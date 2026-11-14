@@ -63,6 +63,13 @@ before category/action. The output contract is unchanged; generation order and
 the native schema hash are recorded in each model trace. Correctness is measured
 separately on development and held-out incidents.
 
+The permitted evidence ID is compiled into the native citation-field enum, with
+one required reference. This is a contextual syntax constraint, not a measure of
+model reasoning or diagnostic quality. The application never fills a missing
+citation or rewrites an incorrect generated citation. The original post-validator
+still checks the returned reference, including responses from a nonconforming
+provider. Category and action remain model decisions subject to independent policy.
+
 Complete evidence and matching target/environment/scope are required before a
 model request. Returned evidence references must match the actual collected
 observation. A valid JSON shape does not prove a correct diagnosis. A separate

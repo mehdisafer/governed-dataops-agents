@@ -22,6 +22,7 @@ from governed_dataops.diagnostic import (
     DiagnosticError,
     LocalNativeSchema,
     diagnose,
+    evidence_schema_transformer,
     runbook_diagnose,
     sanitized_evidence,
     validate_diagnosis,
@@ -239,6 +240,16 @@ def test_native_schema_forbids_extra_privilege_fields():
     schema = Diagnosis.model_json_schema()
     assert schema["additionalProperties"] is False
     assert "shell" not in schema["properties"]
+
+
+def test_native_citations_are_limited_to_collected_evidence():
+    schema = evidence_schema_transformer("ev-observed")(
+        Diagnosis.model_json_schema(), strict=True
+    ).walk()
+    refs = schema["properties"]["evidence_refs"]
+    assert refs["items"] == {"type": "string", "enum": ["ev-observed"]}
+    assert refs["minItems"] == refs["maxItems"] == 1
+    assert "enum" not in Diagnosis.model_json_schema()["properties"]["evidence_refs"]["items"]
 
 
 def test_compact_local_grammar_preserves_post_validation():

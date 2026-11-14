@@ -39,7 +39,7 @@
           <label for="scenario">Incident class</label>
           <select id="scenario"><option value="freshness">Freshness objective exceeded</option><option value="transient">Transient ingestion failure</option><option value="schema">Incompatible schema drift</option><option value="quality">Rejected quality batch</option><option value="duplicate">Duplicate delivery risk</option></select>
           <label for="mode">Diagnostic engine</label>
-          <select id="mode"><option value="agent">Local model · PydanticAI</option><option value="runbook">Deterministic runbook · baseline</option></select>
+          <select id="mode"><option value="runbook">Deterministic runbook · baseline</option><option value="agent">Local model · experimental</option></select>
           <label class="checkbox"><input type="checkbox" id="lost-response"> Lose the effect response after commit</label>
           <button type="submit" class="primary full">Start incident response <span aria-hidden="true">↗</span></button>
         </form>

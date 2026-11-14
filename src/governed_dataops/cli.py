@@ -9,8 +9,7 @@ from pathlib import Path
 
 
 def initialize(directory: Path) -> None:
-    from cryptography.hazmat.primitives import serialization
-    from cryptography.hazmat.primitives.asymmetric.ed25519 import Ed25519PrivateKey
+    from governed_dataops.signing import generate_approval_keys
 
     directory = directory.resolve()
     directory.mkdir(parents=True, exist_ok=True)
@@ -20,6 +19,7 @@ def initialize(directory: Path) -> None:
     if (directory / ".env").exists():
         raise SystemExit("Configuration exists; refusing to overwrite it")
     secret_dir.mkdir(mode=0o700, exist_ok=True)
+    secret_dir.chmod(0o700)
     config = {
         "DATAOPS_DB_PATH": str(directory / "state" / "dataops.db"),
         "DATAOPS_DEMO_MODE": "true",
@@ -28,23 +28,28 @@ def initialize(directory: Path) -> None:
     }
     for role in ("reader", "executor", "operator", "approver"):
         path = secret_dir / f"{role}-token"
-        path.write_text(secrets.token_urlsafe(32))
-        path.chmod(0o600)
+        with os.fdopen(os.open(path, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600), "w") as output:
+            output.write(secrets.token_urlsafe(32))
         config[f"DATAOPS_{role.upper()}_TOKEN_FILE"] = str(path)
-    key = Ed25519PrivateKey.generate()
-    private_path, public_path = secret_dir / "approval-private.pem", secret_dir / "approval-public.pem"
-    private_path.write_bytes(key.private_bytes(serialization.Encoding.PEM, serialization.PrivateFormat.PKCS8, serialization.NoEncryption()))
-    private_path.chmod(0o600)
-    public_path.write_bytes(key.public_key().public_bytes(serialization.Encoding.PEM, serialization.PublicFormat.SubjectPublicKeyInfo))
+    private_path, public_path = (
+        secret_dir / "approval-private.pem",
+        secret_dir / "approval-public.pem",
+    )
+    generate_approval_keys(private_path, public_path)
     config["DATAOPS_APPROVAL_SIGNING_KEY_FILE"] = str(private_path)
     config["DATAOPS_APPROVAL_VERIFY_KEY_FILE"] = str(public_path)
     # JSON-quoted dotenv values support spaces without shell evaluation.
-    (directory / ".env").write_text("\n".join(f"{k}={json.dumps(v)}" for k, v in config.items()) + "\n")
-    (directory / ".env").chmod(0o600)
+    with os.fdopen(
+        os.open(directory / ".env", os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600), "w"
+    ) as output:
+        output.write("\n".join(f"{k}={json.dumps(v)}" for k, v in config.items()) + "\n")
     print(f"Created local configuration in {directory}; use --env-file to load it")
 
 
 def main() -> None:
+    from governed_dataops.observability import configure_logging
+
+    configure_logging()
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--env-file", type=Path)
     sub = parser.add_subparsers(dest="command", required=True)
@@ -82,7 +87,13 @@ def main() -> None:
         import uvicorn
 
         factory = "create_target_app" if args.command == "target" else "create_app"
-        uvicorn.run(f"governed_dataops.{args.command}:{factory}", factory=True, host=args.host, port=args.port, log_config=None)
+        uvicorn.run(
+            f"governed_dataops.{args.command}:{factory}",
+            factory=True,
+            host=args.host,
+            port=args.port,
+            log_config=None,
+        )
     elif args.command == "worker":
         from governed_dataops.settings import get_settings
         from governed_dataops.worker import run_worker

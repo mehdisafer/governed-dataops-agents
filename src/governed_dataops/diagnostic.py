@@ -19,7 +19,7 @@ from pydantic_ai.usage import RunUsage, UsageLimits
 from governed_dataops.contracts import Diagnosis, Evidence, Incident, Scenario, ToolName
 from governed_dataops.settings import Settings, get_settings
 
-PROMPT_VERSION = "diagnosis-v2"
+PROMPT_VERSION = "diagnosis-v3"
 MAX_CONTEXT_BYTES = 32_000
 LOCAL_GENERATION_ORDER = ["summary", "evidence_refs", "rationale", "category", "proposed_action"]
 _SECRET = re.compile(
@@ -54,6 +54,24 @@ class LocalNativeSchema(OpenAIJsonSchemaTransformer):
             }
             transformed["required"] = LOCAL_GENERATION_ORDER.copy()
         return transformed
+
+
+def evidence_schema_transformer(
+    evidence_id: str, *, local: bool = True
+) -> type[OpenAIJsonSchemaTransformer]:
+    """Compile permitted citations before generation; never rewrite a response."""
+    parent = LocalNativeSchema if local else OpenAIJsonSchemaTransformer
+
+    class EvidenceBoundSchema(parent):
+        def walk(self) -> dict:
+            schema = super().walk()
+            reference = schema["properties"]["evidence_refs"]
+            reference["items"] = {"type": "string", "enum": [evidence_id]}
+            reference["minItems"] = 1
+            reference["maxItems"] = 1
+            return schema
+
+    return EvidenceBoundSchema
 
 
 def _hash(value: str) -> str:
@@ -163,8 +181,8 @@ async def diagnose(
         "max_tokens": settings.model_max_tokens,
         "timeout": settings.model_timeout_seconds,
     }
-    transformer = (
-        LocalNativeSchema if settings.model_provider == "local" else OpenAIJsonSchemaTransformer
+    transformer = evidence_schema_transformer(
+        evidence.evidence_id, local=settings.model_provider == "local"
     )
     native_schema = transformer(Diagnosis.model_json_schema(), strict=True).walk()
     schema_hash = _hash(json.dumps(native_schema, separators=(",", ":")))
@@ -187,6 +205,8 @@ async def diagnose(
         "request_sha256": _hash(json.dumps(request_descriptor, sort_keys=True)),
         "native_schema_sha256": schema_hash,
         "generation_property_order": list(native_schema["properties"]),
+        "permitted_evidence_refs": [evidence.evidence_id],
+        "citation_constraint": "native enum compiled from validated evidence; original post-validator retained",
         "parameters": parameters,
         "context": json.loads(context),
         "tools_available_to_model": [],
@@ -220,9 +240,7 @@ async def diagnose(
                         supports_json_schema_output=True,
                         supports_tools=False,
                         openai_chat_supports_max_completion_tokens=False,
-                        json_schema_transformer=LocalNativeSchema
-                        if settings.model_provider == "local"
-                        else OpenAIJsonSchemaTransformer,
+                        json_schema_transformer=transformer,
                     ),
                 )
                 agent = Agent(
@@ -247,12 +265,15 @@ async def diagnose(
                 )
                 run_completed = True
                 diagnosis = result.output
+                trace["model_proposal"] = diagnosis.model_dump(mode="json")
                 validate_diagnosis(diagnosis, evidence)
                 trace["diagnosis_valid"] = True
                 trace["response_sha256"] = _hash(diagnosis.model_dump_json())
                 return diagnosis, trace
     except Exception as exc:
         trace["error_type"] = type(exc).__name__
+        if isinstance(exc, DiagnosticError):
+            trace["validation_failure"] = str(exc)
         raise DiagnosticError(
             f"diagnostic model did not provide a valid sourced proposal ({type(exc).__name__})",
             trace,

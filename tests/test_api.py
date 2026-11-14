@@ -9,6 +9,7 @@ from datetime import UTC, datetime
 import httpx
 import pytest
 from fastapi.testclient import TestClient
+from temporalio.common import WorkflowIDReusePolicy
 from temporalio.exceptions import WorkflowAlreadyStartedError
 
 import governed_dataops.api as api_module
@@ -188,6 +189,16 @@ def test_duplicate_event_has_one_durable_incident_and_stable_workflow_id(app_env
     assert not first.json()["deduplicated"] and second.json()["deduplicated"]
     assert first.json()["workflow_id"] == second.json()["workflow_id"]
     assert len(store.list_incidents()) == len(temporal.started) == 1
+    assert all(
+        request[2]["id_reuse_policy"] == WorkflowIDReusePolicy.REJECT_DUPLICATE
+        for request in temporal.start_requests
+    )
+    assert len(store.get_incident(payload["incident"]["incident_id"])["events"]) == 1
+    changed_mode = client.post(
+        "/api/incidents", headers=headers(settings, "operator"), json={**payload, "mode": "runbook"}
+    )
+    assert changed_mode.status_code == 409
+    assert len(temporal.start_requests) == 2
     payload["incident"]["target_id"] = "a-different-target"
     assert (
         client.post(
@@ -195,6 +206,21 @@ def test_duplicate_event_has_one_durable_incident_and_stable_workflow_id(app_env
         ).status_code
         == 409
     )
+
+
+def test_terminal_event_retry_does_not_restart_a_closed_workflow(app_env):
+    client, settings, store, temporal, _, _ = app_env
+    item = incident()
+    payload = {"incident": item.model_dump(mode="json")}
+    first = client.post("/api/incidents", headers=headers(settings, "operator"), json=payload)
+    assert first.status_code == 202
+    store.event(item.incident_id, "resolved", {"reason": "unit synthetic completed workflow"})
+    starts = len(temporal.start_requests)
+    again = client.post("/api/incidents", headers=headers(settings, "operator"), json=payload)
+    assert again.status_code == 202 and again.json()["deduplicated"]
+    assert again.json()["workflow_id"] == first.json()["workflow_id"]
+    assert len(temporal.start_requests) == starts
+    assert store.get_incident(item.incident_id)["status"] == "resolved"
 
 
 def test_admission_returns_backpressure_and_recovers_after_terminal_outcome(app_env):

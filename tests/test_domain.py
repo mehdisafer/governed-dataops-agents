@@ -1,7 +1,9 @@
+import logging
 import sqlite3
 from concurrent.futures import ThreadPoolExecutor
 from datetime import UTC, datetime, timedelta
 from pathlib import Path
+from threading import Barrier
 
 import pytest
 from fastapi.testclient import TestClient
@@ -271,6 +273,177 @@ def test_atomic_admission_backpressure_and_recovery(store):
     store.event("one", "escalated", {"reason": "operator intervention"})
     assert store.record_incident(second, max_pending=1)
     assert store.incident_counts() == {"escalated": 1, "received": 1}
+
+
+@pytest.mark.parametrize("legacy", [False, True])
+def test_concurrent_duplicate_admission_atomically_binds_one_execution_intent(store, legacy):
+    incident = Incident(
+        incident_id="intent", event_id="intent-event", target_id="line-a", symptom="synthetic alert"
+    )
+    if legacy:
+        store.record_incident(incident)
+    barrier = Barrier(2)
+
+    def compete(mode):
+        barrier.wait(timeout=5)
+        try:
+            created = store.record_incident(
+                incident, intent={"mode": mode, "simulate_lost_response": False}
+            )
+            return {"accepted": True, "created": created, "mode": mode}
+        except ValueError:
+            return {"accepted": False, "mode": mode}
+
+    with ThreadPoolExecutor(max_workers=2) as pool:
+        results = list(pool.map(compete, ["agent", "runbook"]))
+    accepted = [r for r in results if r["accepted"]]
+    assert len(accepted) == 1
+    assert accepted[0]["created"] is not legacy
+    received = [
+        e for e in store.get_incident(incident.incident_id)["events"] if e["phase"] == "received"
+    ]
+    expected = {"mode": accepted[0]["mode"], "simulate_lost_response": False}
+    assert len(received) == 1 and received[0]["payload"] == expected
+    reopened = Store(store.path)
+    assert not reopened.record_incident(incident, intent=expected)
+    with pytest.raises(ValueError, match="execution mode"):
+        reopened.record_incident(incident, intent={**expected, "simulate_lost_response": True})
+    assert len(reopened.get_incident(incident.incident_id)["events"]) == 1
+
+
+def test_failed_intent_write_rolls_back_admission(store):
+    with sqlite3.connect(store.path) as connection:
+        connection.execute(
+            "CREATE TRIGGER reject_intent BEFORE INSERT ON incident_events WHEN NEW.phase='received' BEGIN SELECT RAISE(ABORT, 'synthetic event failure'); END"
+        )
+    incident = Incident(
+        incident_id="atomic", event_id="atomic-event", target_id="line-a", symptom="synthetic alert"
+    )
+    with pytest.raises(sqlite3.IntegrityError, match="synthetic event failure"):
+        store.record_incident(incident, intent={"mode": "agent", "simulate_lost_response": False})
+    assert store.get_incident_by_event(incident.event_id) is None
+    assert store.incident_counts() == {}
+
+
+def test_scoped_listing_applies_filters_before_the_global_limit(store):
+    for identifier, created_at in [
+        ("own-old", "2020-01-01T00:00:00Z"),
+        ("own-new", "2020-01-02T00:00:00Z"),
+    ]:
+        store.record_incident(
+            Incident(
+                incident_id=identifier,
+                event_id=identifier,
+                target_id="line-a",
+                symptom="synthetic alert",
+                created_at=created_at,
+            )
+        )
+    foreign = [
+        Incident(
+            incident_id=f"foreign-{index}",
+            event_id=f"foreign-{index}",
+            target_id="line-a",
+            symptom="synthetic alert",
+            environment="prod" if index % 2 else "dev",
+            scope="factory-a" if index % 2 else "factory-b",
+            created_at="2026-01-01T00:00:00Z",
+        )
+        for index in range(257)
+    ]
+    with sqlite3.connect(store.path) as connection:
+        connection.executemany(
+            "INSERT INTO incidents(incident_id,event_id,target_id,body_json,created_at) VALUES(?,?,?,?,?)",
+            [
+                (
+                    item.incident_id,
+                    item.event_id,
+                    item.target_id,
+                    item.model_dump_json(),
+                    item.created_at,
+                )
+                for item in foreign
+            ],
+        )
+    assert len(store.list_incidents(256)) == 256
+    assert [
+        item["incident_id"]
+        for item in store.list_incidents(1, environment="dev", scope="factory-a")
+    ] == ["own-new"]
+    assert [
+        item["incident_id"]
+        for item in store.list_incidents(256, environment="dev", scope="factory-a")
+    ] == ["own-new", "own-old"]
+    assert not store.list_incidents(scope="factory-a' OR 1=1 --")
+
+
+def test_operational_event_log_is_correlated_payload_free_and_only_after_commit(store):
+    incident, _, _ = prepare(store)
+    observed = []
+
+    class ObserveCommit(logging.Handler):
+        def emit(self, record):
+            with sqlite3.connect(store.path, timeout=0.1) as connection:
+                count = connection.execute(
+                    "SELECT COUNT(*) FROM incident_events WHERE phase='observed'"
+                ).fetchone()[0]
+            observed.append((record, count))
+
+    logger = logging.getLogger("governed_dataops.storage")
+    handler, previous_level = ObserveCommit(), logger.level
+    logger.addHandler(handler)
+    logger.setLevel(logging.INFO)
+    try:
+        store.event(incident.incident_id, "observed", {"secret": "synthetic sensitive payload"})
+        with sqlite3.connect(store.path) as connection:
+            connection.execute(
+                "CREATE TRIGGER reject_log BEFORE INSERT ON incident_events WHEN NEW.phase='failed' BEGIN SELECT RAISE(ABORT, 'synthetic commit failure'); END"
+            )
+        with pytest.raises(sqlite3.IntegrityError):
+            store.event(incident.incident_id, "failed", {})
+    finally:
+        logger.removeHandler(handler)
+        logger.setLevel(previous_level)
+    assert len(observed) == 1
+    record, committed_count = observed[0]
+    assert committed_count == 1
+    assert record.incident_id == incident.incident_id and record.phase == "observed"
+    assert record.getMessage() == "incident_phase"
+    assert "payload" not in record.__dict__ and "synthetic sensitive payload" not in repr(
+        record.__dict__
+    )
+
+
+@pytest.mark.parametrize("failure", ["missing_file", "schema_changed", "missing_table"])
+def test_target_health_checks_actual_existing_database_and_schema(store, failure):
+    app = create_target_app(store=store, settings=Settings())
+    with TestClient(app) as client:
+        ready = client.get("/health")
+        assert ready.status_code == 200 and ready.json()["schema_version"] == 1
+        if failure == "missing_file":
+            Path(store.path).rename(Path(store.path).with_suffix(".moved"))
+        else:
+            with sqlite3.connect(store.path) as connection:
+                connection.execute(
+                    "UPDATE schema_migrations SET version=2"
+                    if failure == "schema_changed"
+                    else "DROP TABLE effect_ledger"
+                )
+        failed = client.get("/health")
+    assert failed.status_code == 503 and failed.headers["retry-after"] == "1"
+    assert failed.json()["status"] == "unavailable"
+    if failure == "missing_file":
+        assert not Path(store.path).exists()
+
+
+def test_target_rejects_non_ascii_bearer_as_unauthorized(store):
+    store.seed_target("line-a", Scenario.FRESHNESS)
+    config = Settings(reader_token="reader-" + "r" * 32)
+    with TestClient(create_target_app(store=store, settings=config)) as client:
+        response = client.get(
+            "/targets/line-a", headers=[(b"Authorization", b"Bearer \xff-malformed")]
+        )
+    assert response.status_code == 401
 
 
 def test_audit_events_keep_correlated_plan_without_credentials(store):

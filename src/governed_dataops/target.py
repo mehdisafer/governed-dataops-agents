@@ -43,10 +43,10 @@ def create_target_app(store: Store | None = None, settings: Settings | None = No
     def authenticate(authorization: Annotated[str | None, Header()] = None) -> Principal:
         if not authorization or not authorization.startswith("Bearer "):
             raise HTTPException(401, "A role token is required")
-        value = authorization[7:]
+        value = authorization[7:].encode("utf-8")
         for role in ("executor", "reader", "operator", "approver"):
             token = getattr(config, f"{role}_token")
-            if token and secrets.compare_digest(value, token):
+            if token and secrets.compare_digest(value, token.encode("utf-8")):
                 return config.principal(role)
         raise HTTPException(401, "Invalid role token")
 
@@ -68,12 +68,18 @@ def create_target_app(store: Store | None = None, settings: Settings | None = No
 
     @app.get("/health")
     def health():
-        return {
-            "status": "ok",
-            "target": "synthetic",
-            "persistence": "sqlite-wal",
-            "schema_version": 1,
-        }
+        try:
+            return {"target": "synthetic", **database.health()}
+        except (sqlite3.Error, OSError, RuntimeError):
+            return JSONResponse(
+                status_code=503,
+                content={
+                    "status": "unavailable",
+                    "target": "synthetic",
+                    "persistence": "unavailable",
+                },
+                headers={"Retry-After": "1"},
+            )
 
     @app.post("/seed", response_model=Snapshot)
     def seed(body: SeedRequest, principal: Annotated[Principal, Depends(authenticate)]):

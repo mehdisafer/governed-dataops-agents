@@ -49,6 +49,23 @@
       "decision": "Abstain when evidence does not justify an executable action"
     }
   ],
+  "profiles": {
+    "diagnostic-agent": {
+      "catalog_version": "1.0", "input_contract": "Evidence", "output_contract": "Diagnosis",
+      "model_tools": [], "max_requests": 2, "max_delegation_depth": 0,
+      "authority": "Proposal only; independent policy and target checks are mandatory"
+    },
+    "deterministic-runbook": {
+      "catalog_version": "1.0", "runbook_version": "1.0",
+      "input_contract": "Evidence", "output_contract": "Diagnosis", "model_used": false,
+      "authority": "Same proposal, policy, approval and effect path as the agent"
+    },
+    "effect-executor": {
+      "catalog_version": "1.0", "input_contract": "EffectRequest", "output_contract": "EffectResult",
+      "role": "executor", "max_actions_per_incident": 1,
+      "authority": "Fixed handlers; signature, receipt and live-state checks"
+    }
+  },
   "mcp_capabilities": [
     {"name": "collect_evidence", "input": "target_id", "output_contract": "Evidence", "role": "reader"},
     {"name": "execute_action", "input_contract": "EffectRequest", "output_contract": "EffectResult", "role": "executor"},

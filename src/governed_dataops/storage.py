@@ -7,6 +7,7 @@ is made for other target systems.
 
 import hashlib
 import json
+import logging
 import os
 import sqlite3
 from contextlib import closing, contextmanager
@@ -33,6 +34,7 @@ from governed_dataops.policy import evaluate_plan
 from governed_dataops.signing import verify_approval_signature
 
 TERMINAL_STATUSES = ("resolved", "contained", "escalated", "denied", "cancelled")
+logger = logging.getLogger(__name__)
 
 
 class CapacityExceeded(OverflowError):
@@ -111,6 +113,27 @@ class Store:
                     "INSERT OR IGNORE INTO schema_migrations VALUES(1,?)", (utc_now(),)
                 )
                 connection.commit()
+
+    def health(self) -> dict:
+        """Check existing storage through bounded reads; never create a missing DB."""
+        uri = Path(self.path).resolve().as_uri() + "?mode=ro"
+        with closing(
+            sqlite3.connect(uri, uri=True, timeout=0.25, isolation_level=None)
+        ) as connection:
+            connection.execute("PRAGMA busy_timeout=250")
+            connection.execute("PRAGMA query_only=ON")
+            connection.execute("BEGIN")
+            version = connection.execute("SELECT MAX(version) FROM schema_migrations").fetchone()[0]
+            if version != 1:
+                raise RuntimeError("database schema version is unavailable or unsupported")
+            connection.execute(
+                "SELECT target_id,revision,batch_status FROM targets LIMIT 1"
+            ).fetchone()
+            connection.execute("SELECT idempotency_key FROM effect_ledger LIMIT 1").fetchone()
+            journal = connection.execute("PRAGMA journal_mode").fetchone()[0]
+            if journal != "wal":
+                raise RuntimeError("database is not using the required WAL journal")
+        return {"status": "ok", "persistence": "sqlite-wal", "schema_version": version}
 
     @staticmethod
     def _target(connection, target_id: str):
@@ -462,7 +485,18 @@ class Store:
             result.reconciled = True
             return result
 
-    def record_incident(self, incident: Incident, max_pending: int | None = None) -> bool:
+    def record_incident(
+        self, incident: Incident, max_pending: int | None = None, *, intent: dict | None = None
+    ) -> bool:
+        encoded_intent = None
+        if intent is not None:
+            if (
+                set(intent) != {"mode", "simulate_lost_response"}
+                or intent["mode"] not in {"agent", "runbook"}
+                or not isinstance(intent["simulate_lost_response"], bool)
+            ):
+                raise ValueError("invalid incident execution intent")
+            encoded_intent = _json(intent)
         with self._connection(write=True) as connection:
             existing = connection.execute(
                 "SELECT body_json FROM incidents WHERE event_id=? OR incident_id=?",
@@ -476,6 +510,8 @@ class Store:
                         raise ValueError(
                             "event or incident identity was reused with different content"
                         )
+                if encoded_intent is not None:
+                    self._claim_incident_intent(connection, incident.incident_id, encoded_intent)
                 return False
             if max_pending is not None:
                 if max_pending < 1:
@@ -498,7 +534,27 @@ class Store:
                     incident.created_at,
                 ),
             )
+            if encoded_intent is not None:
+                self._claim_incident_intent(connection, incident.incident_id, encoded_intent)
             return True
+
+    @staticmethod
+    def _claim_incident_intent(connection, incident_id: str, encoded_intent: str) -> None:
+        """Bind the first dispatch intent within the admission write transaction."""
+        previous = connection.execute(
+            "SELECT payload_json FROM incident_events WHERE incident_id=? AND phase='received' "
+            "ORDER BY sequence LIMIT 1",
+            (incident_id,),
+        ).fetchone()
+        if previous is not None:
+            if _json(json.loads(previous["payload_json"])) != encoded_intent:
+                raise ValueError("event identity was reused with a different execution mode")
+            return
+        connection.execute(
+            "INSERT INTO incident_events(incident_id,phase,payload_json,created_at) "
+            "VALUES(?,'received',?,?)",
+            (incident_id, encoded_intent, utc_now()),
+        )
 
     def get_incident_by_event(self, event_id: str) -> dict | None:
         with self._connection() as connection:
@@ -530,6 +586,7 @@ class Store:
                 connection.execute(
                     "UPDATE incidents SET status=? WHERE incident_id=?", (status, incident_id)
                 )
+        logger.info("incident_phase", extra={"incident_id": incident_id, "phase": phase})
 
     def get_incident(self, incident_id: str) -> dict:
         with self._connection() as connection:
@@ -582,12 +639,23 @@ class Store:
                 result["plan_hash"] = Plan.model_validate(result["plan"]).digest()
             return result
 
-    def list_incidents(self, limit: int = 100) -> list[dict]:
+    def list_incidents(
+        self, limit: int = 100, *, environment: str | None = None, scope: str | None = None
+    ) -> list[dict]:
         if not 1 <= limit <= 256:
             raise ValueError("limit must be between 1 and 256")
+        filters, parameters = [], []
+        if environment is not None:
+            filters.append("json_extract(body_json,'$.environment')=?")
+            parameters.append(environment)
+        if scope is not None:
+            filters.append("json_extract(body_json,'$.scope')=?")
+            parameters.append(scope)
+        where = " WHERE " + " AND ".join(filters) if filters else ""
         with self._connection() as connection:
             rows = connection.execute(
-                "SELECT incident_id FROM incidents ORDER BY created_at DESC LIMIT ?", (limit,)
+                "SELECT incident_id FROM incidents" + where + " ORDER BY created_at DESC LIMIT ?",
+                [*parameters, limit],
             ).fetchall()
         return [self.get_incident(row["incident_id"]) for row in rows]
 

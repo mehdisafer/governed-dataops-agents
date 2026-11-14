@@ -84,14 +84,15 @@ docker compose run --rm --no-deps -T \
   --user "$(id -u):$(id -g)" \
   -v "$DATAOPS_BACKUP:/backup" --entrypoint python init-state - <<'PY'
 import hashlib, json, pathlib, sqlite3
+from contextlib import closing
 out = pathlib.Path('/backup')
 manifest = {'files': {}, 'scope': 'stopped application and Temporal pair'}
 for name, source in [('dataops.db', '/data/dataops.db'), ('temporal.db', '/temporal/temporal.db')]:
     destination = out / name
     if destination.exists():
         raise RuntimeError(f'Refusing to replace {destination}')
-    with sqlite3.connect(f'file:{source}?mode=ro', uri=True) as src:
-        with sqlite3.connect(destination) as dst:
+    with closing(sqlite3.connect(f'file:{source}?mode=ro', uri=True)) as src:
+        with closing(sqlite3.connect(destination)) as dst:
             src.backup(dst)
             if dst.execute('PRAGMA integrity_check').fetchall() != [('ok',)]:
                 raise RuntimeError(f'Integrity check failed for {name}')

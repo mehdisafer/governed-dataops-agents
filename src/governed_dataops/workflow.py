@@ -27,6 +27,7 @@ class IncidentWorkflow:
     @workflow.query(name="status")
     def status(self) -> dict:
         return {
+            "workflow_revision": "incident-v1",
             "phase": self.phase,
             "plan": self.plan,
             "plan_hash": self.plan_hash,

@@ -64,13 +64,17 @@ class Settings(BaseModel):
             or self.model_api_key in {"", "local-only"}
         ):
             raise ValueError("external inference requires explicit authorization, HTTPS and key")
-        tokens = [getattr(self, f"{r}_token") for r in ("reader", "executor", "operator", "approver")]
+        tokens = [
+            getattr(self, f"{r}_token") for r in ("reader", "executor", "operator", "approver")
+        ]
         populated = [t for t in tokens if t]
         if any(len(t) < 24 for t in populated):
             raise ValueError("role tokens must contain at least 24 characters")
         if len(populated) != len(set(populated)):
             raise ValueError("role tokens must be distinct")
-        subjects = [getattr(self, f"{r}_subject") for r in ("reader", "executor", "operator", "approver")]
+        subjects = [
+            getattr(self, f"{r}_subject") for r in ("reader", "executor", "operator", "approver")
+        ]
         if len(subjects) != len(set(subjects)):
             raise ValueError("role identities must be distinct")
         if not self.environment.strip() or not self.scope.strip():

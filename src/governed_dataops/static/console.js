@@ -1,6 +1,6 @@
 "use strict";
 (() => {
-  let operatorToken = "", selected = null, incidents = [], busy = false;
+  let operatorToken = "", selected = null, incidents = [], busy = false, sessionVersion = 0;
   const $ = (id) => document.getElementById(id);
   const terminal = new Set(["resolved", "contained", "denied", "escalated", "cancelled"]);
   const nice = (value) => String(value ?? "pending").replaceAll("_", " ");
@@ -56,8 +56,9 @@
     $("source-logs").textContent = (evidence?.logs || []).join("\n");
     const diagnosis = latest(record, "diagnosis"), trace = latest(record, "model_trace") || latest(record, "trace");
     $("diagnostic-engine").textContent = trace?.mode || trace?.model || "DIAGNOSIS";
-    $("diagnosis-summary").textContent = diagnosis?.summary || "Awaiting diagnostic evidence.";
-    $("diagnosis-rationale").textContent = diagnosis?.rationale || "";
+    const diagnosticFailure = [...(record.events || [])].reverse().find(x => x.phase === "diagnostic_failed" || x.phase === "escalated");
+    $("diagnosis-summary").textContent = diagnosis?.summary || (terminal.has(record.status) ? "No valid diagnostic proposal was produced." : "Awaiting diagnostic evidence.");
+    $("diagnosis-rationale").textContent = diagnosis?.rationale || diagnosticFailure?.payload?.reason || diagnosticFailure?.payload?.result?.reason || "";
     $("diagnosis-citations").textContent = diagnosis ? `Evidence: ${diagnosis.evidence_refs.join(", ")}` : "";
     $("model-trace").textContent = json(trace);
     const plan = latest(record, "plan"), policy = latest(record, "policy");
@@ -81,18 +82,19 @@
   }
   async function refresh() {
     if (!operatorToken || busy) return; busy = true;
+    const version = sessionVersion;
     try {
-      const data = await request("/api/incidents"); incidents = Array.isArray(data) ? data : data.incidents;
+      const data = await request("/api/incidents"); if (version !== sessionVersion) return; incidents = Array.isArray(data) ? data : data.incidents;
       if (!selected && incidents.length) selected = incidents[0].incident_id;
-      renderQueue(); if (selected) render(await request(`/api/incidents/${encodeURIComponent(selected)}`));
+      renderQueue(); if (selected) { const target = selected, detail = await request(`/api/incidents/${encodeURIComponent(target)}`); if (version !== sessionVersion || selected !== target) return; render(detail); }
       $("session-state").textContent = "Connected · refreshes every 4 seconds";
-    } catch (error) { notice(error.message); } finally { busy = false; }
+    } catch (error) { if (version === sessionVersion) notice(error.message); } finally { busy = false; }
   }
-  $("connect").addEventListener("click", () => { operatorToken = $("operator-token").value.trim(); $("operator-token").value = ""; notice(""); refresh(); });
+  $("connect").addEventListener("click", () => { sessionVersion += 1; operatorToken = $("operator-token").value.trim(); $("operator-token").value = ""; $("approver-token").value = ""; selected = null; incidents = []; $("incident-detail").hidden = true; $("empty-state").hidden = false; for (const id of ["observations", "timeline", "model-trace", "source-logs", "diagnosis-summary", "diagnosis-rationale", "diagnosis-citations", "incident-context", "incident-title", "incident-id", "plan-hash", "result-reason", "verification-state"]) $(id).replaceChildren(); renderQueue(); notice(""); refresh(); });
   $("refresh").addEventListener("click", refresh);
   $("incident-form").addEventListener("submit", async event => {
-    event.preventDefault(); const button = event.submitter; button.disabled = true; notice("");
-    try { const result = await request("/api/demo/incidents", {method:"POST", body:json({scenario:$("scenario").value, mode:$("mode").value, simulate_lost_response:$("lost-response").checked})}); selected = result.incident_id; await refresh(); }
+    event.preventDefault(); const button = event.submitter, version = sessionVersion; button.disabled = true; notice("");
+    try { const result = await request("/api/demo/incidents", {method:"POST", body:json({scenario:$("scenario").value, mode:$("mode").value, simulate_lost_response:$("lost-response").checked})}); if (version !== sessionVersion) return; selected = result.incident_id; await refresh(); }
     catch (error) { notice(error.message); } finally { button.disabled = false; }
   });
   $("approval-form").addEventListener("submit", async event => {

@@ -81,6 +81,18 @@ API, worker and target share one writable application database. They are trusted
 
 Run the gate on a normal Linux Docker host or a CI runner with sufficient measured resources. Retain the source commit, resolved Compose configuration, image IDs, versions, health output, business API results, raw service logs and cleanup status. Do not upload tokens, private keys or live databases.
 
+The executable harness builds the actual images and creates its own synthetic stack, private credentials and fresh volumes:
+
+```bash
+uv run python scripts/qualify_container.py \
+  --source-commit "$(git rev-parse HEAD)" \
+  --output evidence/runs/container-01
+```
+
+It checks container isolation, installed asset identity, all five runbook cases, response-loss reconciliation, worker restart, a stopped paired backup and restore, retained Temporal history, and an actual local-agent request. It removes only its uniquely named stacks and image tags; it never prunes shared Docker resources. On a smaller CI runner, an explicit `--model-cpus 2` override records the different CPU budget. It is not the reference host's throughput measurement.
+
+The local-agent request always runs. The harness requires an observed model response and independently enforces safe effects; its semantic diagnosis result is recorded in `model-quality.json`. Add `--require-model-quality` to make correctness on that case an exit-status gate. Without that flag, a passed container-execution gate can coexist with a failed diagnostic-quality result. Neither outcome establishes the separate full-corpus acceptance gate.
+
 The build/start sequence above is necessary but insufficient. Submit a synthetic freshness incident, observe a real MCP/model/Temporal path, approve a quality quarantine using the separate approver credential, and verify target rows and effect receipts. Exercise a worker restart and a stopped application/Temporal backup and restore. Confirm that only loopback API port 8080 is published, the worker cannot read the signing key, and the private target/model/Temporal ports are not published.
 
 Use `docker compose logs --no-color` and `docker compose ps --format json` to retain original runtime evidence. Capture `docker image inspect` and an installed OS/package inventory for the built images. A CI job that only parses YAML, skips the model, replaces services with mocks or never reaches the business postconditions cannot mark the container gate as passed. Always stop the job's containers in cleanup. Keep or remove only that job's explicitly named synthetic volumes according to its retention policy.
