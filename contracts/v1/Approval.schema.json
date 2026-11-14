@@ -1,0 +1,117 @@
+{
+  "$defs": {
+    "Principal": {
+      "additionalProperties": false,
+      "properties": {
+        "environment": {
+          "default": "dev",
+          "enum": [
+            "dev",
+            "staging",
+            "prod"
+          ],
+          "title": "Environment",
+          "type": "string"
+        },
+        "role": {
+          "enum": [
+            "operator",
+            "approver",
+            "executor",
+            "reader"
+          ],
+          "title": "Role",
+          "type": "string"
+        },
+        "scope": {
+          "default": "factory-a",
+          "pattern": "^[a-zA-Z0-9][a-zA-Z0-9_.-]{0,95}$",
+          "title": "Scope",
+          "type": "string"
+        },
+        "subject": {
+          "pattern": "^[a-zA-Z0-9][a-zA-Z0-9_.-]{0,95}$",
+          "title": "Subject",
+          "type": "string"
+        }
+      },
+      "required": [
+        "subject",
+        "role"
+      ],
+      "title": "Principal",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "approver": {
+      "$ref": "#/$defs/Principal"
+    },
+    "environment": {
+      "enum": [
+        "dev",
+        "staging",
+        "prod"
+      ],
+      "title": "Environment",
+      "type": "string"
+    },
+    "expected_revision": {
+      "title": "Expected Revision",
+      "type": "integer"
+    },
+    "expires_at": {
+      "title": "Expires At",
+      "type": "string"
+    },
+    "incident_id": {
+      "pattern": "^[a-zA-Z0-9][a-zA-Z0-9_.-]{0,95}$",
+      "title": "Incident Id",
+      "type": "string"
+    },
+    "issued_at": {
+      "title": "Issued At",
+      "type": "string"
+    },
+    "plan_hash": {
+      "pattern": "^[a-f0-9]{64}$",
+      "title": "Plan Hash",
+      "type": "string"
+    },
+    "policy_version": {
+      "title": "Policy Version",
+      "type": "string"
+    },
+    "scope": {
+      "pattern": "^[a-zA-Z0-9][a-zA-Z0-9_.-]{0,95}$",
+      "title": "Scope",
+      "type": "string"
+    },
+    "signature": {
+      "default": "",
+      "maxLength": 256,
+      "title": "Signature",
+      "type": "string"
+    },
+    "target_id": {
+      "pattern": "^[a-zA-Z0-9][a-zA-Z0-9_.-]{0,95}$",
+      "title": "Target Id",
+      "type": "string"
+    }
+  },
+  "required": [
+    "plan_hash",
+    "incident_id",
+    "target_id",
+    "environment",
+    "scope",
+    "expected_revision",
+    "policy_version",
+    "approver",
+    "issued_at",
+    "expires_at"
+  ],
+  "title": "Approval",
+  "type": "object"
+}

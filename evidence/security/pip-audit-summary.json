@@ -1,0 +1,17 @@
+{
+  "recorded_at": "2026-11-14T12:20:34.209533+00:00",
+  "pip_audit_version": "2.10.1",
+  "command": "uvx --from pip-audit==2.10.1 pip-audit --disable-pip --strict --format json --output evidence/runs/security-current/pip-audit.json -r evidence/runs/security-current/requirements.txt",
+  "observed_exit_code": 0,
+  "uv_lock_sha256": "50b215d3ab2e6c408a40e0569a253e5fe305bad488a04910e8e12a6de7166fbd",
+  "requirements_sha256": "f168061e1888843f8bc880a44c333854fe1a0461fde1c9ff77debe8a81554f8d",
+  "audited_dependencies": 50,
+  "vulnerabilities": 0,
+  "skipped_dependencies": [],
+  "native_artifacts": {
+    "pip-audit.json": "f92dcef484a6fb7b1d1ee7df43b18777a409485c91a360ec668eddf850d6f33f",
+    "pip-audit.stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "pip-audit.stderr.txt": "66ba67dd388ac26a032b099d6c51daf32054981c51bf0515f2f097b9d0872cbe"
+  },
+  "scope": "frozen no-dev runtime requirements; no OCI/native/system/model audit"
+}

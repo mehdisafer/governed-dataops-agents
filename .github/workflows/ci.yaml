@@ -1,0 +1,175 @@
+name: Qualify governed incident response
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: qualification-${{ github.workflow }}-${{ github.ref }}
+  # Preserve an in-flight source qualification when a later documentation update
+  # legitimately skips the expensive runtime jobs.
+  cancel-in-progress: false
+
+jobs:
+  core:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    outputs:
+      runtime: ${{ steps.scope.outputs.runtime }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+        with:
+          python-version: '3.12.14'
+      - name: Determine whether runtime qualification is required
+        id: scope
+        run: |
+          python - <<'PY'
+          import json, os, subprocess
+          event = json.load(open(os.environ['GITHUB_EVENT_PATH']))
+          base = event.get('before') or event.get('pull_request', {}).get('base', {}).get('sha')
+          if not base or set(base) == {'0'}:
+              required = True
+          else:
+              paths = subprocess.check_output(['git', 'diff', '--name-only', base, 'HEAD'], text=True).splitlines()
+              prefixes = ('src/', 'scripts/', 'tests/', 'contracts/', 'data/', 'infra/', '.github/', '.dockerignore', 'Dockerfile', 'compose', 'pyproject.toml', 'uv.lock')
+              required = any(path.startswith(prefixes) for path in paths)
+          with open(os.environ['GITHUB_OUTPUT'], 'a') as output:
+              output.write(f'runtime={str(required).lower()}\n')
+          PY
+      - name: Install locked project and review tools
+        run: |
+          python -m pip install uv==0.13.6
+          uv sync --frozen
+          mkdir -p evidence/runs/ci
+      - name: Static and unit checks
+        run: |
+          uv run ruff check .
+          uv run pytest -q --junitxml=evidence/runs/ci/pytest.xml
+          uv run python scripts/export_contracts.py
+          git diff --exit-code -- contracts
+      - name: Scan source and reachable history
+        run: |
+          uv run python scripts/secret_scan.py --working-tree --output evidence/runs/ci/secret-worktree.json
+          uv run python scripts/secret_scan.py --output evidence/runs/ci/secret-history.json
+      - name: Inventory components and audit runtime lock
+        run: |
+          uv run python scripts/component_inventory.py --output evidence/runs/ci/component-inventory.json
+          uv export --frozen --no-dev --no-emit-project --format requirements-txt --output-file evidence/runs/ci/requirements.txt
+          uvx --from pip-audit==2.10.1 pip-audit --disable-pip --strict --format json --output evidence/runs/ci/pip-audit.json -r evidence/runs/ci/requirements.txt
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        if: always()
+        with:
+          name: core-evidence-${{ github.sha }}
+          path: evidence/runs/ci/
+          retention-days: 14
+
+  governance:
+    needs: core
+    if: needs.core.outputs.runtime == 'true'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+        with:
+          python-version: '3.12.14'
+      - name: Install project, real Temporal and browser
+        run: |
+          python -m pip install uv==0.13.6
+          uv sync --frozen
+          uv run playwright install --with-deps chromium
+          python scripts/bootstrap_runtime.py --component temporal --destination var/runtime
+      - name: Qualify policy, recovery, business effects, restore and console
+        run: uv run python scripts/qualify.py --manifest var/runtime/provisioning.json --output evidence/runs/governance --profile governance --count 12 --concurrency 4 --source-commit "$GITHUB_SHA"
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        if: always()
+        with:
+          name: governance-evidence-${{ github.sha }}
+          path: evidence/runs/governance/
+          retention-days: 14
+
+  model-evaluation:
+    needs: core
+    if: needs.core.outputs.runtime == 'true'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+        with:
+          python-version: '3.12.14'
+      - name: Install real local inference and workflow runtimes
+        run: |
+          python -m pip install uv==0.13.6
+          uv sync --frozen
+          python scripts/bootstrap_runtime.py --destination var/runtime
+      - name: Compare both engines on the frozen corpus
+        run: uv run python scripts/qualify.py --manifest var/runtime/provisioning.json --output evidence/runs/evaluation --profile evaluation --source-commit "$GITHUB_SHA"
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        if: always()
+        with:
+          name: model-evaluation-${{ github.sha }}
+          path: evidence/runs/evaluation/
+          retention-days: 14
+
+  containers:
+    needs: core
+    if: needs.core.outputs.runtime == 'true'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+        with:
+          python-version: '3.12.14'
+      - name: Install locked project
+        run: |
+          python -m pip install uv==0.13.6
+          uv sync --frozen
+      - name: Build and qualify the actual reference containers
+        run: uv run python scripts/qualify_container.py --source-commit "$GITHUB_SHA" --output evidence/runs/container --model-cpus 2
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        if: always()
+        with:
+          name: container-evidence-${{ github.sha }}
+          path: evidence/runs/container/
+          retention-days: 14
+
+  infrastructure:
+    needs: core
+    if: needs.core.outputs.runtime == 'true'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+        with:
+          python-version: '3.12.14'
+      - name: Install locked project
+        run: |
+          python -m pip install uv==0.13.6
+          uv sync --frozen
+      - name: Verify Terraform and plan isolated local Docker resources
+        run: uv run python scripts/validate_infra.py --source-commit "$GITHUB_SHA" --output evidence/runs/infrastructure
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        if: always()
+        with:
+          name: infrastructure-evidence-${{ github.sha }}
+          path: evidence/runs/infrastructure/
+          retention-days: 14

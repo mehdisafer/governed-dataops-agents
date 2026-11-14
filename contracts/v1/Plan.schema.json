@@ -1,0 +1,122 @@
+{
+  "$defs": {
+    "Action": {
+      "additionalProperties": false,
+      "properties": {
+        "tool": {
+          "$ref": "#/$defs/ToolName"
+        }
+      },
+      "required": [
+        "tool"
+      ],
+      "title": "Action",
+      "type": "object"
+    },
+    "ToolName": {
+      "enum": [
+        "refresh_partition",
+        "retry_batch",
+        "quarantine_batch",
+        "suppress_duplicate",
+        "apply_schema_migration",
+        "escalate"
+      ],
+      "title": "ToolName",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "action_budget": {
+      "default": 1,
+      "maximum": 3,
+      "minimum": 1,
+      "title": "Action Budget",
+      "type": "integer"
+    },
+    "actions": {
+      "items": {
+        "$ref": "#/$defs/Action"
+      },
+      "maxItems": 3,
+      "minItems": 1,
+      "title": "Actions",
+      "type": "array"
+    },
+    "catalog_version": {
+      "default": "1.0",
+      "title": "Catalog Version",
+      "type": "string"
+    },
+    "contract_version": {
+      "const": "1.0",
+      "default": "1.0",
+      "title": "Contract Version",
+      "type": "string"
+    },
+    "delegation_depth": {
+      "default": 0,
+      "maximum": 8,
+      "minimum": 0,
+      "title": "Delegation Depth",
+      "type": "integer"
+    },
+    "environment": {
+      "enum": [
+        "dev",
+        "staging",
+        "prod"
+      ],
+      "title": "Environment",
+      "type": "string"
+    },
+    "evidence_id": {
+      "pattern": "^[a-zA-Z0-9][a-zA-Z0-9_.-]{0,95}$",
+      "title": "Evidence Id",
+      "type": "string"
+    },
+    "expected_revision": {
+      "minimum": 0,
+      "title": "Expected Revision",
+      "type": "integer"
+    },
+    "incident_id": {
+      "pattern": "^[a-zA-Z0-9][a-zA-Z0-9_.-]{0,95}$",
+      "title": "Incident Id",
+      "type": "string"
+    },
+    "policy_version": {
+      "default": "1.0",
+      "title": "Policy Version",
+      "type": "string"
+    },
+    "rationale": {
+      "maxLength": 2000,
+      "title": "Rationale",
+      "type": "string"
+    },
+    "scope": {
+      "pattern": "^[a-zA-Z0-9][a-zA-Z0-9_.-]{0,95}$",
+      "title": "Scope",
+      "type": "string"
+    },
+    "target_id": {
+      "pattern": "^[a-zA-Z0-9][a-zA-Z0-9_.-]{0,95}$",
+      "title": "Target Id",
+      "type": "string"
+    }
+  },
+  "required": [
+    "incident_id",
+    "target_id",
+    "environment",
+    "scope",
+    "evidence_id",
+    "expected_revision",
+    "actions",
+    "rationale"
+  ],
+  "title": "Plan",
+  "type": "object"
+}

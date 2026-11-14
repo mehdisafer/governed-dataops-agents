@@ -1,0 +1,246 @@
+{
+  "contract_version": "1.0",
+  "created_at": "2026-11-14T12:57:50.323341+00:00",
+  "environment": "dev",
+  "event_id": "event-434f101a571d403c82",
+  "incident_id": "inc-434f101a571d403c82",
+  "scope": "factory-a",
+  "symptom": "Industrial data batch requires investigation",
+  "target_id": "line-434f101a571d403c82",
+  "incident": {
+    "contract_version": "1.0",
+    "created_at": "2026-11-14T12:57:50.323341+00:00",
+    "environment": "dev",
+    "event_id": "event-434f101a571d403c82",
+    "incident_id": "inc-434f101a571d403c82",
+    "scope": "factory-a",
+    "symptom": "Industrial data batch requires investigation",
+    "target_id": "line-434f101a571d403c82"
+  },
+  "status": "cancelled",
+  "phase": "cancelled",
+  "events": [
+    {
+      "sequence": 65,
+      "phase": "received",
+      "payload": {
+        "mode": "runbook",
+        "simulate_lost_response": false
+      },
+      "created_at": "2026-11-14T12:57:50.329933+00:00"
+    },
+    {
+      "sequence": 66,
+      "phase": "collected",
+      "payload": {
+        "evidence": {
+          "collected_at": "2026-11-14T12:57:50.878021+00:00",
+          "complete": true,
+          "evidence_id": "ev-958909a13d6549ad8bb1e98f9d59d39b",
+          "logs": [
+            "Synthetic pipeline line-434f101a571d403c82: batch=batch-e836f04fefda7986; status=rejected.",
+            "Input schema=1; accepted schema=1; pending rows=3; rejected rows=1."
+          ],
+          "snapshot": {
+            "accepted_schema": 1,
+            "backlog_rows": 3,
+            "batch_id": "batch-e836f04fefda7986",
+            "batch_status": "rejected",
+            "curated_rows": 0,
+            "duplicate_rows": 0,
+            "environment": "dev",
+            "freshness_lag_seconds": 7200,
+            "policy_version": "1.0",
+            "rejected_rows": 1,
+            "revision": 0,
+            "scope": "factory-a",
+            "source_schema": 1,
+            "target_id": "line-434f101a571d403c82",
+            "transient_failure": false
+          }
+        }
+      },
+      "created_at": "2026-11-14T12:57:51.025551+00:00"
+    },
+    {
+      "sequence": 67,
+      "phase": "diagnosing",
+      "payload": {
+        "mode": "runbook"
+      },
+      "created_at": "2026-11-14T12:57:51.038610+00:00"
+    },
+    {
+      "sequence": 68,
+      "phase": "diagnosed",
+      "payload": {
+        "diagnosis": {
+          "category": "quality",
+          "evidence_refs": [
+            "ev-958909a13d6549ad8bb1e98f9d59d39b"
+          ],
+          "proposed_action": "quarantine_batch",
+          "rationale": "Batch has 1 rejected rows; isolate it from curated data.",
+          "summary": "Batch has 1 rejected rows; isolate it from curated data."
+        },
+        "model_trace": {
+          "mode": "runbook",
+          "model_used": false,
+          "provider_cost_usd": 0,
+          "request_attempted": false,
+          "response_observed": false,
+          "runbook_version": "1.0",
+          "usage_complete": true
+        }
+      },
+      "created_at": "2026-11-14T12:57:51.049688+00:00"
+    },
+    {
+      "sequence": 69,
+      "phase": "planned",
+      "payload": {
+        "plan": {
+          "action_budget": 1,
+          "actions": [
+            {
+              "tool": "quarantine_batch"
+            }
+          ],
+          "catalog_version": "1.0",
+          "contract_version": "1.0",
+          "delegation_depth": 0,
+          "environment": "dev",
+          "evidence_id": "ev-958909a13d6549ad8bb1e98f9d59d39b",
+          "expected_revision": 0,
+          "incident_id": "inc-434f101a571d403c82",
+          "policy_version": "1.0",
+          "rationale": "Batch has 1 rejected rows; isolate it from curated data.",
+          "scope": "factory-a",
+          "target_id": "line-434f101a571d403c82"
+        },
+        "plan_hash": "db4db7e80794339bf75e647f90a91041fd3f4b4c09b02ae3179dea81976cfd76"
+      },
+      "created_at": "2026-11-14T12:57:51.059114+00:00"
+    },
+    {
+      "sequence": 70,
+      "phase": "policy_checked",
+      "payload": {
+        "approval": null,
+        "observed_revision": 0,
+        "plan_hash": "db4db7e80794339bf75e647f90a91041fd3f4b4c09b02ae3179dea81976cfd76",
+        "policy": {
+          "allowed": false,
+          "approval_required": true,
+          "reasons": [
+            "approval required"
+          ]
+        }
+      },
+      "created_at": "2026-11-14T12:57:51.802725+00:00"
+    },
+    {
+      "sequence": 71,
+      "phase": "awaiting_approval",
+      "payload": {
+        "deadline": "2026-11-14T12:58:51.806790+00:00",
+        "plan": {
+          "action_budget": 1,
+          "actions": [
+            {
+              "tool": "quarantine_batch"
+            }
+          ],
+          "catalog_version": "1.0",
+          "contract_version": "1.0",
+          "delegation_depth": 0,
+          "environment": "dev",
+          "evidence_id": "ev-958909a13d6549ad8bb1e98f9d59d39b",
+          "expected_revision": 0,
+          "incident_id": "inc-434f101a571d403c82",
+          "policy_version": "1.0",
+          "rationale": "Batch has 1 rejected rows; isolate it from curated data.",
+          "scope": "factory-a",
+          "target_id": "line-434f101a571d403c82"
+        },
+        "plan_hash": "db4db7e80794339bf75e647f90a91041fd3f4b4c09b02ae3179dea81976cfd76",
+        "policy": {
+          "allowed": false,
+          "approval_required": true,
+          "reasons": [
+            "approval required"
+          ]
+        }
+      },
+      "created_at": "2026-11-14T12:57:51.815149+00:00"
+    },
+    {
+      "sequence": 72,
+      "phase": "cancellation_requested",
+      "payload": {
+        "requested_by": "dataops-operator"
+      },
+      "created_at": "2026-11-14T12:57:51.984827+00:00"
+    },
+    {
+      "sequence": 73,
+      "phase": "cancelled",
+      "payload": {
+        "result": {
+          "incident_id": "inc-434f101a571d403c82",
+          "plan_hash": "db4db7e80794339bf75e647f90a91041fd3f4b4c09b02ae3179dea81976cfd76",
+          "reason": "cancelled while awaiting approval; no effect dispatched",
+          "status": "cancelled",
+          "verification": null
+        },
+        "verification": null
+      },
+      "created_at": "2026-11-14T12:57:51.995008+00:00"
+    }
+  ],
+  "diagnosis": {
+    "category": "quality",
+    "evidence_refs": [
+      "ev-958909a13d6549ad8bb1e98f9d59d39b"
+    ],
+    "proposed_action": "quarantine_batch",
+    "rationale": "Batch has 1 rejected rows; isolate it from curated data.",
+    "summary": "Batch has 1 rejected rows; isolate it from curated data."
+  },
+  "plan": {
+    "action_budget": 1,
+    "actions": [
+      {
+        "tool": "quarantine_batch"
+      }
+    ],
+    "catalog_version": "1.0",
+    "contract_version": "1.0",
+    "delegation_depth": 0,
+    "environment": "dev",
+    "evidence_id": "ev-958909a13d6549ad8bb1e98f9d59d39b",
+    "expected_revision": 0,
+    "incident_id": "inc-434f101a571d403c82",
+    "policy_version": "1.0",
+    "rationale": "Batch has 1 rejected rows; isolate it from curated data.",
+    "scope": "factory-a",
+    "target_id": "line-434f101a571d403c82"
+  },
+  "plan_hash": "db4db7e80794339bf75e647f90a91041fd3f4b4c09b02ae3179dea81976cfd76",
+  "policy": {
+    "allowed": false,
+    "approval_required": true,
+    "reasons": [
+      "approval required"
+    ]
+  },
+  "approval": null,
+  "verification": null,
+  "result": {
+    "incident_id": "inc-434f101a571d403c82",
+    "plan_hash": "db4db7e80794339bf75e647f90a91041fd3f4b4c09b02ae3179dea81976cfd76",
+    "reason": "cancelled while awaiting approval; no effect dispatched",
+    "status": "cancelled",
+    "verification": null
+  }
+}

@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <title>Governed DataOps · Operations</title>
+  <link rel="stylesheet" href="/static/console.css">
+  <script src="/static/console.js" defer></script>
+</head>
+<body>
+<header class="masthead">
+  <a class="brand" href="/" aria-label="Governed DataOps home"><span class="brand-mark">G</span><span>Governed <strong>DataOps</strong><small>INDUSTRIAL OPERATIONS</small></span></a>
+  <div class="service-badge"><span class="dot"></span><span id="service-status">Checking services</span></div>
+  <div class="synthetic">SYNTHETIC PLATFORM · PRIVATE DEMO</div>
+</header>
+<main>
+  <section class="page-heading">
+    <div><p class="eyebrow">OPERATIONS / INCIDENT RESPONSE</p><h1>Decisions you can inspect.</h1><p class="lede">Trace an incident from observation to a verified business outcome.</p></div>
+    <div class="session-box">
+      <label for="operator-token">Operator access</label>
+      <div class="inline"><input type="password" id="operator-token" placeholder="Enter your operator token" autocomplete="off" spellcheck="false"><button id="connect" type="button">Connect</button></div>
+      <small id="session-state">Credentials stay in this tab's memory.</small>
+    </div>
+  </section>
+  <section class="stats" aria-label="Incident overview">
+    <article><span>Active incidents</span><strong id="count-active">—</strong><small>In the durable workflow</small></article>
+    <article><span>Verified resolutions</span><strong id="count-resolved">—</strong><small>Fresh business state checked</small></article>
+    <article><span>Contained</span><strong id="count-contained">—</strong><small>Isolated; source repair remains</small></article>
+    <article><span>Needs attention</span><strong id="count-attention">—</strong><small>Denied or escalated</small></article>
+  </section>
+  <div id="notice" role="status" class="notice" hidden></div>
+  <div class="workspace">
+    <aside>
+      <section class="panel create-panel">
+        <div class="panel-title"><h2>Reproduce an incident</h2><span class="tag">DEMO</span></div>
+        <p>Each case creates its own synthetic batch and target state.</p>
+        <form id="incident-form">
+          <label for="scenario">Incident class</label>
+          <select id="scenario"><option value="freshness">Freshness objective exceeded</option><option value="transient">Transient ingestion failure</option><option value="schema">Incompatible schema drift</option><option value="quality">Rejected quality batch</option><option value="duplicate">Duplicate delivery risk</option></select>
+          <label for="mode">Diagnostic engine</label>
+          <select id="mode"><option value="runbook">Deterministic runbook · baseline</option><option value="agent">Local model · experimental</option></select>
+          <label class="checkbox"><input type="checkbox" id="lost-response"> Lose the effect response after commit</label>
+          <button type="submit" class="primary full">Start incident response <span aria-hidden="true">↗</span></button>
+        </form>
+      </section>
+      <section class="panel incident-panel">
+        <div class="panel-title"><h2>Incident queue</h2><button class="quiet" id="refresh" type="button" aria-label="Refresh incident queue">Refresh</button></div>
+        <div id="incident-list" class="incident-list"><p class="muted">Connect to inspect your incident queue.</p></div>
+      </section>
+    </aside>
+    <section class="detail" aria-live="polite">
+      <div id="empty-state" class="panel empty-state"><span class="empty-symbol" aria-hidden="true">◎</span><h2>Follow the evidence.</h2><p>Select an incident to inspect its observations, proposed action, authorization and final verification.</p><div class="empty-steps"><span>Observe</span><span>Decide</span><span>Authorize</span><span>Verify</span></div></div>
+      <div id="incident-detail" hidden>
+        <section class="panel incident-heading"><div><p class="eyebrow" id="incident-context"></p><h2 id="incident-title"></h2><code id="incident-id"></code></div><span id="incident-status" class="status"></span></section>
+        <section class="lifecycle" aria-label="Workflow stages" id="lifecycle"></section>
+        <div class="detail-grid">
+          <section class="panel"><div class="panel-title"><h3>Observed state</h3><span class="tag">MCP</span></div><dl id="observations" class="facts"></dl><details><summary>Source logs · untrusted input</summary><pre id="source-logs"></pre></details></section>
+          <section class="panel"><div class="panel-title"><h3>Diagnosis</h3><span class="tag" id="diagnostic-engine">—</span></div><p id="diagnosis-summary" class="emphasis"></p><p id="diagnosis-rationale"></p><small id="diagnosis-citations"></small><details><summary>Model trace and usage</summary><pre id="model-trace"></pre></details></section>
+        </div>
+        <section class="panel"><div class="panel-title"><h3>Proposed action &amp; authorization</h3><span class="tag">POLICY</span></div><div class="plan-row"><strong id="plan-action">Awaiting plan</strong><span id="plan-revision"></span></div><p id="policy-reasons"></p><label>Plan fingerprint</label><code id="plan-hash" class="hash"></code>
+          <form id="approval-form" hidden><p>Approval is bound to this plan, target, state revision and identity. It expires after five minutes.</p><label for="approver-token">Approver token</label><div class="inline"><input type="password" id="approver-token" autocomplete="off" placeholder="Separate approver credential"><button type="submit" class="primary">Approve this plan</button></div></form>
+          <button id="cancel" class="danger quiet" type="button">Request cancellation</button>
+        </section>
+        <section class="panel outcome"><div class="panel-title"><h3>Business outcome</h3><span id="verification-status" class="tag">PENDING</span></div><p id="result-reason">A completed tool call is not a verified resolution.</p><pre id="verification-state"></pre></section>
+        <section class="panel"><div class="panel-title"><h3>Correlated execution trace</h3><small id="event-count"></small></div><ol id="timeline" class="timeline"></ol></section>
+      </div>
+    </section>
+  </div>
+  <footer>Governed DataOps Agents <span>Model proposals do not grant permissions. Quality containment does not repair the source.</span></footer>
+</main>
+</body>
+</html>

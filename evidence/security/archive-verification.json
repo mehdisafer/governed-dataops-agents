@@ -1,0 +1,22 @@
+{
+  "recorded_at": "2026-11-14T13:45:26.008768+00:00",
+  "method": "Read each proof-bearing member directly with tarfile.extractfile; verify the exact portable entry and retained native finding against those bytes. No extraction over original run directories. Full member coverage and byte equality recorded in each artifact manifest.",
+  "archives": [
+    {
+      "archive": "evidence/qualification-f1e6e2f/full-originals.tar.gz",
+      "archive_sha256": "30fdb830efd8106ba62d89ba395f1a5cb3696385d0275d587dfecd9671356402",
+      "findings_reproved_directly_from_archive_member_bytes": 229,
+      "review_registry": "evidence/qualification-f1e6e2f/expanded-secret-review.json",
+      "review_registry_sha256": "1b26b5e26ced3fd63750239d1d45ac49f52c37082b837615a9b5c7191c0006b7",
+      "all_proved": true
+    },
+    {
+      "archive": "evidence/recovery-development/prior-histories.tar.gz",
+      "archive_sha256": "be3e8bc382de1395eafed7769e49bbcdda4eab9e5d541351f271a33de8ad7f19",
+      "findings_reproved_directly_from_archive_member_bytes": 57,
+      "review_registry": "evidence/recovery-development/prior-histories-secret-review.json",
+      "review_registry_sha256": "4e84b940b9ffc1229a92b95b2de6b25c5c8a63b1fe39652afa8a130efd2cb065",
+      "all_proved": true
+    }
+  ]
+}

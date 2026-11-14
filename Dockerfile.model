@@ -1,0 +1,16 @@
+FROM python:3.12.14-slim-trixie@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f AS download
+COPY scripts/bootstrap_runtime.py /bootstrap_runtime.py
+RUN python /bootstrap_runtime.py --component model --destination /runtime
+
+FROM python:3.12.14-slim-trixie@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f
+RUN python -c "from pathlib import Path; Path('/etc/apt/sources.list.d/debian.sources').unlink(missing_ok=True); Path('/etc/apt/sources.list').write_text('deb [check-valid-until=no] https://snapshot.debian.org/archive/debian/20261113T000000Z/ trixie main\\n')" \
+    && apt-get update && apt-get install -y --no-install-recommends libgomp1 libstdc++6 libzstd1 \
+    && rm -rf /var/lib/apt/lists/*
+COPY --from=download /runtime/llama/llama-b12368 /opt/llama
+COPY --from=download /runtime/Qwen3-4B-Instruct-2507-Q2_K.gguf /models/model.gguf
+COPY --from=download /runtime/QWEN-LICENSE /models/LICENSE
+COPY --from=download /runtime/qwen3-4b-base-README.md /runtime/qwen3-4b-quantizer-README.md /models/
+COPY --from=download /runtime/provisioning.json /models/provenance.json
+USER 1000:1000
+ENTRYPOINT ["/opt/llama/llama-server"]
+CMD ["--model", "/models/model.gguf", "--host", "0.0.0.0", "--port", "8090", "--alias", "governed-qwen", "--threads", "4", "--threads-batch", "4", "--threads-http", "4", "--ctx-size", "2048", "--parallel", "1", "--gpu-layers", "0", "--metrics", "--no-webui", "--no-agent", "--jinja", "--n-predict", "768", "--batch-size", "128", "--ubatch-size", "64", "--cache-type-k", "q8_0", "--cache-type-v", "q8_0", "--flash-attn", "on", "--no-repack", "--cache-ram", "0", "--ctx-checkpoints", "0"]

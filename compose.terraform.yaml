@@ -1,0 +1,13 @@
+# Use only after Terraform created these resources. Compose never owns them.
+networks:
+  private:
+    external: true
+    internal: !reset null
+    name: "${DATAOPS_STACK:-governed-dataops}-private"
+volumes:
+  app-data:
+    external: true
+    name: "${DATAOPS_STACK:-governed-dataops}-app-data"
+  temporal-data:
+    external: true
+    name: "${DATAOPS_STACK:-governed-dataops}-temporal-data"

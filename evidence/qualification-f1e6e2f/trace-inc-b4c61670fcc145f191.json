@@ -1,0 +1,297 @@
+{
+  "contract_version": "1.0",
+  "created_at": "2026-11-14T12:59:47.861671+00:00",
+  "environment": "dev",
+  "event_id": "event-b4c61670fcc145f191",
+  "incident_id": "inc-b4c61670fcc145f191",
+  "scope": "factory-a",
+  "symptom": "Industrial data batch requires investigation",
+  "target_id": "line-b4c61670fcc145f191",
+  "incident": {
+    "contract_version": "1.0",
+    "created_at": "2026-11-14T12:59:47.861671+00:00",
+    "environment": "dev",
+    "event_id": "event-b4c61670fcc145f191",
+    "incident_id": "inc-b4c61670fcc145f191",
+    "scope": "factory-a",
+    "symptom": "Industrial data batch requires investigation",
+    "target_id": "line-b4c61670fcc145f191"
+  },
+  "status": "denied",
+  "phase": "denied",
+  "events": [
+    {
+      "sequence": 246,
+      "phase": "received",
+      "payload": {
+        "mode": "agent",
+        "simulate_lost_response": false
+      },
+      "created_at": "2026-11-14T12:59:47.868336+00:00"
+    },
+    {
+      "sequence": 247,
+      "phase": "collected",
+      "payload": {
+        "evidence": {
+          "collected_at": "2026-11-14T12:59:48.614349+00:00",
+          "complete": true,
+          "evidence_id": "ev-ce70ba2a749d4e6ab619399af2ebd72e",
+          "logs": [
+            "Synthetic pipeline line-b4c61670fcc145f191: batch=batch-872abf80279a575d; status=pending.",
+            "Input schema=2; accepted schema=1; pending rows=3; rejected rows=0."
+          ],
+          "snapshot": {
+            "accepted_schema": 1,
+            "backlog_rows": 3,
+            "batch_id": "batch-872abf80279a575d",
+            "batch_status": "pending",
+            "curated_rows": 0,
+            "duplicate_rows": 0,
+            "environment": "dev",
+            "freshness_lag_seconds": 7200,
+            "policy_version": "1.0",
+            "rejected_rows": 0,
+            "revision": 0,
+            "scope": "factory-a",
+            "source_schema": 2,
+            "target_id": "line-b4c61670fcc145f191",
+            "transient_failure": false
+          }
+        }
+      },
+      "created_at": "2026-11-14T12:59:48.745564+00:00"
+    },
+    {
+      "sequence": 248,
+      "phase": "diagnosing",
+      "payload": {
+        "mode": "agent"
+      },
+      "created_at": "2026-11-14T12:59:48.759007+00:00"
+    },
+    {
+      "sequence": 249,
+      "phase": "diagnosed",
+      "payload": {
+        "diagnosis": {
+          "category": "schema",
+          "evidence_refs": [
+            "ev-ce70ba2a749d4e6ab619399af2ebd72e"
+          ],
+          "proposed_action": "apply_schema_migration",
+          "rationale": "source_schema=2, accepted_schema=1; schema mismatch detected",
+          "summary": "source_schema mismatch triggers schema migration"
+        },
+        "model_trace": {
+          "citation_constraint": "native enum compiled from validated evidence; original post-validator retained",
+          "context": {
+            "evidence": {
+              "collected_at": "2026-11-14T12:59:48.614349+00:00",
+              "complete": true,
+              "evidence_id": "ev-ce70ba2a749d4e6ab619399af2ebd72e",
+              "logs": [
+                "Synthetic pipeline line-b4c61670fcc145f191: batch=batch-872abf80279a575d; status=pending.",
+                "Input schema=2; accepted schema=1; pending rows=3; rejected rows=0."
+              ],
+              "snapshot": {
+                "accepted_schema": 1,
+                "backlog_rows": 3,
+                "batch_id": "batch-872abf80279a575d",
+                "batch_status": "pending",
+                "curated_rows": 0,
+                "duplicate_rows": 0,
+                "environment": "dev",
+                "freshness_lag_seconds": 7200,
+                "policy_version": "1.0",
+                "rejected_rows": 0,
+                "revision": 0,
+                "scope": "factory-a",
+                "source_schema": 2,
+                "target_id": "line-b4c61670fcc145f191",
+                "transient_failure": false
+              }
+            },
+            "incident": {
+              "contract_version": "1.0",
+              "created_at": "2026-11-14T12:59:47.861671+00:00",
+              "environment": "dev",
+              "event_id": "event-b4c61670fcc145f191",
+              "incident_id": "inc-b4c61670fcc145f191",
+              "scope": "factory-a",
+              "symptom": "Industrial data batch requires investigation",
+              "target_id": "line-b4c61670fcc145f191"
+            }
+          },
+          "context_sha256": "d36c34b20115e1e5b00a7e5e4d43a95ad1de4ad1309d994961d3056b2f8514d4",
+          "cost_basis": "local provider charge only; compute and energy unmeasured",
+          "diagnosis_valid": true,
+          "duration_seconds": 14.860723,
+          "generation_property_order": [
+            "summary",
+            "evidence_refs",
+            "rationale",
+            "category",
+            "proposed_action"
+          ],
+          "mode": "agent",
+          "model": "governed-qwen",
+          "model_proposal": {
+            "category": "schema",
+            "evidence_refs": [
+              "ev-ce70ba2a749d4e6ab619399af2ebd72e"
+            ],
+            "proposed_action": "apply_schema_migration",
+            "rationale": "source_schema=2, accepted_schema=1; schema mismatch detected",
+            "summary": "source_schema mismatch triggers schema migration"
+          },
+          "model_revision": "sha256:f7ed2f57713ad29e1a4ec093be0cdf3d7fd31e137e8fd4fc3edcfd04a5267862",
+          "model_used": true,
+          "model_used_basis": "completed model response observed",
+          "native_schema_sha256": "84400b479e153323b0850511528f915ea5945c73b95bacb336cddddc1f653254",
+          "parameters": {
+            "max_tokens": 300,
+            "temperature": 0.0,
+            "timeout": 90.0
+          },
+          "permitted_evidence_refs": [
+            "ev-ce70ba2a749d4e6ab619399af2ebd72e"
+          ],
+          "prompt_sha256": "3f899265f14a72dbf77f6e9e1e5008ddc73937628f1a1256130fb0ecb1b6ace8",
+          "prompt_version": "diagnosis-v3",
+          "provider": "local",
+          "provider_cost_usd": 0.0,
+          "request_attempted": true,
+          "request_sha256": "856c3bb0ece4d6009060b624e2fb541a7988e1a1b9a232e358354f8d941815b9",
+          "response_observed": true,
+          "response_sha256": "7f2f1ed6c030a46e7318be34a2bebd4a97d373711f5c327469eb583cd6bd876c",
+          "tools_available_to_model": [],
+          "usage": {
+            "audio_seconds": 0,
+            "cache_audio_read_tokens": 0,
+            "cache_read_tokens": 303,
+            "cache_write_1h_tokens": 0,
+            "cache_write_tokens": 0,
+            "cost": null,
+            "details": {},
+            "input_audio_tokens": 0,
+            "input_tokens": 673,
+            "output_audio_tokens": 0,
+            "output_reasoning_tokens": 0,
+            "output_tokens": 75,
+            "requests": 1,
+            "tool_calls": 0,
+            "unmeasured_requests": 0
+          },
+          "usage_complete": true,
+          "usage_note": "Reported usage for the completed diagnostic run; compute and energy are unmeasured"
+        }
+      },
+      "created_at": "2026-11-14T13:00:03.632645+00:00"
+    },
+    {
+      "sequence": 250,
+      "phase": "planned",
+      "payload": {
+        "plan": {
+          "action_budget": 1,
+          "actions": [
+            {
+              "tool": "apply_schema_migration"
+            }
+          ],
+          "catalog_version": "1.0",
+          "contract_version": "1.0",
+          "delegation_depth": 0,
+          "environment": "dev",
+          "evidence_id": "ev-ce70ba2a749d4e6ab619399af2ebd72e",
+          "expected_revision": 0,
+          "incident_id": "inc-b4c61670fcc145f191",
+          "policy_version": "1.0",
+          "rationale": "source_schema=2, accepted_schema=1; schema mismatch detected",
+          "scope": "factory-a",
+          "target_id": "line-b4c61670fcc145f191"
+        },
+        "plan_hash": "e57a70884a55ea9366d7c33eb9343a8caa1fb5317b5b8abb8bbffbdc83a7cd06"
+      },
+      "created_at": "2026-11-14T13:00:03.648877+00:00"
+    },
+    {
+      "sequence": 251,
+      "phase": "policy_checked",
+      "payload": {
+        "approval": null,
+        "observed_revision": 0,
+        "plan_hash": "e57a70884a55ea9366d7c33eb9343a8caa1fb5317b5b8abb8bbffbdc83a7cd06",
+        "policy": {
+          "allowed": false,
+          "approval_required": false,
+          "reasons": [
+            "operation requires human engineering; no executable permission exists"
+          ]
+        }
+      },
+      "created_at": "2026-11-14T13:00:04.492325+00:00"
+    },
+    {
+      "sequence": 252,
+      "phase": "denied",
+      "payload": {
+        "result": {
+          "incident_id": "inc-b4c61670fcc145f191",
+          "plan_hash": "e57a70884a55ea9366d7c33eb9343a8caa1fb5317b5b8abb8bbffbdc83a7cd06",
+          "reason": "operation requires human engineering; no executable permission exists",
+          "status": "denied",
+          "verification": null
+        },
+        "verification": null
+      },
+      "created_at": "2026-11-14T13:00:04.505146+00:00"
+    }
+  ],
+  "diagnosis": {
+    "category": "schema",
+    "evidence_refs": [
+      "ev-ce70ba2a749d4e6ab619399af2ebd72e"
+    ],
+    "proposed_action": "apply_schema_migration",
+    "rationale": "source_schema=2, accepted_schema=1; schema mismatch detected",
+    "summary": "source_schema mismatch triggers schema migration"
+  },
+  "plan": {
+    "action_budget": 1,
+    "actions": [
+      {
+        "tool": "apply_schema_migration"
+      }
+    ],
+    "catalog_version": "1.0",
+    "contract_version": "1.0",
+    "delegation_depth": 0,
+    "environment": "dev",
+    "evidence_id": "ev-ce70ba2a749d4e6ab619399af2ebd72e",
+    "expected_revision": 0,
+    "incident_id": "inc-b4c61670fcc145f191",
+    "policy_version": "1.0",
+    "rationale": "source_schema=2, accepted_schema=1; schema mismatch detected",
+    "scope": "factory-a",
+    "target_id": "line-b4c61670fcc145f191"
+  },
+  "plan_hash": "e57a70884a55ea9366d7c33eb9343a8caa1fb5317b5b8abb8bbffbdc83a7cd06",
+  "policy": {
+    "allowed": false,
+    "approval_required": false,
+    "reasons": [
+      "operation requires human engineering; no executable permission exists"
+    ]
+  },
+  "approval": null,
+  "verification": null,
+  "result": {
+    "incident_id": "inc-b4c61670fcc145f191",
+    "plan_hash": "e57a70884a55ea9366d7c33eb9343a8caa1fb5317b5b8abb8bbffbdc83a7cd06",
+    "reason": "operation requires human engineering; no executable permission exists",
+    "status": "denied",
+    "verification": null
+  }
+}

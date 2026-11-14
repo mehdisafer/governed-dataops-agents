@@ -1,0 +1,22 @@
+{
+  "started_at": "2026-11-14T13:11:14.531943+00:00",
+  "gate": "terraform_local_docker_plan",
+  "status": "failed",
+  "source_commit": "f1e6e2f3800242ec210145680261da8ab60f38b4",
+  "source_inputs": {
+    "infra/terraform/main.tf": "873e19d70e846ce298d647c9bdf5863452628aad44bb53cc2e48738be9d4c938",
+    "infra/terraform/outputs.tf": "485a5311fa3bdbdad81782e0fbd7ccaf202e25749277fcbe4683cdcb4ac40258",
+    "infra/terraform/variables.tf": "20fb410218cd8020566cf4210396f47eef2299e8ddbe95aabab466926fc271b0",
+    "infra/terraform/.terraform.lock.hcl": "62ab6e72c811cff56b4f9892c4e54105529e13a6cf05362b3e1e6c2ec14767f4",
+    "scripts/validate_infra.py": "0f221ce936af9fd707308046cf98c3a9f35050bf0882497ba7c86872cfdaf9c4"
+  },
+  "source_tracked_and_clean": true,
+  "stack_name": "gda-plan-f7a9a0c008c9",
+  "docker_host": "unix:///var/run/docker.sock",
+  "terraform_apply_executed": false,
+  "resource_changes_applied": false,
+  "exception_type": "RuntimeError",
+  "reason": "validate failed (exit 1, timeout=False); original output retained",
+  "source_unchanged": true,
+  "finished_at": "2026-11-14T13:12:17.339936+00:00"
+}

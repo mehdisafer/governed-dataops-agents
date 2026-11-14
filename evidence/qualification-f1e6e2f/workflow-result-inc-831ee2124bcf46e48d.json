@@ -1,0 +1,30 @@
+{
+  "incident_id": "inc-831ee2124bcf46e48d",
+  "status": "resolved",
+  "reason": "freshly read business postconditions hold",
+  "plan_hash": "c17ac5f2987fbcfc4c56cd33fc61d1e95af92d9ec26e8b10270a3f8bdac14c9b",
+  "verification": {
+    "resolved": true,
+    "outcome": "resolved",
+    "reasons": [
+      "freshly read business postconditions hold"
+    ],
+    "snapshot": {
+      "target_id": "line-831ee2124bcf46e48d",
+      "environment": "dev",
+      "scope": "factory-a",
+      "revision": 1,
+      "source_schema": 1,
+      "accepted_schema": 1,
+      "backlog_rows": 0,
+      "rejected_rows": 0,
+      "curated_rows": 3,
+      "duplicate_rows": 0,
+      "transient_failure": false,
+      "freshness_lag_seconds": 0,
+      "batch_id": "batch-06167206fea52838",
+      "batch_status": "applied",
+      "policy_version": "1.0"
+    }
+  }
+}

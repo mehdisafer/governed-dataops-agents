@@ -1,0 +1,240 @@
+{
+  "recorded_at": "2026-11-14T13:43:12.636911+00:00",
+  "selection": "All 26 original history-*.json files, and no other files, from governance-development-01",
+  "original_run_directory": "evidence/runs/governance-development-01",
+  "source_commit": "78a46751f69cc719c85aee123b58a7f86810df97",
+  "whole_source_clean": false,
+  "workflow_blob_sha256": "92739ffdd0b9508707229e3f55d9841712a64da74a54142e729510617a52a67c",
+  "workflow_blob_matches_named_commit": true,
+  "archive": {
+    "file": "prior-histories.tar.gz",
+    "sha256": "be3e8bc382de1395eafed7769e49bbcdda4eab9e5d541351f271a33de8ad7f19",
+    "bytes": 140618,
+    "member_prefix": "governance-development-01/",
+    "file_count": 26,
+    "original_bytes": 1264384,
+    "verified_each_member_against_original": true,
+    "metadata_normalization": "gzip mtime 0; tar mtime/uid/gid 0, empty owner names, mode 0644; original file contents unchanged"
+  },
+  "scan": {
+    "original_report": "evidence/runs/security-current/prior-histories-expanded-reviewed.json",
+    "report_sha256": "8feeda40f3a7e86f7d17ed43e676a053f08dfbbcf223f01da6b128afa21f1a0b",
+    "created_at": "2026-11-14T13:37:13.998380+00:00",
+    "raw_candidates": 57,
+    "reviewed_non_secret_candidates": 57,
+    "unresolved_candidates": 0,
+    "expanded_content_manifest_sha256": "46535977ecbfe2961293c2e9f8371bfb0bbac9f42a507a35e77e92cfbcb7d6bb",
+    "completed_before_archive_creation": true
+  },
+  "original_files": [
+    {
+      "file": "history-inc-01b9279cd5a7446b9d.json",
+      "original_path": "evidence/runs/governance-development-01/history-inc-01b9279cd5a7446b9d.json",
+      "archive_member": "governance-development-01/history-inc-01b9279cd5a7446b9d.json",
+      "bytes": 51966,
+      "sha256": "a6dffce042ab5f3600d7438bcd799c6dbeb0882b0c7782dced05f1256c734543",
+      "original_file_mtime_utc": "2026-11-14T12:25:06.796583+00:00"
+    },
+    {
+      "file": "history-inc-044c68e1c1ea473d82.json",
+      "original_path": "evidence/runs/governance-development-01/history-inc-044c68e1c1ea473d82.json",
+      "archive_member": "governance-development-01/history-inc-044c68e1c1ea473d82.json",
+      "bytes": 33454,
+      "sha256": "22d66242e0cfd385f194ec9b4ef7f4da3f604645af8faac9684fc25cdfb9f188",
+      "original_file_mtime_utc": "2026-11-14T12:24:28.084879+00:00"
+    },
+    {
+      "file": "history-inc-1f8f05d46ab04e4cb2.json",
+      "original_path": "evidence/runs/governance-development-01/history-inc-1f8f05d46ab04e4cb2.json",
+      "archive_member": "governance-development-01/history-inc-1f8f05d46ab04e4cb2.json",
+      "bytes": 33454,
+      "sha256": "aa226b5a81c4cbaad30abc0e181916e690c38d725f577fad4a679dae18a96c33",
+      "original_file_mtime_utc": "2026-11-14T12:24:28.082349+00:00"
+    },
+    {
+      "file": "history-inc-32fb6f3553c7477cb7.json",
+      "original_path": "evidence/runs/governance-development-01/history-inc-32fb6f3553c7477cb7.json",
+      "archive_member": "governance-development-01/history-inc-32fb6f3553c7477cb7.json",
+      "bytes": 51966,
+      "sha256": "d4c14e9f300d79e87d3e96c0b68142a0a8129f2dd857605f797f6c91f452fbb4",
+      "original_file_mtime_utc": "2026-11-14T12:25:11.612857+00:00"
+    },
+    {
+      "file": "history-inc-37eb81bd42dc4a2d80.json",
+      "original_path": "evidence/runs/governance-development-01/history-inc-37eb81bd42dc4a2d80.json",
+      "archive_member": "governance-development-01/history-inc-37eb81bd42dc4a2d80.json",
+      "bytes": 51965,
+      "sha256": "fe8648f42c4fc72d4980aec70855a0be16564a3c29928723bc76a768c66ad5ee",
+      "original_file_mtime_utc": "2026-11-14T12:24:28.327294+00:00"
+    },
+    {
+      "file": "history-inc-41d0b6d817804762a5.json",
+      "original_path": "evidence/runs/governance-development-01/history-inc-41d0b6d817804762a5.json",
+      "archive_member": "governance-development-01/history-inc-41d0b6d817804762a5.json",
+      "bytes": 51858,
+      "sha256": "d3945cd9e93a594a2b6fbc1673c9546d6b8ed9b8ec983f4c36f97031e8bfb159",
+      "original_file_mtime_utc": "2026-11-14T12:24:44.316697+00:00"
+    },
+    {
+      "file": "history-inc-4302cd0dc7b042b68a.json",
+      "original_path": "evidence/runs/governance-development-01/history-inc-4302cd0dc7b042b68a.json",
+      "archive_member": "governance-development-01/history-inc-4302cd0dc7b042b68a.json",
+      "bytes": 39241,
+      "sha256": "33494c79a73abcae5d627be1493c3ce7c7a1617d05648d5fb1acfb08655093cc",
+      "original_file_mtime_utc": "2026-11-14T12:23:58.837948+00:00"
+    },
+    {
+      "file": "history-inc-4d0df1d4e46d42cba5.json",
+      "original_path": "evidence/runs/governance-development-01/history-inc-4d0df1d4e46d42cba5.json",
+      "archive_member": "governance-development-01/history-inc-4d0df1d4e46d42cba5.json",
+      "bytes": 51966,
+      "sha256": "4a22bb763dc00ff7270821e0da5b3e17faf85f92eb592a7a2728e753185439a9",
+      "original_file_mtime_utc": "2026-11-14T12:25:11.618140+00:00"
+    },
+    {
+      "file": "history-inc-4f61fb4e9d544fa289.json",
+      "original_path": "evidence/runs/governance-development-01/history-inc-4f61fb4e9d544fa289.json",
+      "archive_member": "governance-development-01/history-inc-4f61fb4e9d544fa289.json",
+      "bytes": 51966,
+      "sha256": "7d5004caabe270c342048e93425ba194ae27b5e6fef058d253368b71593fc6d6",
+      "original_file_mtime_utc": "2026-11-14T12:25:06.737415+00:00"
+    },
+    {
+      "file": "history-inc-725099d78dc4451ba0.json",
+      "original_path": "evidence/runs/governance-development-01/history-inc-725099d78dc4451ba0.json",
+      "archive_member": "governance-development-01/history-inc-725099d78dc4451ba0.json",
+      "bytes": 32262,
+      "sha256": "8fa3b64647d9e7b0097d7f10a604b8e05c55fd1b7e5cd2b90886dcfb49423171",
+      "original_file_mtime_utc": "2026-11-14T12:23:17.524853+00:00"
+    },
+    {
+      "file": "history-inc-77c75a66c1104fc4ab.json",
+      "original_path": "evidence/runs/governance-development-01/history-inc-77c75a66c1104fc4ab.json",
+      "archive_member": "governance-development-01/history-inc-77c75a66c1104fc4ab.json",
+      "bytes": 51966,
+      "sha256": "37278e3ad96c503d2a9d5decf7f4b78dd51d5b6f894dbdb6da799c29dc491503",
+      "original_file_mtime_utc": "2026-11-14T12:24:38.282283+00:00"
+    },
+    {
+      "file": "history-inc-7d04e7aaccb6453c87.json",
+      "original_path": "evidence/runs/governance-development-01/history-inc-7d04e7aaccb6453c87.json",
+      "archive_member": "governance-development-01/history-inc-7d04e7aaccb6453c87.json",
+      "bytes": 14154,
+      "sha256": "768b1428d4d812ee131269b353a98337e2f99063dfffc449bea6552e9a840d62",
+      "original_file_mtime_utc": "2026-11-14T12:23:56.838147+00:00"
+    },
+    {
+      "file": "history-inc-81a76f15c64d4aa6a7.json",
+      "original_path": "evidence/runs/governance-development-01/history-inc-81a76f15c64d4aa6a7.json",
+      "archive_member": "governance-development-01/history-inc-81a76f15c64d4aa6a7.json",
+      "bytes": 51966,
+      "sha256": "6a0ee3d0cbedd17cf2fc043324ec91cad3b9a983f3a4831d4be2cfc1cf03c2a5",
+      "original_file_mtime_utc": "2026-11-14T12:25:01.021878+00:00"
+    },
+    {
+      "file": "history-inc-9970e3985067448388.json",
+      "original_path": "evidence/runs/governance-development-01/history-inc-9970e3985067448388.json",
+      "archive_member": "governance-development-01/history-inc-9970e3985067448388.json",
+      "bytes": 51966,
+      "sha256": "ca77ec8f01ed22bbbd5c3d32eb794ee20deefd596db62f1eba40226ac4dca6ae",
+      "original_file_mtime_utc": "2026-11-14T12:25:11.882073+00:00"
+    },
+    {
+      "file": "history-inc-9ce288d7670743d7be.json",
+      "original_path": "evidence/runs/governance-development-01/history-inc-9ce288d7670743d7be.json",
+      "archive_member": "governance-development-01/history-inc-9ce288d7670743d7be.json",
+      "bytes": 51966,
+      "sha256": "13f8b3e1d4aac7072e75ba07173ee201c70c2f87b473e5c11e2cd00a4090a27d",
+      "original_file_mtime_utc": "2026-11-14T12:24:38.575063+00:00"
+    },
+    {
+      "file": "history-inc-9d9b9760b4ff4fd8a6.json",
+      "original_path": "evidence/runs/governance-development-01/history-inc-9d9b9760b4ff4fd8a6.json",
+      "archive_member": "governance-development-01/history-inc-9d9b9760b4ff4fd8a6.json",
+      "bytes": 51966,
+      "sha256": "29e6718e9f50983c212883fab68a66e83163d59e4afac43edaff8cc7f0feba72",
+      "original_file_mtime_utc": "2026-11-14T12:25:06.744331+00:00"
+    },
+    {
+      "file": "history-inc-b2a2408a7e804f96a3.json",
+      "original_path": "evidence/runs/governance-development-01/history-inc-b2a2408a7e804f96a3.json",
+      "archive_member": "governance-development-01/history-inc-b2a2408a7e804f96a3.json",
+      "bytes": 65741,
+      "sha256": "ad0467dac6d78e5c6575bcd6e1a78f7182bc60380f50185e6992f605a38549f7",
+      "original_file_mtime_utc": "2026-11-14T12:23:22.630644+00:00"
+    },
+    {
+      "file": "history-inc-b2c1e9a247574eadb0.json",
+      "original_path": "evidence/runs/governance-development-01/history-inc-b2c1e9a247574eadb0.json",
+      "archive_member": "governance-development-01/history-inc-b2c1e9a247574eadb0.json",
+      "bytes": 51966,
+      "sha256": "22f6ac0df21fb13d2c23bea990e1da3579d23503cbd0586d643275080b532c03",
+      "original_file_mtime_utc": "2026-11-14T12:25:06.753834+00:00"
+    },
+    {
+      "file": "history-inc-c4d5acdc0e454d10b6.json",
+      "original_path": "evidence/runs/governance-development-01/history-inc-c4d5acdc0e454d10b6.json",
+      "archive_member": "governance-development-01/history-inc-c4d5acdc0e454d10b6.json",
+      "bytes": 52185,
+      "sha256": "a007403865435e0938f5e63ba139175a771130b40a63564a273c23d8f5c011d8",
+      "original_file_mtime_utc": "2026-11-14T12:23:26.726233+00:00"
+    },
+    {
+      "file": "history-inc-c7d7674a5a664ee0bf.json",
+      "original_path": "evidence/runs/governance-development-01/history-inc-c7d7674a5a664ee0bf.json",
+      "archive_member": "governance-development-01/history-inc-c7d7674a5a664ee0bf.json",
+      "bytes": 51966,
+      "sha256": "fe496b7d7ebe69bf6d908507aee0c140037b2b62189c59cac0991a7908ecbfac",
+      "original_file_mtime_utc": "2026-11-14T12:24:51.067704+00:00"
+    },
+    {
+      "file": "history-inc-e2934f1e29ba4032bf.json",
+      "original_path": "evidence/runs/governance-development-01/history-inc-e2934f1e29ba4032bf.json",
+      "archive_member": "governance-development-01/history-inc-e2934f1e29ba4032bf.json",
+      "bytes": 52073,
+      "sha256": "6d1d731ea9c092006df2daa831889efa4beec89d95657331d06e555c645718b6",
+      "original_file_mtime_utc": "2026-11-14T12:23:15.984263+00:00"
+    },
+    {
+      "file": "history-inc-e5bc2ca110fb4e5d98.json",
+      "original_path": "evidence/runs/governance-development-01/history-inc-e5bc2ca110fb4e5d98.json",
+      "archive_member": "governance-development-01/history-inc-e5bc2ca110fb4e5d98.json",
+      "bytes": 51913,
+      "sha256": "2f6d4559d05868a3f20a603045673d9397a96534e76edc04a0384706b9a051ef",
+      "original_file_mtime_utc": "2026-11-14T12:23:10.380347+00:00"
+    },
+    {
+      "file": "history-inc-f386a902692c4473b0.json",
+      "original_path": "evidence/runs/governance-development-01/history-inc-f386a902692c4473b0.json",
+      "archive_member": "governance-development-01/history-inc-f386a902692c4473b0.json",
+      "bytes": 39200,
+      "sha256": "b9d7eb04ebc0fd79eea4542945e838832cd26b688a9bb74067c2b11b96788d55",
+      "original_file_mtime_utc": "2026-11-14T12:23:28.458804+00:00"
+    },
+    {
+      "file": "history-inc-f4dbc349ad664b66a0.json",
+      "original_path": "evidence/runs/governance-development-01/history-inc-f4dbc349ad664b66a0.json",
+      "archive_member": "governance-development-01/history-inc-f4dbc349ad664b66a0.json",
+      "bytes": 56794,
+      "sha256": "562aaa07b4934b64ab418e8bb613d74b44abd24a2d41075d43216e308932b45c",
+      "original_file_mtime_utc": "2026-11-14T12:23:56.050833+00:00"
+    },
+    {
+      "file": "history-inc-f4fac72a86104a83b0.json",
+      "original_path": "evidence/runs/governance-development-01/history-inc-f4fac72a86104a83b0.json",
+      "archive_member": "governance-development-01/history-inc-f4fac72a86104a83b0.json",
+      "bytes": 66498,
+      "sha256": "475af452f1abfc2160c1836403f3c6f969e4eff4c19504dc142f223e3b22148c",
+      "original_file_mtime_utc": "2026-11-14T12:23:43.381970+00:00"
+    },
+    {
+      "file": "history-inc-fdee2bf1ecff49aab0.json",
+      "original_path": "evidence/runs/governance-development-01/history-inc-fdee2bf1ecff49aab0.json",
+      "archive_member": "governance-development-01/history-inc-fdee2bf1ecff49aab0.json",
+      "bytes": 51966,
+      "sha256": "c0555e8c92c6fd50190b53d06e5e433477c579761b11194350f29c152267e17a",
+      "original_file_mtime_utc": "2026-11-14T12:25:11.615420+00:00"
+    }
+  ],
+  "omissions": "The dirty full-run source-manifest.json and run.json are excluded; their unresolved source digests are not waived. This is solely the complete 26-history selection, not the entire development run."
+}

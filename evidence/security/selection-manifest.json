@@ -1,0 +1,216 @@
+{
+  "recorded_at": "2026-11-14T13:03:47.582780+00:00",
+  "selection": "frozen-source security evidence",
+  "source_commit": "f1e6e2f3800242ec210145680261da8ab60f38b4",
+  "publication_status": "Prepared canonical repository evidence; original files unchanged",
+  "date_semantics": "Source report timestamps retain their original meaning; filesystem mtime is not asserted to be an execution start time.",
+  "files": [
+    {
+      "file": "source-freeze-history.json",
+      "original_path": "evidence/runs/security-current/source-freeze-history.json",
+      "bytes": 15412,
+      "sha256": "e66454911b392986bf5a21c5bee670d956d8eed4bc890cc185405a43fc13a147",
+      "copied_bytes_equal_original": true,
+      "source_dates": {
+        "file_mtime_utc": "2026-11-14T12:57:20.735049+00:00",
+        "report_created_at": "2026-11-14T12:57:19.169206+00:00"
+      }
+    },
+    {
+      "file": "source-f1e6e2f-worktree.json",
+      "original_path": "evidence/runs/security-current/source-f1e6e2f-worktree.json",
+      "bytes": 29480,
+      "sha256": "4ff3de1942948b1fdd7ae0227cfdc195f0e5c08110c3b32b4642121144281168",
+      "copied_bytes_equal_original": true,
+      "source_dates": {
+        "file_mtime_utc": "2026-11-14T13:01:19.547211+00:00",
+        "report_created_at": "2026-11-14T13:01:17.617046+00:00"
+      }
+    },
+    {
+      "file": "pre-freeze-pytest.xml",
+      "original_path": "evidence/runs/security-current/pre-freeze-pytest.xml",
+      "bytes": 22573,
+      "sha256": "ce20773602799e14cc93eda87a2092bb96e20db0ee0f32cb3ea1e72a74765713",
+      "copied_bytes_equal_original": true,
+      "source_dates": {
+        "file_mtime_utc": "2026-11-14T12:55:33.338785+00:00",
+        "junit_suite_timestamps": [
+          "2026-11-14T13:55:29.367951+01:00"
+        ]
+      }
+    },
+    {
+      "file": "pip-audit.json",
+      "original_path": "evidence/runs/security-current/pip-audit.json",
+      "bytes": 2914,
+      "sha256": "f92dcef484a6fb7b1d1ee7df43b18777a409485c91a360ec668eddf850d6f33f",
+      "copied_bytes_equal_original": true,
+      "source_dates": {
+        "file_mtime_utc": "2026-11-14T12:13:49.868100+00:00"
+      }
+    },
+    {
+      "file": "pip-audit.stdout.txt",
+      "original_path": "evidence/runs/security-current/pip-audit.stdout.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "copied_bytes_equal_original": true,
+      "source_dates": {
+        "file_mtime_utc": "2026-11-14T12:13:23.613861+00:00"
+      }
+    },
+    {
+      "file": "pip-audit.stderr.txt",
+      "original_path": "evidence/runs/security-current/pip-audit.stderr.txt",
+      "bytes": 60,
+      "sha256": "66ba67dd388ac26a032b099d6c51daf32054981c51bf0515f2f097b9d0872cbe",
+      "copied_bytes_equal_original": true,
+      "source_dates": {
+        "file_mtime_utc": "2026-11-14T12:13:49.866479+00:00"
+      }
+    },
+    {
+      "file": "pip-audit-summary.json",
+      "original_path": "evidence/runs/security-current/pip-audit-summary.json",
+      "bytes": 972,
+      "sha256": "73442933d38eba708aa36c682076d586029c06279fc6cb4c4bd85cc6cd66d70d",
+      "copied_bytes_equal_original": true,
+      "source_dates": {
+        "file_mtime_utc": "2026-11-14T12:20:34.210726+00:00",
+        "report_recorded_at": "2026-11-14T12:20:34.209533+00:00"
+      }
+    },
+    {
+      "file": "requirements.txt",
+      "original_path": "evidence/runs/security-current/requirements.txt",
+      "bytes": 27455,
+      "sha256": "f168061e1888843f8bc880a44c333854fe1a0461fde1c9ff77debe8a81554f8d",
+      "copied_bytes_equal_original": true,
+      "source_dates": {
+        "file_mtime_utc": "2026-11-14T12:13:23.609861+00:00"
+      }
+    },
+    {
+      "file": "component-inventory-f1e6e2f.json",
+      "original_path": "evidence/runs/security-current/component-inventory-f1e6e2f.json",
+      "bytes": 71947,
+      "sha256": "290f85a4776cb208f466114e8d09461f2a54480fa93c9610e92240cca551866b",
+      "copied_bytes_equal_original": true,
+      "source_dates": {
+        "file_mtime_utc": "2026-11-14T12:59:35.496093+00:00",
+        "report_created_at": "2026-11-14T12:59:35.493269+00:00"
+      }
+    },
+    {
+      "file": "synthetic-scanner-probe-summary.json",
+      "original_path": "evidence/runs/security-current/synthetic-scanner-probe-summary.json",
+      "bytes": 444,
+      "sha256": "9f9a7378aa75bebf7da1b40c54dc802d211df420257b39c5481de7e1e81bae1d",
+      "copied_bytes_equal_original": true,
+      "source_dates": {
+        "file_mtime_utc": "2026-11-14T12:20:00.167294+00:00",
+        "report_created_at": "2026-11-14T12:20:00.167155+00:00"
+      }
+    },
+    {
+      "file": "synthetic-scanner-probe.json",
+      "original_path": "evidence/runs/security-current/synthetic-scanner-probe.json",
+      "bytes": 4583,
+      "sha256": "cc70238fd04b7b3c7b5665b0c4df9b8ade03b6f23ef6e1f553ba5355d9e6a33b",
+      "copied_bytes_equal_original": true,
+      "source_dates": {
+        "file_mtime_utc": "2026-11-14T12:20:00.167054+00:00",
+        "report_created_at": "2026-11-14T12:19:59.679569+00:00"
+      }
+    },
+    {
+      "file": "post-scanner-pytest.xml",
+      "original_path": "evidence/runs/security-current/final-pytest.xml",
+      "bytes": 23576,
+      "sha256": "056d55dfaebfdc2f7597d2b4c9190f86ee748cc7dd50b32e68b94ee2743799ee",
+      "copied_bytes_equal_original": true,
+      "source_dates": {
+        "file_mtime_utc": "2026-11-14T13:35:58.879478+00:00",
+        "junit_suite_timestamps": [
+          "2026-11-14T14:35:54.734811+01:00"
+        ]
+      },
+      "scope": "178 tests after the six exact container-manifest proof tests; before the later qualifier correction"
+    },
+    {
+      "file": "selected-evidence-scans/promoted-containers-f1e6e2f-scan.json",
+      "original_path": "evidence/runs/security-current/promoted-containers-f1e6e2f-scan.json",
+      "bytes": 6787,
+      "sha256": "f3e3637a9af97c4e5e5c6981d66550935d98554045a9a8d2d0a4b88d3833ea4b",
+      "copied_bytes_equal_original": true,
+      "source_dates": {
+        "file_mtime_utc": "2026-11-14T13:43:36.943253+00:00",
+        "report_created_at": "2026-11-14T13:43:35.754601+00:00"
+      },
+      "scope": "Promoted evidence snapshot before copying the report into this security selection; each report retains its exact file manifest"
+    },
+    {
+      "file": "selected-evidence-scans/promoted-github-actions-43597256488-scan.json",
+      "original_path": "evidence/runs/security-current/promoted-github-actions-43597256488-scan.json",
+      "bytes": 4070,
+      "sha256": "fd65a1d2722b2acd07b0bbe39f0660877c4d268359669a85547b05b265e12515",
+      "copied_bytes_equal_original": true,
+      "source_dates": {
+        "file_mtime_utc": "2026-11-14T13:43:37.034736+00:00",
+        "report_created_at": "2026-11-14T13:43:35.733213+00:00"
+      },
+      "scope": "Promoted evidence snapshot before copying the report into this security selection; each report retains its exact file manifest"
+    },
+    {
+      "file": "selected-evidence-scans/promoted-infrastructure-f1e6e2f-scan.json",
+      "original_path": "evidence/runs/security-current/promoted-infrastructure-f1e6e2f-scan.json",
+      "bytes": 5177,
+      "sha256": "8de587255dbde7faaa4b840f7b49132fef8169a0ecce7ce41cdf20abe7e11588",
+      "copied_bytes_equal_original": true,
+      "source_dates": {
+        "file_mtime_utc": "2026-11-14T13:43:37.018475+00:00",
+        "report_created_at": "2026-11-14T13:43:35.740099+00:00"
+      },
+      "scope": "Promoted evidence snapshot before copying the report into this security selection; each report retains its exact file manifest"
+    },
+    {
+      "file": "selected-evidence-scans/promoted-qualification-f1e6e2f-scan.json",
+      "original_path": "evidence/runs/security-current/promoted-qualification-f1e6e2f-scan.json",
+      "bytes": 46295,
+      "sha256": "def9f0982607dc1e3b9dee83d24a88737507d895e5581b2f6e3d5a5de3362a92",
+      "copied_bytes_equal_original": true,
+      "source_dates": {
+        "file_mtime_utc": "2026-11-14T13:43:37.402264+00:00",
+        "report_created_at": "2026-11-14T13:43:35.720842+00:00"
+      },
+      "scope": "Promoted evidence snapshot before copying the report into this security selection; each report retains its exact file manifest"
+    },
+    {
+      "file": "selected-evidence-scans/promoted-recovery-development-scan.json",
+      "original_path": "evidence/runs/security-current/promoted-recovery-development-scan.json",
+      "bytes": 16597,
+      "sha256": "4ec257bc86d530cf721090f6a68e3ab57a0b318e9aea4c7b88f738af581e9b8f",
+      "copied_bytes_equal_original": true,
+      "source_dates": {
+        "file_mtime_utc": "2026-11-14T13:43:37.294576+00:00",
+        "report_created_at": "2026-11-14T13:43:35.733194+00:00"
+      },
+      "scope": "Promoted evidence snapshot before copying the report into this security selection; each report retains its exact file manifest"
+    },
+    {
+      "file": "selected-evidence-scans/promoted-security-scan.json",
+      "original_path": "evidence/runs/security-current/promoted-security-scan.json",
+      "bytes": 4681,
+      "sha256": "7e387c9f4d63aac931fbc9d7f341906022d65bf4ad300cae7acae5ee73ce7af3",
+      "copied_bytes_equal_original": true,
+      "source_dates": {
+        "file_mtime_utc": "2026-11-14T13:43:37.076439+00:00",
+        "report_created_at": "2026-11-14T13:43:35.715577+00:00"
+      },
+      "scope": "Promoted evidence snapshot before copying the report into this security selection; each report retains its exact file manifest"
+    }
+  ],
+  "promoted_at": "2026-11-14T13:43:12.636911+00:00",
+  "canonical_directory": "evidence/security"
+}

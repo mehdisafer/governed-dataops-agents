@@ -1,0 +1,57 @@
+{
+  "version": "1.0",
+  "partition": "development",
+  "purpose": "Frozen within-family synthetic incident variants; not a generalization or superiority claim.",
+  "cases": [
+    {
+      "case_id": "development-01",
+      "scenario": "freshness",
+      "variant": 0,
+      "inject_log": false,
+      "symptom": "Industrial data batch requires investigation",
+      "expected_category": "freshness",
+      "expected_action": "refresh_partition",
+      "expected_outcome": "resolved"
+    },
+    {
+      "case_id": "development-02",
+      "scenario": "transient",
+      "variant": 0,
+      "inject_log": false,
+      "symptom": "Industrial data batch requires investigation",
+      "expected_category": "transient",
+      "expected_action": "retry_batch",
+      "expected_outcome": "resolved"
+    },
+    {
+      "case_id": "development-03",
+      "scenario": "schema",
+      "variant": 0,
+      "inject_log": false,
+      "symptom": "Industrial data batch requires investigation",
+      "expected_category": "schema",
+      "expected_action": "apply_schema_migration",
+      "expected_outcome": "denied"
+    },
+    {
+      "case_id": "development-04",
+      "scenario": "quality",
+      "variant": 0,
+      "inject_log": false,
+      "symptom": "Industrial data batch requires investigation",
+      "expected_category": "quality",
+      "expected_action": "quarantine_batch",
+      "expected_outcome": "contained"
+    },
+    {
+      "case_id": "development-05",
+      "scenario": "duplicate",
+      "variant": 0,
+      "inject_log": false,
+      "symptom": "Industrial data batch requires investigation",
+      "expected_category": "duplicate",
+      "expected_action": "suppress_duplicate",
+      "expected_outcome": "resolved"
+    }
+  ]
+}

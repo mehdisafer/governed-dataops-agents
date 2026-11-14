@@ -1,0 +1,145 @@
+{
+  "recorded_at": "2026-11-14T13:59:34.651204+00:00",
+  "scope": "Post-native-run qualification/secret-verifier regression and publication checks; not a rerun of the real services",
+  "tested_worktree_parent_commit": "f1e6e2f3800242ec210145680261da8ab60f38b4",
+  "uncommitted_implementation_files_at_test": [
+    {
+      "path": "scripts/qualify.py",
+      "sha256": "548c9d25c953060ebf745a79ad4d36e936af840c4d832db75c2a20330ac0d379"
+    },
+    {
+      "path": "tests/test_qualification.py",
+      "sha256": "0cc982dcfa3809d79526f1a30491751cb05facdc6822bba979247625ce75b594"
+    },
+    {
+      "path": "scripts/secret_scan.py",
+      "sha256": "6e885bbfe7ede94d7aa57c54d96fc56803d506a963af2dd45b71c1b38c83b63e"
+    },
+    {
+      "path": "tests/test_security_tooling.py",
+      "sha256": "253cb327e05bed478e9eda97ffec898af4d3a5dc4511f08350c4e65866d9e6b5"
+    }
+  ],
+  "pytest": {
+    "command": [
+      ".venv/bin/python",
+      "-m",
+      "pytest",
+      "-q",
+      "--junitxml=evidence/runs/publication-final/pytest.xml"
+    ],
+    "exit_code": 0,
+    "tests": 232,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "junit_attributes": {
+      "name": "pytest",
+      "errors": "0",
+      "failures": "0",
+      "skipped": "0",
+      "tests": "232",
+      "time": "5.291",
+      "timestamp": "2026-11-14T14:58:25.893529+01:00",
+      "hostname": "209792f7a523"
+    },
+    "console_file": "pytest.console.txt",
+    "junit_file": "pytest.xml"
+  },
+  "ruff_and_whitespace": {
+    "exit_code": 0,
+    "console_file": "ruff-and-whitespace.console.txt"
+  },
+  "checks": [
+    {
+      "command": [
+        "node",
+        "--check",
+        "src/governed_dataops/static/console.js"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        ".venv/bin/python",
+        "scripts/export_contracts.py"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--exit-code",
+        "--",
+        "contracts"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--exit-code",
+        "f1e6e2f3800242ec210145680261da8ab60f38b4",
+        "--",
+        "src",
+        "data",
+        "contracts",
+        "pyproject.toml",
+        "uv.lock"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    }
+  ],
+  "application_model_prompt_catalogue_contract_corpus_lock_unchanged_since_parent": true,
+  "native_source_result_preserved": "14/18 checks passed, overall failed, at f1e6e2f",
+  "status": "passed_with_explicit_boundary",
+  "subsequently_published_code_commit": "062daaf419b419665729e4c63c1fa6ddfeb7d8d2",
+  "published_code_files_match_tested_bytes": true,
+  "staged_original_artifact_whitespace": {
+    "file": "evidence/infrastructure-f1e6e2f/terraform-LICENSE.txt",
+    "lines": [
+      11,
+      12,
+      16,
+      17,
+      18,
+      19,
+      21,
+      22,
+      25,
+      26,
+      29,
+      30,
+      31,
+      32,
+      35,
+      36,
+      37,
+      40,
+      41
+    ],
+    "sha256": "dc4cb9f6140970b69110d82e8f25545135965ae50f6761ddfd6cd7cf9452bfa9",
+    "unchanged_original_copy": true,
+    "decision": "Preserve upstream original bytes. Full staged diff check reports trailing whitespace in this single licence artifact; authored and other changes pass when this exact file is excluded. No source whitespace rule is disabled."
+  }
+}

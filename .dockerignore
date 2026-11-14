@@ -1,0 +1,14 @@
+.git
+.env
+.env.*
+.secrets
+.venv
+var
+evidence
+dist
+**/__pycache__
+.pytest_cache
+.ruff_cache
+infra/terraform/.terraform
+infra/terraform/*.tfstate*
+*.db*

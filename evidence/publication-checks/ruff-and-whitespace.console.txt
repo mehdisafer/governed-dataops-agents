@@ -1,0 +1,4 @@
+All checks passed!
+src/governed_dataops/static/console.js
+src/governed_dataops/static/console.css
+src/governed_dataops/static/index.html

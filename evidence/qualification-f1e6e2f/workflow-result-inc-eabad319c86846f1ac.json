@@ -1,0 +1,30 @@
+{
+  "incident_id": "inc-eabad319c86846f1ac",
+  "status": "contained",
+  "reason": "freshly read business postconditions hold",
+  "plan_hash": "d96225483b41f0839785003c224d11f4f998501d92f25639ac1a3224dddf1fb0",
+  "verification": {
+    "resolved": false,
+    "outcome": "contained",
+    "reasons": [
+      "freshly read business postconditions hold"
+    ],
+    "snapshot": {
+      "target_id": "line-eabad319c86846f1ac",
+      "environment": "dev",
+      "scope": "factory-a",
+      "revision": 1,
+      "source_schema": 1,
+      "accepted_schema": 1,
+      "backlog_rows": 0,
+      "rejected_rows": 0,
+      "curated_rows": 0,
+      "duplicate_rows": 0,
+      "transient_failure": false,
+      "freshness_lag_seconds": 8000,
+      "batch_id": "batch-3a8ced506269bfe5",
+      "batch_status": "quarantined",
+      "policy_version": "1.0"
+    }
+  }
+}

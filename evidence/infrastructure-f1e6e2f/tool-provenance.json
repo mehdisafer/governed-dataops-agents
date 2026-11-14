@@ -1,0 +1,13 @@
+{
+  "version": "1.17.2",
+  "archive": {
+    "url": "https://releases.hashicorp.com/terraform/1.17.2/terraform_1.17.2_linux_amd64.zip",
+    "sha256": "e6f16b2f0b137ee5729caa8c4e79a3bae4ee261acd198a1fcfa8584a6296605b",
+    "bytes": 38245299
+  },
+  "official_checksum_manifest": {
+    "url": "https://releases.hashicorp.com/terraform/1.17.2/terraform_1.17.2_SHA256SUMS",
+    "sha256": "6ece9a6cf116bb7b59adb14103140aa197b2d09543457f611c5a7f362302beab",
+    "bytes": 1592
+  }
+}

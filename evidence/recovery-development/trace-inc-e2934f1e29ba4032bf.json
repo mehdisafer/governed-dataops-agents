@@ -1,0 +1,433 @@
+{
+  "contract_version": "1.0",
+  "created_at": "2026-11-14T12:23:10.390110+00:00",
+  "environment": "dev",
+  "event_id": "event-e2934f1e29ba4032bf",
+  "incident_id": "inc-e2934f1e29ba4032bf",
+  "scope": "factory-a",
+  "symptom": "Industrial data batch requires investigation",
+  "target_id": "line-e2934f1e29ba4032bf",
+  "incident": {
+    "contract_version": "1.0",
+    "created_at": "2026-11-14T12:23:10.390110+00:00",
+    "environment": "dev",
+    "event_id": "event-e2934f1e29ba4032bf",
+    "incident_id": "inc-e2934f1e29ba4032bf",
+    "scope": "factory-a",
+    "symptom": "Industrial data batch requires investigation",
+    "target_id": "line-e2934f1e29ba4032bf"
+  },
+  "status": "resolved",
+  "phase": "resolved",
+  "events": [
+    {
+      "sequence": 14,
+      "phase": "received",
+      "payload": {
+        "mode": "runbook",
+        "simulate_lost_response": true
+      },
+      "created_at": "2026-11-14T12:23:10.397698+00:00"
+    },
+    {
+      "sequence": 15,
+      "phase": "collected",
+      "payload": {
+        "evidence": {
+          "collected_at": "2026-11-14T12:23:11.008554+00:00",
+          "complete": true,
+          "evidence_id": "ev-0c3eb67d6d4e4d58a70f02614d11fa2a",
+          "logs": [
+            "Synthetic pipeline line-e2934f1e29ba4032bf: batch=batch-467381876b3a056c; status=failed.",
+            "Input schema=1; accepted schema=1; pending rows=3; rejected rows=0.",
+            "Transient upstream connection interruption; one bounded retry is available."
+          ],
+          "snapshot": {
+            "accepted_schema": 1,
+            "backlog_rows": 3,
+            "batch_id": "batch-467381876b3a056c",
+            "batch_status": "failed",
+            "curated_rows": 0,
+            "duplicate_rows": 0,
+            "environment": "dev",
+            "freshness_lag_seconds": 7200,
+            "policy_version": "1.0",
+            "rejected_rows": 0,
+            "revision": 0,
+            "scope": "factory-a",
+            "source_schema": 1,
+            "target_id": "line-e2934f1e29ba4032bf",
+            "transient_failure": true
+          }
+        }
+      },
+      "created_at": "2026-11-14T12:23:11.142147+00:00"
+    },
+    {
+      "sequence": 16,
+      "phase": "diagnosing",
+      "payload": {
+        "mode": "runbook"
+      },
+      "created_at": "2026-11-14T12:23:11.154914+00:00"
+    },
+    {
+      "sequence": 17,
+      "phase": "diagnosed",
+      "payload": {
+        "diagnosis": {
+          "category": "transient",
+          "evidence_refs": [
+            "ev-0c3eb67d6d4e4d58a70f02614d11fa2a"
+          ],
+          "proposed_action": "retry_batch",
+          "rationale": "A transient failure left 3 unprocessed rows.",
+          "summary": "A transient failure left 3 unprocessed rows."
+        },
+        "model_trace": {
+          "mode": "runbook",
+          "model_used": false,
+          "provider_cost_usd": 0,
+          "request_attempted": false,
+          "response_observed": false,
+          "runbook_version": "1.0",
+          "usage_complete": true
+        }
+      },
+      "created_at": "2026-11-14T12:23:11.165084+00:00"
+    },
+    {
+      "sequence": 18,
+      "phase": "planned",
+      "payload": {
+        "plan": {
+          "action_budget": 1,
+          "actions": [
+            {
+              "tool": "retry_batch"
+            }
+          ],
+          "catalog_version": "1.0",
+          "contract_version": "1.0",
+          "delegation_depth": 0,
+          "environment": "dev",
+          "evidence_id": "ev-0c3eb67d6d4e4d58a70f02614d11fa2a",
+          "expected_revision": 0,
+          "incident_id": "inc-e2934f1e29ba4032bf",
+          "policy_version": "1.0",
+          "rationale": "A transient failure left 3 unprocessed rows.",
+          "scope": "factory-a",
+          "target_id": "line-e2934f1e29ba4032bf"
+        },
+        "plan_hash": "1dfa490b336078f128a23aa00f2c1de1aecc684ce07d94554458b1f186d0bb72"
+      },
+      "created_at": "2026-11-14T12:23:11.173667+00:00"
+    },
+    {
+      "sequence": 19,
+      "phase": "policy_checked",
+      "payload": {
+        "approval": null,
+        "observed_revision": 0,
+        "plan_hash": "1dfa490b336078f128a23aa00f2c1de1aecc684ce07d94554458b1f186d0bb72",
+        "policy": {
+          "allowed": true,
+          "approval_required": false,
+          "reasons": [
+            "catalogue operation authorized"
+          ]
+        }
+      },
+      "created_at": "2026-11-14T12:23:11.824186+00:00"
+    },
+    {
+      "sequence": 20,
+      "phase": "executing",
+      "payload": {
+        "plan_hash": "1dfa490b336078f128a23aa00f2c1de1aecc684ce07d94554458b1f186d0bb72"
+      },
+      "created_at": "2026-11-14T12:23:11.838193+00:00"
+    },
+    {
+      "sequence": 21,
+      "phase": "dispatching",
+      "payload": {
+        "idempotency_key": "ec50fd4b2cd233bf1e8aa99db70a1c7c5e23670e70edae628add6506e9b71927",
+        "plan_hash": "1dfa490b336078f128a23aa00f2c1de1aecc684ce07d94554458b1f186d0bb72"
+      },
+      "created_at": "2026-11-14T12:23:13.236190+00:00"
+    },
+    {
+      "sequence": 22,
+      "phase": "effect_uncertain",
+      "payload": {
+        "effect": {
+          "after_revision": null,
+          "before_revision": null,
+          "idempotency_key": "ec50fd4b2cd233bf1e8aa99db70a1c7c5e23670e70edae628add6506e9b71927",
+          "message": "target returned HTTP 503; effect may already be committed",
+          "reconciled": false,
+          "snapshot": null,
+          "status": "unknown"
+        }
+      },
+      "created_at": "2026-11-14T12:23:14.112686+00:00"
+    },
+    {
+      "sequence": 23,
+      "phase": "effect_reconciled",
+      "payload": {
+        "effect": {
+          "after_revision": 1,
+          "before_revision": 0,
+          "idempotency_key": "ec50fd4b2cd233bf1e8aa99db70a1c7c5e23670e70edae628add6506e9b71927",
+          "message": "business data and effect receipt committed in the same transaction",
+          "reconciled": true,
+          "snapshot": {
+            "accepted_schema": 1,
+            "backlog_rows": 0,
+            "batch_id": "batch-467381876b3a056c",
+            "batch_status": "applied",
+            "curated_rows": 3,
+            "duplicate_rows": 0,
+            "environment": "dev",
+            "freshness_lag_seconds": 0,
+            "policy_version": "1.0",
+            "rejected_rows": 0,
+            "revision": 1,
+            "scope": "factory-a",
+            "source_schema": 1,
+            "target_id": "line-e2934f1e29ba4032bf",
+            "transient_failure": false
+          },
+          "status": "applied"
+        }
+      },
+      "created_at": "2026-11-14T12:23:14.956148+00:00"
+    },
+    {
+      "sequence": 24,
+      "phase": "verifying",
+      "payload": {
+        "idempotency_key": "ec50fd4b2cd233bf1e8aa99db70a1c7c5e23670e70edae628add6506e9b71927"
+      },
+      "created_at": "2026-11-14T12:23:14.974329+00:00"
+    },
+    {
+      "sequence": 25,
+      "phase": "postcondition_observed",
+      "payload": {
+        "evidence": {
+          "collected_at": "2026-11-14T12:23:15.543174+00:00",
+          "complete": true,
+          "evidence_id": "ev-c5fe608028ca4c95881a4917ebee7287",
+          "logs": [
+            "Synthetic pipeline line-e2934f1e29ba4032bf: batch=batch-467381876b3a056c; status=applied.",
+            "Input schema=1; accepted schema=1; pending rows=0; rejected rows=0."
+          ],
+          "snapshot": {
+            "accepted_schema": 1,
+            "backlog_rows": 0,
+            "batch_id": "batch-467381876b3a056c",
+            "batch_status": "applied",
+            "curated_rows": 3,
+            "duplicate_rows": 0,
+            "environment": "dev",
+            "freshness_lag_seconds": 0,
+            "policy_version": "1.0",
+            "rejected_rows": 0,
+            "revision": 1,
+            "scope": "factory-a",
+            "source_schema": 1,
+            "target_id": "line-e2934f1e29ba4032bf",
+            "transient_failure": false
+          }
+        }
+      },
+      "created_at": "2026-11-14T12:23:15.711420+00:00"
+    },
+    {
+      "sequence": 26,
+      "phase": "verified",
+      "payload": {
+        "verification": {
+          "outcome": "resolved",
+          "reasons": [
+            "freshly read business postconditions hold"
+          ],
+          "resolved": true,
+          "snapshot": {
+            "accepted_schema": 1,
+            "backlog_rows": 0,
+            "batch_id": "batch-467381876b3a056c",
+            "batch_status": "applied",
+            "curated_rows": 3,
+            "duplicate_rows": 0,
+            "environment": "dev",
+            "freshness_lag_seconds": 0,
+            "policy_version": "1.0",
+            "rejected_rows": 0,
+            "revision": 1,
+            "scope": "factory-a",
+            "source_schema": 1,
+            "target_id": "line-e2934f1e29ba4032bf",
+            "transient_failure": false
+          }
+        }
+      },
+      "created_at": "2026-11-14T12:23:15.711786+00:00"
+    },
+    {
+      "sequence": 27,
+      "phase": "resolved",
+      "payload": {
+        "result": {
+          "incident_id": "inc-e2934f1e29ba4032bf",
+          "plan_hash": "1dfa490b336078f128a23aa00f2c1de1aecc684ce07d94554458b1f186d0bb72",
+          "reason": "freshly read business postconditions hold",
+          "status": "resolved",
+          "verification": {
+            "outcome": "resolved",
+            "reasons": [
+              "freshly read business postconditions hold"
+            ],
+            "resolved": true,
+            "snapshot": {
+              "accepted_schema": 1,
+              "backlog_rows": 0,
+              "batch_id": "batch-467381876b3a056c",
+              "batch_status": "applied",
+              "curated_rows": 3,
+              "duplicate_rows": 0,
+              "environment": "dev",
+              "freshness_lag_seconds": 0,
+              "policy_version": "1.0",
+              "rejected_rows": 0,
+              "revision": 1,
+              "scope": "factory-a",
+              "source_schema": 1,
+              "target_id": "line-e2934f1e29ba4032bf",
+              "transient_failure": false
+            }
+          }
+        },
+        "verification": {
+          "outcome": "resolved",
+          "reasons": [
+            "freshly read business postconditions hold"
+          ],
+          "resolved": true,
+          "snapshot": {
+            "accepted_schema": 1,
+            "backlog_rows": 0,
+            "batch_id": "batch-467381876b3a056c",
+            "batch_status": "applied",
+            "curated_rows": 3,
+            "duplicate_rows": 0,
+            "environment": "dev",
+            "freshness_lag_seconds": 0,
+            "policy_version": "1.0",
+            "rejected_rows": 0,
+            "revision": 1,
+            "scope": "factory-a",
+            "source_schema": 1,
+            "target_id": "line-e2934f1e29ba4032bf",
+            "transient_failure": false
+          }
+        }
+      },
+      "created_at": "2026-11-14T12:23:15.724827+00:00"
+    }
+  ],
+  "diagnosis": {
+    "category": "transient",
+    "evidence_refs": [
+      "ev-0c3eb67d6d4e4d58a70f02614d11fa2a"
+    ],
+    "proposed_action": "retry_batch",
+    "rationale": "A transient failure left 3 unprocessed rows.",
+    "summary": "A transient failure left 3 unprocessed rows."
+  },
+  "plan": {
+    "action_budget": 1,
+    "actions": [
+      {
+        "tool": "retry_batch"
+      }
+    ],
+    "catalog_version": "1.0",
+    "contract_version": "1.0",
+    "delegation_depth": 0,
+    "environment": "dev",
+    "evidence_id": "ev-0c3eb67d6d4e4d58a70f02614d11fa2a",
+    "expected_revision": 0,
+    "incident_id": "inc-e2934f1e29ba4032bf",
+    "policy_version": "1.0",
+    "rationale": "A transient failure left 3 unprocessed rows.",
+    "scope": "factory-a",
+    "target_id": "line-e2934f1e29ba4032bf"
+  },
+  "plan_hash": "1dfa490b336078f128a23aa00f2c1de1aecc684ce07d94554458b1f186d0bb72",
+  "policy": {
+    "allowed": true,
+    "approval_required": false,
+    "reasons": [
+      "catalogue operation authorized"
+    ]
+  },
+  "approval": null,
+  "verification": {
+    "outcome": "resolved",
+    "reasons": [
+      "freshly read business postconditions hold"
+    ],
+    "resolved": true,
+    "snapshot": {
+      "accepted_schema": 1,
+      "backlog_rows": 0,
+      "batch_id": "batch-467381876b3a056c",
+      "batch_status": "applied",
+      "curated_rows": 3,
+      "duplicate_rows": 0,
+      "environment": "dev",
+      "freshness_lag_seconds": 0,
+      "policy_version": "1.0",
+      "rejected_rows": 0,
+      "revision": 1,
+      "scope": "factory-a",
+      "source_schema": 1,
+      "target_id": "line-e2934f1e29ba4032bf",
+      "transient_failure": false
+    }
+  },
+  "result": {
+    "incident_id": "inc-e2934f1e29ba4032bf",
+    "plan_hash": "1dfa490b336078f128a23aa00f2c1de1aecc684ce07d94554458b1f186d0bb72",
+    "reason": "freshly read business postconditions hold",
+    "status": "resolved",
+    "verification": {
+      "outcome": "resolved",
+      "reasons": [
+        "freshly read business postconditions hold"
+      ],
+      "resolved": true,
+      "snapshot": {
+        "accepted_schema": 1,
+        "backlog_rows": 0,
+        "batch_id": "batch-467381876b3a056c",
+        "batch_status": "applied",
+        "curated_rows": 3,
+        "duplicate_rows": 0,
+        "environment": "dev",
+        "freshness_lag_seconds": 0,
+        "policy_version": "1.0",
+        "rejected_rows": 0,
+        "revision": 1,
+        "scope": "factory-a",
+        "source_schema": 1,
+        "target_id": "line-e2934f1e29ba4032bf",
+        "transient_failure": false
+      }
+    }
+  }
+}

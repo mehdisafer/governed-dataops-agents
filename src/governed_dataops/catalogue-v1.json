@@ -1,0 +1,74 @@
+{
+  "catalog_version": "1.0",
+  "policy_version": "1.0",
+  "contract_version": "1.0",
+  "authority": "Reviewed Python policy and fixed handlers, never executable metadata",
+  "execution": {
+    "input_contract": "EffectRequest", "output_contract": "EffectResult",
+    "max_actions_per_incident": 1, "max_delegation_depth": 1,
+    "target_timeout_seconds": 10, "environments": ["dev", "staging", "prod"],
+    "required_role": "executor", "scope_rule": "Exact authenticated environment and scope",
+    "approval": "Ed25519-signed, persisted, scoped, unexpired and bound to canonical plan hash and revision",
+    "ambiguity": "Reconcile target effect ledger before repeating any mutation"
+  },
+  "tools": [
+    {
+      "name": "refresh_partition", "risk": "bounded_data_write", "handler": "fixed reviewed handler",
+      "preconditions": ["compatible schema", "pending batch", "freshness lag over 300 seconds",
+        "backlog exists", "no rejects, duplicates, curated rows or transient failure"],
+      "approval_required": "production", "postconditions": ["batch applied", "backlog zero",
+        "curated rows present", "freshness lag at most 300 seconds", "one revision increment"]
+    },
+    {
+      "name": "retry_batch", "risk": "bounded_data_write", "handler": "fixed reviewed handler",
+      "preconditions": ["compatible schema", "failed batch", "transient failure", "backlog exists",
+        "no rejects, duplicates or curated rows"],
+      "approval_required": "production", "postconditions": ["batch applied", "backlog zero",
+        "transient failure cleared", "curated rows present", "one revision increment"]
+    },
+    {
+      "name": "quarantine_batch", "risk": "data_isolation", "handler": "fixed reviewed handler",
+      "preconditions": ["compatible schema", "rejected batch", "invalid input rows",
+        "no curated rows or duplicates"], "approval_required": "always",
+      "postconditions": ["whole batch quarantined", "no outstanding rejected rows", "no curated rows",
+        "backlog zero", "outcome is containment rather than business resolution"]
+    },
+    {
+      "name": "suppress_duplicate", "risk": "bounded_delivery_change", "handler": "fixed reviewed handler",
+      "preconditions": ["compatible schema", "batch already applied", "pending redelivery",
+        "every source row matches a curated row and original batch", "no existing duplicate rows"],
+      "approval_required": "production", "postconditions": ["delivery suppressed", "backlog zero",
+        "curated rows retained", "no duplicate rows", "one revision increment"]
+    },
+    {
+      "name": "apply_schema_migration", "risk": "incompatible_schema_change", "executable": false,
+      "decision": "Refuse automatic execution; explicit engineering intervention required"
+    },
+    {
+      "name": "escalate", "risk": "none", "executable": false,
+      "decision": "Abstain when evidence does not justify an executable action"
+    }
+  ],
+  "profiles": {
+    "diagnostic-agent": {
+      "catalog_version": "1.0", "input_contract": "Evidence", "output_contract": "Diagnosis",
+      "model_tools": [], "max_requests": 2, "max_delegation_depth": 0,
+      "authority": "Proposal only; independent policy and target checks are mandatory"
+    },
+    "deterministic-runbook": {
+      "catalog_version": "1.0", "runbook_version": "1.0",
+      "input_contract": "Evidence", "output_contract": "Diagnosis", "model_used": false,
+      "authority": "Same proposal, policy, approval and effect path as the agent"
+    },
+    "effect-executor": {
+      "catalog_version": "1.0", "input_contract": "EffectRequest", "output_contract": "EffectResult",
+      "role": "executor", "max_actions_per_incident": 1,
+      "authority": "Fixed handlers; signature, receipt and live-state checks"
+    }
+  },
+  "mcp_capabilities": [
+    {"name": "collect_evidence", "input": "target_id", "output_contract": "Evidence", "role": "reader"},
+    {"name": "execute_action", "input_contract": "EffectRequest", "output_contract": "EffectResult", "role": "executor"},
+    {"name": "reconcile_effect", "input": "idempotency_key and target_id", "output_contract": "EffectResult", "role": "executor"}
+  ]
+}

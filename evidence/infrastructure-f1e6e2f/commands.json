@@ -1,0 +1,57 @@
+[
+  {
+    "gate": "version",
+    "argv": [
+      "/tmp/dataops-terraform-plan-x9m5sfy6/terraform",
+      "version",
+      "-json"
+    ],
+    "exit_code": 0,
+    "timed_out": false,
+    "stdout": "version.stdout.log",
+    "stderr": "version.stderr.log"
+  },
+  {
+    "gate": "format",
+    "argv": [
+      "/tmp/dataops-terraform-plan-x9m5sfy6/terraform",
+      "-chdir=/tmp/dataops-terraform-plan-x9m5sfy6/configuration",
+      "fmt",
+      "-check",
+      "-recursive"
+    ],
+    "exit_code": 0,
+    "timed_out": false,
+    "stdout": "format.stdout.log",
+    "stderr": "format.stderr.log"
+  },
+  {
+    "gate": "init",
+    "argv": [
+      "/tmp/dataops-terraform-plan-x9m5sfy6/terraform",
+      "-chdir=/tmp/dataops-terraform-plan-x9m5sfy6/configuration",
+      "init",
+      "-backend=false",
+      "-input=false",
+      "-lockfile=readonly",
+      "-no-color"
+    ],
+    "exit_code": 0,
+    "timed_out": false,
+    "stdout": "init.stdout.log",
+    "stderr": "init.stderr.log"
+  },
+  {
+    "gate": "validate",
+    "argv": [
+      "/tmp/dataops-terraform-plan-x9m5sfy6/terraform",
+      "-chdir=/tmp/dataops-terraform-plan-x9m5sfy6/configuration",
+      "validate",
+      "-json"
+    ],
+    "exit_code": 1,
+    "timed_out": false,
+    "stdout": "validate.stdout.log",
+    "stderr": "validate.stderr.log"
+  }
+]
