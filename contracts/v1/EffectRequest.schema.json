@@ -1,0 +1,283 @@
+{
+  "$defs": {
+    "Action": {
+      "additionalProperties": false,
+      "properties": {
+        "tool": {
+          "$ref": "#/$defs/ToolName"
+        }
+      },
+      "required": [
+        "tool"
+      ],
+      "title": "Action",
+      "type": "object"
+    },
+    "Approval": {
+      "additionalProperties": false,
+      "properties": {
+        "approver": {
+          "$ref": "#/$defs/Principal"
+        },
+        "environment": {
+          "enum": [
+            "dev",
+            "staging",
+            "prod"
+          ],
+          "title": "Environment",
+          "type": "string"
+        },
+        "expected_revision": {
+          "title": "Expected Revision",
+          "type": "integer"
+        },
+        "expires_at": {
+          "title": "Expires At",
+          "type": "string"
+        },
+        "incident_id": {
+          "pattern": "^[a-zA-Z0-9][a-zA-Z0-9_.-]{0,95}$",
+          "title": "Incident Id",
+          "type": "string"
+        },
+        "issued_at": {
+          "title": "Issued At",
+          "type": "string"
+        },
+        "plan_hash": {
+          "pattern": "^[a-f0-9]{64}$",
+          "title": "Plan Hash",
+          "type": "string"
+        },
+        "policy_version": {
+          "title": "Policy Version",
+          "type": "string"
+        },
+        "scope": {
+          "pattern": "^[a-zA-Z0-9][a-zA-Z0-9_.-]{0,95}$",
+          "title": "Scope",
+          "type": "string"
+        },
+        "signature": {
+          "default": "",
+          "maxLength": 256,
+          "title": "Signature",
+          "type": "string"
+        },
+        "target_id": {
+          "pattern": "^[a-zA-Z0-9][a-zA-Z0-9_.-]{0,95}$",
+          "title": "Target Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "plan_hash",
+        "incident_id",
+        "target_id",
+        "environment",
+        "scope",
+        "expected_revision",
+        "policy_version",
+        "approver",
+        "issued_at",
+        "expires_at"
+      ],
+      "title": "Approval",
+      "type": "object"
+    },
+    "Plan": {
+      "additionalProperties": false,
+      "properties": {
+        "action_budget": {
+          "default": 1,
+          "maximum": 3,
+          "minimum": 1,
+          "title": "Action Budget",
+          "type": "integer"
+        },
+        "actions": {
+          "items": {
+            "$ref": "#/$defs/Action"
+          },
+          "maxItems": 3,
+          "minItems": 1,
+          "title": "Actions",
+          "type": "array"
+        },
+        "catalog_version": {
+          "default": "1.0",
+          "title": "Catalog Version",
+          "type": "string"
+        },
+        "contract_version": {
+          "const": "1.0",
+          "default": "1.0",
+          "title": "Contract Version",
+          "type": "string"
+        },
+        "delegation_depth": {
+          "default": 0,
+          "maximum": 8,
+          "minimum": 0,
+          "title": "Delegation Depth",
+          "type": "integer"
+        },
+        "environment": {
+          "enum": [
+            "dev",
+            "staging",
+            "prod"
+          ],
+          "title": "Environment",
+          "type": "string"
+        },
+        "evidence_id": {
+          "pattern": "^[a-zA-Z0-9][a-zA-Z0-9_.-]{0,95}$",
+          "title": "Evidence Id",
+          "type": "string"
+        },
+        "expected_revision": {
+          "minimum": 0,
+          "title": "Expected Revision",
+          "type": "integer"
+        },
+        "incident_id": {
+          "pattern": "^[a-zA-Z0-9][a-zA-Z0-9_.-]{0,95}$",
+          "title": "Incident Id",
+          "type": "string"
+        },
+        "policy_version": {
+          "default": "1.0",
+          "title": "Policy Version",
+          "type": "string"
+        },
+        "rationale": {
+          "maxLength": 2000,
+          "title": "Rationale",
+          "type": "string"
+        },
+        "scope": {
+          "pattern": "^[a-zA-Z0-9][a-zA-Z0-9_.-]{0,95}$",
+          "title": "Scope",
+          "type": "string"
+        },
+        "target_id": {
+          "pattern": "^[a-zA-Z0-9][a-zA-Z0-9_.-]{0,95}$",
+          "title": "Target Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "incident_id",
+        "target_id",
+        "environment",
+        "scope",
+        "evidence_id",
+        "expected_revision",
+        "actions",
+        "rationale"
+      ],
+      "title": "Plan",
+      "type": "object"
+    },
+    "Principal": {
+      "additionalProperties": false,
+      "properties": {
+        "environment": {
+          "default": "dev",
+          "enum": [
+            "dev",
+            "staging",
+            "prod"
+          ],
+          "title": "Environment",
+          "type": "string"
+        },
+        "role": {
+          "enum": [
+            "operator",
+            "approver",
+            "executor",
+            "reader"
+          ],
+          "title": "Role",
+          "type": "string"
+        },
+        "scope": {
+          "default": "factory-a",
+          "pattern": "^[a-zA-Z0-9][a-zA-Z0-9_.-]{0,95}$",
+          "title": "Scope",
+          "type": "string"
+        },
+        "subject": {
+          "pattern": "^[a-zA-Z0-9][a-zA-Z0-9_.-]{0,95}$",
+          "title": "Subject",
+          "type": "string"
+        }
+      },
+      "required": [
+        "subject",
+        "role"
+      ],
+      "title": "Principal",
+      "type": "object"
+    },
+    "ToolName": {
+      "enum": [
+        "refresh_partition",
+        "retry_batch",
+        "quarantine_batch",
+        "suppress_duplicate",
+        "apply_schema_migration",
+        "escalate"
+      ],
+      "title": "ToolName",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "action_index": {
+      "maximum": 2,
+      "minimum": 0,
+      "title": "Action Index",
+      "type": "integer"
+    },
+    "approval": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/Approval"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "executor": {
+      "$ref": "#/$defs/Principal"
+    },
+    "idempotency_key": {
+      "pattern": "^[a-f0-9]{64}$",
+      "title": "Idempotency Key",
+      "type": "string"
+    },
+    "plan": {
+      "$ref": "#/$defs/Plan"
+    },
+    "simulate_lost_response": {
+      "default": false,
+      "title": "Simulate Lost Response",
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "idempotency_key",
+    "plan",
+    "action_index",
+    "executor"
+  ],
+  "title": "EffectRequest",
+  "type": "object"
+}

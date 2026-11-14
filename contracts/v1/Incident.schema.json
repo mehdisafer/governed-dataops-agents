@@ -1,0 +1,60 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "contract_version": {
+      "const": "1.0",
+      "default": "1.0",
+      "title": "Contract Version",
+      "type": "string"
+    },
+    "created_at": {
+      "title": "Created At",
+      "type": "string"
+    },
+    "environment": {
+      "default": "dev",
+      "enum": [
+        "dev",
+        "staging",
+        "prod"
+      ],
+      "title": "Environment",
+      "type": "string"
+    },
+    "event_id": {
+      "pattern": "^[a-zA-Z0-9][a-zA-Z0-9_.-]{0,95}$",
+      "title": "Event Id",
+      "type": "string"
+    },
+    "incident_id": {
+      "pattern": "^[a-zA-Z0-9][a-zA-Z0-9_.-]{0,95}$",
+      "title": "Incident Id",
+      "type": "string"
+    },
+    "scope": {
+      "default": "factory-a",
+      "pattern": "^[a-zA-Z0-9][a-zA-Z0-9_.-]{0,95}$",
+      "title": "Scope",
+      "type": "string"
+    },
+    "symptom": {
+      "maxLength": 2000,
+      "minLength": 1,
+      "title": "Symptom",
+      "type": "string"
+    },
+    "target_id": {
+      "pattern": "^[a-zA-Z0-9][a-zA-Z0-9_.-]{0,95}$",
+      "title": "Target Id",
+      "type": "string"
+    }
+  },
+  "required": [
+    "incident_id",
+    "event_id",
+    "target_id",
+    "symptom"
+  ],
+  "title": "Incident",
+  "type": "object"
+}

@@ -1,0 +1,67 @@
+{
+  "$defs": {
+    "Scenario": {
+      "enum": [
+        "freshness",
+        "transient",
+        "schema",
+        "quality",
+        "duplicate",
+        "unknown"
+      ],
+      "title": "Scenario",
+      "type": "string"
+    },
+    "ToolName": {
+      "enum": [
+        "refresh_partition",
+        "retry_batch",
+        "quarantine_batch",
+        "suppress_duplicate",
+        "apply_schema_migration",
+        "escalate"
+      ],
+      "title": "ToolName",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "category": {
+      "$ref": "#/$defs/Scenario"
+    },
+    "evidence_refs": {
+      "items": {
+        "type": "string"
+      },
+      "maxItems": 10,
+      "minItems": 1,
+      "title": "Evidence Refs",
+      "type": "array"
+    },
+    "proposed_action": {
+      "$ref": "#/$defs/ToolName"
+    },
+    "rationale": {
+      "maxLength": 2000,
+      "minLength": 1,
+      "title": "Rationale",
+      "type": "string"
+    },
+    "summary": {
+      "maxLength": 2000,
+      "minLength": 1,
+      "title": "Summary",
+      "type": "string"
+    }
+  },
+  "required": [
+    "category",
+    "summary",
+    "evidence_refs",
+    "proposed_action",
+    "rationale"
+  ],
+  "title": "Diagnosis",
+  "type": "object"
+}

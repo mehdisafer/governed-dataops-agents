@@ -1,0 +1,44 @@
+[build-system]
+requires = ["hatchling==1.29.0"]
+build-backend = "hatchling.build"
+
+[project]
+name = "governed-dataops-agents"
+version = "0.1.0a1"
+description = "Evidence-led, policy-governed incident response for a synthetic industrial data platform"
+readme = "README.md"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+  "mcp==2.3.0",
+  "pydantic-ai-slim[openai]==2.68.0",
+  "temporalio[pydantic]==1.36.0",
+  "pydantic==2.14.3",
+  "fastapi==0.141.1",
+  "uvicorn==0.52.1",
+  "httpx==0.28.1",
+  "httpx2==2.16.0",
+  "openai==3.51.0",
+  "cryptography==50.0.2",
+]
+
+[project.scripts]
+dataops = "governed_dataops.cli:main"
+
+[dependency-groups]
+dev = ["pytest==9.2.0", "pytest-asyncio==1.5.0", "ruff==0.17.5", "playwright==1.62.0"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/governed_dataops"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "function"
+testpaths = ["tests"]
+
+[tool.ruff]
+target-version = "py312"
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
+ignore = ["E501"]

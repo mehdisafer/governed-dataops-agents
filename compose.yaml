@@ -1,0 +1,163 @@
+name: governed-dataops
+
+x-common: &common
+  platform: linux/amd64
+  user: "${DATAOPS_UID:-1000}:${DATAOPS_GID:-1000}"
+  networks: [private]
+  read_only: true
+  tmpfs: [/tmp]
+  cap_drop: [ALL]
+  security_opt: [no-new-privileges:true]
+  restart: unless-stopped
+  stop_grace_period: 45s
+  logging:
+    driver: json-file
+    options: {max-size: "10m", max-file: "3"}
+
+x-app: &app
+  <<: *common
+  image: governed-dataops-app:0.1.0a1
+  build: {context: ., dockerfile: Dockerfile}
+  volumes: [app-data:/data]
+  mem_limit: 768m
+  cpus: 1.0
+  pids_limit: 128
+
+x-app-env: &app-env
+  DATAOPS_DB_PATH: /data/dataops.db
+  DATAOPS_ENVIRONMENT: dev
+  DATAOPS_SCOPE: factory-a
+  DATAOPS_DEMO_MODE: "true"
+  DATAOPS_TARGET_URL: http://target:8081
+  DATAOPS_TEMPORAL_ADDRESS: temporal:7233
+  DATAOPS_TASK_QUEUE: governed-dataops-v1
+  DATAOPS_MAX_PENDING_INCIDENTS: "32"
+  DATAOPS_WORKER_CONCURRENCY: "4"
+  DATAOPS_APPROVAL_TIMEOUT_SECONDS: "300"
+
+services:
+  init-state:
+    <<: *app
+    user: "0:0"
+    entrypoint: [sh, -ec]
+    command:
+      - 'test "$$DATAOPS_UID" -ne 0; mkdir -p /data /temporal; chown -R "$$DATAOPS_UID:$$DATAOPS_GID" /data /temporal'
+    environment:
+      DATAOPS_UID: "${DATAOPS_UID:-1000}"
+      DATAOPS_GID: "${DATAOPS_GID:-1000}"
+    volumes: [app-data:/data, temporal-data:/temporal]
+    cap_add: [CHOWN]
+    restart: "no"
+    mem_limit: 128m
+    cpus: 0.25
+
+  temporal:
+    <<: *common
+    image: governed-dataops-temporal:1.10.1
+    build: {context: ., dockerfile: Dockerfile.temporal}
+    volumes: [temporal-data:/data]
+    depends_on:
+      init-state: {condition: service_completed_successfully}
+    healthcheck:
+      test: [CMD, /opt/temporal/temporal, operator, cluster, health, --address, "127.0.0.1:7233"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+      start_period: 10s
+    mem_limit: 1g
+    cpus: 1.5
+    pids_limit: 256
+
+  model:
+    <<: *common
+    image: governed-dataops-model:qwen3-4b-2507-q2k-b12368
+    build: {context: ., dockerfile: Dockerfile.model}
+    healthcheck:
+      test: [CMD, python, -c, "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8090/health', timeout=3)"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+      start_period: 30s
+    mem_limit: 3g
+    cpus: 4.0
+    pids_limit: 128
+
+  target:
+    <<: *app
+    command: [serve, target, --host, "0.0.0.0", --port, "8081"]
+    environment:
+      <<: *app-env
+      DATAOPS_OPERATOR_TOKEN_FILE: /run/secrets/operator-token
+      DATAOPS_READER_TOKEN_FILE: /run/secrets/reader-token
+      DATAOPS_EXECUTOR_TOKEN_FILE: /run/secrets/executor-token
+      DATAOPS_APPROVAL_VERIFY_KEY_FILE: /run/secrets/approval-public.pem
+    secrets: [operator-token, reader-token, executor-token, approval-public.pem]
+    depends_on:
+      init-state: {condition: service_completed_successfully}
+    healthcheck:
+      test: [CMD, python, -c, "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8081/health', timeout=3)"]
+      interval: 5s
+      timeout: 5s
+      retries: 12
+
+  worker:
+    <<: *app
+    command: [serve, worker]
+    environment:
+      <<: *app-env
+      DATAOPS_READER_TOKEN_FILE: /run/secrets/reader-token
+      DATAOPS_EXECUTOR_TOKEN_FILE: /run/secrets/executor-token
+      DATAOPS_APPROVAL_VERIFY_KEY_FILE: /run/secrets/approval-public.pem
+      DATAOPS_MODEL_PROVIDER: local
+      DATAOPS_MODEL_BASE_URL: http://model:8090/v1
+      DATAOPS_MODEL_NAME: governed-qwen
+      DATAOPS_MODEL_REVISION: "sha256:f7ed2f57713ad29e1a4ec093be0cdf3d7fd31e137e8fd4fc3edcfd04a5267862"
+      DATAOPS_MODEL_MAX_TOKENS: "300"
+      DATAOPS_MODEL_TIMEOUT_SECONDS: "90"
+      DATAOPS_MODEL_CONCURRENCY: "1"
+    secrets: [reader-token, executor-token, approval-public.pem]
+    depends_on:
+      target: {condition: service_healthy}
+      temporal: {condition: service_healthy}
+      model: {condition: service_healthy}
+
+  api:
+    <<: *app
+    command: [serve, api, --host, "0.0.0.0", --port, "8080"]
+    ports: ["127.0.0.1:8080:8080"]
+    environment:
+      <<: *app-env
+      DATAOPS_OPERATOR_TOKEN_FILE: /run/secrets/operator-token
+      DATAOPS_APPROVER_TOKEN_FILE: /run/secrets/approver-token
+      DATAOPS_READER_TOKEN_FILE: /run/secrets/reader-token
+      DATAOPS_APPROVAL_SIGNING_KEY_FILE: /run/secrets/approval-private.pem
+      DATAOPS_APPROVAL_VERIFY_KEY_FILE: /run/secrets/approval-public.pem
+    secrets: [operator-token, approver-token, reader-token, approval-private.pem, approval-public.pem]
+    depends_on:
+      target: {condition: service_healthy}
+      temporal: {condition: service_healthy}
+      worker: {condition: service_started}
+    healthcheck:
+      test: [CMD, python, -c, "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8080/health', timeout=3)"]
+      interval: 10s
+      timeout: 5s
+      retries: 6
+
+networks:
+  private:
+    name: "${DATAOPS_STACK:-governed-dataops}-private"
+    internal: true
+
+volumes:
+  app-data:
+    name: "${DATAOPS_STACK:-governed-dataops}-app-data"
+  temporal-data:
+    name: "${DATAOPS_STACK:-governed-dataops}-temporal-data"
+
+secrets:
+  operator-token: {file: ./.secrets/operator-token}
+  approver-token: {file: ./.secrets/approver-token}
+  reader-token: {file: ./.secrets/reader-token}
+  executor-token: {file: ./.secrets/executor-token}
+  approval-private.pem: {file: ./.secrets/approval-private.pem}
+  approval-public.pem: {file: ./.secrets/approval-public.pem}

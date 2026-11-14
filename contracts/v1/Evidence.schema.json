@@ -1,0 +1,145 @@
+{
+  "$defs": {
+    "Snapshot": {
+      "additionalProperties": false,
+      "properties": {
+        "accepted_schema": {
+          "title": "Accepted Schema",
+          "type": "integer"
+        },
+        "backlog_rows": {
+          "minimum": 0,
+          "title": "Backlog Rows",
+          "type": "integer"
+        },
+        "batch_id": {
+          "pattern": "^[a-zA-Z0-9][a-zA-Z0-9_.-]{0,95}$",
+          "title": "Batch Id",
+          "type": "string"
+        },
+        "batch_status": {
+          "enum": [
+            "pending",
+            "failed",
+            "rejected",
+            "applied",
+            "quarantined",
+            "suppressed"
+          ],
+          "title": "Batch Status",
+          "type": "string"
+        },
+        "curated_rows": {
+          "minimum": 0,
+          "title": "Curated Rows",
+          "type": "integer"
+        },
+        "duplicate_rows": {
+          "minimum": 0,
+          "title": "Duplicate Rows",
+          "type": "integer"
+        },
+        "environment": {
+          "enum": [
+            "dev",
+            "staging",
+            "prod"
+          ],
+          "title": "Environment",
+          "type": "string"
+        },
+        "freshness_lag_seconds": {
+          "minimum": 0,
+          "title": "Freshness Lag Seconds",
+          "type": "integer"
+        },
+        "policy_version": {
+          "default": "1.0",
+          "title": "Policy Version",
+          "type": "string"
+        },
+        "rejected_rows": {
+          "minimum": 0,
+          "title": "Rejected Rows",
+          "type": "integer"
+        },
+        "revision": {
+          "minimum": 0,
+          "title": "Revision",
+          "type": "integer"
+        },
+        "scope": {
+          "pattern": "^[a-zA-Z0-9][a-zA-Z0-9_.-]{0,95}$",
+          "title": "Scope",
+          "type": "string"
+        },
+        "source_schema": {
+          "title": "Source Schema",
+          "type": "integer"
+        },
+        "target_id": {
+          "pattern": "^[a-zA-Z0-9][a-zA-Z0-9_.-]{0,95}$",
+          "title": "Target Id",
+          "type": "string"
+        },
+        "transient_failure": {
+          "title": "Transient Failure",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "target_id",
+        "environment",
+        "scope",
+        "revision",
+        "source_schema",
+        "accepted_schema",
+        "backlog_rows",
+        "rejected_rows",
+        "curated_rows",
+        "duplicate_rows",
+        "transient_failure",
+        "freshness_lag_seconds",
+        "batch_id",
+        "batch_status"
+      ],
+      "title": "Snapshot",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "collected_at": {
+      "title": "Collected At",
+      "type": "string"
+    },
+    "complete": {
+      "title": "Complete",
+      "type": "boolean"
+    },
+    "evidence_id": {
+      "pattern": "^[a-zA-Z0-9][a-zA-Z0-9_.-]{0,95}$",
+      "title": "Evidence Id",
+      "type": "string"
+    },
+    "logs": {
+      "items": {
+        "type": "string"
+      },
+      "maxItems": 30,
+      "title": "Logs",
+      "type": "array"
+    },
+    "snapshot": {
+      "$ref": "#/$defs/Snapshot"
+    }
+  },
+  "required": [
+    "evidence_id",
+    "snapshot",
+    "complete",
+    "logs"
+  ],
+  "title": "Evidence",
+  "type": "object"
+}
