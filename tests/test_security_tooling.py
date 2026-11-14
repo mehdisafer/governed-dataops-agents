@@ -231,9 +231,10 @@ def test_valid_semantic_proof_requires_exact_recorded_occurrence(tmp_path):
     assert len(reviewed) == 1 and unresolved == []
 
 
+@pytest.mark.parametrize("schema", ["native", "container"])
 @pytest.mark.parametrize("dirty,forged", [(False, False), (True, False), (False, True)])
 def test_source_hash_proof_recomputes_named_commit_blob_and_refuses_dirty_manifest(
-    tmp_path, monkeypatch, dirty, forged
+    tmp_path, monkeypatch, dirty, forged, schema
 ):
     original = b"synthetic source bytes\n"
     candidate = hashlib.sha256(b"forged source" if forged else original).hexdigest()
@@ -243,6 +244,12 @@ def test_source_hash_proof_recomputes_named_commit_blob_and_refuses_dirty_manife
         "untracked_source_files": [],
         "files": {"src/api.py": candidate},
     }
+    if schema == "container":
+        manifest = {
+            "commit": manifest["commit"],
+            "tracked_and_clean": not dirty,
+            "files": manifest["files"],
+        }
     raw = json.dumps({"source": manifest}, indent=2).encode()
     line = next(i for i, text in enumerate(raw.decode().splitlines(), 1) if '"src/api.py"' in text)
     match = 'api.py": "REDACTED"'
@@ -270,3 +277,38 @@ def test_source_hash_proof_recomputes_named_commit_blob_and_refuses_dirty_manife
     assert bool(proof) is (not dirty and not forged)
     if not dirty:
         assert calls == [("show", "a" * 40 + ":src/api.py")]
+
+
+@pytest.mark.parametrize(
+    "extra",
+    [
+        {"tracked_worktree_clean": False},
+        {"untracked_source_files": ["src/untracked.py"]},
+        {"invented_clean_override": True},
+    ],
+)
+def test_container_source_proof_refuses_ambiguous_or_extended_manifest_schema(tmp_path, extra):
+    candidate = hashlib.sha256(b"source").hexdigest()
+    manifest = {
+        "commit": "a" * 40,
+        "tracked_and_clean": True,
+        "files": {"src/api.py": candidate},
+        **extra,
+    }
+    raw = json.dumps({"source": manifest}, indent=2).encode()
+    line = next(i for i, text in enumerate(raw.decode().splitlines(), 1) if '"src/api.py"' in text)
+    match = 'api.py": "REDACTED"'
+    finding = {
+        "RuleID": "generic-api-key",
+        "Secret": "REDACTED",
+        "Match": match,
+        "StartLine": line,
+        "EndLine": line,
+        "Tags": [],
+    }
+    entry = {
+        "kind": "source_digest",
+        "artifact_sha256": hashlib.sha256(raw).hexdigest(),
+        "redacted_match_sha256": hashlib.sha256(match.encode()).hexdigest(),
+    }
+    assert scanner.verify_review(tmp_path, raw, finding, entry) is None

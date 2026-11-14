@@ -298,11 +298,19 @@ def verify_review(root: Path, artifact: bytes, finding: dict, entry: dict) -> di
             if finding["Match"].replace("REDACTED", candidate) not in line:
                 return None
             for pointer, manifest in json_nodes(document):
-                if (
-                    not isinstance(manifest, dict)
-                    or manifest.get("tracked_worktree_clean") is not True
-                    or manifest.get("untracked_source_files")
-                ):
+                if not isinstance(manifest, dict):
+                    continue
+                native_clean = (
+                    manifest.get("tracked_worktree_clean") is True
+                    and not manifest.get("untracked_source_files")
+                    and "tracked_and_clean" not in manifest
+                )
+                container_clean = (
+                    set(manifest) == {"commit", "tracked_and_clean", "files"}
+                    and manifest["tracked_and_clean"] is True
+                    and isinstance(manifest["files"], dict)
+                )
+                if not (native_clean or container_clean):
                     continue
                 commit = manifest.get("commit", "")
                 if (
@@ -318,6 +326,7 @@ def verify_review(root: Path, artifact: bytes, finding: dict, entry: dict) -> di
                     return {
                         "kind": "source_digest",
                         "manifest_pointer": pointer,
+                        "manifest_schema": "container-v1" if container_clean else "native-v1",
                         "source_commit": commit,
                         "source_path": source_path,
                     }

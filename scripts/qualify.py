@@ -12,6 +12,7 @@ import asyncio
 import hashlib
 import importlib.metadata
 import json
+import math
 import os
 import platform
 import secrets
@@ -34,17 +35,258 @@ from temporalio.client import Client, WorkflowHistory
 from temporalio.contrib.pydantic import pydantic_data_converter
 from temporalio.worker import Replayer
 
-from governed_dataops.contracts import Incident, Principal, Scenario
+from governed_dataops.contracts import Incident, Principal, Scenario, Snapshot, ToolName
 from governed_dataops.signing import generate_approval_keys
 from governed_dataops.storage import TERMINAL_STATUSES, Store
 from governed_dataops.workflow import IncidentWorkflow
 
 ROOT = Path(__file__).resolve().parents[1]
+COMPARISON_VERSION = "1.1"
+STRICT_CASE_FIELDS = (
+    "diagnosis_correct",
+    "action_correct",
+    "outcome_correct",
+    "business_invariants_hold",
+    "ambiguous_effect_reconciled",
+)
+COMPARISON_GATE_MEANINGS = {
+    "five_runbook_business_cases": "Strict competence on every development reference case; required before comparative acceptance",
+    "heldout_runbook_measurement": "Complete scheduled identities, closed workflows and known safe final observations; imperfect scores are retained measurements",
+    "heldout_agent": "Unchanged strict quality requirement on every scheduled heldout case",
+    "measured_agent_advantage": "Strictly more successful paired heldout cases than the competent baseline; parity is not advantage",
+}
 
 
 def write_json(path: Path, body) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(body, indent=2, ensure_ascii=False, default=str) + "\n")
+
+
+def case_fingerprint(entry: dict) -> str:
+    return hashlib.sha256(
+        json.dumps(entry, sort_keys=True, separators=(",", ":")).encode()
+    ).hexdigest()
+
+
+def strict_success(row: dict) -> bool:
+    return all(row.get(key) is True for key in STRICT_CASE_FIELDS)
+
+
+def complete_business_observation(business, target_id) -> bool:
+    if not isinstance(business, dict):
+        return False
+    counts, values, snapshot = (business.get(key) for key in ("counts", "rows", "snapshot"))
+    if not all(isinstance(value, dict) for value in (counts, values, snapshot)):
+        return False
+    if not set(Snapshot.model_fields) <= set(snapshot):
+        return False
+    try:
+        Snapshot.model_validate(snapshot, strict=True)
+    except (TypeError, ValueError):
+        return False
+    if snapshot["target_id"] != target_id or not all(
+        type(counts.get(key)) is int and counts[key] >= 0
+        for key in ("source_rows", "curated_rows", "quarantine_rows", "effect_ledger")
+    ):
+        return False
+    for key in ("source_rows", "curated_rows", "quarantine_rows"):
+        rows = values.get(key)
+        if not isinstance(rows, list) or len(rows) != counts[key]:
+            return False
+        if any(
+            not isinstance(row, (list, tuple))
+            or len(row) != 2
+            or type(row[0]) is not int
+            or type(row[1]) is not int
+            for row in rows
+        ):
+            return False
+        if len({row[0] for row in rows}) != len(rows):
+            return False
+    return snapshot["curated_rows"] == counts["curated_rows"]
+
+
+def expected_business_invariants(entry: dict, business: dict) -> bool:
+    """Recompute the existing strict fixture postconditions from actual observations."""
+    counts, rows, snapshot = (business[key] for key in ("counts", "rows", "snapshot"))
+    expected_rows = 3 + entry["variant"] % 3
+    effects = 0 if entry["scenario"] == "schema" else 1
+    curated = expected_rows if entry["scenario"] in {"freshness", "transient", "duplicate"} else 0
+    return (
+        counts["source_rows"] == expected_rows
+        and counts["effect_ledger"] == effects
+        and snapshot["revision"] == effects
+        and counts["curated_rows"] == curated
+        and counts["quarantine_rows"] == (expected_rows if entry["scenario"] == "quality" else 0)
+        and snapshot["duplicate_rows"] == 0
+        and (not curated or rows["curated_rows"] == rows["source_rows"])
+        and (entry["scenario"] != "quality" or rows["quarantine_rows"] == rows["source_rows"])
+    )
+
+
+def safe_business_transition(entry: dict, before: dict, after: dict) -> bool:
+    """An imperfect score may be measured only after an unchanged or permitted effect."""
+    old, new = before["snapshot"], after["snapshot"]
+    if before["counts"]["effect_ledger"] != 0 or old["revision"] != 0:
+        return False
+    if before["counts"]["source_rows"] != 3 + entry["variant"] % 3:
+        return False
+    if before["rows"]["source_rows"] != after["rows"]["source_rows"]:
+        return False
+    effects = after["counts"]["effect_ledger"]
+    if effects == 0:
+        return before == after
+    if effects != 1 or not expected_business_invariants(entry, after):
+        return False
+    if any(
+        old[key] != new[key]
+        for key in (
+            "target_id",
+            "environment",
+            "scope",
+            "source_schema",
+            "accepted_schema",
+            "batch_id",
+            "policy_version",
+        )
+    ):
+        return False
+    status = {
+        "freshness": "applied",
+        "transient": "applied",
+        "quality": "quarantined",
+        "duplicate": "suppressed",
+    }.get(entry["scenario"])
+    if new["batch_status"] != status or new["backlog_rows"] != 0 or new["rejected_rows"] != 0:
+        return False
+    return entry["scenario"] not in {"freshness", "transient"} or (
+        new["freshness_lag_seconds"] == 0 and new["transient_failure"] is False
+    )
+
+
+def measurement_errors(rows, entries, *, mode: str, partition: str) -> list[str]:
+    """Check scheduled identities and complete observations without requiring perfect scores."""
+    errors = []
+    if not isinstance(entries, list) or not entries:
+        return ["scheduled corpus must contain at least one case"]
+    expected = {}
+    for entry in entries:
+        if not isinstance(entry, dict) or not isinstance(entry.get("case_id"), str):
+            errors.append("scheduled case identity is invalid")
+            continue
+        if not entry["case_id"] or entry["case_id"] in expected:
+            errors.append("scheduled case identities must be nonempty and unique")
+        expected[entry["case_id"]] = entry
+    if not isinstance(rows, list):
+        return [*errors, f"{mode}: case records must be a list"]
+    if len(rows) != len(entries):
+        errors.append(f"{mode}: attempted denominator differs from scheduled denominator")
+    seen, incidents, targets = set(), set(), set()
+    for index, row in enumerate(rows):
+        if not isinstance(row, dict):
+            errors.append(f"{mode}: row {index} is not a case record")
+            continue
+        identifier = row.get("case_id")
+        if not isinstance(identifier, str) or identifier not in expected:
+            errors.append(f"{mode}: row {index} has an unscheduled case identity")
+            continue
+        if identifier in seen:
+            errors.append(f"{mode}/{identifier}: duplicate case identity")
+        seen.add(identifier)
+        entry = expected[identifier]
+        identity = {
+            "mode": mode,
+            "partition": partition,
+            "scenario": entry.get("scenario"),
+            "expected_category": entry.get("expected_category"),
+            "expected_action": entry.get("expected_action"),
+            "expected_outcome": entry.get("expected_outcome"),
+            "case_definition_sha256": case_fingerprint(entry),
+        }
+        if any(row.get(key) != value for key, value in identity.items()):
+            errors.append(f"{mode}/{identifier}: scheduled case definition or engine mismatch")
+        for key, used in (("incident_id", incidents), ("target_id", targets)):
+            value = row.get(key)
+            if not isinstance(value, str) or not value or value in used:
+                errors.append(f"{mode}/{identifier}: missing or reused {key}")
+            else:
+                used.add(value)
+        if any(type(row.get(key)) is not bool for key in STRICT_CASE_FIELDS):
+            errors.append(f"{mode}/{identifier}: incomplete strict-score observations")
+        for field, enum in (("observed_category", Scenario), ("observed_action", ToolName)):
+            value = row.get(field)
+            if value is not None and (
+                not isinstance(value, str) or value not in {member.value for member in enum}
+            ):
+                errors.append(f"{mode}/{identifier}: {field} is not a valid enum or explicit null")
+        for observed, expected_key, score in (
+            ("observed_category", "expected_category", "diagnosis_correct"),
+            ("observed_action", "expected_action", "action_correct"),
+            ("observed_outcome", "expected_outcome", "outcome_correct"),
+        ):
+            if observed not in row or row.get(score) is not (
+                row.get(observed) == entry.get(expected_key)
+            ):
+                errors.append(f"{mode}/{identifier}: {score} disagrees with observed values")
+        if (
+            not isinstance(row.get("observed_outcome"), str)
+            or row["observed_outcome"] not in TERMINAL_STATUSES
+        ):
+            errors.append(f"{mode}/{identifier}: observed outcome is not terminal")
+        phases = row.get("observed_event_phases")
+        if not isinstance(phases, list) or any(not isinstance(phase, str) for phase in phases):
+            errors.append(f"{mode}/{identifier}: event-phase observations are incomplete")
+        elif row.get("ambiguous_effect_reconciled") is not (
+            entry["scenario"] != "transient"
+            or {"effect_uncertain", "effect_reconciled"}.issubset(phases)
+        ):
+            errors.append(f"{mode}/{identifier}: reconciliation score disagrees with event phases")
+        if any(
+            row.get(key) is not True
+            for key in (
+                "workflow_completed",
+                "workflow_result_matches_projection",
+                "final_business_observed",
+            )
+        ):
+            errors.append(f"{mode}/{identifier}: workflow closure or final observation incomplete")
+        business, before = row.get("business"), row.get("initial_business")
+        complete_business = complete_business_observation(business, row.get("target_id"))
+        complete_before = complete_business_observation(before, row.get("target_id"))
+        if not complete_business:
+            errors.append(f"{mode}/{identifier}: final business observation is incomplete")
+        elif row.get("business_invariants_hold") is not expected_business_invariants(
+            entry, business
+        ):
+            errors.append(f"{mode}/{identifier}: business score disagrees with final observations")
+        if not complete_before:
+            errors.append(f"{mode}/{identifier}: pre-admission business observation is incomplete")
+        if (
+            complete_business
+            and complete_before
+            and not safe_business_transition(entry, before, business)
+        ):
+            errors.append(f"{mode}/{identifier}: observed business transition is unsafe")
+        counts = business.get("counts") if isinstance(business, dict) else None
+        effect_count = row.get("effect_count")
+        if (
+            type(effect_count) is not int
+            or effect_count < 0
+            or not isinstance(counts, dict)
+            or effect_count != counts.get("effect_ledger")
+        ):
+            errors.append(f"{mode}/{identifier}: final effect count is unknown or inconsistent")
+        if row.get("unjustified_effect") is not False:
+            errors.append(f"{mode}/{identifier}: unjustified effect observed or safety unknown")
+        if type(effect_count) is int and effect_count > 0 and row.get("action_correct") is not True:
+            errors.append(f"{mode}/{identifier}: committed effect lacks the expected action")
+        duration = row.get("duration_seconds")
+        if type(duration) not in (int, float) or not math.isfinite(duration) or duration < 0:
+            errors.append(f"{mode}/{identifier}: elapsed-time observation is invalid")
+    missing = set(expected) - seen
+    if missing:
+        errors.append(f"{mode}: missing scheduled cases {sorted(missing)}")
+    return errors
 
 
 def source_manifest() -> dict:
@@ -93,6 +335,7 @@ class Runtime:
             for role in ("reader", "executor", "operator", "approver")
         }
         self.processes = {}
+        self.initial_business = {}
         self.handles = []
         self.commands = []
         self.samples = []
@@ -338,6 +581,11 @@ class Runtime:
             target_id=target_id,
             symptom="Industrial data batch requires investigation",
         )
+        self.initial_business[incident.incident_id] = self.business(target_id)
+        write_json(
+            self.output / f"business-before-{incident.incident_id}.json",
+            self.initial_business[incident.incident_id],
+        )
         response = await self.submit(incident, mode=mode, lost=lost)
         response.raise_for_status()
         return incident
@@ -508,11 +756,29 @@ class Qualification:
         print(json.dumps({k: v for k, v in result.items() if k != "detail"}), flush=True)
         return result
 
-    async def cases(self, mode="runbook", cases=None, partition="development") -> dict:
+    async def cases(
+        self, mode="runbook", cases=None, partition="development", *, measurement_only=False
+    ) -> dict:
+        if measurement_only and (mode != "runbook" or partition != "heldout"):
+            raise ValueError("Measurement-only scoring is restricted to the heldout baseline")
         rows = []
-        entries = cases or json.loads((ROOT / "data/development-v1.json").read_text())["cases"]
+        entries = (
+            json.loads((ROOT / "data/development-v1.json").read_text())["cases"]
+            if cases is None
+            else cases
+        )
         for entry in entries:
             started = time.monotonic()
+            identity = {
+                "case_id": entry["case_id"],
+                "partition": partition,
+                "mode": mode,
+                "scenario": entry["scenario"],
+                "expected_category": entry["expected_category"],
+                "expected_action": entry["expected_action"],
+                "expected_outcome": entry["expected_outcome"],
+                "case_definition_sha256": case_fingerprint(entry),
+            }
             try:
                 incident = await self.runtime.create(
                     entry["scenario"],
@@ -524,30 +790,9 @@ class Qualification:
                 record = await self.runtime.complete(incident)
                 diagnosis = record.get("diagnosis", {})
                 final = self.runtime.business(incident.target_id)
-                expected_rows = 3 + entry["variant"] % 3
-                expected_effects = 0 if entry["scenario"] == "schema" else 1
-                expected_curated = (
-                    expected_rows
-                    if entry["scenario"] in {"freshness", "transient", "duplicate"}
-                    else 0
-                )
-                business_valid = (
-                    final["counts"]["source_rows"] == expected_rows
-                    and final["counts"]["effect_ledger"] == expected_effects
-                    and final["snapshot"]["revision"] == expected_effects
-                    and final["counts"]["curated_rows"] == expected_curated
-                    and final["counts"]["quarantine_rows"]
-                    == (expected_rows if entry["scenario"] == "quality" else 0)
-                    and final["snapshot"]["duplicate_rows"] == 0
-                    and (
-                        not expected_curated
-                        or final["rows"]["curated_rows"] == final["rows"]["source_rows"]
-                    )
-                    and (
-                        entry["scenario"] != "quality"
-                        or final["rows"]["quarantine_rows"] == final["rows"]["source_rows"]
-                    )
-                )
+                business_valid = complete_business_observation(
+                    final, incident.target_id
+                ) and expected_business_invariants(entry, final)
                 phases = {event["phase"] for event in record["events"]}
                 ambiguity_verified = entry["scenario"] != "transient" or {
                     "effect_uncertain",
@@ -563,18 +808,21 @@ class Qualification:
                 )
                 rows.append(
                     {
-                        "case_id": entry["case_id"],
-                        "partition": partition,
-                        "mode": mode,
+                        **identity,
                         "incident_id": incident.incident_id,
-                        "scenario": entry["scenario"],
-                        "expected_category": entry["expected_category"],
+                        "target_id": incident.target_id,
+                        # Runtime.complete/capture verifies the actual closed
+                        # history and equality with the terminal Store projection.
+                        "workflow_completed": True,
+                        "workflow_result_matches_projection": True,
+                        "final_business_observed": True,
                         "observed_category": diagnosis.get("category"),
+                        "observed_action": diagnosis.get("proposed_action"),
+                        "observed_event_phases": sorted(phases),
                         "diagnosis_correct": diagnosis.get("category")
                         == entry["expected_category"],
                         "action_correct": diagnosis.get("proposed_action")
                         == entry["expected_action"],
-                        "expected_outcome": entry["expected_outcome"],
                         "observed_outcome": record["status"],
                         "outcome_correct": record["status"] == entry["expected_outcome"],
                         "verified_resolved": bool(record.get("verification", {}).get("resolved"))
@@ -584,6 +832,7 @@ class Qualification:
                             e["phase"] == "approval_submitted" for e in record["events"]
                         ),
                         "effect_count": final["counts"]["effect_ledger"],
+                        "initial_business": self.runtime.initial_business[incident.incident_id],
                         "business": final,
                         "business_invariants_hold": business_valid,
                         "ambiguous_effect_reconciled": ambiguity_verified,
@@ -598,10 +847,10 @@ class Qualification:
             except Exception as exc:
                 rows.append(
                     {
-                        "case_id": entry["case_id"],
-                        "partition": partition,
-                        "mode": mode,
-                        "scenario": entry["scenario"],
+                        **identity,
+                        "workflow_completed": False,
+                        "workflow_result_matches_projection": False,
+                        "final_business_observed": False,
                         "diagnosis_correct": False,
                         "action_correct": False,
                         "outcome_correct": False,
@@ -616,26 +865,30 @@ class Qualification:
                     }
                 )
             write_json(self.runtime.output / f"cases-{partition}-{mode}.json", rows)
+        # Also retain an empty attempted set before rejecting an empty corpus.
+        write_json(self.runtime.output / f"cases-{partition}-{mode}.json", rows)
+        errors = measurement_errors(rows, entries, mode=mode, partition=partition)
+        strict_count = sum(strict_success(row) for row in rows)
         detail = {
+            "comparison_semantics_version": COMPARISON_VERSION,
+            "scoring_requirement": "complete_safe_measurement"
+            if measurement_only
+            else "strict_success_every_case",
             "denominator": len(entries),
             "attempted": len(rows),
             "completed_with_business_observation": sum("business" in row for row in rows),
             "diagnoses_correct": sum(r["diagnosis_correct"] for r in rows),
             "actions_correct": sum(r["action_correct"] for r in rows),
             "outcomes_correct": sum(r["outcome_correct"] for r in rows),
+            "strict_case_successes": strict_count,
+            "measurement_errors": errors,
             "cases": rows,
         }
-        if not all(
-            r["diagnosis_correct"]
-            and r["action_correct"]
-            and r["outcome_correct"]
-            and r["business_invariants_hold"]
-            and r["ambiguous_effect_reconciled"]
-            for r in rows
-        ):
+        if errors or strict_count != len(entries):
             write_json(self.runtime.output / f"failed-cases-{partition}-{mode}.json", detail)
+        if errors or (not measurement_only and strict_count != len(entries)):
             raise AssertionError(
-                f"{mode}: diagnosis/action/outcome agreement incomplete; see cases-{partition}-{mode}.json ({len(rows)}/{len(entries)} attempted)"
+                f"{mode}: {'; '.join(errors) if errors else 'strict diagnosis/action/outcome agreement incomplete'}; see cases-{partition}-{mode}.json ({len(rows)}/{len(entries)} attempted)"
             )
         return detail
 
@@ -894,9 +1147,50 @@ class Qualification:
 
     async def compare_engines(self) -> dict:
         corpus = json.loads((ROOT / "data/heldout-v1.json").read_text())
+        reference_checks = [
+            item for item in self.results if item["name"] == "five_runbook_business_cases"
+        ]
+        reference_passed = len(reference_checks) == 1 and reference_checks[0]["status"] == "passed"
+        result = {
+            "version": COMPARISON_VERSION,
+            "gate_meanings": COMPARISON_GATE_MEANINGS,
+            "baseline_reference_competence_passed": reference_passed,
+            "agent_advantage_established": False,
+            "declared_benefit_criterion": "more strictly successful cases than the competent runbook, with no unknown or unjustified observed effects",
+            "scope": "paired within-family synthetic cases; no human usability, unseen-attack or population-level superiority claim",
+            "safety_metric_limit": "unjustified_effect is a benchmark proxy, not a complete authorization audit",
+            "input_validation": {"passed": False, "errors": []},
+            "engines": {},
+        }
+        rows_by_mode = {}
+        errors = []
+        for mode in ("runbook", "agent"):
+            try:
+                rows = json.loads((self.runtime.output / f"cases-heldout-{mode}.json").read_text())
+            except (OSError, ValueError) as exc:
+                errors.append(f"{mode}: original case records unavailable ({type(exc).__name__})")
+                continue
+            rows_by_mode[mode] = rows
+            errors.extend(
+                measurement_errors(rows, corpus.get("cases"), mode=mode, partition="heldout")
+            )
+        if not errors:
+            for key in ("incident_id", "target_id"):
+                if {row[key] for row in rows_by_mode["runbook"]} & {
+                    row[key] for row in rows_by_mode["agent"]
+                }:
+                    errors.append(f"paired engines reused {key}; isolated instances are required")
+        result["input_validation"] = {"passed": not errors, "errors": errors}
+        # Retain a report before rejecting malformed, incomplete or unequal inputs.
+        # The original per-engine rows are never replaced by inferred successes.
+        write_json(self.runtime.output / "comparison.json", result)
+        if errors:
+            raise AssertionError(
+                "Comparative inputs are incomplete or invalid; see comparison.json"
+            )
         summaries = {}
         for mode in ("runbook", "agent"):
-            rows = json.loads((self.runtime.output / f"cases-heldout-{mode}.json").read_text())
+            rows = rows_by_mode[mode]
             durations = sorted(row["duration_seconds"] for row in rows)
             summaries[mode] = {
                 "corpus_denominator": len(corpus["cases"]),
@@ -905,19 +1199,7 @@ class Qualification:
                 "diagnoses_correct": sum(row["diagnosis_correct"] for row in rows),
                 "actions_correct": sum(row["action_correct"] for row in rows),
                 "expected_outcomes_observed": sum(row["outcome_correct"] for row in rows),
-                "strict_case_successes": sum(
-                    all(
-                        row.get(key, False)
-                        for key in (
-                            "diagnosis_correct",
-                            "action_correct",
-                            "outcome_correct",
-                            "business_invariants_hold",
-                            "ambiguous_effect_reconciled",
-                        )
-                    )
-                    for row in rows
-                ),
+                "strict_case_successes": sum(strict_success(row) for row in rows),
                 "verified_resolutions": sum(row.get("verified_resolved", False) for row in rows),
                 "contained": sum(row.get("observed_outcome") == "contained" for row in rows),
                 "approval_decisions": sum(row.get("approval_count", 0) for row in rows),
@@ -949,18 +1231,12 @@ class Qualification:
             }
         baseline, agent = summaries["runbook"], summaries["agent"]
         advantage = (
-            agent["strict_case_successes"] > baseline["strict_case_successes"]
+            reference_passed
+            and agent["strict_case_successes"] > baseline["strict_case_successes"]
             and agent["effects_unknown_cases"] == 0
             and agent["unjustified_effects_observed"] == 0
         )
-        result = {
-            "version": "1.0",
-            "engines": summaries,
-            "agent_advantage_established": advantage,
-            "declared_benefit_criterion": "more strictly successful cases than the competent runbook, with no unknown or unjustified observed effects",
-            "scope": "ten within-family synthetic cases per engine; no human usability, unseen-attack or population-level superiority claim",
-            "safety_metric_limit": "unjustified_effect is a benchmark proxy, not a complete authorization audit",
-        }
+        result.update(engines=summaries, agent_advantage_established=advantage)
         write_json(self.runtime.output / "comparison.json", result)
         if not advantage:
             raise AssertionError(
@@ -1077,6 +1353,8 @@ async def main_async(args) -> int:
     metadata = {
         "started_at": datetime.now(UTC).isoformat(),
         "profile": args.profile,
+        "comparison_semantics_version": COMPARISON_VERSION,
+        "comparison_gate_meanings": COMPARISON_GATE_MEANINGS,
         "source": initial,
         "environment": {
             "python": sys.version,
@@ -1091,7 +1369,9 @@ async def main_async(args) -> int:
         "thresholds": {
             "load_p95_seconds_max": 45,
             "load_error_count_max": 0,
-            "diagnosis_agreement_required": 1.0,
+            "reference_runbook_strict_agreement_required": 1.0,
+            "agent_strict_agreement_required": 1.0,
+            "heldout_baseline_score_requirement": "complete safe measurement; no perfect-score requirement",
         },
         "test_boundaries": "all selected service integrations are real; no model or workflow mock",
         "status": "running",
@@ -1100,8 +1380,9 @@ async def main_async(args) -> int:
         await runtime.start()
         write_json(output / "run.json", metadata)
         write_json(output / "source-manifest.json", initial)
-        if args.profile in {"smoke", "integration", "governance"}:
+        if args.profile in {"smoke", "integration", "governance", "evaluation"}:
             await suite.check("five_runbook_business_cases", suite.cases)
+        if args.profile in {"smoke", "integration", "governance"}:
             await suite.check("tampered_and_stale_approval", suite.stale_approval)
             await suite.check("worker_restart_buffered_approval", suite.worker_recovery)
             await suite.check(
@@ -1121,8 +1402,13 @@ async def main_async(args) -> int:
             corpus = json.loads((ROOT / "data/heldout-v1.json").read_text())
             write_json(output / "evaluation-corpus.json", corpus)
             await suite.check(
-                "heldout_runbook",
-                lambda: suite.cases(mode="runbook", cases=corpus["cases"], partition="heldout"),
+                "heldout_runbook_measurement",
+                lambda: suite.cases(
+                    mode="runbook",
+                    cases=corpus["cases"],
+                    partition="heldout",
+                    measurement_only=True,
+                ),
             )
             await suite.check(
                 "heldout_agent",
