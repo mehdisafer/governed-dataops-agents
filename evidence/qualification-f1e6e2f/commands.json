@@ -1,0 +1,298 @@
+[
+  {
+    "service": "temporal",
+    "argv": [
+      "/workspace/scratch/0496cf0d38c8/runtime/temporal/temporal",
+      "server",
+      "start-dev",
+      "--ip",
+      "127.0.0.1",
+      "--port",
+      "7233",
+      "--ui-ip",
+      "127.0.0.1",
+      "--ui-port",
+      "8233",
+      "--ui-disable-news-fetch",
+      "--metrics-port",
+      "8234",
+      "--db-filename",
+      "/tmp/dataops-qualification-6wq77zch/temporal.db"
+    ],
+    "started_at": "2026-11-14T12:57:23.417621+00:00"
+  },
+  {
+    "service": "model",
+    "argv": [
+      "/workspace/scratch/0496cf0d38c8/runtime/llama/llama-b12368/llama-server",
+      "--model",
+      "/workspace/scratch/0496cf0d38c8/runtime/Qwen3-4B-Instruct-2507-Q2_K.gguf",
+      "--host",
+      "127.0.0.1",
+      "--port",
+      "8090",
+      "--alias",
+      "governed-qwen",
+      "--threads",
+      "4",
+      "--threads-batch",
+      "4",
+      "--threads-http",
+      "4",
+      "--ctx-size",
+      "2048",
+      "--parallel",
+      "1",
+      "--gpu-layers",
+      "0",
+      "--metrics",
+      "--no-webui",
+      "--no-agent",
+      "--jinja",
+      "--n-predict",
+      "768",
+      "--batch-size",
+      "128",
+      "--ubatch-size",
+      "64",
+      "--cache-type-k",
+      "q8_0",
+      "--cache-type-v",
+      "q8_0",
+      "--flash-attn",
+      "on",
+      "--no-repack",
+      "--cache-ram",
+      "0",
+      "--ctx-checkpoints",
+      "0"
+    ],
+    "started_at": "2026-11-14T12:57:23.746710+00:00"
+  },
+  {
+    "service": "target",
+    "argv": [
+      "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/.venv/bin/python",
+      "-m",
+      "governed_dataops.cli",
+      "--env-file",
+      "/dev/null",
+      "serve",
+      "target"
+    ],
+    "started_at": "2026-11-14T12:57:25.161204+00:00"
+  },
+  {
+    "service": "worker",
+    "argv": [
+      "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/.venv/bin/python",
+      "-m",
+      "governed_dataops.cli",
+      "--env-file",
+      "/dev/null",
+      "serve",
+      "worker"
+    ],
+    "started_at": "2026-11-14T12:57:25.696702+00:00"
+  },
+  {
+    "service": "api",
+    "argv": [
+      "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/.venv/bin/python",
+      "-m",
+      "governed_dataops.cli",
+      "--env-file",
+      "/dev/null",
+      "serve",
+      "api"
+    ],
+    "started_at": "2026-11-14T12:57:25.697636+00:00"
+  },
+  {
+    "service": "worker",
+    "argv": [
+      "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/.venv/bin/python",
+      "-m",
+      "governed_dataops.cli",
+      "--env-file",
+      "/dev/null",
+      "serve",
+      "worker"
+    ],
+    "started_at": "2026-11-14T12:57:53.928744+00:00"
+  },
+  {
+    "service": "worker",
+    "argv": [
+      "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/.venv/bin/python",
+      "-m",
+      "governed_dataops.cli",
+      "--env-file",
+      "/dev/null",
+      "serve",
+      "worker"
+    ],
+    "started_at": "2026-11-14T12:58:12.685679+00:00"
+  },
+  {
+    "service": "worker2",
+    "argv": [
+      "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/.venv/bin/python",
+      "-m",
+      "governed_dataops.cli",
+      "--env-file",
+      "/dev/null",
+      "serve",
+      "worker"
+    ],
+    "started_at": "2026-11-14T12:58:24.978676+00:00"
+  },
+  {
+    "service": "api",
+    "argv": [
+      "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/.venv/bin/python",
+      "-m",
+      "governed_dataops.cli",
+      "--env-file",
+      "/dev/null",
+      "serve",
+      "api"
+    ],
+    "started_at": "2026-11-14T12:58:30.652566+00:00"
+  },
+  {
+    "service": "worker",
+    "argv": [
+      "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/.venv/bin/python",
+      "-m",
+      "governed_dataops.cli",
+      "--env-file",
+      "/dev/null",
+      "serve",
+      "worker"
+    ],
+    "started_at": "2026-11-14T12:58:31.230150+00:00"
+  },
+  {
+    "service": "api",
+    "argv": [
+      "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/.venv/bin/python",
+      "-m",
+      "governed_dataops.cli",
+      "--env-file",
+      "/dev/null",
+      "serve",
+      "api"
+    ],
+    "started_at": "2026-11-14T12:58:43.172003+00:00"
+  },
+  {
+    "service": "temporal",
+    "argv": [
+      "/workspace/scratch/0496cf0d38c8/runtime/temporal/temporal",
+      "server",
+      "start-dev",
+      "--ip",
+      "127.0.0.1",
+      "--port",
+      "7233",
+      "--ui-ip",
+      "127.0.0.1",
+      "--ui-port",
+      "8233",
+      "--ui-disable-news-fetch",
+      "--metrics-port",
+      "8234",
+      "--db-filename",
+      "/tmp/dataops-qualification-6wq77zch/restored/temporal.db"
+    ],
+    "started_at": "2026-11-14T12:58:50.269302+00:00"
+  },
+  {
+    "service": "target",
+    "argv": [
+      "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/.venv/bin/python",
+      "-m",
+      "governed_dataops.cli",
+      "--env-file",
+      "/dev/null",
+      "serve",
+      "target"
+    ],
+    "started_at": "2026-11-14T12:58:50.577913+00:00"
+  },
+  {
+    "service": "worker",
+    "argv": [
+      "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/.venv/bin/python",
+      "-m",
+      "governed_dataops.cli",
+      "--env-file",
+      "/dev/null",
+      "serve",
+      "worker"
+    ],
+    "started_at": "2026-11-14T12:58:50.853956+00:00"
+  },
+  {
+    "service": "api",
+    "argv": [
+      "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/.venv/bin/python",
+      "-m",
+      "governed_dataops.cli",
+      "--env-file",
+      "/dev/null",
+      "serve",
+      "api"
+    ],
+    "started_at": "2026-11-14T12:58:50.854970+00:00"
+  },
+  {
+    "service": "model",
+    "argv": [
+      "/workspace/scratch/0496cf0d38c8/runtime/llama/llama-b12368/llama-server",
+      "--model",
+      "/workspace/scratch/0496cf0d38c8/runtime/Qwen3-4B-Instruct-2507-Q2_K.gguf",
+      "--host",
+      "127.0.0.1",
+      "--port",
+      "8090",
+      "--alias",
+      "governed-qwen",
+      "--threads",
+      "4",
+      "--threads-batch",
+      "4",
+      "--threads-http",
+      "4",
+      "--ctx-size",
+      "2048",
+      "--parallel",
+      "1",
+      "--gpu-layers",
+      "0",
+      "--metrics",
+      "--no-webui",
+      "--no-agent",
+      "--jinja",
+      "--n-predict",
+      "768",
+      "--batch-size",
+      "128",
+      "--ubatch-size",
+      "64",
+      "--cache-type-k",
+      "q8_0",
+      "--cache-type-v",
+      "q8_0",
+      "--flash-attn",
+      "on",
+      "--no-repack",
+      "--cache-ram",
+      "0",
+      "--ctx-checkpoints",
+      "0"
+    ],
+    "started_at": "2026-11-14T13:02:30.606324+00:00"
+  }
+]

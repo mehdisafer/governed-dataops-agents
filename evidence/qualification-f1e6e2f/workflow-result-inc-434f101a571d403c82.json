@@ -1,0 +1,7 @@
+{
+  "incident_id": "inc-434f101a571d403c82",
+  "status": "cancelled",
+  "reason": "cancelled while awaiting approval; no effect dispatched",
+  "plan_hash": "db4db7e80794339bf75e647f90a91041fd3f4b4c09b02ae3179dea81976cfd76",
+  "verification": null
+}

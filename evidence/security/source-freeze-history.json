@@ -1,0 +1,277 @@
+{
+  "created_at": "2026-11-14T12:57:19.169206+00:00",
+  "wrapper_sha256": "964e45b1cf7cb2b2a1556bbdf78f9b338bd0af135f92b46dc121b594de37e7ca",
+  "mode": "git_history",
+  "status": "reviewed_non_secret_findings",
+  "history_scanned": true,
+  "reviewed_non_secret_candidates": [
+    {
+      "fingerprint": "evidence/recovery-development/history-inc-e2934f1e29ba4032bf.json:generic-api-key:937",
+      "native_fingerprint": "f1e6e2f3800242ec210145680261da8ab60f38b4:evidence/recovery-development/history-inc-e2934f1e29ba4032bf.json:generic-api-key:937",
+      "artifact_sha256": "6d1d731ea9c092006df2daa831889efa4beec89d95657331d06e555c645718b6",
+      "reason": "Native operation identifier recomputed from the complete retained Plan and action index zero; target receipt reconciliation, not an authentication credential.",
+      "proof": {
+        "kind": "effect_key",
+        "plan_pointer": "/events/20/activityTaskCompletedEventAttributes/result/payloads/0/data#json-plain/plan",
+        "plan_digest": "1dfa490b336078f128a23aa00f2c1de1aecc684ce07d94554458b1f186d0bb72",
+        "action_index": 0
+      }
+    },
+    {
+      "fingerprint": "evidence/recovery-development/history-inc-e2934f1e29ba4032bf.json:generic-api-key:1013",
+      "native_fingerprint": "f1e6e2f3800242ec210145680261da8ab60f38b4:evidence/recovery-development/history-inc-e2934f1e29ba4032bf.json:generic-api-key:1013",
+      "artifact_sha256": "6d1d731ea9c092006df2daa831889efa4beec89d95657331d06e555c645718b6",
+      "reason": "Native operation identifier recomputed from the complete retained Plan and action index zero; target receipt reconciliation, not an authentication credential.",
+      "proof": {
+        "kind": "effect_key",
+        "plan_pointer": "/events/20/activityTaskCompletedEventAttributes/result/payloads/0/data#json-plain/plan",
+        "plan_digest": "1dfa490b336078f128a23aa00f2c1de1aecc684ce07d94554458b1f186d0bb72",
+        "action_index": 0
+      }
+    },
+    {
+      "fingerprint": "evidence/recovery-development/history-inc-e2934f1e29ba4032bf.json:generic-api-key:1135",
+      "native_fingerprint": "f1e6e2f3800242ec210145680261da8ab60f38b4:evidence/recovery-development/history-inc-e2934f1e29ba4032bf.json:generic-api-key:1135",
+      "artifact_sha256": "6d1d731ea9c092006df2daa831889efa4beec89d95657331d06e555c645718b6",
+      "reason": "Native operation identifier recomputed from the complete retained Plan and action index zero; target receipt reconciliation, not an authentication credential.",
+      "proof": {
+        "kind": "effect_key",
+        "plan_pointer": "/events/20/activityTaskCompletedEventAttributes/result/payloads/0/data#json-plain/plan",
+        "plan_digest": "1dfa490b336078f128a23aa00f2c1de1aecc684ce07d94554458b1f186d0bb72",
+        "action_index": 0
+      }
+    },
+    {
+      "fingerprint": "evidence/recovery-development/trace-inc-e2934f1e29ba4032bf.json:generic-api-key:155",
+      "native_fingerprint": "f1e6e2f3800242ec210145680261da8ab60f38b4:evidence/recovery-development/trace-inc-e2934f1e29ba4032bf.json:generic-api-key:155",
+      "artifact_sha256": "b97337ac3151cb56fa2f7b94edc78bb395a8f2f96cb0c0b9d65aa36e99fa34f9",
+      "reason": "Native operation identifier recomputed from the complete retained Plan and action index zero; target receipt reconciliation, not an authentication credential.",
+      "proof": {
+        "kind": "effect_key",
+        "plan_pointer": "/events/4/payload/plan",
+        "plan_digest": "1dfa490b336078f128a23aa00f2c1de1aecc684ce07d94554458b1f186d0bb72",
+        "action_index": 0
+      }
+    },
+    {
+      "fingerprint": "evidence/recovery-development/trace-inc-e2934f1e29ba4032bf.json:generic-api-key:167",
+      "native_fingerprint": "f1e6e2f3800242ec210145680261da8ab60f38b4:evidence/recovery-development/trace-inc-e2934f1e29ba4032bf.json:generic-api-key:167",
+      "artifact_sha256": "b97337ac3151cb56fa2f7b94edc78bb395a8f2f96cb0c0b9d65aa36e99fa34f9",
+      "reason": "Native operation identifier recomputed from the complete retained Plan and action index zero; target receipt reconciliation, not an authentication credential.",
+      "proof": {
+        "kind": "effect_key",
+        "plan_pointer": "/events/4/payload/plan",
+        "plan_digest": "1dfa490b336078f128a23aa00f2c1de1aecc684ce07d94554458b1f186d0bb72",
+        "action_index": 0
+      }
+    },
+    {
+      "fingerprint": "evidence/recovery-development/trace-inc-e2934f1e29ba4032bf.json:generic-api-key:183",
+      "native_fingerprint": "f1e6e2f3800242ec210145680261da8ab60f38b4:evidence/recovery-development/trace-inc-e2934f1e29ba4032bf.json:generic-api-key:183",
+      "artifact_sha256": "b97337ac3151cb56fa2f7b94edc78bb395a8f2f96cb0c0b9d65aa36e99fa34f9",
+      "reason": "Native operation identifier recomputed from the complete retained Plan and action index zero; target receipt reconciliation, not an authentication credential.",
+      "proof": {
+        "kind": "effect_key",
+        "plan_pointer": "/events/4/payload/plan",
+        "plan_digest": "1dfa490b336078f128a23aa00f2c1de1aecc684ce07d94554458b1f186d0bb72",
+        "action_index": 0
+      }
+    },
+    {
+      "fingerprint": "evidence/recovery-development/trace-inc-e2934f1e29ba4032bf.json:generic-api-key:212",
+      "native_fingerprint": "f1e6e2f3800242ec210145680261da8ab60f38b4:evidence/recovery-development/trace-inc-e2934f1e29ba4032bf.json:generic-api-key:212",
+      "artifact_sha256": "b97337ac3151cb56fa2f7b94edc78bb395a8f2f96cb0c0b9d65aa36e99fa34f9",
+      "reason": "Native operation identifier recomputed from the complete retained Plan and action index zero; target receipt reconciliation, not an authentication credential.",
+      "proof": {
+        "kind": "effect_key",
+        "plan_pointer": "/events/4/payload/plan",
+        "plan_digest": "1dfa490b336078f128a23aa00f2c1de1aecc684ce07d94554458b1f186d0bb72",
+        "action_index": 0
+      }
+    }
+  ],
+  "unreviewed_findings": [],
+  "limitations": [
+    "Pattern detection cannot prove the absence of credentials or malicious dependencies.",
+    "Upstream built-in rules and allowlists apply; explicit content-bound proofs retain every raw finding.",
+    "Working-tree mode respects Git ignores only for untracked files; history mode scans reachable refs."
+  ],
+  "head": "f1e6e2f3800242ec210145680261da8ab60f38b4",
+  "reachable_commit_count": 3,
+  "shallow_clone": false,
+  "scanner": {
+    "name": "gitleaks",
+    "version": "8.30.1",
+    "archive_url": "https://github.com/gitleaks/gitleaks/releases/download/v8.30.1/gitleaks_8.30.1_linux_x64.tar.gz",
+    "archive_sha256": "551f6fc83ea457d62a0d98237cbad105af8d557003051f41f3e7ca7b3f2470eb",
+    "checksum_manifest_url": "https://github.com/gitleaks/gitleaks/releases/download/v8.30.1/gitleaks_8.30.1_checksums.txt",
+    "checksum_manifest_sha256": "061476c21adaf5441516f96f185c1a4706a83cd6329b9b38762271b3d4a52fae",
+    "binary_sha256": "88f91962aa2f93ac6ab281d553b9e125f5197bbbce38f9f2437f7299c32e5509",
+    "licence": "MIT",
+    "licence_sha256": "e3884b252b3bfc045e55be43a34d1e80da070bc6f804ac95bf4660e97d62ebc6"
+  },
+  "scanner_exit_code": 1,
+  "scanner_stdout": "",
+  "scanner_stderr": "1:57PM INF 3 commits scanned.\n1:57PM INF scanned ~1071403 bytes (1.07 MB) in 426ms\n1:57PM WRN leaks found: 7\n",
+  "native_findings": [
+    {
+      "RuleID": "generic-api-key",
+      "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+      "StartLine": 937,
+      "EndLine": 937,
+      "StartColumn": 25,
+      "EndColumn": 812,
+      "Match": "idempotency_key\":\"REDACTED\"",
+      "Secret": "REDACTED",
+      "File": "evidence/recovery-development/history-inc-e2934f1e29ba4032bf.json",
+      "SymlinkFile": "",
+      "Commit": "f1e6e2f3800242ec210145680261da8ab60f38b4",
+      "Link": "https://github.com/mehdisafer/governed-dataops-agents/blob/f1e6e2f3800242ec210145680261da8ab60f38b4/evidence/recovery-development/history-inc-e2934f1e29ba4032bf.json#L937",
+      "Entropy": 3.8786778,
+      "Author": "mehdisafer",
+      "Email": "142994379+mehdisafer@users.noreply.github.com",
+      "Date": "2026-11-14T12:56:22Z",
+      "Message": "test: qualify recovery, governed effects and frozen model evaluation",
+      "Tags": [
+        "decoded:base64",
+        "decode-depth:1"
+      ],
+      "Fingerprint": "f1e6e2f3800242ec210145680261da8ab60f38b4:evidence/recovery-development/history-inc-e2934f1e29ba4032bf.json:generic-api-key:937"
+    },
+    {
+      "RuleID": "generic-api-key",
+      "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+      "StartLine": 1013,
+      "EndLine": 1013,
+      "StartColumn": 25,
+      "EndColumn": 236,
+      "Match": "idempotency_key\":\"REDACTED\"",
+      "Secret": "REDACTED",
+      "File": "evidence/recovery-development/history-inc-e2934f1e29ba4032bf.json",
+      "SymlinkFile": "",
+      "Commit": "f1e6e2f3800242ec210145680261da8ab60f38b4",
+      "Link": "https://github.com/mehdisafer/governed-dataops-agents/blob/f1e6e2f3800242ec210145680261da8ab60f38b4/evidence/recovery-development/history-inc-e2934f1e29ba4032bf.json#L1013",
+      "Entropy": 3.8786778,
+      "Author": "mehdisafer",
+      "Email": "142994379+mehdisafer@users.noreply.github.com",
+      "Date": "2026-11-14T12:56:22Z",
+      "Message": "test: qualify recovery, governed effects and frozen model evaluation",
+      "Tags": [
+        "decoded:base64",
+        "decode-depth:1"
+      ],
+      "Fingerprint": "f1e6e2f3800242ec210145680261da8ab60f38b4:evidence/recovery-development/history-inc-e2934f1e29ba4032bf.json:generic-api-key:1013"
+    },
+    {
+      "RuleID": "generic-api-key",
+      "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+      "StartLine": 1135,
+      "EndLine": 1135,
+      "StartColumn": 25,
+      "EndColumn": 1368,
+      "Match": "idempotency_key\":\"REDACTED\"",
+      "Secret": "REDACTED",
+      "File": "evidence/recovery-development/history-inc-e2934f1e29ba4032bf.json",
+      "SymlinkFile": "",
+      "Commit": "f1e6e2f3800242ec210145680261da8ab60f38b4",
+      "Link": "https://github.com/mehdisafer/governed-dataops-agents/blob/f1e6e2f3800242ec210145680261da8ab60f38b4/evidence/recovery-development/history-inc-e2934f1e29ba4032bf.json#L1135",
+      "Entropy": 3.8786778,
+      "Author": "mehdisafer",
+      "Email": "142994379+mehdisafer@users.noreply.github.com",
+      "Date": "2026-11-14T12:56:22Z",
+      "Message": "test: qualify recovery, governed effects and frozen model evaluation",
+      "Tags": [
+        "decoded:base64",
+        "decode-depth:1"
+      ],
+      "Fingerprint": "f1e6e2f3800242ec210145680261da8ab60f38b4:evidence/recovery-development/history-inc-e2934f1e29ba4032bf.json:generic-api-key:1135"
+    },
+    {
+      "RuleID": "generic-api-key",
+      "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+      "StartLine": 155,
+      "EndLine": 155,
+      "StartColumn": 11,
+      "EndColumn": 94,
+      "Match": "idempotency_key\": \"REDACTED\"",
+      "Secret": "REDACTED",
+      "File": "evidence/recovery-development/trace-inc-e2934f1e29ba4032bf.json",
+      "SymlinkFile": "",
+      "Commit": "f1e6e2f3800242ec210145680261da8ab60f38b4",
+      "Link": "https://github.com/mehdisafer/governed-dataops-agents/blob/f1e6e2f3800242ec210145680261da8ab60f38b4/evidence/recovery-development/trace-inc-e2934f1e29ba4032bf.json#L155",
+      "Entropy": 3.8786778,
+      "Author": "mehdisafer",
+      "Email": "142994379+mehdisafer@users.noreply.github.com",
+      "Date": "2026-11-14T12:56:22Z",
+      "Message": "test: qualify recovery, governed effects and frozen model evaluation",
+      "Tags": [],
+      "Fingerprint": "f1e6e2f3800242ec210145680261da8ab60f38b4:evidence/recovery-development/trace-inc-e2934f1e29ba4032bf.json:generic-api-key:155"
+    },
+    {
+      "RuleID": "generic-api-key",
+      "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+      "StartLine": 167,
+      "EndLine": 167,
+      "StartColumn": 13,
+      "EndColumn": 96,
+      "Match": "idempotency_key\": \"REDACTED\"",
+      "Secret": "REDACTED",
+      "File": "evidence/recovery-development/trace-inc-e2934f1e29ba4032bf.json",
+      "SymlinkFile": "",
+      "Commit": "f1e6e2f3800242ec210145680261da8ab60f38b4",
+      "Link": "https://github.com/mehdisafer/governed-dataops-agents/blob/f1e6e2f3800242ec210145680261da8ab60f38b4/evidence/recovery-development/trace-inc-e2934f1e29ba4032bf.json#L167",
+      "Entropy": 3.8786778,
+      "Author": "mehdisafer",
+      "Email": "142994379+mehdisafer@users.noreply.github.com",
+      "Date": "2026-11-14T12:56:22Z",
+      "Message": "test: qualify recovery, governed effects and frozen model evaluation",
+      "Tags": [],
+      "Fingerprint": "f1e6e2f3800242ec210145680261da8ab60f38b4:evidence/recovery-development/trace-inc-e2934f1e29ba4032bf.json:generic-api-key:167"
+    },
+    {
+      "RuleID": "generic-api-key",
+      "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+      "StartLine": 183,
+      "EndLine": 183,
+      "StartColumn": 13,
+      "EndColumn": 96,
+      "Match": "idempotency_key\": \"REDACTED\"",
+      "Secret": "REDACTED",
+      "File": "evidence/recovery-development/trace-inc-e2934f1e29ba4032bf.json",
+      "SymlinkFile": "",
+      "Commit": "f1e6e2f3800242ec210145680261da8ab60f38b4",
+      "Link": "https://github.com/mehdisafer/governed-dataops-agents/blob/f1e6e2f3800242ec210145680261da8ab60f38b4/evidence/recovery-development/trace-inc-e2934f1e29ba4032bf.json#L183",
+      "Entropy": 3.8786778,
+      "Author": "mehdisafer",
+      "Email": "142994379+mehdisafer@users.noreply.github.com",
+      "Date": "2026-11-14T12:56:22Z",
+      "Message": "test: qualify recovery, governed effects and frozen model evaluation",
+      "Tags": [],
+      "Fingerprint": "f1e6e2f3800242ec210145680261da8ab60f38b4:evidence/recovery-development/trace-inc-e2934f1e29ba4032bf.json:generic-api-key:183"
+    },
+    {
+      "RuleID": "generic-api-key",
+      "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+      "StartLine": 212,
+      "EndLine": 212,
+      "StartColumn": 11,
+      "EndColumn": 94,
+      "Match": "idempotency_key\": \"REDACTED\"",
+      "Secret": "REDACTED",
+      "File": "evidence/recovery-development/trace-inc-e2934f1e29ba4032bf.json",
+      "SymlinkFile": "",
+      "Commit": "f1e6e2f3800242ec210145680261da8ab60f38b4",
+      "Link": "https://github.com/mehdisafer/governed-dataops-agents/blob/f1e6e2f3800242ec210145680261da8ab60f38b4/evidence/recovery-development/trace-inc-e2934f1e29ba4032bf.json#L212",
+      "Entropy": 3.8786778,
+      "Author": "mehdisafer",
+      "Email": "142994379+mehdisafer@users.noreply.github.com",
+      "Date": "2026-11-14T12:56:22Z",
+      "Message": "test: qualify recovery, governed effects and frozen model evaluation",
+      "Tags": [],
+      "Fingerprint": "f1e6e2f3800242ec210145680261da8ab60f38b4:evidence/recovery-development/trace-inc-e2934f1e29ba4032bf.json:generic-api-key:212"
+    }
+  ],
+  "raw_finding_count": 7,
+  "review_registry_sha256": "2e8d84d78072a8388e60433305bf688cac3ff3961cee89f620e36ed867bc7cab",
+  "unreviewed_finding_count": 0
+}

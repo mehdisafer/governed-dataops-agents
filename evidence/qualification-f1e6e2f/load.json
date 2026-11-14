@@ -1,0 +1,29 @@
+{
+  "engine": "runbook",
+  "count": 12,
+  "concurrency": 4,
+  "elapsed_seconds": 17.752922075999777,
+  "throughput_incidents_per_second": 0.6759450612484146,
+  "median_seconds": 5.660277572000268,
+  "p95_seconds": 6.150011194000399,
+  "errors": 0,
+  "threshold_declared_before_run": {
+    "p95_seconds_max": 45,
+    "errors_max": 0
+  },
+  "incident_ids": [
+    "inc-63873f8cc4054ff19f",
+    "inc-27587c8c6a8548c498",
+    "inc-2e540d6e5a24458eb2",
+    "inc-2df4f61adf2e48b590",
+    "inc-058e12b75b73430d9d",
+    "inc-9636d9f05c2d4f5cba",
+    "inc-0f992d2e6c8543aa88",
+    "inc-4c7fc76734f14d41bf",
+    "inc-d0de8f79ef6541f28b",
+    "inc-0f94b6447b1145aab8",
+    "inc-554eb5155063409da2",
+    "inc-91cf83ae535146bf9a"
+  ],
+  "interpretation": "bounded single-host runbook load; not model throughput or scalability proof"
+}

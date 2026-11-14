@@ -1,0 +1,2171 @@
+{
+  "created_at": "2026-11-14T13:37:13.998380+00:00",
+  "wrapper_sha256": "6e885bbfe7ede94d7aa57c54d96fc56803d506a963af2dd45b71c1b38c83b63e",
+  "mode": "expanded_directory",
+  "status": "reviewed_non_secret_findings",
+  "history_scanned": false,
+  "reviewed_non_secret_candidates": [
+    {
+      "fingerprint": "evidence/runs/publication-staging/prior-histories-expanded/history-inc-77c75a66c1104fc4ab.json:generic-api-key:937",
+      "native_fingerprint": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-77c75a66c1104fc4ab.json:generic-api-key:937",
+      "artifact_sha256": "37278e3ad96c503d2a9d5decf7f4b78dd51d5b6f894dbdb6da799c29dc491503",
+      "reason": "Exact semantic proof from retained canonical Plan and action index zero.",
+      "proof": {
+        "kind": "effect_key",
+        "plan_pointer": "/events/20/activityTaskCompletedEventAttributes/result/payloads/0/data#json-plain/plan",
+        "plan_digest": "fa5af8181a65c31852747da6673b505108971920dff1b78d88386814785b1ff9",
+        "action_index": 0
+      }
+    },
+    {
+      "fingerprint": "evidence/runs/publication-staging/prior-histories-expanded/history-inc-77c75a66c1104fc4ab.json:generic-api-key:1013",
+      "native_fingerprint": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-77c75a66c1104fc4ab.json:generic-api-key:1013",
+      "artifact_sha256": "37278e3ad96c503d2a9d5decf7f4b78dd51d5b6f894dbdb6da799c29dc491503",
+      "reason": "Exact semantic proof from retained canonical Plan and action index zero.",
+      "proof": {
+        "kind": "effect_key",
+        "plan_pointer": "/events/20/activityTaskCompletedEventAttributes/result/payloads/0/data#json-plain/plan",
+        "plan_digest": "fa5af8181a65c31852747da6673b505108971920dff1b78d88386814785b1ff9",
+        "action_index": 0
+      }
+    },
+    {
+      "fingerprint": "evidence/runs/publication-staging/prior-histories-expanded/history-inc-77c75a66c1104fc4ab.json:generic-api-key:1135",
+      "native_fingerprint": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-77c75a66c1104fc4ab.json:generic-api-key:1135",
+      "artifact_sha256": "37278e3ad96c503d2a9d5decf7f4b78dd51d5b6f894dbdb6da799c29dc491503",
+      "reason": "Exact semantic proof from retained canonical Plan and action index zero.",
+      "proof": {
+        "kind": "effect_key",
+        "plan_pointer": "/events/20/activityTaskCompletedEventAttributes/result/payloads/0/data#json-plain/plan",
+        "plan_digest": "fa5af8181a65c31852747da6673b505108971920dff1b78d88386814785b1ff9",
+        "action_index": 0
+      }
+    },
+    {
+      "fingerprint": "evidence/runs/publication-staging/prior-histories-expanded/history-inc-37eb81bd42dc4a2d80.json:generic-api-key:937",
+      "native_fingerprint": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-37eb81bd42dc4a2d80.json:generic-api-key:937",
+      "artifact_sha256": "fe8648f42c4fc72d4980aec70855a0be16564a3c29928723bc76a768c66ad5ee",
+      "reason": "Exact semantic proof from retained canonical Plan and action index zero.",
+      "proof": {
+        "kind": "effect_key",
+        "plan_pointer": "/events/20/activityTaskCompletedEventAttributes/result/payloads/0/data#json-plain/plan",
+        "plan_digest": "723302a9b8a4d4ab607950484aeed0589a038cbe9a492c65bba0ec417fe494ed",
+        "action_index": 0
+      }
+    },
+    {
+      "fingerprint": "evidence/runs/publication-staging/prior-histories-expanded/history-inc-37eb81bd42dc4a2d80.json:generic-api-key:1013",
+      "native_fingerprint": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-37eb81bd42dc4a2d80.json:generic-api-key:1013",
+      "artifact_sha256": "fe8648f42c4fc72d4980aec70855a0be16564a3c29928723bc76a768c66ad5ee",
+      "reason": "Exact semantic proof from retained canonical Plan and action index zero.",
+      "proof": {
+        "kind": "effect_key",
+        "plan_pointer": "/events/20/activityTaskCompletedEventAttributes/result/payloads/0/data#json-plain/plan",
+        "plan_digest": "723302a9b8a4d4ab607950484aeed0589a038cbe9a492c65bba0ec417fe494ed",
+        "action_index": 0
+      }
+    },
+    {
+      "fingerprint": "evidence/runs/publication-staging/prior-histories-expanded/history-inc-37eb81bd42dc4a2d80.json:generic-api-key:1135",
+      "native_fingerprint": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-37eb81bd42dc4a2d80.json:generic-api-key:1135",
+      "artifact_sha256": "fe8648f42c4fc72d4980aec70855a0be16564a3c29928723bc76a768c66ad5ee",
+      "reason": "Exact semantic proof from retained canonical Plan and action index zero.",
+      "proof": {
+        "kind": "effect_key",
+        "plan_pointer": "/events/20/activityTaskCompletedEventAttributes/result/payloads/0/data#json-plain/plan",
+        "plan_digest": "723302a9b8a4d4ab607950484aeed0589a038cbe9a492c65bba0ec417fe494ed",
+        "action_index": 0
+      }
+    },
+    {
+      "fingerprint": "evidence/runs/publication-staging/prior-histories-expanded/history-inc-81a76f15c64d4aa6a7.json:generic-api-key:937",
+      "native_fingerprint": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-81a76f15c64d4aa6a7.json:generic-api-key:937",
+      "artifact_sha256": "6a0ee3d0cbedd17cf2fc043324ec91cad3b9a983f3a4831d4be2cfc1cf03c2a5",
+      "reason": "Exact semantic proof from retained canonical Plan and action index zero.",
+      "proof": {
+        "kind": "effect_key",
+        "plan_pointer": "/events/20/activityTaskCompletedEventAttributes/result/payloads/0/data#json-plain/plan",
+        "plan_digest": "b6de8f784c62109f9fd84e523e97950ec43951e5ddb3db92664001062e4122c8",
+        "action_index": 0
+      }
+    },
+    {
+      "fingerprint": "evidence/runs/publication-staging/prior-histories-expanded/history-inc-81a76f15c64d4aa6a7.json:generic-api-key:1013",
+      "native_fingerprint": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-81a76f15c64d4aa6a7.json:generic-api-key:1013",
+      "artifact_sha256": "6a0ee3d0cbedd17cf2fc043324ec91cad3b9a983f3a4831d4be2cfc1cf03c2a5",
+      "reason": "Exact semantic proof from retained canonical Plan and action index zero.",
+      "proof": {
+        "kind": "effect_key",
+        "plan_pointer": "/events/20/activityTaskCompletedEventAttributes/result/payloads/0/data#json-plain/plan",
+        "plan_digest": "b6de8f784c62109f9fd84e523e97950ec43951e5ddb3db92664001062e4122c8",
+        "action_index": 0
+      }
+    },
+    {
+      "fingerprint": "evidence/runs/publication-staging/prior-histories-expanded/history-inc-81a76f15c64d4aa6a7.json:generic-api-key:1135",
+      "native_fingerprint": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-81a76f15c64d4aa6a7.json:generic-api-key:1135",
+      "artifact_sha256": "6a0ee3d0cbedd17cf2fc043324ec91cad3b9a983f3a4831d4be2cfc1cf03c2a5",
+      "reason": "Exact semantic proof from retained canonical Plan and action index zero.",
+      "proof": {
+        "kind": "effect_key",
+        "plan_pointer": "/events/20/activityTaskCompletedEventAttributes/result/payloads/0/data#json-plain/plan",
+        "plan_digest": "b6de8f784c62109f9fd84e523e97950ec43951e5ddb3db92664001062e4122c8",
+        "action_index": 0
+      }
+    },
+    {
+      "fingerprint": "evidence/runs/publication-staging/prior-histories-expanded/history-inc-4d0df1d4e46d42cba5.json:generic-api-key:937",
+      "native_fingerprint": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-4d0df1d4e46d42cba5.json:generic-api-key:937",
+      "artifact_sha256": "4a22bb763dc00ff7270821e0da5b3e17faf85f92eb592a7a2728e753185439a9",
+      "reason": "Exact semantic proof from retained canonical Plan and action index zero.",
+      "proof": {
+        "kind": "effect_key",
+        "plan_pointer": "/events/20/activityTaskCompletedEventAttributes/result/payloads/0/data#json-plain/plan",
+        "plan_digest": "8b9dee80b3b3d504f2aea52e6ed1a0a79c2f439c4ca5513863f98f6fed0bf1b7",
+        "action_index": 0
+      }
+    },
+    {
+      "fingerprint": "evidence/runs/publication-staging/prior-histories-expanded/history-inc-4d0df1d4e46d42cba5.json:generic-api-key:1013",
+      "native_fingerprint": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-4d0df1d4e46d42cba5.json:generic-api-key:1013",
+      "artifact_sha256": "4a22bb763dc00ff7270821e0da5b3e17faf85f92eb592a7a2728e753185439a9",
+      "reason": "Exact semantic proof from retained canonical Plan and action index zero.",
+      "proof": {
+        "kind": "effect_key",
+        "plan_pointer": "/events/20/activityTaskCompletedEventAttributes/result/payloads/0/data#json-plain/plan",
+        "plan_digest": "8b9dee80b3b3d504f2aea52e6ed1a0a79c2f439c4ca5513863f98f6fed0bf1b7",
+        "action_index": 0
+      }
+    },
+    {
+      "fingerprint": "evidence/runs/publication-staging/prior-histories-expanded/history-inc-4d0df1d4e46d42cba5.json:generic-api-key:1135",
+      "native_fingerprint": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-4d0df1d4e46d42cba5.json:generic-api-key:1135",
+      "artifact_sha256": "4a22bb763dc00ff7270821e0da5b3e17faf85f92eb592a7a2728e753185439a9",
+      "reason": "Exact semantic proof from retained canonical Plan and action index zero.",
+      "proof": {
+        "kind": "effect_key",
+        "plan_pointer": "/events/20/activityTaskCompletedEventAttributes/result/payloads/0/data#json-plain/plan",
+        "plan_digest": "8b9dee80b3b3d504f2aea52e6ed1a0a79c2f439c4ca5513863f98f6fed0bf1b7",
+        "action_index": 0
+      }
+    },
+    {
+      "fingerprint": "evidence/runs/publication-staging/prior-histories-expanded/history-inc-9970e3985067448388.json:generic-api-key:937",
+      "native_fingerprint": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-9970e3985067448388.json:generic-api-key:937",
+      "artifact_sha256": "ca77ec8f01ed22bbbd5c3d32eb794ee20deefd596db62f1eba40226ac4dca6ae",
+      "reason": "Exact semantic proof from retained canonical Plan and action index zero.",
+      "proof": {
+        "kind": "effect_key",
+        "plan_pointer": "/events/20/activityTaskCompletedEventAttributes/result/payloads/0/data#json-plain/plan",
+        "plan_digest": "9dec7ba00b52b6297d991957066c8686af2a92df23502ac19d99a5a0e54bd94b",
+        "action_index": 0
+      }
+    },
+    {
+      "fingerprint": "evidence/runs/publication-staging/prior-histories-expanded/history-inc-9970e3985067448388.json:generic-api-key:1013",
+      "native_fingerprint": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-9970e3985067448388.json:generic-api-key:1013",
+      "artifact_sha256": "ca77ec8f01ed22bbbd5c3d32eb794ee20deefd596db62f1eba40226ac4dca6ae",
+      "reason": "Exact semantic proof from retained canonical Plan and action index zero.",
+      "proof": {
+        "kind": "effect_key",
+        "plan_pointer": "/events/20/activityTaskCompletedEventAttributes/result/payloads/0/data#json-plain/plan",
+        "plan_digest": "9dec7ba00b52b6297d991957066c8686af2a92df23502ac19d99a5a0e54bd94b",
+        "action_index": 0
+      }
+    },
+    {
+      "fingerprint": "evidence/runs/publication-staging/prior-histories-expanded/history-inc-9970e3985067448388.json:generic-api-key:1135",
+      "native_fingerprint": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-9970e3985067448388.json:generic-api-key:1135",
+      "artifact_sha256": "ca77ec8f01ed22bbbd5c3d32eb794ee20deefd596db62f1eba40226ac4dca6ae",
+      "reason": "Exact semantic proof from retained canonical Plan and action index zero.",
+      "proof": {
+        "kind": "effect_key",
+        "plan_pointer": "/events/20/activityTaskCompletedEventAttributes/result/payloads/0/data#json-plain/plan",
+        "plan_digest": "9dec7ba00b52b6297d991957066c8686af2a92df23502ac19d99a5a0e54bd94b",
+        "action_index": 0
+      }
+    },
+    {
+      "fingerprint": "evidence/runs/publication-staging/prior-histories-expanded/history-inc-fdee2bf1ecff49aab0.json:generic-api-key:937",
+      "native_fingerprint": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-fdee2bf1ecff49aab0.json:generic-api-key:937",
+      "artifact_sha256": "c0555e8c92c6fd50190b53d06e5e433477c579761b11194350f29c152267e17a",
+      "reason": "Exact semantic proof from retained canonical Plan and action index zero.",
+      "proof": {
+        "kind": "effect_key",
+        "plan_pointer": "/events/20/activityTaskCompletedEventAttributes/result/payloads/0/data#json-plain/plan",
+        "plan_digest": "3fb7e565f26b115efec8961cbbf311e256e1a83cfae33e7821df3fe9954418d7",
+        "action_index": 0
+      }
+    },
+    {
+      "fingerprint": "evidence/runs/publication-staging/prior-histories-expanded/history-inc-fdee2bf1ecff49aab0.json:generic-api-key:1013",
+      "native_fingerprint": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-fdee2bf1ecff49aab0.json:generic-api-key:1013",
+      "artifact_sha256": "c0555e8c92c6fd50190b53d06e5e433477c579761b11194350f29c152267e17a",
+      "reason": "Exact semantic proof from retained canonical Plan and action index zero.",
+      "proof": {
+        "kind": "effect_key",
+        "plan_pointer": "/events/20/activityTaskCompletedEventAttributes/result/payloads/0/data#json-plain/plan",
+        "plan_digest": "3fb7e565f26b115efec8961cbbf311e256e1a83cfae33e7821df3fe9954418d7",
+        "action_index": 0
+      }
+    },
+    {
+      "fingerprint": "evidence/runs/publication-staging/prior-histories-expanded/history-inc-fdee2bf1ecff49aab0.json:generic-api-key:1135",
+      "native_fingerprint": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-fdee2bf1ecff49aab0.json:generic-api-key:1135",
+      "artifact_sha256": "c0555e8c92c6fd50190b53d06e5e433477c579761b11194350f29c152267e17a",
+      "reason": "Exact semantic proof from retained canonical Plan and action index zero.",
+      "proof": {
+        "kind": "effect_key",
+        "plan_pointer": "/events/20/activityTaskCompletedEventAttributes/result/payloads/0/data#json-plain/plan",
+        "plan_digest": "3fb7e565f26b115efec8961cbbf311e256e1a83cfae33e7821df3fe9954418d7",
+        "action_index": 0
+      }
+    },
+    {
+      "fingerprint": "evidence/runs/publication-staging/prior-histories-expanded/history-inc-4f61fb4e9d544fa289.json:generic-api-key:937",
+      "native_fingerprint": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-4f61fb4e9d544fa289.json:generic-api-key:937",
+      "artifact_sha256": "7d5004caabe270c342048e93425ba194ae27b5e6fef058d253368b71593fc6d6",
+      "reason": "Exact semantic proof from retained canonical Plan and action index zero.",
+      "proof": {
+        "kind": "effect_key",
+        "plan_pointer": "/events/20/activityTaskCompletedEventAttributes/result/payloads/0/data#json-plain/plan",
+        "plan_digest": "6aadbf1899d2a5cf0aa000207c57e0cb02590a066b4c468c81b26b73f731f9bc",
+        "action_index": 0
+      }
+    },
+    {
+      "fingerprint": "evidence/runs/publication-staging/prior-histories-expanded/history-inc-4f61fb4e9d544fa289.json:generic-api-key:1013",
+      "native_fingerprint": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-4f61fb4e9d544fa289.json:generic-api-key:1013",
+      "artifact_sha256": "7d5004caabe270c342048e93425ba194ae27b5e6fef058d253368b71593fc6d6",
+      "reason": "Exact semantic proof from retained canonical Plan and action index zero.",
+      "proof": {
+        "kind": "effect_key",
+        "plan_pointer": "/events/20/activityTaskCompletedEventAttributes/result/payloads/0/data#json-plain/plan",
+        "plan_digest": "6aadbf1899d2a5cf0aa000207c57e0cb02590a066b4c468c81b26b73f731f9bc",
+        "action_index": 0
+      }
+    },
+    {
+      "fingerprint": "evidence/runs/publication-staging/prior-histories-expanded/history-inc-4f61fb4e9d544fa289.json:generic-api-key:1135",
+      "native_fingerprint": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-4f61fb4e9d544fa289.json:generic-api-key:1135",
+      "artifact_sha256": "7d5004caabe270c342048e93425ba194ae27b5e6fef058d253368b71593fc6d6",
+      "reason": "Exact semantic proof from retained canonical Plan and action index zero.",
+      "proof": {
+        "kind": "effect_key",
+        "plan_pointer": "/events/20/activityTaskCompletedEventAttributes/result/payloads/0/data#json-plain/plan",
+        "plan_digest": "6aadbf1899d2a5cf0aa000207c57e0cb02590a066b4c468c81b26b73f731f9bc",
+        "action_index": 0
+      }
+    },
+    {
+      "fingerprint": "evidence/runs/publication-staging/prior-histories-expanded/history-inc-32fb6f3553c7477cb7.json:generic-api-key:937",
+      "native_fingerprint": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-32fb6f3553c7477cb7.json:generic-api-key:937",
+      "artifact_sha256": "d4c14e9f300d79e87d3e96c0b68142a0a8129f2dd857605f797f6c91f452fbb4",
+      "reason": "Exact semantic proof from retained canonical Plan and action index zero.",
+      "proof": {
+        "kind": "effect_key",
+        "plan_pointer": "/events/20/activityTaskCompletedEventAttributes/result/payloads/0/data#json-plain/plan",
+        "plan_digest": "44b49534880dbcbed9a41ebacc35ae0df765cd4d3de3199c98c8e464bc8b7b67",
+        "action_index": 0
+      }
+    },
+    {
+      "fingerprint": "evidence/runs/publication-staging/prior-histories-expanded/history-inc-32fb6f3553c7477cb7.json:generic-api-key:1013",
+      "native_fingerprint": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-32fb6f3553c7477cb7.json:generic-api-key:1013",
+      "artifact_sha256": "d4c14e9f300d79e87d3e96c0b68142a0a8129f2dd857605f797f6c91f452fbb4",
+      "reason": "Exact semantic proof from retained canonical Plan and action index zero.",
+      "proof": {
+        "kind": "effect_key",
+        "plan_pointer": "/events/20/activityTaskCompletedEventAttributes/result/payloads/0/data#json-plain/plan",
+        "plan_digest": "44b49534880dbcbed9a41ebacc35ae0df765cd4d3de3199c98c8e464bc8b7b67",
+        "action_index": 0
+      }
+    },
+    {
+      "fingerprint": "evidence/runs/publication-staging/prior-histories-expanded/history-inc-32fb6f3553c7477cb7.json:generic-api-key:1135",
+      "native_fingerprint": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-32fb6f3553c7477cb7.json:generic-api-key:1135",
+      "artifact_sha256": "d4c14e9f300d79e87d3e96c0b68142a0a8129f2dd857605f797f6c91f452fbb4",
+      "reason": "Exact semantic proof from retained canonical Plan and action index zero.",
+      "proof": {
+        "kind": "effect_key",
+        "plan_pointer": "/events/20/activityTaskCompletedEventAttributes/result/payloads/0/data#json-plain/plan",
+        "plan_digest": "44b49534880dbcbed9a41ebacc35ae0df765cd4d3de3199c98c8e464bc8b7b67",
+        "action_index": 0
+      }
+    },
+    {
+      "fingerprint": "evidence/runs/publication-staging/prior-histories-expanded/history-inc-9ce288d7670743d7be.json:generic-api-key:937",
+      "native_fingerprint": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-9ce288d7670743d7be.json:generic-api-key:937",
+      "artifact_sha256": "13f8b3e1d4aac7072e75ba07173ee201c70c2f87b473e5c11e2cd00a4090a27d",
+      "reason": "Exact semantic proof from retained canonical Plan and action index zero.",
+      "proof": {
+        "kind": "effect_key",
+        "plan_pointer": "/events/20/activityTaskCompletedEventAttributes/result/payloads/0/data#json-plain/plan",
+        "plan_digest": "82b91dc3f103c6925bc8d6b07082d8b1d311cc7b0a8f7e16086e52825752c426",
+        "action_index": 0
+      }
+    },
+    {
+      "fingerprint": "evidence/runs/publication-staging/prior-histories-expanded/history-inc-9ce288d7670743d7be.json:generic-api-key:1013",
+      "native_fingerprint": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-9ce288d7670743d7be.json:generic-api-key:1013",
+      "artifact_sha256": "13f8b3e1d4aac7072e75ba07173ee201c70c2f87b473e5c11e2cd00a4090a27d",
+      "reason": "Exact semantic proof from retained canonical Plan and action index zero.",
+      "proof": {
+        "kind": "effect_key",
+        "plan_pointer": "/events/20/activityTaskCompletedEventAttributes/result/payloads/0/data#json-plain/plan",
+        "plan_digest": "82b91dc3f103c6925bc8d6b07082d8b1d311cc7b0a8f7e16086e52825752c426",
+        "action_index": 0
+      }
+    },
+    {
+      "fingerprint": "evidence/runs/publication-staging/prior-histories-expanded/history-inc-9ce288d7670743d7be.json:generic-api-key:1135",
+      "native_fingerprint": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-9ce288d7670743d7be.json:generic-api-key:1135",
+      "artifact_sha256": "13f8b3e1d4aac7072e75ba07173ee201c70c2f87b473e5c11e2cd00a4090a27d",
+      "reason": "Exact semantic proof from retained canonical Plan and action index zero.",
+      "proof": {
+        "kind": "effect_key",
+        "plan_pointer": "/events/20/activityTaskCompletedEventAttributes/result/payloads/0/data#json-plain/plan",
+        "plan_digest": "82b91dc3f103c6925bc8d6b07082d8b1d311cc7b0a8f7e16086e52825752c426",
+        "action_index": 0
+      }
+    },
+    {
+      "fingerprint": "evidence/runs/publication-staging/prior-histories-expanded/history-inc-01b9279cd5a7446b9d.json:generic-api-key:937",
+      "native_fingerprint": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-01b9279cd5a7446b9d.json:generic-api-key:937",
+      "artifact_sha256": "a6dffce042ab5f3600d7438bcd799c6dbeb0882b0c7782dced05f1256c734543",
+      "reason": "Exact semantic proof from retained canonical Plan and action index zero.",
+      "proof": {
+        "kind": "effect_key",
+        "plan_pointer": "/events/20/activityTaskCompletedEventAttributes/result/payloads/0/data#json-plain/plan",
+        "plan_digest": "1646e1341884ca57c5a13457394db0ad393f800e1d9f09b8f2101e679b19dbd3",
+        "action_index": 0
+      }
+    },
+    {
+      "fingerprint": "evidence/runs/publication-staging/prior-histories-expanded/history-inc-01b9279cd5a7446b9d.json:generic-api-key:1013",
+      "native_fingerprint": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-01b9279cd5a7446b9d.json:generic-api-key:1013",
+      "artifact_sha256": "a6dffce042ab5f3600d7438bcd799c6dbeb0882b0c7782dced05f1256c734543",
+      "reason": "Exact semantic proof from retained canonical Plan and action index zero.",
+      "proof": {
+        "kind": "effect_key",
+        "plan_pointer": "/events/20/activityTaskCompletedEventAttributes/result/payloads/0/data#json-plain/plan",
+        "plan_digest": "1646e1341884ca57c5a13457394db0ad393f800e1d9f09b8f2101e679b19dbd3",
+        "action_index": 0
+      }
+    },
+    {
+      "fingerprint": "evidence/runs/publication-staging/prior-histories-expanded/history-inc-01b9279cd5a7446b9d.json:generic-api-key:1135",
+      "native_fingerprint": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-01b9279cd5a7446b9d.json:generic-api-key:1135",
+      "artifact_sha256": "a6dffce042ab5f3600d7438bcd799c6dbeb0882b0c7782dced05f1256c734543",
+      "reason": "Exact semantic proof from retained canonical Plan and action index zero.",
+      "proof": {
+        "kind": "effect_key",
+        "plan_pointer": "/events/20/activityTaskCompletedEventAttributes/result/payloads/0/data#json-plain/plan",
+        "plan_digest": "1646e1341884ca57c5a13457394db0ad393f800e1d9f09b8f2101e679b19dbd3",
+        "action_index": 0
+      }
+    },
+    {
+      "fingerprint": "evidence/runs/publication-staging/prior-histories-expanded/history-inc-c7d7674a5a664ee0bf.json:generic-api-key:937",
+      "native_fingerprint": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-c7d7674a5a664ee0bf.json:generic-api-key:937",
+      "artifact_sha256": "fe496b7d7ebe69bf6d908507aee0c140037b2b62189c59cac0991a7908ecbfac",
+      "reason": "Exact semantic proof from retained canonical Plan and action index zero.",
+      "proof": {
+        "kind": "effect_key",
+        "plan_pointer": "/events/20/activityTaskCompletedEventAttributes/result/payloads/0/data#json-plain/plan",
+        "plan_digest": "fb182612902535469da210eddcab27234417f02402845f3dbe4e4b2a52c65954",
+        "action_index": 0
+      }
+    },
+    {
+      "fingerprint": "evidence/runs/publication-staging/prior-histories-expanded/history-inc-c7d7674a5a664ee0bf.json:generic-api-key:1013",
+      "native_fingerprint": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-c7d7674a5a664ee0bf.json:generic-api-key:1013",
+      "artifact_sha256": "fe496b7d7ebe69bf6d908507aee0c140037b2b62189c59cac0991a7908ecbfac",
+      "reason": "Exact semantic proof from retained canonical Plan and action index zero.",
+      "proof": {
+        "kind": "effect_key",
+        "plan_pointer": "/events/20/activityTaskCompletedEventAttributes/result/payloads/0/data#json-plain/plan",
+        "plan_digest": "fb182612902535469da210eddcab27234417f02402845f3dbe4e4b2a52c65954",
+        "action_index": 0
+      }
+    },
+    {
+      "fingerprint": "evidence/runs/publication-staging/prior-histories-expanded/history-inc-c7d7674a5a664ee0bf.json:generic-api-key:1135",
+      "native_fingerprint": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-c7d7674a5a664ee0bf.json:generic-api-key:1135",
+      "artifact_sha256": "fe496b7d7ebe69bf6d908507aee0c140037b2b62189c59cac0991a7908ecbfac",
+      "reason": "Exact semantic proof from retained canonical Plan and action index zero.",
+      "proof": {
+        "kind": "effect_key",
+        "plan_pointer": "/events/20/activityTaskCompletedEventAttributes/result/payloads/0/data#json-plain/plan",
+        "plan_digest": "fb182612902535469da210eddcab27234417f02402845f3dbe4e4b2a52c65954",
+        "action_index": 0
+      }
+    },
+    {
+      "fingerprint": "evidence/runs/publication-staging/prior-histories-expanded/history-inc-c4d5acdc0e454d10b6.json:generic-api-key:937",
+      "native_fingerprint": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-c4d5acdc0e454d10b6.json:generic-api-key:937",
+      "artifact_sha256": "a007403865435e0938f5e63ba139175a771130b40a63564a273c23d8f5c011d8",
+      "reason": "Exact semantic proof from retained canonical Plan and action index zero.",
+      "proof": {
+        "kind": "effect_key",
+        "plan_pointer": "/events/20/activityTaskCompletedEventAttributes/result/payloads/0/data#json-plain/plan",
+        "plan_digest": "f45b954336eb3f40e3ebe976685c71d9646757e61e3ad5025653b7830fcffef9",
+        "action_index": 0
+      }
+    },
+    {
+      "fingerprint": "evidence/runs/publication-staging/prior-histories-expanded/history-inc-c4d5acdc0e454d10b6.json:generic-api-key:1013",
+      "native_fingerprint": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-c4d5acdc0e454d10b6.json:generic-api-key:1013",
+      "artifact_sha256": "a007403865435e0938f5e63ba139175a771130b40a63564a273c23d8f5c011d8",
+      "reason": "Exact semantic proof from retained canonical Plan and action index zero.",
+      "proof": {
+        "kind": "effect_key",
+        "plan_pointer": "/events/20/activityTaskCompletedEventAttributes/result/payloads/0/data#json-plain/plan",
+        "plan_digest": "f45b954336eb3f40e3ebe976685c71d9646757e61e3ad5025653b7830fcffef9",
+        "action_index": 0
+      }
+    },
+    {
+      "fingerprint": "evidence/runs/publication-staging/prior-histories-expanded/history-inc-c4d5acdc0e454d10b6.json:generic-api-key:1135",
+      "native_fingerprint": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-c4d5acdc0e454d10b6.json:generic-api-key:1135",
+      "artifact_sha256": "a007403865435e0938f5e63ba139175a771130b40a63564a273c23d8f5c011d8",
+      "reason": "Exact semantic proof from retained canonical Plan and action index zero.",
+      "proof": {
+        "kind": "effect_key",
+        "plan_pointer": "/events/20/activityTaskCompletedEventAttributes/result/payloads/0/data#json-plain/plan",
+        "plan_digest": "f45b954336eb3f40e3ebe976685c71d9646757e61e3ad5025653b7830fcffef9",
+        "action_index": 0
+      }
+    },
+    {
+      "fingerprint": "evidence/runs/publication-staging/prior-histories-expanded/history-inc-e5bc2ca110fb4e5d98.json:generic-api-key:937",
+      "native_fingerprint": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-e5bc2ca110fb4e5d98.json:generic-api-key:937",
+      "artifact_sha256": "2f6d4559d05868a3f20a603045673d9397a96534e76edc04a0384706b9a051ef",
+      "reason": "Exact semantic proof from retained canonical Plan and action index zero.",
+      "proof": {
+        "kind": "effect_key",
+        "plan_pointer": "/events/20/activityTaskCompletedEventAttributes/result/payloads/0/data#json-plain/plan",
+        "plan_digest": "d296c6e59d9d670875eea5724691c6cd541912ea68c993be15cee6b65656e744",
+        "action_index": 0
+      }
+    },
+    {
+      "fingerprint": "evidence/runs/publication-staging/prior-histories-expanded/history-inc-e5bc2ca110fb4e5d98.json:generic-api-key:1013",
+      "native_fingerprint": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-e5bc2ca110fb4e5d98.json:generic-api-key:1013",
+      "artifact_sha256": "2f6d4559d05868a3f20a603045673d9397a96534e76edc04a0384706b9a051ef",
+      "reason": "Exact semantic proof from retained canonical Plan and action index zero.",
+      "proof": {
+        "kind": "effect_key",
+        "plan_pointer": "/events/20/activityTaskCompletedEventAttributes/result/payloads/0/data#json-plain/plan",
+        "plan_digest": "d296c6e59d9d670875eea5724691c6cd541912ea68c993be15cee6b65656e744",
+        "action_index": 0
+      }
+    },
+    {
+      "fingerprint": "evidence/runs/publication-staging/prior-histories-expanded/history-inc-e5bc2ca110fb4e5d98.json:generic-api-key:1135",
+      "native_fingerprint": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-e5bc2ca110fb4e5d98.json:generic-api-key:1135",
+      "artifact_sha256": "2f6d4559d05868a3f20a603045673d9397a96534e76edc04a0384706b9a051ef",
+      "reason": "Exact semantic proof from retained canonical Plan and action index zero.",
+      "proof": {
+        "kind": "effect_key",
+        "plan_pointer": "/events/20/activityTaskCompletedEventAttributes/result/payloads/0/data#json-plain/plan",
+        "plan_digest": "d296c6e59d9d670875eea5724691c6cd541912ea68c993be15cee6b65656e744",
+        "action_index": 0
+      }
+    },
+    {
+      "fingerprint": "evidence/runs/publication-staging/prior-histories-expanded/history-inc-b2c1e9a247574eadb0.json:generic-api-key:937",
+      "native_fingerprint": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-b2c1e9a247574eadb0.json:generic-api-key:937",
+      "artifact_sha256": "22f6ac0df21fb13d2c23bea990e1da3579d23503cbd0586d643275080b532c03",
+      "reason": "Exact semantic proof from retained canonical Plan and action index zero.",
+      "proof": {
+        "kind": "effect_key",
+        "plan_pointer": "/events/20/activityTaskCompletedEventAttributes/result/payloads/0/data#json-plain/plan",
+        "plan_digest": "80dc5439365eef505effe926ab462ac085be2825879e2fa456a38a657946a252",
+        "action_index": 0
+      }
+    },
+    {
+      "fingerprint": "evidence/runs/publication-staging/prior-histories-expanded/history-inc-b2c1e9a247574eadb0.json:generic-api-key:1013",
+      "native_fingerprint": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-b2c1e9a247574eadb0.json:generic-api-key:1013",
+      "artifact_sha256": "22f6ac0df21fb13d2c23bea990e1da3579d23503cbd0586d643275080b532c03",
+      "reason": "Exact semantic proof from retained canonical Plan and action index zero.",
+      "proof": {
+        "kind": "effect_key",
+        "plan_pointer": "/events/20/activityTaskCompletedEventAttributes/result/payloads/0/data#json-plain/plan",
+        "plan_digest": "80dc5439365eef505effe926ab462ac085be2825879e2fa456a38a657946a252",
+        "action_index": 0
+      }
+    },
+    {
+      "fingerprint": "evidence/runs/publication-staging/prior-histories-expanded/history-inc-b2c1e9a247574eadb0.json:generic-api-key:1135",
+      "native_fingerprint": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-b2c1e9a247574eadb0.json:generic-api-key:1135",
+      "artifact_sha256": "22f6ac0df21fb13d2c23bea990e1da3579d23503cbd0586d643275080b532c03",
+      "reason": "Exact semantic proof from retained canonical Plan and action index zero.",
+      "proof": {
+        "kind": "effect_key",
+        "plan_pointer": "/events/20/activityTaskCompletedEventAttributes/result/payloads/0/data#json-plain/plan",
+        "plan_digest": "80dc5439365eef505effe926ab462ac085be2825879e2fa456a38a657946a252",
+        "action_index": 0
+      }
+    },
+    {
+      "fingerprint": "evidence/runs/publication-staging/prior-histories-expanded/history-inc-e2934f1e29ba4032bf.json:generic-api-key:937",
+      "native_fingerprint": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-e2934f1e29ba4032bf.json:generic-api-key:937",
+      "artifact_sha256": "6d1d731ea9c092006df2daa831889efa4beec89d95657331d06e555c645718b6",
+      "reason": "Exact semantic proof from retained canonical Plan and action index zero.",
+      "proof": {
+        "kind": "effect_key",
+        "plan_pointer": "/events/20/activityTaskCompletedEventAttributes/result/payloads/0/data#json-plain/plan",
+        "plan_digest": "1dfa490b336078f128a23aa00f2c1de1aecc684ce07d94554458b1f186d0bb72",
+        "action_index": 0
+      }
+    },
+    {
+      "fingerprint": "evidence/runs/publication-staging/prior-histories-expanded/history-inc-e2934f1e29ba4032bf.json:generic-api-key:1013",
+      "native_fingerprint": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-e2934f1e29ba4032bf.json:generic-api-key:1013",
+      "artifact_sha256": "6d1d731ea9c092006df2daa831889efa4beec89d95657331d06e555c645718b6",
+      "reason": "Exact semantic proof from retained canonical Plan and action index zero.",
+      "proof": {
+        "kind": "effect_key",
+        "plan_pointer": "/events/20/activityTaskCompletedEventAttributes/result/payloads/0/data#json-plain/plan",
+        "plan_digest": "1dfa490b336078f128a23aa00f2c1de1aecc684ce07d94554458b1f186d0bb72",
+        "action_index": 0
+      }
+    },
+    {
+      "fingerprint": "evidence/runs/publication-staging/prior-histories-expanded/history-inc-e2934f1e29ba4032bf.json:generic-api-key:1135",
+      "native_fingerprint": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-e2934f1e29ba4032bf.json:generic-api-key:1135",
+      "artifact_sha256": "6d1d731ea9c092006df2daa831889efa4beec89d95657331d06e555c645718b6",
+      "reason": "Exact semantic proof from retained canonical Plan and action index zero.",
+      "proof": {
+        "kind": "effect_key",
+        "plan_pointer": "/events/20/activityTaskCompletedEventAttributes/result/payloads/0/data#json-plain/plan",
+        "plan_digest": "1dfa490b336078f128a23aa00f2c1de1aecc684ce07d94554458b1f186d0bb72",
+        "action_index": 0
+      }
+    },
+    {
+      "fingerprint": "evidence/runs/publication-staging/prior-histories-expanded/history-inc-9d9b9760b4ff4fd8a6.json:generic-api-key:937",
+      "native_fingerprint": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-9d9b9760b4ff4fd8a6.json:generic-api-key:937",
+      "artifact_sha256": "29e6718e9f50983c212883fab68a66e83163d59e4afac43edaff8cc7f0feba72",
+      "reason": "Exact semantic proof from retained canonical Plan and action index zero.",
+      "proof": {
+        "kind": "effect_key",
+        "plan_pointer": "/events/20/activityTaskCompletedEventAttributes/result/payloads/0/data#json-plain/plan",
+        "plan_digest": "9ee37f80301e166833ae2e62d9082c09c86c4f22241d852080695ac605e13530",
+        "action_index": 0
+      }
+    },
+    {
+      "fingerprint": "evidence/runs/publication-staging/prior-histories-expanded/history-inc-9d9b9760b4ff4fd8a6.json:generic-api-key:1013",
+      "native_fingerprint": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-9d9b9760b4ff4fd8a6.json:generic-api-key:1013",
+      "artifact_sha256": "29e6718e9f50983c212883fab68a66e83163d59e4afac43edaff8cc7f0feba72",
+      "reason": "Exact semantic proof from retained canonical Plan and action index zero.",
+      "proof": {
+        "kind": "effect_key",
+        "plan_pointer": "/events/20/activityTaskCompletedEventAttributes/result/payloads/0/data#json-plain/plan",
+        "plan_digest": "9ee37f80301e166833ae2e62d9082c09c86c4f22241d852080695ac605e13530",
+        "action_index": 0
+      }
+    },
+    {
+      "fingerprint": "evidence/runs/publication-staging/prior-histories-expanded/history-inc-9d9b9760b4ff4fd8a6.json:generic-api-key:1135",
+      "native_fingerprint": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-9d9b9760b4ff4fd8a6.json:generic-api-key:1135",
+      "artifact_sha256": "29e6718e9f50983c212883fab68a66e83163d59e4afac43edaff8cc7f0feba72",
+      "reason": "Exact semantic proof from retained canonical Plan and action index zero.",
+      "proof": {
+        "kind": "effect_key",
+        "plan_pointer": "/events/20/activityTaskCompletedEventAttributes/result/payloads/0/data#json-plain/plan",
+        "plan_digest": "9ee37f80301e166833ae2e62d9082c09c86c4f22241d852080695ac605e13530",
+        "action_index": 0
+      }
+    },
+    {
+      "fingerprint": "evidence/runs/publication-staging/prior-histories-expanded/history-inc-41d0b6d817804762a5.json:generic-api-key:937",
+      "native_fingerprint": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-41d0b6d817804762a5.json:generic-api-key:937",
+      "artifact_sha256": "d3945cd9e93a594a2b6fbc1673c9546d6b8ed9b8ec983f4c36f97031e8bfb159",
+      "reason": "Exact semantic proof from retained canonical Plan and action index zero.",
+      "proof": {
+        "kind": "effect_key",
+        "plan_pointer": "/events/20/activityTaskCompletedEventAttributes/result/payloads/0/data#json-plain/plan",
+        "plan_digest": "a887ca2009bd4f513adf92cdabb675b76e4a88fb978a745197e20988a4c88212",
+        "action_index": 0
+      }
+    },
+    {
+      "fingerprint": "evidence/runs/publication-staging/prior-histories-expanded/history-inc-41d0b6d817804762a5.json:generic-api-key:1013",
+      "native_fingerprint": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-41d0b6d817804762a5.json:generic-api-key:1013",
+      "artifact_sha256": "d3945cd9e93a594a2b6fbc1673c9546d6b8ed9b8ec983f4c36f97031e8bfb159",
+      "reason": "Exact semantic proof from retained canonical Plan and action index zero.",
+      "proof": {
+        "kind": "effect_key",
+        "plan_pointer": "/events/20/activityTaskCompletedEventAttributes/result/payloads/0/data#json-plain/plan",
+        "plan_digest": "a887ca2009bd4f513adf92cdabb675b76e4a88fb978a745197e20988a4c88212",
+        "action_index": 0
+      }
+    },
+    {
+      "fingerprint": "evidence/runs/publication-staging/prior-histories-expanded/history-inc-41d0b6d817804762a5.json:generic-api-key:1135",
+      "native_fingerprint": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-41d0b6d817804762a5.json:generic-api-key:1135",
+      "artifact_sha256": "d3945cd9e93a594a2b6fbc1673c9546d6b8ed9b8ec983f4c36f97031e8bfb159",
+      "reason": "Exact semantic proof from retained canonical Plan and action index zero.",
+      "proof": {
+        "kind": "effect_key",
+        "plan_pointer": "/events/20/activityTaskCompletedEventAttributes/result/payloads/0/data#json-plain/plan",
+        "plan_digest": "a887ca2009bd4f513adf92cdabb675b76e4a88fb978a745197e20988a4c88212",
+        "action_index": 0
+      }
+    },
+    {
+      "fingerprint": "evidence/runs/publication-staging/prior-histories-expanded/history-inc-f4fac72a86104a83b0.json:generic-api-key:1295",
+      "native_fingerprint": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-f4fac72a86104a83b0.json:generic-api-key:1295",
+      "artifact_sha256": "475af452f1abfc2160c1836403f3c6f969e4eff4c19504dc142f223e3b22148c",
+      "reason": "Exact semantic proof from retained canonical Plan and action index zero.",
+      "proof": {
+        "kind": "effect_key",
+        "plan_pointer": "/events/20/activityTaskCompletedEventAttributes/result/payloads/0/data#json-plain/plan",
+        "plan_digest": "e7cc3393f2fc86093979bea814ed806de0dfa571c2c30002acc5df050a1f8d88",
+        "action_index": 0
+      }
+    },
+    {
+      "fingerprint": "evidence/runs/publication-staging/prior-histories-expanded/history-inc-f4fac72a86104a83b0.json:generic-api-key:1371",
+      "native_fingerprint": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-f4fac72a86104a83b0.json:generic-api-key:1371",
+      "artifact_sha256": "475af452f1abfc2160c1836403f3c6f969e4eff4c19504dc142f223e3b22148c",
+      "reason": "Exact semantic proof from retained canonical Plan and action index zero.",
+      "proof": {
+        "kind": "effect_key",
+        "plan_pointer": "/events/20/activityTaskCompletedEventAttributes/result/payloads/0/data#json-plain/plan",
+        "plan_digest": "e7cc3393f2fc86093979bea814ed806de0dfa571c2c30002acc5df050a1f8d88",
+        "action_index": 0
+      }
+    },
+    {
+      "fingerprint": "evidence/runs/publication-staging/prior-histories-expanded/history-inc-f4fac72a86104a83b0.json:generic-api-key:1493",
+      "native_fingerprint": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-f4fac72a86104a83b0.json:generic-api-key:1493",
+      "artifact_sha256": "475af452f1abfc2160c1836403f3c6f969e4eff4c19504dc142f223e3b22148c",
+      "reason": "Exact semantic proof from retained canonical Plan and action index zero.",
+      "proof": {
+        "kind": "effect_key",
+        "plan_pointer": "/events/20/activityTaskCompletedEventAttributes/result/payloads/0/data#json-plain/plan",
+        "plan_digest": "e7cc3393f2fc86093979bea814ed806de0dfa571c2c30002acc5df050a1f8d88",
+        "action_index": 0
+      }
+    },
+    {
+      "fingerprint": "evidence/runs/publication-staging/prior-histories-expanded/history-inc-b2a2408a7e804f96a3.json:generic-api-key:1271",
+      "native_fingerprint": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-b2a2408a7e804f96a3.json:generic-api-key:1271",
+      "artifact_sha256": "ad0467dac6d78e5c6575bcd6e1a78f7182bc60380f50185e6992f605a38549f7",
+      "reason": "Exact semantic proof from retained canonical Plan and action index zero.",
+      "proof": {
+        "kind": "effect_key",
+        "plan_pointer": "/events/20/activityTaskCompletedEventAttributes/result/payloads/0/data#json-plain/plan",
+        "plan_digest": "9561e87406a7ac5e39d944ef505624b8b80ef166a5ebbc733023641dc5f4e793",
+        "action_index": 0
+      }
+    },
+    {
+      "fingerprint": "evidence/runs/publication-staging/prior-histories-expanded/history-inc-b2a2408a7e804f96a3.json:generic-api-key:1347",
+      "native_fingerprint": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-b2a2408a7e804f96a3.json:generic-api-key:1347",
+      "artifact_sha256": "ad0467dac6d78e5c6575bcd6e1a78f7182bc60380f50185e6992f605a38549f7",
+      "reason": "Exact semantic proof from retained canonical Plan and action index zero.",
+      "proof": {
+        "kind": "effect_key",
+        "plan_pointer": "/events/20/activityTaskCompletedEventAttributes/result/payloads/0/data#json-plain/plan",
+        "plan_digest": "9561e87406a7ac5e39d944ef505624b8b80ef166a5ebbc733023641dc5f4e793",
+        "action_index": 0
+      }
+    },
+    {
+      "fingerprint": "evidence/runs/publication-staging/prior-histories-expanded/history-inc-b2a2408a7e804f96a3.json:generic-api-key:1469",
+      "native_fingerprint": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-b2a2408a7e804f96a3.json:generic-api-key:1469",
+      "artifact_sha256": "ad0467dac6d78e5c6575bcd6e1a78f7182bc60380f50185e6992f605a38549f7",
+      "reason": "Exact semantic proof from retained canonical Plan and action index zero.",
+      "proof": {
+        "kind": "effect_key",
+        "plan_pointer": "/events/20/activityTaskCompletedEventAttributes/result/payloads/0/data#json-plain/plan",
+        "plan_digest": "9561e87406a7ac5e39d944ef505624b8b80ef166a5ebbc733023641dc5f4e793",
+        "action_index": 0
+      }
+    }
+  ],
+  "unreviewed_findings": [],
+  "limitations": [
+    "Pattern detection cannot prove the absence of credentials or malicious dependencies.",
+    "Upstream built-in rules and allowlists apply; explicit content-bound proofs retain every raw finding.",
+    "Working-tree mode respects Git ignores only for untracked files; history mode scans reachable refs."
+  ],
+  "head": "f1e6e2f3800242ec210145680261da8ab60f38b4",
+  "reachable_commit_count": 3,
+  "shallow_clone": false,
+  "scanner": {
+    "name": "gitleaks",
+    "version": "8.30.1",
+    "archive_url": "https://github.com/gitleaks/gitleaks/releases/download/v8.30.1/gitleaks_8.30.1_linux_x64.tar.gz",
+    "archive_sha256": "551f6fc83ea457d62a0d98237cbad105af8d557003051f41f3e7ca7b3f2470eb",
+    "checksum_manifest_url": "https://github.com/gitleaks/gitleaks/releases/download/v8.30.1/gitleaks_8.30.1_checksums.txt",
+    "checksum_manifest_sha256": "061476c21adaf5441516f96f185c1a4706a83cd6329b9b38762271b3d4a52fae",
+    "binary_sha256": "88f91962aa2f93ac6ab281d553b9e125f5197bbbce38f9f2437f7299c32e5509",
+    "licence": "MIT",
+    "licence_sha256": "e3884b252b3bfc045e55be43a34d1e80da070bc6f804ac95bf4660e97d62ebc6"
+  },
+  "snapshot": {
+    "file_count": 26,
+    "content_manifest_sha256": "46535977ecbfe2961293c2e9f8371bfb0bbac9f42a507a35e77e92cfbcb7d6bb",
+    "files": [
+      {
+        "path": "evidence/runs/publication-staging/prior-histories-expanded/history-inc-01b9279cd5a7446b9d.json",
+        "bytes": 51966,
+        "sha256": "a6dffce042ab5f3600d7438bcd799c6dbeb0882b0c7782dced05f1256c734543"
+      },
+      {
+        "path": "evidence/runs/publication-staging/prior-histories-expanded/history-inc-044c68e1c1ea473d82.json",
+        "bytes": 33454,
+        "sha256": "22d66242e0cfd385f194ec9b4ef7f4da3f604645af8faac9684fc25cdfb9f188"
+      },
+      {
+        "path": "evidence/runs/publication-staging/prior-histories-expanded/history-inc-1f8f05d46ab04e4cb2.json",
+        "bytes": 33454,
+        "sha256": "aa226b5a81c4cbaad30abc0e181916e690c38d725f577fad4a679dae18a96c33"
+      },
+      {
+        "path": "evidence/runs/publication-staging/prior-histories-expanded/history-inc-32fb6f3553c7477cb7.json",
+        "bytes": 51966,
+        "sha256": "d4c14e9f300d79e87d3e96c0b68142a0a8129f2dd857605f797f6c91f452fbb4"
+      },
+      {
+        "path": "evidence/runs/publication-staging/prior-histories-expanded/history-inc-37eb81bd42dc4a2d80.json",
+        "bytes": 51965,
+        "sha256": "fe8648f42c4fc72d4980aec70855a0be16564a3c29928723bc76a768c66ad5ee"
+      },
+      {
+        "path": "evidence/runs/publication-staging/prior-histories-expanded/history-inc-41d0b6d817804762a5.json",
+        "bytes": 51858,
+        "sha256": "d3945cd9e93a594a2b6fbc1673c9546d6b8ed9b8ec983f4c36f97031e8bfb159"
+      },
+      {
+        "path": "evidence/runs/publication-staging/prior-histories-expanded/history-inc-4302cd0dc7b042b68a.json",
+        "bytes": 39241,
+        "sha256": "33494c79a73abcae5d627be1493c3ce7c7a1617d05648d5fb1acfb08655093cc"
+      },
+      {
+        "path": "evidence/runs/publication-staging/prior-histories-expanded/history-inc-4d0df1d4e46d42cba5.json",
+        "bytes": 51966,
+        "sha256": "4a22bb763dc00ff7270821e0da5b3e17faf85f92eb592a7a2728e753185439a9"
+      },
+      {
+        "path": "evidence/runs/publication-staging/prior-histories-expanded/history-inc-4f61fb4e9d544fa289.json",
+        "bytes": 51966,
+        "sha256": "7d5004caabe270c342048e93425ba194ae27b5e6fef058d253368b71593fc6d6"
+      },
+      {
+        "path": "evidence/runs/publication-staging/prior-histories-expanded/history-inc-725099d78dc4451ba0.json",
+        "bytes": 32262,
+        "sha256": "8fa3b64647d9e7b0097d7f10a604b8e05c55fd1b7e5cd2b90886dcfb49423171"
+      },
+      {
+        "path": "evidence/runs/publication-staging/prior-histories-expanded/history-inc-77c75a66c1104fc4ab.json",
+        "bytes": 51966,
+        "sha256": "37278e3ad96c503d2a9d5decf7f4b78dd51d5b6f894dbdb6da799c29dc491503"
+      },
+      {
+        "path": "evidence/runs/publication-staging/prior-histories-expanded/history-inc-7d04e7aaccb6453c87.json",
+        "bytes": 14154,
+        "sha256": "768b1428d4d812ee131269b353a98337e2f99063dfffc449bea6552e9a840d62"
+      },
+      {
+        "path": "evidence/runs/publication-staging/prior-histories-expanded/history-inc-81a76f15c64d4aa6a7.json",
+        "bytes": 51966,
+        "sha256": "6a0ee3d0cbedd17cf2fc043324ec91cad3b9a983f3a4831d4be2cfc1cf03c2a5"
+      },
+      {
+        "path": "evidence/runs/publication-staging/prior-histories-expanded/history-inc-9970e3985067448388.json",
+        "bytes": 51966,
+        "sha256": "ca77ec8f01ed22bbbd5c3d32eb794ee20deefd596db62f1eba40226ac4dca6ae"
+      },
+      {
+        "path": "evidence/runs/publication-staging/prior-histories-expanded/history-inc-9ce288d7670743d7be.json",
+        "bytes": 51966,
+        "sha256": "13f8b3e1d4aac7072e75ba07173ee201c70c2f87b473e5c11e2cd00a4090a27d"
+      },
+      {
+        "path": "evidence/runs/publication-staging/prior-histories-expanded/history-inc-9d9b9760b4ff4fd8a6.json",
+        "bytes": 51966,
+        "sha256": "29e6718e9f50983c212883fab68a66e83163d59e4afac43edaff8cc7f0feba72"
+      },
+      {
+        "path": "evidence/runs/publication-staging/prior-histories-expanded/history-inc-b2a2408a7e804f96a3.json",
+        "bytes": 65741,
+        "sha256": "ad0467dac6d78e5c6575bcd6e1a78f7182bc60380f50185e6992f605a38549f7"
+      },
+      {
+        "path": "evidence/runs/publication-staging/prior-histories-expanded/history-inc-b2c1e9a247574eadb0.json",
+        "bytes": 51966,
+        "sha256": "22f6ac0df21fb13d2c23bea990e1da3579d23503cbd0586d643275080b532c03"
+      },
+      {
+        "path": "evidence/runs/publication-staging/prior-histories-expanded/history-inc-c4d5acdc0e454d10b6.json",
+        "bytes": 52185,
+        "sha256": "a007403865435e0938f5e63ba139175a771130b40a63564a273c23d8f5c011d8"
+      },
+      {
+        "path": "evidence/runs/publication-staging/prior-histories-expanded/history-inc-c7d7674a5a664ee0bf.json",
+        "bytes": 51966,
+        "sha256": "fe496b7d7ebe69bf6d908507aee0c140037b2b62189c59cac0991a7908ecbfac"
+      },
+      {
+        "path": "evidence/runs/publication-staging/prior-histories-expanded/history-inc-e2934f1e29ba4032bf.json",
+        "bytes": 52073,
+        "sha256": "6d1d731ea9c092006df2daa831889efa4beec89d95657331d06e555c645718b6"
+      },
+      {
+        "path": "evidence/runs/publication-staging/prior-histories-expanded/history-inc-e5bc2ca110fb4e5d98.json",
+        "bytes": 51913,
+        "sha256": "2f6d4559d05868a3f20a603045673d9397a96534e76edc04a0384706b9a051ef"
+      },
+      {
+        "path": "evidence/runs/publication-staging/prior-histories-expanded/history-inc-f386a902692c4473b0.json",
+        "bytes": 39200,
+        "sha256": "b9d7eb04ebc0fd79eea4542945e838832cd26b688a9bb74067c2b11b96788d55"
+      },
+      {
+        "path": "evidence/runs/publication-staging/prior-histories-expanded/history-inc-f4dbc349ad664b66a0.json",
+        "bytes": 56794,
+        "sha256": "562aaa07b4934b64ab418e8bb613d74b44abd24a2d41075d43216e308932b45c"
+      },
+      {
+        "path": "evidence/runs/publication-staging/prior-histories-expanded/history-inc-f4fac72a86104a83b0.json",
+        "bytes": 66498,
+        "sha256": "475af452f1abfc2160c1836403f3c6f969e4eff4c19504dc142f223e3b22148c"
+      },
+      {
+        "path": "evidence/runs/publication-staging/prior-histories-expanded/history-inc-fdee2bf1ecff49aab0.json",
+        "bytes": 51966,
+        "sha256": "c0555e8c92c6fd50190b53d06e5e433477c579761b11194350f29c152267e17a"
+      }
+    ],
+    "tracked_deleted_paths": [],
+    "symlink_text_only": [],
+    "selection": "all expanded directory files, including Git-ignored files"
+  },
+  "scanner_exit_code": 1,
+  "scanner_stdout": "",
+  "scanner_stderr": "2:37PM INF scanned ~1264384 bytes (1.26 MB) in 175ms\n2:37PM WRN leaks found: 57\n",
+  "native_findings": [
+    {
+      "RuleID": "generic-api-key",
+      "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+      "StartLine": 937,
+      "EndLine": 937,
+      "StartColumn": 25,
+      "EndColumn": 812,
+      "Match": "idempotency_key\":\"REDACTED\"",
+      "Secret": "REDACTED",
+      "File": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-77c75a66c1104fc4ab.json",
+      "SymlinkFile": "",
+      "Commit": "",
+      "Entropy": 3.7836177,
+      "Author": "",
+      "Email": "",
+      "Date": "",
+      "Message": "",
+      "Tags": [
+        "decoded:base64",
+        "decode-depth:1"
+      ],
+      "Fingerprint": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-77c75a66c1104fc4ab.json:generic-api-key:937"
+    },
+    {
+      "RuleID": "generic-api-key",
+      "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+      "StartLine": 1013,
+      "EndLine": 1013,
+      "StartColumn": 25,
+      "EndColumn": 236,
+      "Match": "idempotency_key\":\"REDACTED\"",
+      "Secret": "REDACTED",
+      "File": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-77c75a66c1104fc4ab.json",
+      "SymlinkFile": "",
+      "Commit": "",
+      "Entropy": 3.7836177,
+      "Author": "",
+      "Email": "",
+      "Date": "",
+      "Message": "",
+      "Tags": [
+        "decoded:base64",
+        "decode-depth:1"
+      ],
+      "Fingerprint": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-77c75a66c1104fc4ab.json:generic-api-key:1013"
+    },
+    {
+      "RuleID": "generic-api-key",
+      "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+      "StartLine": 1135,
+      "EndLine": 1135,
+      "StartColumn": 25,
+      "EndColumn": 1376,
+      "Match": "idempotency_key\":\"REDACTED\"",
+      "Secret": "REDACTED",
+      "File": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-77c75a66c1104fc4ab.json",
+      "SymlinkFile": "",
+      "Commit": "",
+      "Entropy": 3.7836177,
+      "Author": "",
+      "Email": "",
+      "Date": "",
+      "Message": "",
+      "Tags": [
+        "decoded:base64",
+        "decode-depth:1"
+      ],
+      "Fingerprint": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-77c75a66c1104fc4ab.json:generic-api-key:1135"
+    },
+    {
+      "RuleID": "generic-api-key",
+      "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+      "StartLine": 937,
+      "EndLine": 937,
+      "StartColumn": 25,
+      "EndColumn": 812,
+      "Match": "idempotency_key\":\"REDACTED\"",
+      "Secret": "REDACTED",
+      "File": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-37eb81bd42dc4a2d80.json",
+      "SymlinkFile": "",
+      "Commit": "",
+      "Entropy": 3.7285273,
+      "Author": "",
+      "Email": "",
+      "Date": "",
+      "Message": "",
+      "Tags": [
+        "decoded:base64",
+        "decode-depth:1"
+      ],
+      "Fingerprint": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-37eb81bd42dc4a2d80.json:generic-api-key:937"
+    },
+    {
+      "RuleID": "generic-api-key",
+      "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+      "StartLine": 1013,
+      "EndLine": 1013,
+      "StartColumn": 25,
+      "EndColumn": 236,
+      "Match": "idempotency_key\":\"REDACTED\"",
+      "Secret": "REDACTED",
+      "File": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-37eb81bd42dc4a2d80.json",
+      "SymlinkFile": "",
+      "Commit": "",
+      "Entropy": 3.7285273,
+      "Author": "",
+      "Email": "",
+      "Date": "",
+      "Message": "",
+      "Tags": [
+        "decoded:base64",
+        "decode-depth:1"
+      ],
+      "Fingerprint": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-37eb81bd42dc4a2d80.json:generic-api-key:1013"
+    },
+    {
+      "RuleID": "generic-api-key",
+      "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+      "StartLine": 1135,
+      "EndLine": 1135,
+      "StartColumn": 25,
+      "EndColumn": 1376,
+      "Match": "idempotency_key\":\"REDACTED\"",
+      "Secret": "REDACTED",
+      "File": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-37eb81bd42dc4a2d80.json",
+      "SymlinkFile": "",
+      "Commit": "",
+      "Entropy": 3.7285273,
+      "Author": "",
+      "Email": "",
+      "Date": "",
+      "Message": "",
+      "Tags": [
+        "decoded:base64",
+        "decode-depth:1"
+      ],
+      "Fingerprint": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-37eb81bd42dc4a2d80.json:generic-api-key:1135"
+    },
+    {
+      "RuleID": "generic-api-key",
+      "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+      "StartLine": 937,
+      "EndLine": 937,
+      "StartColumn": 25,
+      "EndColumn": 812,
+      "Match": "idempotency_key\":\"REDACTED\"",
+      "Secret": "REDACTED",
+      "File": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-81a76f15c64d4aa6a7.json",
+      "SymlinkFile": "",
+      "Commit": "",
+      "Entropy": 3.7320087,
+      "Author": "",
+      "Email": "",
+      "Date": "",
+      "Message": "",
+      "Tags": [
+        "decoded:base64",
+        "decode-depth:1"
+      ],
+      "Fingerprint": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-81a76f15c64d4aa6a7.json:generic-api-key:937"
+    },
+    {
+      "RuleID": "generic-api-key",
+      "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+      "StartLine": 1013,
+      "EndLine": 1013,
+      "StartColumn": 25,
+      "EndColumn": 236,
+      "Match": "idempotency_key\":\"REDACTED\"",
+      "Secret": "REDACTED",
+      "File": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-81a76f15c64d4aa6a7.json",
+      "SymlinkFile": "",
+      "Commit": "",
+      "Entropy": 3.7320087,
+      "Author": "",
+      "Email": "",
+      "Date": "",
+      "Message": "",
+      "Tags": [
+        "decoded:base64",
+        "decode-depth:1"
+      ],
+      "Fingerprint": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-81a76f15c64d4aa6a7.json:generic-api-key:1013"
+    },
+    {
+      "RuleID": "generic-api-key",
+      "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+      "StartLine": 1135,
+      "EndLine": 1135,
+      "StartColumn": 25,
+      "EndColumn": 1376,
+      "Match": "idempotency_key\":\"REDACTED\"",
+      "Secret": "REDACTED",
+      "File": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-81a76f15c64d4aa6a7.json",
+      "SymlinkFile": "",
+      "Commit": "",
+      "Entropy": 3.7320087,
+      "Author": "",
+      "Email": "",
+      "Date": "",
+      "Message": "",
+      "Tags": [
+        "decoded:base64",
+        "decode-depth:1"
+      ],
+      "Fingerprint": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-81a76f15c64d4aa6a7.json:generic-api-key:1135"
+    },
+    {
+      "RuleID": "generic-api-key",
+      "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+      "StartLine": 937,
+      "EndLine": 937,
+      "StartColumn": 25,
+      "EndColumn": 812,
+      "Match": "idempotency_key\":\"REDACTED\"",
+      "Secret": "REDACTED",
+      "File": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-4d0df1d4e46d42cba5.json",
+      "SymlinkFile": "",
+      "Commit": "",
+      "Entropy": 3.7995934,
+      "Author": "",
+      "Email": "",
+      "Date": "",
+      "Message": "",
+      "Tags": [
+        "decoded:base64",
+        "decode-depth:1"
+      ],
+      "Fingerprint": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-4d0df1d4e46d42cba5.json:generic-api-key:937"
+    },
+    {
+      "RuleID": "generic-api-key",
+      "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+      "StartLine": 1013,
+      "EndLine": 1013,
+      "StartColumn": 25,
+      "EndColumn": 236,
+      "Match": "idempotency_key\":\"REDACTED\"",
+      "Secret": "REDACTED",
+      "File": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-4d0df1d4e46d42cba5.json",
+      "SymlinkFile": "",
+      "Commit": "",
+      "Entropy": 3.7995934,
+      "Author": "",
+      "Email": "",
+      "Date": "",
+      "Message": "",
+      "Tags": [
+        "decoded:base64",
+        "decode-depth:1"
+      ],
+      "Fingerprint": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-4d0df1d4e46d42cba5.json:generic-api-key:1013"
+    },
+    {
+      "RuleID": "generic-api-key",
+      "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+      "StartLine": 1135,
+      "EndLine": 1135,
+      "StartColumn": 25,
+      "EndColumn": 1376,
+      "Match": "idempotency_key\":\"REDACTED\"",
+      "Secret": "REDACTED",
+      "File": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-4d0df1d4e46d42cba5.json",
+      "SymlinkFile": "",
+      "Commit": "",
+      "Entropy": 3.7995934,
+      "Author": "",
+      "Email": "",
+      "Date": "",
+      "Message": "",
+      "Tags": [
+        "decoded:base64",
+        "decode-depth:1"
+      ],
+      "Fingerprint": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-4d0df1d4e46d42cba5.json:generic-api-key:1135"
+    },
+    {
+      "RuleID": "generic-api-key",
+      "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+      "StartLine": 937,
+      "EndLine": 937,
+      "StartColumn": 25,
+      "EndColumn": 812,
+      "Match": "idempotency_key\":\"REDACTED\"",
+      "Secret": "REDACTED",
+      "File": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-9970e3985067448388.json",
+      "SymlinkFile": "",
+      "Commit": "",
+      "Entropy": 3.7700548,
+      "Author": "",
+      "Email": "",
+      "Date": "",
+      "Message": "",
+      "Tags": [
+        "decoded:base64",
+        "decode-depth:1"
+      ],
+      "Fingerprint": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-9970e3985067448388.json:generic-api-key:937"
+    },
+    {
+      "RuleID": "generic-api-key",
+      "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+      "StartLine": 1013,
+      "EndLine": 1013,
+      "StartColumn": 25,
+      "EndColumn": 236,
+      "Match": "idempotency_key\":\"REDACTED\"",
+      "Secret": "REDACTED",
+      "File": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-9970e3985067448388.json",
+      "SymlinkFile": "",
+      "Commit": "",
+      "Entropy": 3.7700548,
+      "Author": "",
+      "Email": "",
+      "Date": "",
+      "Message": "",
+      "Tags": [
+        "decoded:base64",
+        "decode-depth:1"
+      ],
+      "Fingerprint": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-9970e3985067448388.json:generic-api-key:1013"
+    },
+    {
+      "RuleID": "generic-api-key",
+      "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+      "StartLine": 1135,
+      "EndLine": 1135,
+      "StartColumn": 25,
+      "EndColumn": 1376,
+      "Match": "idempotency_key\":\"REDACTED\"",
+      "Secret": "REDACTED",
+      "File": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-9970e3985067448388.json",
+      "SymlinkFile": "",
+      "Commit": "",
+      "Entropy": 3.7700548,
+      "Author": "",
+      "Email": "",
+      "Date": "",
+      "Message": "",
+      "Tags": [
+        "decoded:base64",
+        "decode-depth:1"
+      ],
+      "Fingerprint": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-9970e3985067448388.json:generic-api-key:1135"
+    },
+    {
+      "RuleID": "generic-api-key",
+      "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+      "StartLine": 937,
+      "EndLine": 937,
+      "StartColumn": 25,
+      "EndColumn": 812,
+      "Match": "idempotency_key\":\"REDACTED\"",
+      "Secret": "REDACTED",
+      "File": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-fdee2bf1ecff49aab0.json",
+      "SymlinkFile": "",
+      "Commit": "",
+      "Entropy": 3.7781746,
+      "Author": "",
+      "Email": "",
+      "Date": "",
+      "Message": "",
+      "Tags": [
+        "decoded:base64",
+        "decode-depth:1"
+      ],
+      "Fingerprint": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-fdee2bf1ecff49aab0.json:generic-api-key:937"
+    },
+    {
+      "RuleID": "generic-api-key",
+      "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+      "StartLine": 1013,
+      "EndLine": 1013,
+      "StartColumn": 25,
+      "EndColumn": 236,
+      "Match": "idempotency_key\":\"REDACTED\"",
+      "Secret": "REDACTED",
+      "File": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-fdee2bf1ecff49aab0.json",
+      "SymlinkFile": "",
+      "Commit": "",
+      "Entropy": 3.7781746,
+      "Author": "",
+      "Email": "",
+      "Date": "",
+      "Message": "",
+      "Tags": [
+        "decoded:base64",
+        "decode-depth:1"
+      ],
+      "Fingerprint": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-fdee2bf1ecff49aab0.json:generic-api-key:1013"
+    },
+    {
+      "RuleID": "generic-api-key",
+      "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+      "StartLine": 1135,
+      "EndLine": 1135,
+      "StartColumn": 25,
+      "EndColumn": 1376,
+      "Match": "idempotency_key\":\"REDACTED\"",
+      "Secret": "REDACTED",
+      "File": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-fdee2bf1ecff49aab0.json",
+      "SymlinkFile": "",
+      "Commit": "",
+      "Entropy": 3.7781746,
+      "Author": "",
+      "Email": "",
+      "Date": "",
+      "Message": "",
+      "Tags": [
+        "decoded:base64",
+        "decode-depth:1"
+      ],
+      "Fingerprint": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-fdee2bf1ecff49aab0.json:generic-api-key:1135"
+    },
+    {
+      "RuleID": "generic-api-key",
+      "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+      "StartLine": 937,
+      "EndLine": 937,
+      "StartColumn": 25,
+      "EndColumn": 812,
+      "Match": "idempotency_key\":\"REDACTED\"",
+      "Secret": "REDACTED",
+      "File": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-4f61fb4e9d544fa289.json",
+      "SymlinkFile": "",
+      "Commit": "",
+      "Entropy": 3.7957084,
+      "Author": "",
+      "Email": "",
+      "Date": "",
+      "Message": "",
+      "Tags": [
+        "decoded:base64",
+        "decode-depth:1"
+      ],
+      "Fingerprint": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-4f61fb4e9d544fa289.json:generic-api-key:937"
+    },
+    {
+      "RuleID": "generic-api-key",
+      "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+      "StartLine": 1013,
+      "EndLine": 1013,
+      "StartColumn": 25,
+      "EndColumn": 236,
+      "Match": "idempotency_key\":\"REDACTED\"",
+      "Secret": "REDACTED",
+      "File": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-4f61fb4e9d544fa289.json",
+      "SymlinkFile": "",
+      "Commit": "",
+      "Entropy": 3.7957084,
+      "Author": "",
+      "Email": "",
+      "Date": "",
+      "Message": "",
+      "Tags": [
+        "decoded:base64",
+        "decode-depth:1"
+      ],
+      "Fingerprint": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-4f61fb4e9d544fa289.json:generic-api-key:1013"
+    },
+    {
+      "RuleID": "generic-api-key",
+      "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+      "StartLine": 1135,
+      "EndLine": 1135,
+      "StartColumn": 25,
+      "EndColumn": 1376,
+      "Match": "idempotency_key\":\"REDACTED\"",
+      "Secret": "REDACTED",
+      "File": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-4f61fb4e9d544fa289.json",
+      "SymlinkFile": "",
+      "Commit": "",
+      "Entropy": 3.7957084,
+      "Author": "",
+      "Email": "",
+      "Date": "",
+      "Message": "",
+      "Tags": [
+        "decoded:base64",
+        "decode-depth:1"
+      ],
+      "Fingerprint": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-4f61fb4e9d544fa289.json:generic-api-key:1135"
+    },
+    {
+      "RuleID": "generic-api-key",
+      "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+      "StartLine": 937,
+      "EndLine": 937,
+      "StartColumn": 25,
+      "EndColumn": 812,
+      "Match": "idempotency_key\":\"REDACTED\"",
+      "Secret": "REDACTED",
+      "File": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-32fb6f3553c7477cb7.json",
+      "SymlinkFile": "",
+      "Commit": "",
+      "Entropy": 3.8330579,
+      "Author": "",
+      "Email": "",
+      "Date": "",
+      "Message": "",
+      "Tags": [
+        "decoded:base64",
+        "decode-depth:1"
+      ],
+      "Fingerprint": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-32fb6f3553c7477cb7.json:generic-api-key:937"
+    },
+    {
+      "RuleID": "generic-api-key",
+      "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+      "StartLine": 1013,
+      "EndLine": 1013,
+      "StartColumn": 25,
+      "EndColumn": 236,
+      "Match": "idempotency_key\":\"REDACTED\"",
+      "Secret": "REDACTED",
+      "File": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-32fb6f3553c7477cb7.json",
+      "SymlinkFile": "",
+      "Commit": "",
+      "Entropy": 3.8330579,
+      "Author": "",
+      "Email": "",
+      "Date": "",
+      "Message": "",
+      "Tags": [
+        "decoded:base64",
+        "decode-depth:1"
+      ],
+      "Fingerprint": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-32fb6f3553c7477cb7.json:generic-api-key:1013"
+    },
+    {
+      "RuleID": "generic-api-key",
+      "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+      "StartLine": 1135,
+      "EndLine": 1135,
+      "StartColumn": 25,
+      "EndColumn": 1376,
+      "Match": "idempotency_key\":\"REDACTED\"",
+      "Secret": "REDACTED",
+      "File": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-32fb6f3553c7477cb7.json",
+      "SymlinkFile": "",
+      "Commit": "",
+      "Entropy": 3.8330579,
+      "Author": "",
+      "Email": "",
+      "Date": "",
+      "Message": "",
+      "Tags": [
+        "decoded:base64",
+        "decode-depth:1"
+      ],
+      "Fingerprint": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-32fb6f3553c7477cb7.json:generic-api-key:1135"
+    },
+    {
+      "RuleID": "generic-api-key",
+      "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+      "StartLine": 937,
+      "EndLine": 937,
+      "StartColumn": 25,
+      "EndColumn": 812,
+      "Match": "idempotency_key\":\"REDACTED\"",
+      "Secret": "REDACTED",
+      "File": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-9ce288d7670743d7be.json",
+      "SymlinkFile": "",
+      "Commit": "",
+      "Entropy": 3.7068582,
+      "Author": "",
+      "Email": "",
+      "Date": "",
+      "Message": "",
+      "Tags": [
+        "decoded:base64",
+        "decode-depth:1"
+      ],
+      "Fingerprint": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-9ce288d7670743d7be.json:generic-api-key:937"
+    },
+    {
+      "RuleID": "generic-api-key",
+      "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+      "StartLine": 1013,
+      "EndLine": 1013,
+      "StartColumn": 25,
+      "EndColumn": 236,
+      "Match": "idempotency_key\":\"REDACTED\"",
+      "Secret": "REDACTED",
+      "File": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-9ce288d7670743d7be.json",
+      "SymlinkFile": "",
+      "Commit": "",
+      "Entropy": 3.7068582,
+      "Author": "",
+      "Email": "",
+      "Date": "",
+      "Message": "",
+      "Tags": [
+        "decoded:base64",
+        "decode-depth:1"
+      ],
+      "Fingerprint": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-9ce288d7670743d7be.json:generic-api-key:1013"
+    },
+    {
+      "RuleID": "generic-api-key",
+      "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+      "StartLine": 1135,
+      "EndLine": 1135,
+      "StartColumn": 25,
+      "EndColumn": 1376,
+      "Match": "idempotency_key\":\"REDACTED\"",
+      "Secret": "REDACTED",
+      "File": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-9ce288d7670743d7be.json",
+      "SymlinkFile": "",
+      "Commit": "",
+      "Entropy": 3.7068582,
+      "Author": "",
+      "Email": "",
+      "Date": "",
+      "Message": "",
+      "Tags": [
+        "decoded:base64",
+        "decode-depth:1"
+      ],
+      "Fingerprint": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-9ce288d7670743d7be.json:generic-api-key:1135"
+    },
+    {
+      "RuleID": "generic-api-key",
+      "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+      "StartLine": 937,
+      "EndLine": 937,
+      "StartColumn": 25,
+      "EndColumn": 812,
+      "Match": "idempotency_key\":\"REDACTED\"",
+      "Secret": "REDACTED",
+      "File": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-01b9279cd5a7446b9d.json",
+      "SymlinkFile": "",
+      "Commit": "",
+      "Entropy": 3.7635517,
+      "Author": "",
+      "Email": "",
+      "Date": "",
+      "Message": "",
+      "Tags": [
+        "decoded:base64",
+        "decode-depth:1"
+      ],
+      "Fingerprint": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-01b9279cd5a7446b9d.json:generic-api-key:937"
+    },
+    {
+      "RuleID": "generic-api-key",
+      "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+      "StartLine": 1013,
+      "EndLine": 1013,
+      "StartColumn": 25,
+      "EndColumn": 236,
+      "Match": "idempotency_key\":\"REDACTED\"",
+      "Secret": "REDACTED",
+      "File": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-01b9279cd5a7446b9d.json",
+      "SymlinkFile": "",
+      "Commit": "",
+      "Entropy": 3.7635517,
+      "Author": "",
+      "Email": "",
+      "Date": "",
+      "Message": "",
+      "Tags": [
+        "decoded:base64",
+        "decode-depth:1"
+      ],
+      "Fingerprint": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-01b9279cd5a7446b9d.json:generic-api-key:1013"
+    },
+    {
+      "RuleID": "generic-api-key",
+      "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+      "StartLine": 1135,
+      "EndLine": 1135,
+      "StartColumn": 25,
+      "EndColumn": 1376,
+      "Match": "idempotency_key\":\"REDACTED\"",
+      "Secret": "REDACTED",
+      "File": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-01b9279cd5a7446b9d.json",
+      "SymlinkFile": "",
+      "Commit": "",
+      "Entropy": 3.7635517,
+      "Author": "",
+      "Email": "",
+      "Date": "",
+      "Message": "",
+      "Tags": [
+        "decoded:base64",
+        "decode-depth:1"
+      ],
+      "Fingerprint": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-01b9279cd5a7446b9d.json:generic-api-key:1135"
+    },
+    {
+      "RuleID": "generic-api-key",
+      "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+      "StartLine": 937,
+      "EndLine": 937,
+      "StartColumn": 25,
+      "EndColumn": 812,
+      "Match": "idempotency_key\":\"REDACTED\"",
+      "Secret": "REDACTED",
+      "File": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-c7d7674a5a664ee0bf.json",
+      "SymlinkFile": "",
+      "Commit": "",
+      "Entropy": 3.8283765,
+      "Author": "",
+      "Email": "",
+      "Date": "",
+      "Message": "",
+      "Tags": [
+        "decoded:base64",
+        "decode-depth:1"
+      ],
+      "Fingerprint": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-c7d7674a5a664ee0bf.json:generic-api-key:937"
+    },
+    {
+      "RuleID": "generic-api-key",
+      "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+      "StartLine": 1013,
+      "EndLine": 1013,
+      "StartColumn": 25,
+      "EndColumn": 236,
+      "Match": "idempotency_key\":\"REDACTED\"",
+      "Secret": "REDACTED",
+      "File": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-c7d7674a5a664ee0bf.json",
+      "SymlinkFile": "",
+      "Commit": "",
+      "Entropy": 3.8283765,
+      "Author": "",
+      "Email": "",
+      "Date": "",
+      "Message": "",
+      "Tags": [
+        "decoded:base64",
+        "decode-depth:1"
+      ],
+      "Fingerprint": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-c7d7674a5a664ee0bf.json:generic-api-key:1013"
+    },
+    {
+      "RuleID": "generic-api-key",
+      "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+      "StartLine": 1135,
+      "EndLine": 1135,
+      "StartColumn": 25,
+      "EndColumn": 1376,
+      "Match": "idempotency_key\":\"REDACTED\"",
+      "Secret": "REDACTED",
+      "File": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-c7d7674a5a664ee0bf.json",
+      "SymlinkFile": "",
+      "Commit": "",
+      "Entropy": 3.8283765,
+      "Author": "",
+      "Email": "",
+      "Date": "",
+      "Message": "",
+      "Tags": [
+        "decoded:base64",
+        "decode-depth:1"
+      ],
+      "Fingerprint": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-c7d7674a5a664ee0bf.json:generic-api-key:1135"
+    },
+    {
+      "RuleID": "generic-api-key",
+      "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+      "StartLine": 937,
+      "EndLine": 937,
+      "StartColumn": 25,
+      "EndColumn": 820,
+      "Match": "idempotency_key\":\"REDACTED\"",
+      "Secret": "REDACTED",
+      "File": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-c4d5acdc0e454d10b6.json",
+      "SymlinkFile": "",
+      "Commit": "",
+      "Entropy": 3.9288797,
+      "Author": "",
+      "Email": "",
+      "Date": "",
+      "Message": "",
+      "Tags": [
+        "decoded:base64",
+        "decode-depth:1"
+      ],
+      "Fingerprint": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-c4d5acdc0e454d10b6.json:generic-api-key:937"
+    },
+    {
+      "RuleID": "generic-api-key",
+      "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+      "StartLine": 1013,
+      "EndLine": 1013,
+      "StartColumn": 25,
+      "EndColumn": 236,
+      "Match": "idempotency_key\":\"REDACTED\"",
+      "Secret": "REDACTED",
+      "File": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-c4d5acdc0e454d10b6.json",
+      "SymlinkFile": "",
+      "Commit": "",
+      "Entropy": 3.9288797,
+      "Author": "",
+      "Email": "",
+      "Date": "",
+      "Message": "",
+      "Tags": [
+        "decoded:base64",
+        "decode-depth:1"
+      ],
+      "Fingerprint": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-c4d5acdc0e454d10b6.json:generic-api-key:1013"
+    },
+    {
+      "RuleID": "generic-api-key",
+      "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+      "StartLine": 1135,
+      "EndLine": 1135,
+      "StartColumn": 25,
+      "EndColumn": 1416,
+      "Match": "idempotency_key\":\"REDACTED\"",
+      "Secret": "REDACTED",
+      "File": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-c4d5acdc0e454d10b6.json",
+      "SymlinkFile": "",
+      "Commit": "",
+      "Entropy": 3.9288797,
+      "Author": "",
+      "Email": "",
+      "Date": "",
+      "Message": "",
+      "Tags": [
+        "decoded:base64",
+        "decode-depth:1"
+      ],
+      "Fingerprint": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-c4d5acdc0e454d10b6.json:generic-api-key:1135"
+    },
+    {
+      "RuleID": "generic-api-key",
+      "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+      "StartLine": 937,
+      "EndLine": 937,
+      "StartColumn": 25,
+      "EndColumn": 812,
+      "Match": "idempotency_key\":\"REDACTED\"",
+      "Secret": "REDACTED",
+      "File": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-e5bc2ca110fb4e5d98.json",
+      "SymlinkFile": "",
+      "Commit": "",
+      "Entropy": 3.6972773,
+      "Author": "",
+      "Email": "",
+      "Date": "",
+      "Message": "",
+      "Tags": [
+        "decoded:base64",
+        "decode-depth:1"
+      ],
+      "Fingerprint": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-e5bc2ca110fb4e5d98.json:generic-api-key:937"
+    },
+    {
+      "RuleID": "generic-api-key",
+      "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+      "StartLine": 1013,
+      "EndLine": 1013,
+      "StartColumn": 25,
+      "EndColumn": 236,
+      "Match": "idempotency_key\":\"REDACTED\"",
+      "Secret": "REDACTED",
+      "File": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-e5bc2ca110fb4e5d98.json",
+      "SymlinkFile": "",
+      "Commit": "",
+      "Entropy": 3.6972773,
+      "Author": "",
+      "Email": "",
+      "Date": "",
+      "Message": "",
+      "Tags": [
+        "decoded:base64",
+        "decode-depth:1"
+      ],
+      "Fingerprint": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-e5bc2ca110fb4e5d98.json:generic-api-key:1013"
+    },
+    {
+      "RuleID": "generic-api-key",
+      "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+      "StartLine": 1135,
+      "EndLine": 1135,
+      "StartColumn": 25,
+      "EndColumn": 1376,
+      "Match": "idempotency_key\":\"REDACTED\"",
+      "Secret": "REDACTED",
+      "File": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-e5bc2ca110fb4e5d98.json",
+      "SymlinkFile": "",
+      "Commit": "",
+      "Entropy": 3.6972773,
+      "Author": "",
+      "Email": "",
+      "Date": "",
+      "Message": "",
+      "Tags": [
+        "decoded:base64",
+        "decode-depth:1"
+      ],
+      "Fingerprint": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-e5bc2ca110fb4e5d98.json:generic-api-key:1135"
+    },
+    {
+      "RuleID": "generic-api-key",
+      "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+      "StartLine": 937,
+      "EndLine": 937,
+      "StartColumn": 25,
+      "EndColumn": 812,
+      "Match": "idempotency_key\":\"REDACTED\"",
+      "Secret": "REDACTED",
+      "File": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-b2c1e9a247574eadb0.json",
+      "SymlinkFile": "",
+      "Commit": "",
+      "Entropy": 3.7802894,
+      "Author": "",
+      "Email": "",
+      "Date": "",
+      "Message": "",
+      "Tags": [
+        "decoded:base64",
+        "decode-depth:1"
+      ],
+      "Fingerprint": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-b2c1e9a247574eadb0.json:generic-api-key:937"
+    },
+    {
+      "RuleID": "generic-api-key",
+      "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+      "StartLine": 1013,
+      "EndLine": 1013,
+      "StartColumn": 25,
+      "EndColumn": 236,
+      "Match": "idempotency_key\":\"REDACTED\"",
+      "Secret": "REDACTED",
+      "File": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-b2c1e9a247574eadb0.json",
+      "SymlinkFile": "",
+      "Commit": "",
+      "Entropy": 3.7802894,
+      "Author": "",
+      "Email": "",
+      "Date": "",
+      "Message": "",
+      "Tags": [
+        "decoded:base64",
+        "decode-depth:1"
+      ],
+      "Fingerprint": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-b2c1e9a247574eadb0.json:generic-api-key:1013"
+    },
+    {
+      "RuleID": "generic-api-key",
+      "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+      "StartLine": 1135,
+      "EndLine": 1135,
+      "StartColumn": 25,
+      "EndColumn": 1376,
+      "Match": "idempotency_key\":\"REDACTED\"",
+      "Secret": "REDACTED",
+      "File": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-b2c1e9a247574eadb0.json",
+      "SymlinkFile": "",
+      "Commit": "",
+      "Entropy": 3.7802894,
+      "Author": "",
+      "Email": "",
+      "Date": "",
+      "Message": "",
+      "Tags": [
+        "decoded:base64",
+        "decode-depth:1"
+      ],
+      "Fingerprint": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-b2c1e9a247574eadb0.json:generic-api-key:1135"
+    },
+    {
+      "RuleID": "generic-api-key",
+      "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+      "StartLine": 937,
+      "EndLine": 937,
+      "StartColumn": 25,
+      "EndColumn": 812,
+      "Match": "idempotency_key\":\"REDACTED\"",
+      "Secret": "REDACTED",
+      "File": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-e2934f1e29ba4032bf.json",
+      "SymlinkFile": "",
+      "Commit": "",
+      "Entropy": 3.8786778,
+      "Author": "",
+      "Email": "",
+      "Date": "",
+      "Message": "",
+      "Tags": [
+        "decoded:base64",
+        "decode-depth:1"
+      ],
+      "Fingerprint": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-e2934f1e29ba4032bf.json:generic-api-key:937"
+    },
+    {
+      "RuleID": "generic-api-key",
+      "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+      "StartLine": 1013,
+      "EndLine": 1013,
+      "StartColumn": 25,
+      "EndColumn": 236,
+      "Match": "idempotency_key\":\"REDACTED\"",
+      "Secret": "REDACTED",
+      "File": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-e2934f1e29ba4032bf.json",
+      "SymlinkFile": "",
+      "Commit": "",
+      "Entropy": 3.8786778,
+      "Author": "",
+      "Email": "",
+      "Date": "",
+      "Message": "",
+      "Tags": [
+        "decoded:base64",
+        "decode-depth:1"
+      ],
+      "Fingerprint": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-e2934f1e29ba4032bf.json:generic-api-key:1013"
+    },
+    {
+      "RuleID": "generic-api-key",
+      "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+      "StartLine": 1135,
+      "EndLine": 1135,
+      "StartColumn": 25,
+      "EndColumn": 1368,
+      "Match": "idempotency_key\":\"REDACTED\"",
+      "Secret": "REDACTED",
+      "File": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-e2934f1e29ba4032bf.json",
+      "SymlinkFile": "",
+      "Commit": "",
+      "Entropy": 3.8786778,
+      "Author": "",
+      "Email": "",
+      "Date": "",
+      "Message": "",
+      "Tags": [
+        "decoded:base64",
+        "decode-depth:1"
+      ],
+      "Fingerprint": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-e2934f1e29ba4032bf.json:generic-api-key:1135"
+    },
+    {
+      "RuleID": "generic-api-key",
+      "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+      "StartLine": 937,
+      "EndLine": 937,
+      "StartColumn": 25,
+      "EndColumn": 812,
+      "Match": "idempotency_key\":\"REDACTED\"",
+      "Secret": "REDACTED",
+      "File": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-9d9b9760b4ff4fd8a6.json",
+      "SymlinkFile": "",
+      "Commit": "",
+      "Entropy": 3.8419824,
+      "Author": "",
+      "Email": "",
+      "Date": "",
+      "Message": "",
+      "Tags": [
+        "decoded:base64",
+        "decode-depth:1"
+      ],
+      "Fingerprint": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-9d9b9760b4ff4fd8a6.json:generic-api-key:937"
+    },
+    {
+      "RuleID": "generic-api-key",
+      "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+      "StartLine": 1013,
+      "EndLine": 1013,
+      "StartColumn": 25,
+      "EndColumn": 236,
+      "Match": "idempotency_key\":\"REDACTED\"",
+      "Secret": "REDACTED",
+      "File": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-9d9b9760b4ff4fd8a6.json",
+      "SymlinkFile": "",
+      "Commit": "",
+      "Entropy": 3.8419824,
+      "Author": "",
+      "Email": "",
+      "Date": "",
+      "Message": "",
+      "Tags": [
+        "decoded:base64",
+        "decode-depth:1"
+      ],
+      "Fingerprint": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-9d9b9760b4ff4fd8a6.json:generic-api-key:1013"
+    },
+    {
+      "RuleID": "generic-api-key",
+      "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+      "StartLine": 1135,
+      "EndLine": 1135,
+      "StartColumn": 25,
+      "EndColumn": 1376,
+      "Match": "idempotency_key\":\"REDACTED\"",
+      "Secret": "REDACTED",
+      "File": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-9d9b9760b4ff4fd8a6.json",
+      "SymlinkFile": "",
+      "Commit": "",
+      "Entropy": 3.8419824,
+      "Author": "",
+      "Email": "",
+      "Date": "",
+      "Message": "",
+      "Tags": [
+        "decoded:base64",
+        "decode-depth:1"
+      ],
+      "Fingerprint": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-9d9b9760b4ff4fd8a6.json:generic-api-key:1135"
+    },
+    {
+      "RuleID": "generic-api-key",
+      "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+      "StartLine": 937,
+      "EndLine": 937,
+      "StartColumn": 25,
+      "EndColumn": 812,
+      "Match": "idempotency_key\":\"REDACTED\"",
+      "Secret": "REDACTED",
+      "File": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-41d0b6d817804762a5.json",
+      "SymlinkFile": "",
+      "Commit": "",
+      "Entropy": 3.738654,
+      "Author": "",
+      "Email": "",
+      "Date": "",
+      "Message": "",
+      "Tags": [
+        "decoded:base64",
+        "decode-depth:1"
+      ],
+      "Fingerprint": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-41d0b6d817804762a5.json:generic-api-key:937"
+    },
+    {
+      "RuleID": "generic-api-key",
+      "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+      "StartLine": 1013,
+      "EndLine": 1013,
+      "StartColumn": 25,
+      "EndColumn": 236,
+      "Match": "idempotency_key\":\"REDACTED\"",
+      "Secret": "REDACTED",
+      "File": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-41d0b6d817804762a5.json",
+      "SymlinkFile": "",
+      "Commit": "",
+      "Entropy": 3.738654,
+      "Author": "",
+      "Email": "",
+      "Date": "",
+      "Message": "",
+      "Tags": [
+        "decoded:base64",
+        "decode-depth:1"
+      ],
+      "Fingerprint": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-41d0b6d817804762a5.json:generic-api-key:1013"
+    },
+    {
+      "RuleID": "generic-api-key",
+      "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+      "StartLine": 1135,
+      "EndLine": 1135,
+      "StartColumn": 25,
+      "EndColumn": 1376,
+      "Match": "idempotency_key\":\"REDACTED\"",
+      "Secret": "REDACTED",
+      "File": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-41d0b6d817804762a5.json",
+      "SymlinkFile": "",
+      "Commit": "",
+      "Entropy": 3.738654,
+      "Author": "",
+      "Email": "",
+      "Date": "",
+      "Message": "",
+      "Tags": [
+        "decoded:base64",
+        "decode-depth:1"
+      ],
+      "Fingerprint": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-41d0b6d817804762a5.json:generic-api-key:1135"
+    },
+    {
+      "RuleID": "generic-api-key",
+      "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+      "StartLine": 1295,
+      "EndLine": 1295,
+      "StartColumn": 25,
+      "EndColumn": 824,
+      "Match": "idempotency_key\":\"REDACTED\"",
+      "Secret": "REDACTED",
+      "File": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-f4fac72a86104a83b0.json",
+      "SymlinkFile": "",
+      "Commit": "",
+      "Entropy": 3.675925,
+      "Author": "",
+      "Email": "",
+      "Date": "",
+      "Message": "",
+      "Tags": [
+        "decoded:base64",
+        "decode-depth:1"
+      ],
+      "Fingerprint": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-f4fac72a86104a83b0.json:generic-api-key:1295"
+    },
+    {
+      "RuleID": "generic-api-key",
+      "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+      "StartLine": 1371,
+      "EndLine": 1371,
+      "StartColumn": 25,
+      "EndColumn": 236,
+      "Match": "idempotency_key\":\"REDACTED\"",
+      "Secret": "REDACTED",
+      "File": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-f4fac72a86104a83b0.json",
+      "SymlinkFile": "",
+      "Commit": "",
+      "Entropy": 3.675925,
+      "Author": "",
+      "Email": "",
+      "Date": "",
+      "Message": "",
+      "Tags": [
+        "decoded:base64",
+        "decode-depth:1"
+      ],
+      "Fingerprint": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-f4fac72a86104a83b0.json:generic-api-key:1371"
+    },
+    {
+      "RuleID": "generic-api-key",
+      "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+      "StartLine": 1493,
+      "EndLine": 1493,
+      "StartColumn": 25,
+      "EndColumn": 1400,
+      "Match": "idempotency_key\":\"REDACTED\"",
+      "Secret": "REDACTED",
+      "File": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-f4fac72a86104a83b0.json",
+      "SymlinkFile": "",
+      "Commit": "",
+      "Entropy": 3.675925,
+      "Author": "",
+      "Email": "",
+      "Date": "",
+      "Message": "",
+      "Tags": [
+        "decoded:base64",
+        "decode-depth:1"
+      ],
+      "Fingerprint": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-f4fac72a86104a83b0.json:generic-api-key:1493"
+    },
+    {
+      "RuleID": "generic-api-key",
+      "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+      "StartLine": 1271,
+      "EndLine": 1271,
+      "StartColumn": 25,
+      "EndColumn": 824,
+      "Match": "idempotency_key\":\"REDACTED\"",
+      "Secret": "REDACTED",
+      "File": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-b2a2408a7e804f96a3.json",
+      "SymlinkFile": "",
+      "Commit": "",
+      "Entropy": 3.7762964,
+      "Author": "",
+      "Email": "",
+      "Date": "",
+      "Message": "",
+      "Tags": [
+        "decoded:base64",
+        "decode-depth:1"
+      ],
+      "Fingerprint": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-b2a2408a7e804f96a3.json:generic-api-key:1271"
+    },
+    {
+      "RuleID": "generic-api-key",
+      "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+      "StartLine": 1347,
+      "EndLine": 1347,
+      "StartColumn": 25,
+      "EndColumn": 236,
+      "Match": "idempotency_key\":\"REDACTED\"",
+      "Secret": "REDACTED",
+      "File": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-b2a2408a7e804f96a3.json",
+      "SymlinkFile": "",
+      "Commit": "",
+      "Entropy": 3.7762964,
+      "Author": "",
+      "Email": "",
+      "Date": "",
+      "Message": "",
+      "Tags": [
+        "decoded:base64",
+        "decode-depth:1"
+      ],
+      "Fingerprint": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-b2a2408a7e804f96a3.json:generic-api-key:1347"
+    },
+    {
+      "RuleID": "generic-api-key",
+      "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+      "StartLine": 1469,
+      "EndLine": 1469,
+      "StartColumn": 25,
+      "EndColumn": 1400,
+      "Match": "idempotency_key\":\"REDACTED\"",
+      "Secret": "REDACTED",
+      "File": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-b2a2408a7e804f96a3.json",
+      "SymlinkFile": "",
+      "Commit": "",
+      "Entropy": 3.7762964,
+      "Author": "",
+      "Email": "",
+      "Date": "",
+      "Message": "",
+      "Tags": [
+        "decoded:base64",
+        "decode-depth:1"
+      ],
+      "Fingerprint": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-mxanblk3/snapshot/evidence/runs/publication-staging/prior-histories-expanded/history-inc-b2a2408a7e804f96a3.json:generic-api-key:1469"
+    }
+  ],
+  "raw_finding_count": 57,
+  "review_registry_sha256": "2e436c84d5b0c68e604eb899ad354abae2befbd64e09f81c73be92c13e972d86",
+  "unreviewed_finding_count": 0
+}

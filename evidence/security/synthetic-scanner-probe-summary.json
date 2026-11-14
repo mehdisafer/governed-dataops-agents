@@ -1,0 +1,11 @@
+{
+  "created_at": "2026-11-14T12:20:00.167155+00:00",
+  "kind": "actual pinned Gitleaks probe over generated noncredential fixtures",
+  "expected_findings": 2,
+  "observed_findings": 2,
+  "tracked_ignored_file_scanned": true,
+  "untracked_ignored_file_excluded": true,
+  "arbitrary_hex_key_was_not_waived": true,
+  "status": "observed_expected_detection",
+  "report_sha256": "cc70238fd04b7b3c7b5665b0c4df9b8ade03b6f23ef6e1f553ba5355d9e6a33b"
+}

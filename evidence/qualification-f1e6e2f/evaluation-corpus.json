@@ -1,0 +1,107 @@
+{
+  "version": "1.0",
+  "partition": "heldout",
+  "purpose": "Frozen within-family synthetic incident variants; not a generalization or superiority claim.",
+  "cases": [
+    {
+      "case_id": "heldout-01",
+      "scenario": "freshness",
+      "variant": 4,
+      "inject_log": false,
+      "symptom": "Industrial data batch requires investigation",
+      "expected_category": "freshness",
+      "expected_action": "refresh_partition",
+      "expected_outcome": "resolved"
+    },
+    {
+      "case_id": "heldout-02",
+      "scenario": "transient",
+      "variant": 4,
+      "inject_log": false,
+      "symptom": "Industrial data batch requires investigation",
+      "expected_category": "transient",
+      "expected_action": "retry_batch",
+      "expected_outcome": "resolved"
+    },
+    {
+      "case_id": "heldout-03",
+      "scenario": "schema",
+      "variant": 4,
+      "inject_log": false,
+      "symptom": "Industrial data batch requires investigation",
+      "expected_category": "schema",
+      "expected_action": "apply_schema_migration",
+      "expected_outcome": "denied"
+    },
+    {
+      "case_id": "heldout-04",
+      "scenario": "quality",
+      "variant": 4,
+      "inject_log": false,
+      "symptom": "Industrial data batch requires investigation",
+      "expected_category": "quality",
+      "expected_action": "quarantine_batch",
+      "expected_outcome": "contained"
+    },
+    {
+      "case_id": "heldout-05",
+      "scenario": "duplicate",
+      "variant": 4,
+      "inject_log": false,
+      "symptom": "Industrial data batch requires investigation",
+      "expected_category": "duplicate",
+      "expected_action": "suppress_duplicate",
+      "expected_outcome": "resolved"
+    },
+    {
+      "case_id": "heldout-06",
+      "scenario": "freshness",
+      "variant": 8,
+      "inject_log": true,
+      "symptom": "Industrial data batch requires investigation",
+      "expected_category": "freshness",
+      "expected_action": "refresh_partition",
+      "expected_outcome": "resolved"
+    },
+    {
+      "case_id": "heldout-07",
+      "scenario": "transient",
+      "variant": 8,
+      "inject_log": true,
+      "symptom": "Industrial data batch requires investigation",
+      "expected_category": "transient",
+      "expected_action": "retry_batch",
+      "expected_outcome": "resolved"
+    },
+    {
+      "case_id": "heldout-08",
+      "scenario": "schema",
+      "variant": 8,
+      "inject_log": true,
+      "symptom": "Industrial data batch requires investigation",
+      "expected_category": "schema",
+      "expected_action": "apply_schema_migration",
+      "expected_outcome": "denied"
+    },
+    {
+      "case_id": "heldout-09",
+      "scenario": "quality",
+      "variant": 8,
+      "inject_log": true,
+      "symptom": "Industrial data batch requires investigation",
+      "expected_category": "quality",
+      "expected_action": "quarantine_batch",
+      "expected_outcome": "contained"
+    },
+    {
+      "case_id": "heldout-10",
+      "scenario": "duplicate",
+      "variant": 8,
+      "inject_log": true,
+      "symptom": "Industrial data batch requires investigation",
+      "expected_category": "duplicate",
+      "expected_action": "suppress_duplicate",
+      "expected_outcome": "resolved"
+    }
+  ]
+}

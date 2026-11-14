@@ -1,0 +1,21 @@
+{
+  "recorded_at": "2026-11-14T13:45:16.135837+00:00",
+  "scope": "Independent archive member and retained-original comparison; not a service rerun",
+  "checks": [
+    {
+      "collection": "qualification-f1e6e2f",
+      "files_verified": 192,
+      "original_bytes": 5470157,
+      "archive_sha256": "30fdb830efd8106ba62d89ba395f1a5cb3696385d0275d587dfecd9671356402",
+      "all_archive_members_byte_identical_to_originals": true
+    },
+    {
+      "collection": "recovery-development",
+      "files_verified": 26,
+      "original_bytes": 1264384,
+      "archive_sha256": "be3e8bc382de1395eafed7769e49bbcdda4eab9e5d541351f271a33de8ad7f19",
+      "all_archive_members_byte_identical_to_originals": true
+    }
+  ],
+  "status": "passed"
+}

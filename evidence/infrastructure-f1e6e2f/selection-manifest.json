@@ -1,0 +1,150 @@
+{
+  "recorded_at": "2026-11-14T13:20:41.980091+00:00",
+  "source_commit": "f1e6e2f3800242ec210145680261da8ab60f38b4",
+  "original_run_directory": "evidence/runs/infrastructure-f1e6e2f",
+  "publication_status": "Prepared canonical repository evidence; original files unchanged",
+  "all_source_input_blobs_recomputed_at_commit": true,
+  "source_input_count": 5,
+  "files": [
+    {
+      "file": "commands.json",
+      "original_path": "evidence/runs/infrastructure-f1e6e2f/commands.json",
+      "bytes": 1308,
+      "sha256": "578402413b09256139ca1b45d96ba3a0e9b0e4663f99fa153f4c940f8bb87975",
+      "copied_bytes_equal_original": true,
+      "source_dates": {
+        "file_mtime_utc": "2026-11-14T13:12:17.330906+00:00"
+      }
+    },
+    {
+      "file": "format.stderr.log",
+      "original_path": "evidence/runs/infrastructure-f1e6e2f/format.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "copied_bytes_equal_original": true,
+      "source_dates": {
+        "file_mtime_utc": "2026-11-14T13:11:31.407404+00:00"
+      }
+    },
+    {
+      "file": "format.stdout.log",
+      "original_path": "evidence/runs/infrastructure-f1e6e2f/format.stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "copied_bytes_equal_original": true,
+      "source_dates": {
+        "file_mtime_utc": "2026-11-14T13:11:31.407404+00:00"
+      }
+    },
+    {
+      "file": "init.stderr.log",
+      "original_path": "evidence/runs/infrastructure-f1e6e2f/init.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "copied_bytes_equal_original": true,
+      "source_dates": {
+        "file_mtime_utc": "2026-11-14T13:12:17.177145+00:00"
+      }
+    },
+    {
+      "file": "init.stdout.log",
+      "original_path": "evidence/runs/infrastructure-f1e6e2f/init.stdout.log",
+      "bytes": 479,
+      "sha256": "eac0c28e2025800d6e16e4cd61df99a86bb4497f58a6706973624f84149668fd",
+      "copied_bytes_equal_original": true,
+      "source_dates": {
+        "file_mtime_utc": "2026-11-14T13:12:17.177145+00:00"
+      }
+    },
+    {
+      "file": "run.json",
+      "original_path": "evidence/runs/infrastructure-f1e6e2f/run.json",
+      "bytes": 1120,
+      "sha256": "f1a295a6c99c5bb65969353f174df7b16a617cc0827d78894b266b9e3919274a",
+      "copied_bytes_equal_original": true,
+      "source_dates": {
+        "file_mtime_utc": "2026-11-14T13:12:17.340047+00:00",
+        "report_started_at": "2026-11-14T13:11:14.531943+00:00",
+        "report_finished_at": "2026-11-14T13:12:17.339936+00:00"
+      }
+    },
+    {
+      "file": "terraform-LICENSE.txt",
+      "original_path": "evidence/runs/infrastructure-f1e6e2f/terraform-LICENSE.txt",
+      "bytes": 4950,
+      "sha256": "dc4cb9f6140970b69110d82e8f25545135965ae50f6761ddfd6cd7cf9452bfa9",
+      "copied_bytes_equal_original": true,
+      "source_dates": {
+        "file_mtime_utc": "2026-11-14T13:11:31.327166+00:00"
+      }
+    },
+    {
+      "file": "terraform_1.17.2_SHA256SUMS",
+      "original_path": "evidence/runs/infrastructure-f1e6e2f/terraform_1.17.2_SHA256SUMS",
+      "bytes": 1592,
+      "sha256": "6ece9a6cf116bb7b59adb14103140aa197b2d09543457f611c5a7f362302beab",
+      "copied_bytes_equal_original": true,
+      "source_dates": {
+        "file_mtime_utc": "2026-11-14T13:11:30.819358+00:00"
+      }
+    },
+    {
+      "file": "tool-provenance.json",
+      "original_path": "evidence/runs/infrastructure-f1e6e2f/tool-provenance.json",
+      "bytes": 474,
+      "sha256": "1d74f5e806bee4e3a1dc9845aa25b117cca7201525782612136bed6b89cc0277",
+      "copied_bytes_equal_original": true,
+      "source_dates": {
+        "file_mtime_utc": "2026-11-14T13:11:30.819510+00:00"
+      }
+    },
+    {
+      "file": "validate.stderr.log",
+      "original_path": "evidence/runs/infrastructure-f1e6e2f/validate.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "copied_bytes_equal_original": true,
+      "source_dates": {
+        "file_mtime_utc": "2026-11-14T13:12:17.330579+00:00"
+      }
+    },
+    {
+      "file": "validate.stdout.log",
+      "original_path": "evidence/runs/infrastructure-f1e6e2f/validate.stdout.log",
+      "bytes": 1232,
+      "sha256": "96aca028a004d7c93af222895306617cabe4609eda7ca432d9a0e5dcc6d7ac28",
+      "copied_bytes_equal_original": true,
+      "source_dates": {
+        "file_mtime_utc": "2026-11-14T13:12:17.330579+00:00"
+      }
+    },
+    {
+      "file": "version.stderr.log",
+      "original_path": "evidence/runs/infrastructure-f1e6e2f/version.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "copied_bytes_equal_original": true,
+      "source_dates": {
+        "file_mtime_utc": "2026-11-14T13:11:31.372802+00:00"
+      }
+    },
+    {
+      "file": "version.stdout.log",
+      "original_path": "evidence/runs/infrastructure-f1e6e2f/version.stdout.log",
+      "bytes": 152,
+      "sha256": "768e7951cd1fb2f07b005be3832eab09424343c0db83da9440d6c9cc91d60b7e",
+      "copied_bytes_equal_original": true,
+      "source_dates": {
+        "file_mtime_utc": "2026-11-14T13:11:31.372802+00:00"
+      }
+    }
+  ],
+  "scan": {
+    "original_report": "evidence/runs/security-current/infrastructure-f1e6e2f-expanded-prescan.json",
+    "sha256": "010396e3c305a12c6a9ab1d8afcfa341d2dfcbb0adc5e41907ae54f5ce2135e1",
+    "raw_candidates": 0,
+    "automated_unresolved_candidates": 0
+  },
+  "promoted_at": "2026-11-14T13:43:12.636911+00:00",
+  "canonical_directory": "evidence/infrastructure-f1e6e2f"
+}

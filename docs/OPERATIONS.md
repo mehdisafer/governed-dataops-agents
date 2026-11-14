@@ -4,6 +4,24 @@
 
 The primary objective is business correctness: every committed effect must have a durable target ledger entry and fresh scoped verification. An unavailable model, incomplete observation or invalid approval must produce an explicit refusal or escalation. Quarantine is containment, not repaired data.
 
+### Retained execution results
+
+The full native integration run on **2026-11-14**, at clean and unchanged source commit `f1e6e2f3800242ec210145680261da8ab60f38b4`, passed **14/18 gates** and finished with overall status **failed**. Governance, bounded recovery and load checks passed; agent business-case quality, heldout agent quality, demonstrated agent advantage and browser execution did not. The supervisor reported all direct child services stopped and no cleanup failures. These observations are retained in the [native qualification evidence](../evidence/qualification-f1e6e2f/).
+
+| Observation | Measured or exercised scope | Operational interpretation |
+| --- | --- | --- |
+| Runbook load | 12 incidents, concurrency 4, median 5.660 seconds, p95 6.150 seconds, zero errors | A bounded measurement on this native host; no capacity or availability guarantee |
+| Heldout agent | 2/10 strict successes; median 91.425 seconds, p95 210.917 seconds end to end | Diagnostic acceptance failed; the runbook achieved 10/10 on the same ten cases |
+| Model accounting | Responses and complete usage observed for 2/10 heldout agent attempts | Interrupted or unobserved work remains unmeasured; do not treat missing usage as zero consumption |
+| Paired restore | Stopped application/Temporal pair restored into a new directory; historical result retrieved, rows preserved, duplicate effect count remained one, new incident completed | Native recovery was exercised; the Docker procedure below remains unexecuted |
+| Replay | 56 closed workflow histories from the frozen run and 26 from an earlier development revision replayed | Compatibility applies to those histories; the earlier source was dirty and does not represent a qualified release upgrade |
+
+The measurements, restore assertions and replay source hashes are in the [original run results, comparison and load records](../evidence/qualification-f1e6e2f/). No unjustified or unknown effects were observed in the heldout benchmark; that metric is a benchmark proxy and does not establish a complete authorization audit.
+
+Deployment qualification remains open. The [container attempt](../evidence/containers-f1e6e2f/) stopped before build because Docker was unavailable. The [Terraform attempt](../evidence/infrastructure-f1e6e2f/) passed version, formatting and readonly initialization but failed provider-schema loading; no plan or apply ran. Chromium could not create its local Unix-domain socket, so console interaction and visual checks were not executed. Both [GitHub Actions attempts](../evidence/github-actions-43597256488/) failed before runner assignment with zero executed steps; their cause remains unknown from the available evidence. See [deployment status](DEPLOYMENT.md#observed-qualification-status) for the separate gate boundaries.
+
+### Operating thresholds
+
 The following thresholds are operating choices, not measured availability guarantees:
 
 | Signal | Initial threshold | Operator response |
@@ -11,7 +29,7 @@ The following thresholds are operating choices, not measured availability guaran
 | Unjustified committed effect | Any occurrence | Stop admission and workers, preserve state and investigate |
 | Unknown effect outcome | Any unreconciled occurrence | Inspect the exact idempotency key in the target ledger; do not force a repeat with another key |
 | Admission queue | 32 pending incidents | Honour HTTP 429 and Retry-After; inspect worker/model capacity, retry the same event identity |
-| Local model request | 90 seconds, 300 output tokens | Inspect model health, prompt revision, usage and context size; retain failed cases in the evaluation denominator |
+| Local model diagnosis | 90-second overall diagnostic deadline; at most two requests, each capped at 300 output tokens | Inspect model health, prompt revision, usage and context size; track total incident latency separately and retain failures in the evaluation denominator |
 | Application/Temporal disk | 80% host volume usage | Plan retention or storage expansion before writes fail; preserve live histories and effect receipts |
 | Service health | Three consecutive failed checks | Inspect service dependencies; a restart alone is not verified recovery |
 
@@ -55,6 +73,14 @@ Stop admission if the queue is exhausted. Restart the same worker version with t
 
 Use bounded restart, contention and replay evidence from the current qualifier. A small successful contention test is not a scale guarantee. Target-partitioned queues and additional workers need new invariant and load tests before they are described as supported capacity.
 
+### Model or workflow completion is delayed
+
+The frozen run recorded long end-to-end agent completion times alongside worker heartbeat timeouts and RPC errors. The cause has not been established. Preserve the [original service logs and Temporal histories](../evidence/qualification-f1e6e2f/) when investigating; do not attribute the delay to model speed, CPU pressure, network behavior or Temporal without evidence that separates those possibilities.
+
+Correlate the incident identifier across API admission, workflow task scheduling and start, MCP observation, the model request/response, activity completion and final verification. Distinguish the configured model-call deadline from queueing, workflow recovery and RPC retry time. Compare the actual model trace and response-observed flags with server logs; an expired client request can leave server work or usage unobserved.
+
+Inspect model health and its single inference slot, measured CPU/RAM limits, Temporal RPC health and worker task progress before changing budgets or restarting services. Retain the failing case, prompt/schema hashes, elapsed times and incomplete usage in the report. Reconcile any uncertain target effect using its original idempotency key. Increasing a deadline or repeating an operation under a different identity does not establish that the underlying fault has been resolved.
+
 ### Cancellation
 
 An operator requests cancellation through the API. Cancellation is a durable request, not a rollback primitive. A committed target effect still requires reconciliation and verification. Preserve its outcome and escalate when compensation needs a separate reviewed action.
@@ -62,6 +88,8 @@ An operator requests cancellation through the API. Cancellation is a durable req
 ## Backup scope
 
 Back up the application and Temporal databases as a consistent stopped pair. The application snapshot contains incidents, evidence, approvals and effect receipts; Temporal contains workflow histories. Restoring only one can make the system disagree about effects that already happened.
+
+The [native paired-restore gate at `f1e6e2f`](../evidence/qualification-f1e6e2f/) exercised this stopped-pair approach and checked historical workflow results, business rows, duplicate suppression and a new incident after restoration. It did not exercise Docker volumes, the container commands below, an HA failover or a recovery-time objective. Keep those claims separate when recording a recovery exercise.
 
 An application-only SQLite snapshot is useful for inspection but is not a complete workflow-system recovery point. Never copy a live SQLite main file while ignoring its WAL. The procedure below uses SQLite's backup API after writers stop.
 
@@ -149,8 +177,12 @@ For Compose, the explicit command is `docker compose run --rm --no-deps api migr
 
 Reverting an image is safe only when its database schema and retained Temporal histories are compatible. A forward-only migration has no automatic inverse. Otherwise restore the stopped pair into fresh volumes using the matching older application version. Never restore only the application database to undo an effect whose Temporal history already records completion. Changes in workflow execution order require replay and appropriate Temporal versioning or patching.
 
+The retained execution establishes restoration of the current schema and replay of the specified histories. It does not establish a schema upgrade/downgrade or rollback between two released versions. Preserve that limitation when using the 26 earlier-development histories as compatibility evidence; their producing source was not clean. A future schema or workflow change needs its own migration, recovery and replay evidence.
+
 ## Retention and release gates
 
 This release has no automatic database retention or archival service. Monitor disk use and preserve unresolved incidents, effect receipts and retained histories. Do not delete receipts merely to free disk while retries remain possible.
 
 Before publication, inspect Git history, issue/PR text, raw logs and exported artifacts for secrets and private data. Synthetic inputs do not replace that check. Keep visibility and project-licence decisions explicit. Container startup, a checksum match, a backup setting or an implementation flag cannot substitute for its corresponding acceptance evidence.
+
+Keep the failed overall qualification visible until new evidence closes the outstanding gates. A later documentation or evidence commit does not change which implementation was exercised: the retained run is bound to `f1e6e2f3800242ec210145680261da8ab60f38b4`. CI attempts with zero executed steps cannot replace the missing container, Terraform or browser results. Diagnostic quality must be assessed independently even after those deployment checks can run.

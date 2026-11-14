@@ -1,0 +1,93 @@
+{
+  "recorded_at": "2026-11-14T13:03:47.605604+00:00",
+  "selection": "GitHub Actions original API responses for attempts 1 and 2",
+  "source_commit": "f1e6e2f3800242ec210145680261da8ab60f38b4",
+  "publication_status": "Prepared canonical repository evidence; original files unchanged",
+  "date_semantics": "Source report timestamps retain their original meaning; filesystem mtime is not asserted to be an execution start time.",
+  "files": [
+    {
+      "file": "annotation-retrieval-error.json",
+      "original_path": "evidence/runs/github-actions-43597256488/annotation-retrieval-error.json",
+      "bytes": 166,
+      "sha256": "87af17e69a22bbb00512bddcaa53aa02a3abb0c320c9feca494439ed28b70f94",
+      "copied_bytes_equal_original": true,
+      "source_dates": {
+        "file_mtime_utc": "2026-11-14T12:59:08.490091+00:00"
+      }
+    },
+    {
+      "file": "artifacts.json",
+      "original_path": "evidence/runs/github-actions-43597256488/artifacts.json",
+      "bytes": 22,
+      "sha256": "fb09a9699b26ad536855bb4263ff01baa31a107d9af48b348e96cb4a9eb2b8d9",
+      "copied_bytes_equal_original": true,
+      "source_dates": {
+        "file_mtime_utc": "2026-11-14T12:59:07.623708+00:00"
+      }
+    },
+    {
+      "file": "checks.json",
+      "original_path": "evidence/runs/github-actions-43597256488/checks.json",
+      "bytes": 25934,
+      "sha256": "89a5e3669b796b7db48ad093f05e90861e7c13baf52d172a349f527e2a989c77",
+      "copied_bytes_equal_original": true,
+      "source_dates": {
+        "file_mtime_utc": "2026-11-14T12:59:07.262292+00:00"
+      }
+    },
+    {
+      "file": "jobs.json",
+      "original_path": "evidence/runs/github-actions-43597256488/jobs.json",
+      "bytes": 5878,
+      "sha256": "cc2ce7852257b8256f9e5d3bf7e4d1f39d21d91bd13ed78e68db55f8f40896eb",
+      "copied_bytes_equal_original": true,
+      "source_dates": {
+        "file_mtime_utc": "2026-11-14T12:59:06.875361+00:00"
+      }
+    },
+    {
+      "file": "log-retrieval-error.json",
+      "original_path": "evidence/runs/github-actions-43597256488/log-retrieval-error.json",
+      "bytes": 582,
+      "sha256": "5efba3bd7baee491522e7f9459a078be2dc2a4f3ce0a10e80483193d42a3507d",
+      "copied_bytes_equal_original": true,
+      "source_dates": {
+        "file_mtime_utc": "2026-11-14T12:59:07.990065+00:00"
+      }
+    },
+    {
+      "file": "workflow-runs.json",
+      "original_path": "evidence/runs/github-actions-43597256488/workflow-runs.json",
+      "bytes": 16654,
+      "sha256": "3cfeb2eb0c9b6f7b243450ef10082b17dc43ec44ae486e703c33ec60a374037a",
+      "copied_bytes_equal_original": true,
+      "source_dates": {
+        "file_mtime_utc": "2026-11-14T12:59:06.505136+00:00"
+      }
+    },
+    {
+      "file": "workflow-attempt-2.json",
+      "original_path": "evidence/runs/github-actions-43597256488/workflow-attempt-2.json",
+      "bytes": 15710,
+      "sha256": "edc1d9274e9dccefb4f1e14d6633fee9c02fb247137c122fb69d2d3a2d0f73f5",
+      "copied_bytes_equal_original": true,
+      "source_dates": {
+        "file_mtime_utc": "2026-11-14T13:01:44.053854+00:00",
+        "report_created_at": "2026-11-14T12:56:35Z",
+        "report_updated_at": "2026-11-14T13:00:13Z"
+      }
+    },
+    {
+      "file": "jobs-attempt-2.json",
+      "original_path": "evidence/runs/github-actions-43597256488/jobs-attempt-2.json",
+      "bytes": 5878,
+      "sha256": "e0ac8070d697fd58c7a8c431da98622ae7b32df64e070b10da9840774d3c2681",
+      "copied_bytes_equal_original": true,
+      "source_dates": {
+        "file_mtime_utc": "2026-11-14T13:01:44.450096+00:00"
+      }
+    }
+  ],
+  "promoted_at": "2026-11-14T13:43:12.636911+00:00",
+  "canonical_directory": "evidence/github-actions-43597256488"
+}

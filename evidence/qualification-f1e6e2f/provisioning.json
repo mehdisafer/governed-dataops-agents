@@ -1,0 +1,152 @@
+{
+  "created_at": "2026-11-14T12:06:14.666613+00:00",
+  "assets": [
+    {
+      "name": "temporal_cli_1.10.1_linux_amd64.tar.gz",
+      "url": "https://github.com/temporalio/cli/releases/download/v1.10.1/temporal_cli_1.10.1_linux_amd64.tar.gz",
+      "sha256": "4c1500e2ce2d4de136e5fe8852d9b7f82eb62f19b6b383b3e0c040519a9d20b1",
+      "bytes": 38357804,
+      "licence": "MIT",
+      "version": "1.10.1"
+    },
+    {
+      "name": "llama-b12368-bin-ubuntu-x64.tar.gz",
+      "url": "https://github.com/ggml-org/llama.cpp/releases/download/b12368/llama-b12368-bin-ubuntu-x64.tar.gz",
+      "sha256": "4162c124bf89feb9096bd69689d69afc303473b6024db6e0e8c41cbd53f52ab4",
+      "bytes": 23332342,
+      "licence": "MIT",
+      "version": "b12368"
+    },
+    {
+      "name": "qwen3-4b.LICENSE",
+      "url": "https://huggingface.co/Qwen/Qwen3-4B-Instruct-2507/resolve/cdbee75f17c01a7cc42f958dc650907174af0554/LICENSE",
+      "sha256": "832dd9e00a68dd83b3c3fb9f5588dad7dcf337a0db50f7d9483f310cd292e92e",
+      "bytes": 11343,
+      "licence": "Apache-2.0"
+    },
+    {
+      "name": "qwen3-4b-quantizer-README.md",
+      "url": "https://huggingface.co/unsloth/Qwen3-4B-Instruct-2507-GGUF/resolve/a06e946bb6b655725eafa393f4a9745d460374c9/README.md",
+      "sha256": "c18c2d01645e709fcc0bfd593291d3dc43e51873f5af170a082c36ccd95988c3",
+      "bytes": 11207
+    },
+    {
+      "name": "qwen3-4b-base-README.md",
+      "url": "https://huggingface.co/Qwen/Qwen3-4B-Instruct-2507/resolve/cdbee75f17c01a7cc42f958dc650907174af0554/README.md",
+      "sha256": "8e3dd0c3b5b11897cc71092ccfe517bb7a9783479baa3665aad73c8d1a2041cd",
+      "bytes": 8168
+    },
+    {
+      "name": "Qwen3-4B-Instruct-2507-Q2_K.gguf",
+      "url": "https://huggingface.co/unsloth/Qwen3-4B-Instruct-2507-GGUF/resolve/a06e946bb6b655725eafa393f4a9745d460374c9/Qwen3-4B-Instruct-2507-Q2_K.gguf",
+      "sha256": "f7ed2f57713ad29e1a4ec093be0cdf3d7fd31e137e8fd4fc3edcfd04a5267862",
+      "bytes": 1669500000,
+      "licence": "Apache-2.0",
+      "revision": "a06e946bb6b655725eafa393f4a9745d460374c9",
+      "quantization": "Q2_K",
+      "quantizer": "Unsloth (community quantization)",
+      "base_model": "Qwen/Qwen3-4B-Instruct-2507",
+      "base_model_revision": "cdbee75f17c01a7cc42f958dc650907174af0554"
+    }
+  ],
+  "services": {
+    "temporal": {
+      "command": [
+        "/workspace/scratch/0496cf0d38c8/runtime/temporal/temporal",
+        "server",
+        "start-dev",
+        "--ip",
+        "127.0.0.1",
+        "--port",
+        "7233",
+        "--ui-ip",
+        "127.0.0.1",
+        "--ui-port",
+        "8233",
+        "--ui-disable-news-fetch",
+        "--metrics-port",
+        "8234",
+        "--db-filename",
+        "/workspace/scratch/0496cf0d38c8/runtime/temporal.db"
+      ]
+    },
+    "model": {
+      "command": [
+        "/workspace/scratch/0496cf0d38c8/runtime/llama/llama-b12368/llama-server",
+        "--model",
+        "/workspace/scratch/0496cf0d38c8/runtime/Qwen3-4B-Instruct-2507-Q2_K.gguf",
+        "--host",
+        "127.0.0.1",
+        "--port",
+        "8090",
+        "--alias",
+        "governed-qwen",
+        "--threads",
+        "4",
+        "--threads-batch",
+        "4",
+        "--threads-http",
+        "4",
+        "--ctx-size",
+        "2048",
+        "--parallel",
+        "1",
+        "--gpu-layers",
+        "0",
+        "--metrics",
+        "--no-webui",
+        "--no-agent",
+        "--jinja",
+        "--n-predict",
+        "768",
+        "--batch-size",
+        "128",
+        "--ubatch-size",
+        "64",
+        "--cache-type-k",
+        "q8_0",
+        "--cache-type-v",
+        "q8_0",
+        "--flash-attn",
+        "on",
+        "--no-repack",
+        "--cache-ram",
+        "0",
+        "--ctx-checkpoints",
+        "0"
+      ]
+    }
+  },
+  "services_running": false,
+  "execution_status": "downloaded; not executed by bootstrap",
+  "model_qualification_status": "experimental; diagnostic quality gate failed",
+  "platform": "linux/amd64",
+  "model_repo_revision": "a06e946bb6b655725eafa393f4a9745d460374c9",
+  "recommended_environment": {
+    "DATAOPS_MODEL_PROVIDER": "local",
+    "DATAOPS_MODEL_BASE_URL": "http://127.0.0.1:8090/v1",
+    "DATAOPS_MODEL_NAME": "governed-qwen",
+    "DATAOPS_MODEL_REVISION": "sha256:f7ed2f57713ad29e1a4ec093be0cdf3d7fd31e137e8fd4fc3edcfd04a5267862",
+    "DATAOPS_MODEL_MAX_TOKENS": "300",
+    "DATAOPS_MODEL_TIMEOUT_SECONDS": "90",
+    "DATAOPS_MODEL_CONCURRENCY": "1"
+  },
+  "licence_sources": {
+    "Temporal": "https://github.com/temporalio/cli/blob/v1.10.1/LICENSE",
+    "llama.cpp": "https://github.com/ggml-org/llama.cpp/blob/b12368/LICENSE",
+    "Qwen": "https://huggingface.co/Qwen/Qwen3-4B-Instruct-2507/blob/cdbee75f17c01a7cc42f958dc650907174af0554/LICENSE"
+  },
+  "model_qualification": {
+    "observed_at": "2026-11-14T12:28:12.185794+00:00",
+    "status": "experimental; diagnostic quality gate failed",
+    "development_correct": 2,
+    "development_total": 5,
+    "proof_file": "development-20261114-02.json",
+    "proof_sha256": "e733a6823ca5cc39c4b3ca3e8219b096ad46a8dc34f15a1d7f2f66d6b13a29b0",
+    "max_observed_model_rss_kib": 1890816,
+    "model_exit_code": 0,
+    "services_running_after_test": false,
+    "heldout_used_for_selection": false,
+    "interpretation": "Current bytes and bounded runtime are usable; development diagnostic agreement is insufficient. No production or full acceptance claim."
+  }
+}

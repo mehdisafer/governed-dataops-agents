@@ -1,12 +1,29 @@
 # Private single-host deployment
 
-## Supported reference profile
+## Reference profile
 
-The reference deployment is a private Linux amd64 host running Docker Engine and Docker Compose. It contains one synthetic target, one application SQLite database, one persistent Temporal development server and one local CPU model. Temporal is the workflow authority. SQLite WAL coordinates transactions on a local filesystem; network filesystems and multiple hosts are outside this profile.
+The reference configuration targets a private Linux amd64 host running Docker Engine and Docker Compose. It contains one synthetic target, one application SQLite database, one persistent Temporal development server and one local CPU model. Temporal is the workflow authority. SQLite WAL coordinates transactions on a local filesystem; network filesystems and multiple hosts are outside this profile.
 
 Use a non-root deployment account. Allow 8 CPU threads, 12 GiB RAM and at least 15 GiB free disk for images, downloads, state and evidence. These are provisioning allowances, not measured throughput guarantees. Record the actual execution environment with every qualification run.
 
-**Validation boundary:** download verification, native execution, container build, container execution and Terraform validation are separate gates. `docker compose config` checks structure; it does not build or start an image. Docker and Podman were absent from the reconstruction environment. The CI or target host must execute the container gate below before a container-runtime claim is made. This is a single-host demonstration, not an HA or production-validated profile. The [Temporal CLI development server](https://docs.temporal.io/cli/server#start-dev) is intended for development.
+**Validation boundary:** download verification, native execution, container build, container execution and Terraform validation are separate gates. `docker compose config` checks structure; it does not build or start an image. The reference container deployment remains unverified. This is a single-host demonstration with no HA or production acceptance. The [Temporal CLI development server](https://docs.temporal.io/cli/server#start-dev) is intended for development.
+
+## Observed qualification status
+
+The retained qualification on **2026-11-14** used clean, unchanged source commit `f1e6e2f3800242ec210145680261da8ab60f38b4`. Its native integration run passed **14 of 18 gates** and finished with overall status **failed**. The failed gates cover the five agent business cases, heldout agent evaluation, demonstrated agent advantage and the browser console. The supervisor stopped its direct child services at the end. These results describe an executed test, not a service left running. See the [native qualification evidence](../evidence/qualification-f1e6e2f/).
+
+| Area | Observed result | Remaining boundary |
+| --- | --- | --- |
+| Native governance and recovery | Runbook business cases, approval checks, worker outage/restart, contention, admission recovery, model outage handling and paired database restore passed | Bounded synthetic single-host exercises; no availability or multi-host guarantee |
+| Native history replay | 56 closed workflow histories from the frozen run and 26 from an earlier development revision replayed | The earlier source was dirty; this is concrete history compatibility evidence, not a clean release-to-release upgrade certification |
+| Native runbook load | 12 incidents, concurrency 4, p95 6.150 seconds, zero errors | Runbook measurement only; no model throughput or service-level guarantee |
+| Agent quality | 2/10 strict heldout successes, versus 10/10 for the runbook; agent advantage was not established | Diagnostic quality acceptance failed; retain failed and timed-out attempts in the denominator |
+| Containers | The [frozen-commit attempt](../evidence/containers-f1e6e2f/) stopped because Docker was unavailable | No image build, container startup, isolation check or container restore executed |
+| Terraform | [Version, formatting and readonly initialization](../evidence/infrastructure-f1e6e2f/) succeeded; validation failed while loading the provider schema | No Docker resource plan or Terraform apply executed |
+| Browser console | Chromium launch failed with `socket() failed: Operation not permitted` in the [native results](../evidence/qualification-f1e6e2f/) | Browser interaction and visual verification remain unexecuted because of the local Unix-domain socket restriction |
+| GitHub Actions | [Run 43597256488](../evidence/github-actions-43597256488/) failed on both attempts before runner assignment, with zero executed steps | The available evidence does not establish the cause; neither attempt supplies CI qualification results |
+
+End-to-end heldout agent latency was median **91.425 seconds** and p95 **210.917 seconds**. The run also recorded delayed workflow completion, worker heartbeat timeouts and RPC errors. Their cause remains unestablished. The configured 90-second model-call deadline is not an end-to-end incident deadline. Diagnose those timing layers before changing budgets or attributing the delay to a particular component. Detailed model results and scope are in [evaluation](EVALUATION.md) and the [retained comparison and logs](../evidence/qualification-f1e6e2f/).
 
 ## Versions and provenance
 
@@ -36,9 +53,9 @@ The model is **Qwen3-4B-Instruct-2507, Q2_K**, a community quantization publishe
 | Weight file | `Qwen3-4B-Instruct-2507-Q2_K.gguf`, 1,669,500,000 bytes |
 | SHA-256 | `f7ed2f57713ad29e1a4ec093be0cdf3d7fd31e137e8fd4fc3edcfd04a5267862` |
 
-The CPU profile uses four inference threads, one slot, a 2,048-token context, `q8_0` KV cache, flash attention, batch size 128 and microbatch size 64. Weight repacking, host prompt cache and context checkpoints are disabled to bound extra host buffers. Application requests have a 90-second deadline and a 300-token output budget. Changing those bounds needs fresh latency and memory evidence.
+The CPU profile uses four inference threads, one slot, a 2,048-token context, `q8_0` KV cache, flash attention, batch size 128 and microbatch size 64. Weight repacking, host prompt cache and context checkpoints are disabled to bound extra host buffers. Each diagnostic run has one overall 90-second deadline, at most two provider requests and a 300-token output cap per request. Changing those bounds needs fresh latency and memory evidence.
 
-The asset remains an experimental diagnostic candidate until the current evidence establishes the corresponding quality gate. A correct checksum establishes the selected bytes. It does not establish diagnostic accuracy, prompt-injection resistance or value over the deterministic runbook. Record invalid diagnoses, timeouts and process exits alongside successful responses. Historical results whose raw evidence was lost are contextual notes, not retained acceptance proof. See [evaluation](EVALUATION.md) and [qualification](QUALIFICATION.md) for current results.
+The selected asset is an **experimental diagnostic candidate whose current quality gate failed**. A correct checksum establishes the selected bytes. It does not establish diagnostic accuracy, prompt-injection resistance or value over the deterministic runbook. Record invalid diagnoses, timeouts and process exits alongside successful responses. Historical results whose raw evidence was lost are contextual notes, not retained acceptance proof. See [evaluation](EVALUATION.md), [qualification](QUALIFICATION.md) and the [frozen-commit comparison](../evidence/qualification-f1e6e2f/) for current results.
 
 ## Install and start
 
@@ -79,9 +96,11 @@ API, worker and target share one writable application database. They are trusted
 
 ## Container qualification gate
 
+The [attempt against `f1e6e2f`](../evidence/containers-f1e6e2f/) returned exit code 1 before any Docker command ran. Its cleanup list is empty because no stack was created. The procedures below remain to be executed on a host with Docker; the successful native recovery exercise does not verify their container equivalents.
+
 Run the gate on a normal Linux Docker host or a CI runner with sufficient measured resources. Retain the source commit, resolved Compose configuration, image IDs, versions, health output, business API results, raw service logs and cleanup status. Do not upload tokens, private keys or live databases.
 
-The executable harness builds the actual images and creates its own synthetic stack, private credentials and fresh volumes:
+The executable harness targets only `unix:///var/run/docker.sock`, clears inherited Docker context variables and supplies that endpoint to every Docker invocation. When Docker is available, it builds the actual images and creates its own synthetic stack, private credentials and fresh volumes:
 
 ```bash
 uv run python scripts/qualify_container.py \
@@ -121,7 +140,17 @@ Choose ownership before first deployment:
 | Default | Compose | `docker compose -f compose.yaml up -d` |
 | Optional | Terraform | `docker compose -f compose.yaml -f compose.terraform.yaml up -d` |
 
-For a fresh Terraform-managed namespace, inspect the plan before applying:
+First execute the verification-only gate against a clean source commit on the local Docker host:
+
+```bash
+uv run python scripts/validate_infra.py \
+  --source-commit "$(git rev-parse HEAD)" \
+  --output evidence/runs/infrastructure-01
+```
+
+The harness verifies the pinned Terraform archive against its retained official checksum manifest, copies the configuration and committed provider lock into a temporary directory, and runs formatting, readonly initialization, validation and an isolated create-only plan. It uses only the local Docker socket, retains original output and JSON, and never applies the plan. A failed stage stops later stages.
+
+For a subsequent deployment into a fresh Terraform-managed namespace, inspect the plan before applying. These are operator procedures; no Terraform apply has been qualified by the retained run:
 
 ```bash
 terraform -chdir=infra/terraform init -lockfile=readonly
@@ -135,7 +164,7 @@ docker compose -f compose.yaml -f compose.terraform.yaml up -d
 
 Keep `.terraform.lock.hcl` in Git; keep working state, plans and provider caches outside Git. Provider installation, static validation, planning and applying are distinct operations. A lock file records package selection and hashes, not an applied deployment. The project does not claim a successful Terraform apply without the corresponding execution evidence.
 
-In the current reconstruction environment, `init` succeeded and generated the lock file. `validate` was attempted but the provider could not create its local Unix-domain RPC socket: `socket: operation not permitted`. It did not reach Docker. Repeat validation on the normal Docker host or CI runner; the blocked local attempt is not a successful validation. No Terraform apply was executed here.
+The [attempt against `f1e6e2f`](../evidence/infrastructure-f1e6e2f/) verified Terraform 1.17.2 and passed `fmt -check` and `init -lockfile=readonly`, installing Docker provider 4.7.0 from the committed lock. `validate -json` returned exit code 1 with `valid: false`, `Failed to load plugin schemas` and no provider handshake output. That retained output does not establish the lower-level cause. The attempt stopped before Docker access or planning; no resources were applied, and its temporary workspace was removed. Repeat the gate on a normal local Docker host or a functioning CI runner.
 
 Set Terraform's `stack_name` and Compose's `DATAOPS_STACK` to the same value. Do not silently adopt existing Compose-owned resources into Terraform. Use a separate namespace or a reviewed import procedure. The external override removes Compose's internal-network attribute because Terraform owns it. All three Terraform resources have `prevent_destroy` protection.
 
@@ -152,6 +181,8 @@ uv run python scripts/qualify.py \
 ```
 
 Bootstrap verifies size and SHA-256, rejects modified cache/extracted files and records provenance. Cache and installation paths on the same filesystem share verified assets through hard links; treat both paths as immutable. Bootstrap starts no service. The qualifier must supervise all real services and clean up its children. On hosts where each command has a separate network namespace, run services and clients inside one supervisor invocation.
+
+The smoke profile covers a subset of the checks. The retained [full native integration run](../evidence/qualification-f1e6e2f/) contains its original commands, source hashes, runtime identities, business observations, histories, failures and cleanup result. A future run must retain its own evidence and source identity; the current native results do not close the container, infrastructure, browser or model-quality gates.
 
 ## Sources
 

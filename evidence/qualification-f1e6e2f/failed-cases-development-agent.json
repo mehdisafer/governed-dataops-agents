@@ -1,0 +1,872 @@
+{
+  "denominator": 5,
+  "attempted": 5,
+  "completed_with_business_observation": 5,
+  "diagnoses_correct": 3,
+  "actions_correct": 3,
+  "outcomes_correct": 3,
+  "cases": [
+    {
+      "case_id": "development-01",
+      "partition": "development",
+      "mode": "agent",
+      "incident_id": "inc-7b35bdf277a14bc7ae",
+      "scenario": "freshness",
+      "expected_category": "freshness",
+      "observed_category": "freshness",
+      "diagnosis_correct": true,
+      "action_correct": true,
+      "expected_outcome": "resolved",
+      "observed_outcome": "resolved",
+      "outcome_correct": true,
+      "verified_resolved": true,
+      "approval_count": 0,
+      "effect_count": 1,
+      "business": {
+        "counts": {
+          "source_rows": 3,
+          "curated_rows": 3,
+          "quarantine_rows": 0,
+          "effect_ledger": 1
+        },
+        "rows": {
+          "source_rows": [
+            [
+              1,
+              10
+            ],
+            [
+              2,
+              20
+            ],
+            [
+              3,
+              30
+            ]
+          ],
+          "curated_rows": [
+            [
+              1,
+              10
+            ],
+            [
+              2,
+              20
+            ],
+            [
+              3,
+              30
+            ]
+          ],
+          "quarantine_rows": []
+        },
+        "snapshot": {
+          "target_id": "line-7b35bdf277a14bc7ae",
+          "environment": "dev",
+          "scope": "factory-a",
+          "revision": 1,
+          "source_schema": 1,
+          "accepted_schema": 1,
+          "backlog_rows": 0,
+          "rejected_rows": 0,
+          "curated_rows": 3,
+          "duplicate_rows": 0,
+          "transient_failure": false,
+          "freshness_lag_seconds": 0,
+          "batch_id": "batch-e849d3af5375d1d2",
+          "batch_status": "applied",
+          "policy_version": "1.0"
+        }
+      },
+      "business_invariants_hold": true,
+      "ambiguous_effect_reconciled": true,
+      "unjustified_effect": false,
+      "engineering_followup_required": false,
+      "model_trace": {
+        "citation_constraint": "native enum compiled from validated evidence; original post-validator retained",
+        "context": {
+          "evidence": {
+            "collected_at": "2026-11-14T12:58:58.404710+00:00",
+            "complete": true,
+            "evidence_id": "ev-bf6c6a93a9a9475586e432a88788adc0",
+            "logs": [
+              "Synthetic pipeline line-7b35bdf277a14bc7ae: batch=batch-e849d3af5375d1d2; status=pending.",
+              "Input schema=1; accepted schema=1; pending rows=3; rejected rows=0."
+            ],
+            "snapshot": {
+              "accepted_schema": 1,
+              "backlog_rows": 3,
+              "batch_id": "batch-e849d3af5375d1d2",
+              "batch_status": "pending",
+              "curated_rows": 0,
+              "duplicate_rows": 0,
+              "environment": "dev",
+              "freshness_lag_seconds": 7200,
+              "policy_version": "1.0",
+              "rejected_rows": 0,
+              "revision": 0,
+              "scope": "factory-a",
+              "source_schema": 1,
+              "target_id": "line-7b35bdf277a14bc7ae",
+              "transient_failure": false
+            }
+          },
+          "incident": {
+            "contract_version": "1.0",
+            "created_at": "2026-11-14T12:58:57.602175+00:00",
+            "environment": "dev",
+            "event_id": "event-7b35bdf277a14bc7ae",
+            "incident_id": "inc-7b35bdf277a14bc7ae",
+            "scope": "factory-a",
+            "symptom": "Industrial data batch requires investigation",
+            "target_id": "line-7b35bdf277a14bc7ae"
+          }
+        },
+        "context_sha256": "c306e5a43dfa08f322c597a598073e589fb438e8de7214b12a60e9996302610f",
+        "cost_basis": "local provider charge only; compute and energy unmeasured",
+        "diagnosis_valid": true,
+        "duration_seconds": 23.565001,
+        "generation_property_order": [
+          "summary",
+          "evidence_refs",
+          "rationale",
+          "category",
+          "proposed_action"
+        ],
+        "mode": "agent",
+        "model": "governed-qwen",
+        "model_proposal": {
+          "category": "freshness",
+          "evidence_refs": [
+            "ev-bf6c6a93a9a9475586e432a88788adc0"
+          ],
+          "proposed_action": "refresh_partition",
+          "rationale": "batch_status=pending, backlog_rows=3, freshness_lag_seconds=7200; no duplicate or rejected rows; thus triggers rule 5.",
+          "summary": "batch_status=pending, backlog_rows>0, freshness_lag_seconds>300"
+        },
+        "model_revision": "sha256:f7ed2f57713ad29e1a4ec093be0cdf3d7fd31e137e8fd4fc3edcfd04a5267862",
+        "model_used": true,
+        "model_used_basis": "completed model response observed",
+        "native_schema_sha256": "89b71199460c236530a9517b398415ae0af28a9f79611c3f6675c47418019327",
+        "parameters": {
+          "max_tokens": 300,
+          "temperature": 0.0,
+          "timeout": 90.0
+        },
+        "permitted_evidence_refs": [
+          "ev-bf6c6a93a9a9475586e432a88788adc0"
+        ],
+        "prompt_sha256": "3f899265f14a72dbf77f6e9e1e5008ddc73937628f1a1256130fb0ecb1b6ace8",
+        "prompt_version": "diagnosis-v3",
+        "provider": "local",
+        "provider_cost_usd": 0.0,
+        "request_attempted": true,
+        "request_sha256": "451f3440b859a603a70cea6b4da75baa3583b4326b9d2ad222cb3a5635800465",
+        "response_observed": true,
+        "response_sha256": "cf63eccf973349d10d695f8d1f4480fff4362b9f04dd71fd6b22e025481fc572",
+        "tools_available_to_model": [],
+        "usage": {
+          "audio_seconds": 0,
+          "cache_audio_read_tokens": 0,
+          "cache_read_tokens": 0,
+          "cache_write_1h_tokens": 0,
+          "cache_write_tokens": 0,
+          "cost": null,
+          "details": {},
+          "input_audio_tokens": 0,
+          "input_tokens": 674,
+          "output_audio_tokens": 0,
+          "output_reasoning_tokens": 0,
+          "output_tokens": 112,
+          "requests": 1,
+          "tool_calls": 0,
+          "unmeasured_requests": 0
+        },
+        "usage_complete": true,
+        "usage_note": "Reported usage for the completed diagnostic run; compute and energy are unmeasured"
+      },
+      "duration_seconds": 28.7285
+    },
+    {
+      "case_id": "development-02",
+      "partition": "development",
+      "mode": "agent",
+      "incident_id": "inc-831ee2124bcf46e48d",
+      "scenario": "transient",
+      "expected_category": "transient",
+      "observed_category": "transient",
+      "diagnosis_correct": true,
+      "action_correct": true,
+      "expected_outcome": "resolved",
+      "observed_outcome": "resolved",
+      "outcome_correct": true,
+      "verified_resolved": true,
+      "approval_count": 0,
+      "effect_count": 1,
+      "business": {
+        "counts": {
+          "source_rows": 3,
+          "curated_rows": 3,
+          "quarantine_rows": 0,
+          "effect_ledger": 1
+        },
+        "rows": {
+          "source_rows": [
+            [
+              1,
+              10
+            ],
+            [
+              2,
+              20
+            ],
+            [
+              3,
+              30
+            ]
+          ],
+          "curated_rows": [
+            [
+              1,
+              10
+            ],
+            [
+              2,
+              20
+            ],
+            [
+              3,
+              30
+            ]
+          ],
+          "quarantine_rows": []
+        },
+        "snapshot": {
+          "target_id": "line-831ee2124bcf46e48d",
+          "environment": "dev",
+          "scope": "factory-a",
+          "revision": 1,
+          "source_schema": 1,
+          "accepted_schema": 1,
+          "backlog_rows": 0,
+          "rejected_rows": 0,
+          "curated_rows": 3,
+          "duplicate_rows": 0,
+          "transient_failure": false,
+          "freshness_lag_seconds": 0,
+          "batch_id": "batch-06167206fea52838",
+          "batch_status": "applied",
+          "policy_version": "1.0"
+        }
+      },
+      "business_invariants_hold": true,
+      "ambiguous_effect_reconciled": true,
+      "unjustified_effect": false,
+      "engineering_followup_required": false,
+      "model_trace": {
+        "citation_constraint": "native enum compiled from validated evidence; original post-validator retained",
+        "context": {
+          "evidence": {
+            "collected_at": "2026-11-14T12:59:27.056321+00:00",
+            "complete": true,
+            "evidence_id": "ev-67e5322edc1d49b0a0a3d375cbc4d388",
+            "logs": [
+              "Synthetic pipeline line-831ee2124bcf46e48d: batch=batch-06167206fea52838; status=failed.",
+              "Input schema=1; accepted schema=1; pending rows=3; rejected rows=0.",
+              "Transient upstream connection interruption; one bounded retry is available."
+            ],
+            "snapshot": {
+              "accepted_schema": 1,
+              "backlog_rows": 3,
+              "batch_id": "batch-06167206fea52838",
+              "batch_status": "failed",
+              "curated_rows": 0,
+              "duplicate_rows": 0,
+              "environment": "dev",
+              "freshness_lag_seconds": 7200,
+              "policy_version": "1.0",
+              "rejected_rows": 0,
+              "revision": 0,
+              "scope": "factory-a",
+              "source_schema": 1,
+              "target_id": "line-831ee2124bcf46e48d",
+              "transient_failure": true
+            }
+          },
+          "incident": {
+            "contract_version": "1.0",
+            "created_at": "2026-11-14T12:59:26.330490+00:00",
+            "environment": "dev",
+            "event_id": "event-831ee2124bcf46e48d",
+            "incident_id": "inc-831ee2124bcf46e48d",
+            "scope": "factory-a",
+            "symptom": "Industrial data batch requires investigation",
+            "target_id": "line-831ee2124bcf46e48d"
+          }
+        },
+        "context_sha256": "8dfe09e9510591562b41ea560ca81d732716f0dbbaacb892fdbe6569a80365e1",
+        "cost_basis": "local provider charge only; compute and energy unmeasured",
+        "diagnosis_valid": true,
+        "duration_seconds": 16.487383,
+        "generation_property_order": [
+          "summary",
+          "evidence_refs",
+          "rationale",
+          "category",
+          "proposed_action"
+        ],
+        "mode": "agent",
+        "model": "governed-qwen",
+        "model_proposal": {
+          "category": "transient",
+          "evidence_refs": [
+            "ev-67e5322edc1d49b0a0a3d375cbc4d388"
+          ],
+          "proposed_action": "retry_batch",
+          "rationale": "batch_status=failed and transient_failure=true, thus rule 4 applies.",
+          "summary": "batch failed with high freshness lag"
+        },
+        "model_revision": "sha256:f7ed2f57713ad29e1a4ec093be0cdf3d7fd31e137e8fd4fc3edcfd04a5267862",
+        "model_used": true,
+        "model_used_basis": "completed model response observed",
+        "native_schema_sha256": "b625c5e4471b496db2353426a4e4d3fddb1c1ac4136b1565ce41631af5905f8b",
+        "parameters": {
+          "max_tokens": 300,
+          "temperature": 0.0,
+          "timeout": 90.0
+        },
+        "permitted_evidence_refs": [
+          "ev-67e5322edc1d49b0a0a3d375cbc4d388"
+        ],
+        "prompt_sha256": "3f899265f14a72dbf77f6e9e1e5008ddc73937628f1a1256130fb0ecb1b6ace8",
+        "prompt_version": "diagnosis-v3",
+        "provider": "local",
+        "provider_cost_usd": 0.0,
+        "request_attempted": true,
+        "request_sha256": "0ee223557eee5787ea5660807123b1a4ca1d5ee5fa7f20d52b27df57c790dac0",
+        "response_observed": true,
+        "response_sha256": "641dadc322a81eaa3c3532e7730495b51fa4f17a14bc0c5d283389493141430d",
+        "tools_available_to_model": [],
+        "usage": {
+          "audio_seconds": 0,
+          "cache_audio_read_tokens": 0,
+          "cache_read_tokens": 301,
+          "cache_write_1h_tokens": 0,
+          "cache_write_tokens": 0,
+          "cost": null,
+          "details": {},
+          "input_audio_tokens": 0,
+          "input_tokens": 690,
+          "output_audio_tokens": 0,
+          "output_reasoning_tokens": 0,
+          "output_tokens": 81,
+          "requests": 1,
+          "tool_calls": 0,
+          "unmeasured_requests": 0
+        },
+        "usage_complete": true,
+        "usage_note": "Reported usage for the completed diagnostic run; compute and energy are unmeasured"
+      },
+      "duration_seconds": 21.5312
+    },
+    {
+      "case_id": "development-03",
+      "partition": "development",
+      "mode": "agent",
+      "incident_id": "inc-b4c61670fcc145f191",
+      "scenario": "schema",
+      "expected_category": "schema",
+      "observed_category": "schema",
+      "diagnosis_correct": true,
+      "action_correct": true,
+      "expected_outcome": "denied",
+      "observed_outcome": "denied",
+      "outcome_correct": true,
+      "verified_resolved": false,
+      "approval_count": 0,
+      "effect_count": 0,
+      "business": {
+        "counts": {
+          "source_rows": 3,
+          "curated_rows": 0,
+          "quarantine_rows": 0,
+          "effect_ledger": 0
+        },
+        "rows": {
+          "source_rows": [
+            [
+              1,
+              10
+            ],
+            [
+              2,
+              20
+            ],
+            [
+              3,
+              30
+            ]
+          ],
+          "curated_rows": [],
+          "quarantine_rows": []
+        },
+        "snapshot": {
+          "target_id": "line-b4c61670fcc145f191",
+          "environment": "dev",
+          "scope": "factory-a",
+          "revision": 0,
+          "source_schema": 2,
+          "accepted_schema": 1,
+          "backlog_rows": 3,
+          "rejected_rows": 0,
+          "curated_rows": 0,
+          "duplicate_rows": 0,
+          "transient_failure": false,
+          "freshness_lag_seconds": 7200,
+          "batch_id": "batch-872abf80279a575d",
+          "batch_status": "pending",
+          "policy_version": "1.0"
+        }
+      },
+      "business_invariants_hold": true,
+      "ambiguous_effect_reconciled": true,
+      "unjustified_effect": false,
+      "engineering_followup_required": true,
+      "model_trace": {
+        "citation_constraint": "native enum compiled from validated evidence; original post-validator retained",
+        "context": {
+          "evidence": {
+            "collected_at": "2026-11-14T12:59:48.614349+00:00",
+            "complete": true,
+            "evidence_id": "ev-ce70ba2a749d4e6ab619399af2ebd72e",
+            "logs": [
+              "Synthetic pipeline line-b4c61670fcc145f191: batch=batch-872abf80279a575d; status=pending.",
+              "Input schema=2; accepted schema=1; pending rows=3; rejected rows=0."
+            ],
+            "snapshot": {
+              "accepted_schema": 1,
+              "backlog_rows": 3,
+              "batch_id": "batch-872abf80279a575d",
+              "batch_status": "pending",
+              "curated_rows": 0,
+              "duplicate_rows": 0,
+              "environment": "dev",
+              "freshness_lag_seconds": 7200,
+              "policy_version": "1.0",
+              "rejected_rows": 0,
+              "revision": 0,
+              "scope": "factory-a",
+              "source_schema": 2,
+              "target_id": "line-b4c61670fcc145f191",
+              "transient_failure": false
+            }
+          },
+          "incident": {
+            "contract_version": "1.0",
+            "created_at": "2026-11-14T12:59:47.861671+00:00",
+            "environment": "dev",
+            "event_id": "event-b4c61670fcc145f191",
+            "incident_id": "inc-b4c61670fcc145f191",
+            "scope": "factory-a",
+            "symptom": "Industrial data batch requires investigation",
+            "target_id": "line-b4c61670fcc145f191"
+          }
+        },
+        "context_sha256": "d36c34b20115e1e5b00a7e5e4d43a95ad1de4ad1309d994961d3056b2f8514d4",
+        "cost_basis": "local provider charge only; compute and energy unmeasured",
+        "diagnosis_valid": true,
+        "duration_seconds": 14.860723,
+        "generation_property_order": [
+          "summary",
+          "evidence_refs",
+          "rationale",
+          "category",
+          "proposed_action"
+        ],
+        "mode": "agent",
+        "model": "governed-qwen",
+        "model_proposal": {
+          "category": "schema",
+          "evidence_refs": [
+            "ev-ce70ba2a749d4e6ab619399af2ebd72e"
+          ],
+          "proposed_action": "apply_schema_migration",
+          "rationale": "source_schema=2, accepted_schema=1; schema mismatch detected",
+          "summary": "source_schema mismatch triggers schema migration"
+        },
+        "model_revision": "sha256:f7ed2f57713ad29e1a4ec093be0cdf3d7fd31e137e8fd4fc3edcfd04a5267862",
+        "model_used": true,
+        "model_used_basis": "completed model response observed",
+        "native_schema_sha256": "84400b479e153323b0850511528f915ea5945c73b95bacb336cddddc1f653254",
+        "parameters": {
+          "max_tokens": 300,
+          "temperature": 0.0,
+          "timeout": 90.0
+        },
+        "permitted_evidence_refs": [
+          "ev-ce70ba2a749d4e6ab619399af2ebd72e"
+        ],
+        "prompt_sha256": "3f899265f14a72dbf77f6e9e1e5008ddc73937628f1a1256130fb0ecb1b6ace8",
+        "prompt_version": "diagnosis-v3",
+        "provider": "local",
+        "provider_cost_usd": 0.0,
+        "request_attempted": true,
+        "request_sha256": "856c3bb0ece4d6009060b624e2fb541a7988e1a1b9a232e358354f8d941815b9",
+        "response_observed": true,
+        "response_sha256": "7f2f1ed6c030a46e7318be34a2bebd4a97d373711f5c327469eb583cd6bd876c",
+        "tools_available_to_model": [],
+        "usage": {
+          "audio_seconds": 0,
+          "cache_audio_read_tokens": 0,
+          "cache_read_tokens": 303,
+          "cache_write_1h_tokens": 0,
+          "cache_write_tokens": 0,
+          "cost": null,
+          "details": {},
+          "input_audio_tokens": 0,
+          "input_tokens": 673,
+          "output_audio_tokens": 0,
+          "output_reasoning_tokens": 0,
+          "output_tokens": 75,
+          "requests": 1,
+          "tool_calls": 0,
+          "unmeasured_requests": 0
+        },
+        "usage_complete": true,
+        "usage_note": "Reported usage for the completed diagnostic run; compute and energy are unmeasured"
+      },
+      "duration_seconds": 16.7757
+    },
+    {
+      "case_id": "development-04",
+      "partition": "development",
+      "mode": "agent",
+      "incident_id": "inc-9f4780c67f104fe08c",
+      "scenario": "quality",
+      "expected_category": "quality",
+      "observed_category": null,
+      "diagnosis_correct": false,
+      "action_correct": false,
+      "expected_outcome": "contained",
+      "observed_outcome": "escalated",
+      "outcome_correct": false,
+      "verified_resolved": false,
+      "approval_count": 0,
+      "effect_count": 0,
+      "business": {
+        "counts": {
+          "source_rows": 3,
+          "curated_rows": 0,
+          "quarantine_rows": 0,
+          "effect_ledger": 0
+        },
+        "rows": {
+          "source_rows": [
+            [
+              1,
+              10
+            ],
+            [
+              2,
+              20
+            ],
+            [
+              3,
+              -30
+            ]
+          ],
+          "curated_rows": [],
+          "quarantine_rows": []
+        },
+        "snapshot": {
+          "target_id": "line-9f4780c67f104fe08c",
+          "environment": "dev",
+          "scope": "factory-a",
+          "revision": 0,
+          "source_schema": 1,
+          "accepted_schema": 1,
+          "backlog_rows": 3,
+          "rejected_rows": 1,
+          "curated_rows": 0,
+          "duplicate_rows": 0,
+          "transient_failure": false,
+          "freshness_lag_seconds": 7200,
+          "batch_id": "batch-5277bf766b6a02f3",
+          "batch_status": "rejected",
+          "policy_version": "1.0"
+        }
+      },
+      "business_invariants_hold": false,
+      "ambiguous_effect_reconciled": true,
+      "unjustified_effect": false,
+      "engineering_followup_required": true,
+      "model_trace": {
+        "citation_constraint": "native enum compiled from validated evidence; original post-validator retained",
+        "context": {
+          "evidence": {
+            "collected_at": "2026-11-14T13:00:05.358097+00:00",
+            "complete": true,
+            "evidence_id": "ev-b0fc9c0f060447388c0a105acc4885a2",
+            "logs": [
+              "Synthetic pipeline line-9f4780c67f104fe08c: batch=batch-5277bf766b6a02f3; status=rejected.",
+              "Input schema=1; accepted schema=1; pending rows=3; rejected rows=1."
+            ],
+            "snapshot": {
+              "accepted_schema": 1,
+              "backlog_rows": 3,
+              "batch_id": "batch-5277bf766b6a02f3",
+              "batch_status": "rejected",
+              "curated_rows": 0,
+              "duplicate_rows": 0,
+              "environment": "dev",
+              "freshness_lag_seconds": 7200,
+              "policy_version": "1.0",
+              "rejected_rows": 1,
+              "revision": 0,
+              "scope": "factory-a",
+              "source_schema": 1,
+              "target_id": "line-9f4780c67f104fe08c",
+              "transient_failure": false
+            }
+          },
+          "incident": {
+            "contract_version": "1.0",
+            "created_at": "2026-11-14T13:00:04.638363+00:00",
+            "environment": "dev",
+            "event_id": "event-9f4780c67f104fe08c",
+            "incident_id": "inc-9f4780c67f104fe08c",
+            "scope": "factory-a",
+            "symptom": "Industrial data batch requires investigation",
+            "target_id": "line-9f4780c67f104fe08c"
+          }
+        },
+        "context_sha256": "78ad7515c184a2cb356af090a2ffff15bf671ba227feb712d032f4922cc69b04",
+        "cost_basis": "local provider charge only; compute and energy unmeasured",
+        "diagnosis_valid": false,
+        "duration_seconds": 51.819624,
+        "error_type": "OutputTokenLimitExceeded",
+        "generation_property_order": [
+          "summary",
+          "evidence_refs",
+          "rationale",
+          "category",
+          "proposed_action"
+        ],
+        "mode": "agent",
+        "model": "governed-qwen",
+        "model_revision": "sha256:f7ed2f57713ad29e1a4ec093be0cdf3d7fd31e137e8fd4fc3edcfd04a5267862",
+        "model_used": true,
+        "model_used_basis": "completed model response observed",
+        "native_schema_sha256": "7194b46277f97ffbf7f2115cd401cd7152e4f7de941d4ca99f29968c64036abf",
+        "parameters": {
+          "max_tokens": 300,
+          "temperature": 0.0,
+          "timeout": 90.0
+        },
+        "permitted_evidence_refs": [
+          "ev-b0fc9c0f060447388c0a105acc4885a2"
+        ],
+        "prompt_sha256": "3f899265f14a72dbf77f6e9e1e5008ddc73937628f1a1256130fb0ecb1b6ace8",
+        "prompt_version": "diagnosis-v3",
+        "provider": "local",
+        "provider_cost_usd": 0.0,
+        "request_attempted": true,
+        "request_sha256": "b8ad74de350f9a3292b3d976b16b655adabe812cc437ace4bd8de311604f5d8e",
+        "response_observed": true,
+        "tools_available_to_model": [],
+        "usage": {
+          "audio_seconds": 0,
+          "cache_audio_read_tokens": 0,
+          "cache_read_tokens": 298,
+          "cache_write_1h_tokens": 0,
+          "cache_write_tokens": 0,
+          "cost": null,
+          "details": {},
+          "input_audio_tokens": 0,
+          "input_tokens": 685,
+          "output_audio_tokens": 0,
+          "output_reasoning_tokens": 0,
+          "output_tokens": 300,
+          "requests": 1,
+          "tool_calls": 0,
+          "unmeasured_requests": 0
+        },
+        "usage_complete": false,
+        "usage_note": "Usage covers observed responses only; interrupted server work may be unreported"
+      },
+      "duration_seconds": 53.0125
+    },
+    {
+      "case_id": "development-05",
+      "partition": "development",
+      "mode": "agent",
+      "incident_id": "inc-25d8fc5d592446c791",
+      "scenario": "duplicate",
+      "expected_category": "duplicate",
+      "observed_category": null,
+      "diagnosis_correct": false,
+      "action_correct": false,
+      "expected_outcome": "resolved",
+      "observed_outcome": "escalated",
+      "outcome_correct": false,
+      "verified_resolved": false,
+      "approval_count": 0,
+      "effect_count": 0,
+      "business": {
+        "counts": {
+          "source_rows": 3,
+          "curated_rows": 3,
+          "quarantine_rows": 0,
+          "effect_ledger": 0
+        },
+        "rows": {
+          "source_rows": [
+            [
+              1,
+              10
+            ],
+            [
+              2,
+              20
+            ],
+            [
+              3,
+              30
+            ]
+          ],
+          "curated_rows": [
+            [
+              1,
+              10
+            ],
+            [
+              2,
+              20
+            ],
+            [
+              3,
+              30
+            ]
+          ],
+          "quarantine_rows": []
+        },
+        "snapshot": {
+          "target_id": "line-25d8fc5d592446c791",
+          "environment": "dev",
+          "scope": "factory-a",
+          "revision": 0,
+          "source_schema": 1,
+          "accepted_schema": 1,
+          "backlog_rows": 3,
+          "rejected_rows": 0,
+          "curated_rows": 3,
+          "duplicate_rows": 0,
+          "transient_failure": false,
+          "freshness_lag_seconds": 7200,
+          "batch_id": "batch-d1fb537745e89146",
+          "batch_status": "applied",
+          "policy_version": "1.0"
+        }
+      },
+      "business_invariants_hold": false,
+      "ambiguous_effect_reconciled": true,
+      "unjustified_effect": false,
+      "engineering_followup_required": true,
+      "model_trace": {
+        "citation_constraint": "native enum compiled from validated evidence; original post-validator retained",
+        "context": {
+          "evidence": {
+            "collected_at": "2026-11-14T13:00:58.483724+00:00",
+            "complete": true,
+            "evidence_id": "ev-863625db91004cc19d6c5db647321d64",
+            "logs": [
+              "Synthetic pipeline line-25d8fc5d592446c791: batch=batch-d1fb537745e89146; status=applied.",
+              "Input schema=1; accepted schema=1; pending rows=3; rejected rows=0."
+            ],
+            "snapshot": {
+              "accepted_schema": 1,
+              "backlog_rows": 3,
+              "batch_id": "batch-d1fb537745e89146",
+              "batch_status": "applied",
+              "curated_rows": 3,
+              "duplicate_rows": 0,
+              "environment": "dev",
+              "freshness_lag_seconds": 7200,
+              "policy_version": "1.0",
+              "rejected_rows": 0,
+              "revision": 0,
+              "scope": "factory-a",
+              "source_schema": 1,
+              "target_id": "line-25d8fc5d592446c791",
+              "transient_failure": false
+            }
+          },
+          "incident": {
+            "contract_version": "1.0",
+            "created_at": "2026-11-14T13:00:57.656868+00:00",
+            "environment": "dev",
+            "event_id": "event-25d8fc5d592446c791",
+            "incident_id": "inc-25d8fc5d592446c791",
+            "scope": "factory-a",
+            "symptom": "Industrial data batch requires investigation",
+            "target_id": "line-25d8fc5d592446c791"
+          }
+        },
+        "context_sha256": "39398a20c20a918cd9c280e7741685e97a8ae9ba8ba01a40c90b9a4bb7ce5b97",
+        "cost_basis": "local provider charge only; compute and energy unmeasured",
+        "diagnosis_valid": false,
+        "duration_seconds": 90.094232,
+        "error_type": "RunTimedOut",
+        "generation_property_order": [
+          "summary",
+          "evidence_refs",
+          "rationale",
+          "category",
+          "proposed_action"
+        ],
+        "mode": "agent",
+        "model": "governed-qwen",
+        "model_revision": "sha256:f7ed2f57713ad29e1a4ec093be0cdf3d7fd31e137e8fd4fc3edcfd04a5267862",
+        "model_used": false,
+        "model_used_basis": "completed model response observed",
+        "native_schema_sha256": "b375756a0ace404fae459f392f11ed4c9ec809c43180b49243a25996a6e35162",
+        "parameters": {
+          "max_tokens": 300,
+          "temperature": 0.0,
+          "timeout": 90.0
+        },
+        "permitted_evidence_refs": [
+          "ev-863625db91004cc19d6c5db647321d64"
+        ],
+        "prompt_sha256": "3f899265f14a72dbf77f6e9e1e5008ddc73937628f1a1256130fb0ecb1b6ace8",
+        "prompt_version": "diagnosis-v3",
+        "provider": "local",
+        "provider_cost_usd": 0.0,
+        "request_attempted": true,
+        "request_sha256": "3446f996420adcbbf58a6acbec6e8be4439551ab9a9d20790bf20d9ad528a84c",
+        "response_observed": false,
+        "tools_available_to_model": [],
+        "usage": {
+          "audio_seconds": 0,
+          "cache_audio_read_tokens": 0,
+          "cache_read_tokens": 0,
+          "cache_write_1h_tokens": 0,
+          "cache_write_tokens": 0,
+          "cost": null,
+          "details": {},
+          "input_audio_tokens": 0,
+          "input_tokens": 0,
+          "output_audio_tokens": 0,
+          "output_reasoning_tokens": 0,
+          "output_tokens": 0,
+          "requests": 0,
+          "tool_calls": 0,
+          "unmeasured_requests": 0
+        },
+        "usage_complete": false,
+        "usage_note": "Usage covers observed responses only; interrupted server work may be unreported"
+      },
+      "duration_seconds": 91.3137
+    }
+  ]
+}

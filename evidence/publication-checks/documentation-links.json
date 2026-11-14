@@ -1,0 +1,8 @@
+{
+  "recorded_at": "2026-11-14T13:55:13.941499+00:00",
+  "scope": "Repository Markdown relative file and heading references; external URL availability is not tested",
+  "markdown_files": 22,
+  "local_links_checked": 149,
+  "missing": [],
+  "status": "passed"
+}

@@ -1,0 +1,32 @@
+{
+  "classification": "independently reproduced public source-file digests",
+  "raw_candidates": 2,
+  "current_scanner_status": "unresolved because frozen verifier only accepts tracked_worktree_clean schema",
+  "candidate_values_printed": false,
+  "proofs": [
+    {
+      "file": "evidence/runs/container-f1e6e2f/run.json",
+      "line": 20,
+      "rule": "generic-api-key",
+      "native_fingerprint": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-6ljnbwl8/snapshot/evidence/runs/container-f1e6e2f/run.json:generic-api-key:20",
+      "artifact_sha256": "7806097d5555d4c2889b73713239007f9a0f2fdc0601fc9a03200b4757631b4c",
+      "redacted_match_sha256": "f964e117b9a2d82d290355593e886bbdfa045e8a0ad9338af1820429a2917554",
+      "source_schema": "source.{commit,tracked_and_clean,files}",
+      "source_path": "scripts/secret_scan.py",
+      "source_commit": "f1e6e2f3800242ec210145680261da8ab60f38b4",
+      "exact_blob_digest_recomputed": true
+    },
+    {
+      "file": "evidence/runs/container-f1e6e2f/run.json",
+      "line": 24,
+      "rule": "generic-api-key",
+      "native_fingerprint": "/workspace/scratch/0496cf0d38c8/governed-dataops-agents/var/tools/secret-scan-6ljnbwl8/snapshot/evidence/runs/container-f1e6e2f/run.json:generic-api-key:24",
+      "artifact_sha256": "7806097d5555d4c2889b73713239007f9a0f2fdc0601fc9a03200b4757631b4c",
+      "redacted_match_sha256": "14fa076327c3a58543782e9c2dbf163173b79377280316348b5ca1caff256ccc",
+      "source_schema": "source.{commit,tracked_and_clean,files}",
+      "source_path": "src/governed_dataops/api.py",
+      "source_commit": "f1e6e2f3800242ec210145680261da8ab60f38b4",
+      "exact_blob_digest_recomputed": true
+    }
+  ]
+}

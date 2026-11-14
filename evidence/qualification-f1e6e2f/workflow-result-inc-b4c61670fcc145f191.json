@@ -1,0 +1,7 @@
+{
+  "incident_id": "inc-b4c61670fcc145f191",
+  "status": "denied",
+  "reason": "operation requires human engineering; no executable permission exists",
+  "plan_hash": "e57a70884a55ea9366d7c33eb9343a8caa1fb5317b5b8abb8bbffbdc83a7cd06",
+  "verification": null
+}

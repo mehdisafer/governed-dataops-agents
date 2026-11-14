@@ -4,7 +4,22 @@ An incident-response console for a synthetic industrial data platform. It collec
 
 I built this project to make agent decisions inspectable. The console shows the incident, observations, diagnosis, proposed action, permission decision, approval and correlated execution trace. The target holds actual source, curated and quarantine rows. A successful tool response alone cannot close an incident as resolved.
 
-**Current status:** the implementation is being qualified. The local model is experimental and has not demonstrated an advantage over the deterministic runbook. Development failures are retained; they are not replaced by a fallback. Read the [qualification ledger](docs/QUALIFICATION.md) and [evaluation method](docs/EVALUATION.md) before interpreting any capability as accepted. [Issue #1](https://github.com/mehdisafer/governed-dataops-agents/issues/1) tracks the remaining acceptance criteria.
+**Current status: acceptance remains open.** The complete native run passed **14 of 18 checks** and returned a nonzero exit. On the ten frozen reserved cases, the deterministic runbook achieved **10/10** strict successes and the local agent **2/10**; eight model attempts escalated without an accepted diagnosis. The model remains experimental, and no advantage over the runbook is established. Original failures, logs and workflow histories are retained. [PR #2](https://github.com/mehdisafer/governed-dataops-agents/pull/2) records the implementation and automated review. [Issue #1](https://github.com/mehdisafer/governed-dataops-agents/issues/1) remains open; publishing the experimental implementation does not close its acceptance criteria.
+
+## Observed results
+
+These results describe the clean, unchanged application source at [`f1e6e2f`](https://github.com/mehdisafer/governed-dataops-agents/commit/f1e6e2f3800242ec210145680261da8ab60f38b4), executed on 2026-11-14. Later qualification-harness and evidence-verifier corrections have separate regression checks; they do not rewrite this native result.
+
+| Area | Observed result | Limit |
+| --- | --- | --- |
+| Business paths | All five runbook cases matched the expected row-based outcome | A containment or refusal is not a resolution |
+| Governance and recovery | Tampered/stale/expired approval refusal, worker restart, model outage, contention and admission recovery exercised | Trusted single-host application processes and synthetic targets |
+| Persistence | Paired application/Temporal restore executed; 56 closed current histories and 26 earlier development histories replayed | Earlier development source was dirty; replay covered a query-only workflow change |
+| Frozen comparison | Runbook 10/10; agent 2/10; all twenty final business states observed | Two accepted model proposals were correct; eight absent responses failed the operational criterion |
+| Bounded load | Twelve runbook incidents, concurrency four, p95 6.150 s, zero errors | This does not measure model throughput or multi-host scalability |
+| Deployment and console | Native services ran; Docker, Terraform validation, browser interaction and CI remain unqualified | Docker unavailable; provider/browser runtime failures; CI failed before running any step |
+
+The [qualification ledger](docs/QUALIFICATION.md) explains each result, the [evaluation report](docs/EVALUATION.md) preserves denominators and usage uncertainty, and the [evidence index](evidence/README.md) links the original artifacts. The [prioritized backlog](docs/BACKLOG.md) records the remaining work without changing the acceptance criteria.
 
 ## What the system does
 
@@ -42,6 +57,8 @@ See [architecture and decisions](docs/ARCHITECTURE.md), [SDK compatibility](docs
 ## Start the private console
 
 The reference profile is Linux amd64, Python 3.12, uv 0.13.6, Docker Engine and Docker Compose. Allow 12 GiB RAM, eight CPU threads and 15 GiB disk for the full demonstration. These are deployment allowances, not measured throughput claims.
+
+The commands below describe the container reference. Its build and execution could not be exercised in the supplied environment because Docker was unavailable. Browser interaction also lacks a successful rendered run. Use the [deployment guide](docs/DEPLOYMENT.md) and the retained failure evidence when reproducing those outstanding gates on an authorized host.
 
 ```bash
 uv sync --frozen
@@ -113,8 +130,9 @@ Profiles are `smoke`, `integration`, `governance`, `evaluation` and `load`. `gov
 - [Security](docs/SECURITY.md): role boundaries, signed approvals, injection assumptions, scan coverage and disclosure.
 - [Third-party components](docs/THIRD_PARTY.md): pinned provenance, inventories and unresolved licence decisions.
 - [Evidence](evidence/README.md): retained original results and their scope.
-- [Delivery plan](docs/PLAN.md): acceptance criteria and reconstruction history.
+- [Delivery plan](docs/PLAN.md): implementation milestones, acceptance status and reconstruction history.
+- [Backlog](docs/BACKLOG.md): model/runtime investigation, evaluation design and remaining deployment gates.
 
 This is a private single-host demonstration over synthetic data. The Temporal development server, shared SQLite volume and trusted application processes do not provide hostile-tenant isolation or an HA production deployment. The local model can be wrong even when its JSON and citations are valid. Atomic effect/receipt behavior is specific to the provided target; it is not a generic exactly-once guarantee for external APIs. A paired backup is only considered exercised when a restore is executed and its business state checked.
 
-The repository's own licence has not been selected. It stays private pending an explicit maintainer decision and publication review. Third-party software and weights retain their own licences. No client data, personal computer access or external paid provider is used.
+The repository's own licence has not been selected. The maintainer will handle the public-repository interface steps after choosing a licence for this source and reviewing the publication record. Third-party software and weights retain their own licences. No client data, personal computer access or external paid provider is used.

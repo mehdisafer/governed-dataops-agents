@@ -1,0 +1,14 @@
+{
+  "temporal": {
+    "executable_sha256": "960afddde142595ea4bf6c74f0213b4634a4ef2ef8778c2e930af2cce30d7c8a",
+    "version_stdout": "temporal version 1.10.1 (Server 1.32.2, UI 2.56.4)\n",
+    "version_stderr": ""
+  },
+  "model": {
+    "executable_sha256": "37e113debade9fff9c2532006b9277ba3677439ab18854cc3264c485ffbf958e",
+    "version_stdout": "",
+    "version_stderr": "version: 1.0.0-dev (build 12368, commit 9daa0aa22)\nbuilt with GNU 11.4.0 for Linux x86_64\n",
+    "weights_sha256": "f7ed2f57713ad29e1a4ec093be0cdf3d7fd31e137e8fd4fc3edcfd04a5267862",
+    "weights_bytes": 1669500000
+  }
+}

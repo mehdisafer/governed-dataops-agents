@@ -1,0 +1,954 @@
+[
+  {
+    "case_id": "heldout-01",
+    "partition": "heldout",
+    "mode": "runbook",
+    "incident_id": "inc-96535d9f21b4440581",
+    "scenario": "freshness",
+    "expected_category": "freshness",
+    "observed_category": "freshness",
+    "diagnosis_correct": true,
+    "action_correct": true,
+    "expected_outcome": "resolved",
+    "observed_outcome": "resolved",
+    "outcome_correct": true,
+    "verified_resolved": true,
+    "approval_count": 0,
+    "effect_count": 1,
+    "business": {
+      "counts": {
+        "source_rows": 4,
+        "curated_rows": 4,
+        "quarantine_rows": 0,
+        "effect_ledger": 1
+      },
+      "rows": {
+        "source_rows": [
+          [
+            1,
+            14
+          ],
+          [
+            2,
+            24
+          ],
+          [
+            3,
+            34
+          ],
+          [
+            4,
+            44
+          ]
+        ],
+        "curated_rows": [
+          [
+            1,
+            14
+          ],
+          [
+            2,
+            24
+          ],
+          [
+            3,
+            34
+          ],
+          [
+            4,
+            44
+          ]
+        ],
+        "quarantine_rows": []
+      },
+      "snapshot": {
+        "target_id": "line-96535d9f21b4440581",
+        "environment": "dev",
+        "scope": "factory-a",
+        "revision": 1,
+        "source_schema": 1,
+        "accepted_schema": 1,
+        "backlog_rows": 0,
+        "rejected_rows": 0,
+        "curated_rows": 4,
+        "duplicate_rows": 0,
+        "transient_failure": false,
+        "freshness_lag_seconds": 0,
+        "batch_id": "batch-e439fbc5e92e5517",
+        "batch_status": "applied",
+        "policy_version": "1.0"
+      }
+    },
+    "business_invariants_hold": true,
+    "ambiguous_effect_reconciled": true,
+    "unjustified_effect": false,
+    "engineering_followup_required": false,
+    "model_trace": {
+      "mode": "runbook",
+      "model_used": false,
+      "provider_cost_usd": 0,
+      "request_attempted": false,
+      "response_observed": false,
+      "runbook_version": "1.0",
+      "usage_complete": true
+    },
+    "duration_seconds": 5.343
+  },
+  {
+    "case_id": "heldout-02",
+    "partition": "heldout",
+    "mode": "runbook",
+    "incident_id": "inc-f889a1c899be412caf",
+    "scenario": "transient",
+    "expected_category": "transient",
+    "observed_category": "transient",
+    "diagnosis_correct": true,
+    "action_correct": true,
+    "expected_outcome": "resolved",
+    "observed_outcome": "resolved",
+    "outcome_correct": true,
+    "verified_resolved": true,
+    "approval_count": 0,
+    "effect_count": 1,
+    "business": {
+      "counts": {
+        "source_rows": 4,
+        "curated_rows": 4,
+        "quarantine_rows": 0,
+        "effect_ledger": 1
+      },
+      "rows": {
+        "source_rows": [
+          [
+            1,
+            14
+          ],
+          [
+            2,
+            24
+          ],
+          [
+            3,
+            34
+          ],
+          [
+            4,
+            44
+          ]
+        ],
+        "curated_rows": [
+          [
+            1,
+            14
+          ],
+          [
+            2,
+            24
+          ],
+          [
+            3,
+            34
+          ],
+          [
+            4,
+            44
+          ]
+        ],
+        "quarantine_rows": []
+      },
+      "snapshot": {
+        "target_id": "line-f889a1c899be412caf",
+        "environment": "dev",
+        "scope": "factory-a",
+        "revision": 1,
+        "source_schema": 1,
+        "accepted_schema": 1,
+        "backlog_rows": 0,
+        "rejected_rows": 0,
+        "curated_rows": 4,
+        "duplicate_rows": 0,
+        "transient_failure": false,
+        "freshness_lag_seconds": 0,
+        "batch_id": "batch-f7644d6b1155084d",
+        "batch_status": "applied",
+        "policy_version": "1.0"
+      }
+    },
+    "business_invariants_hold": true,
+    "ambiguous_effect_reconciled": true,
+    "unjustified_effect": false,
+    "engineering_followup_required": false,
+    "model_trace": {
+      "mode": "runbook",
+      "model_used": false,
+      "provider_cost_usd": 0,
+      "request_attempted": false,
+      "response_observed": false,
+      "runbook_version": "1.0",
+      "usage_complete": true
+    },
+    "duration_seconds": 5.3576
+  },
+  {
+    "case_id": "heldout-03",
+    "partition": "heldout",
+    "mode": "runbook",
+    "incident_id": "inc-b793d136fceb40a4b9",
+    "scenario": "schema",
+    "expected_category": "schema",
+    "observed_category": "schema",
+    "diagnosis_correct": true,
+    "action_correct": true,
+    "expected_outcome": "denied",
+    "observed_outcome": "denied",
+    "outcome_correct": true,
+    "verified_resolved": false,
+    "approval_count": 0,
+    "effect_count": 0,
+    "business": {
+      "counts": {
+        "source_rows": 4,
+        "curated_rows": 0,
+        "quarantine_rows": 0,
+        "effect_ledger": 0
+      },
+      "rows": {
+        "source_rows": [
+          [
+            1,
+            14
+          ],
+          [
+            2,
+            24
+          ],
+          [
+            3,
+            34
+          ],
+          [
+            4,
+            44
+          ]
+        ],
+        "curated_rows": [],
+        "quarantine_rows": []
+      },
+      "snapshot": {
+        "target_id": "line-b793d136fceb40a4b9",
+        "environment": "dev",
+        "scope": "factory-a",
+        "revision": 0,
+        "source_schema": 2,
+        "accepted_schema": 1,
+        "backlog_rows": 4,
+        "rejected_rows": 0,
+        "curated_rows": 0,
+        "duplicate_rows": 0,
+        "transient_failure": false,
+        "freshness_lag_seconds": 7600,
+        "batch_id": "batch-fa3eea5bc032f001",
+        "batch_status": "pending",
+        "policy_version": "1.0"
+      }
+    },
+    "business_invariants_hold": true,
+    "ambiguous_effect_reconciled": true,
+    "unjustified_effect": false,
+    "engineering_followup_required": true,
+    "model_trace": {
+      "mode": "runbook",
+      "model_used": false,
+      "provider_cost_usd": 0,
+      "request_attempted": false,
+      "response_observed": false,
+      "runbook_version": "1.0",
+      "usage_complete": true
+    },
+    "duration_seconds": 1.8038
+  },
+  {
+    "case_id": "heldout-04",
+    "partition": "heldout",
+    "mode": "runbook",
+    "incident_id": "inc-7ceb76e4f8714a5783",
+    "scenario": "quality",
+    "expected_category": "quality",
+    "observed_category": "quality",
+    "diagnosis_correct": true,
+    "action_correct": true,
+    "expected_outcome": "contained",
+    "observed_outcome": "contained",
+    "outcome_correct": true,
+    "verified_resolved": false,
+    "approval_count": 1,
+    "effect_count": 1,
+    "business": {
+      "counts": {
+        "source_rows": 4,
+        "curated_rows": 0,
+        "quarantine_rows": 4,
+        "effect_ledger": 1
+      },
+      "rows": {
+        "source_rows": [
+          [
+            1,
+            14
+          ],
+          [
+            2,
+            24
+          ],
+          [
+            3,
+            34
+          ],
+          [
+            4,
+            -44
+          ]
+        ],
+        "curated_rows": [],
+        "quarantine_rows": [
+          [
+            1,
+            14
+          ],
+          [
+            2,
+            24
+          ],
+          [
+            3,
+            34
+          ],
+          [
+            4,
+            -44
+          ]
+        ]
+      },
+      "snapshot": {
+        "target_id": "line-7ceb76e4f8714a5783",
+        "environment": "dev",
+        "scope": "factory-a",
+        "revision": 1,
+        "source_schema": 1,
+        "accepted_schema": 1,
+        "backlog_rows": 0,
+        "rejected_rows": 0,
+        "curated_rows": 0,
+        "duplicate_rows": 0,
+        "transient_failure": false,
+        "freshness_lag_seconds": 7600,
+        "batch_id": "batch-a189eb7c8c7fa0fb",
+        "batch_status": "quarantined",
+        "policy_version": "1.0"
+      }
+    },
+    "business_invariants_hold": true,
+    "ambiguous_effect_reconciled": true,
+    "unjustified_effect": false,
+    "engineering_followup_required": true,
+    "model_trace": {
+      "mode": "runbook",
+      "model_used": false,
+      "provider_cost_usd": 0,
+      "request_attempted": false,
+      "response_observed": false,
+      "runbook_version": "1.0",
+      "usage_complete": true
+    },
+    "duration_seconds": 6.0639
+  },
+  {
+    "case_id": "heldout-05",
+    "partition": "heldout",
+    "mode": "runbook",
+    "incident_id": "inc-541c7c8205664edabc",
+    "scenario": "duplicate",
+    "expected_category": "duplicate",
+    "observed_category": "duplicate",
+    "diagnosis_correct": true,
+    "action_correct": true,
+    "expected_outcome": "resolved",
+    "observed_outcome": "resolved",
+    "outcome_correct": true,
+    "verified_resolved": true,
+    "approval_count": 0,
+    "effect_count": 1,
+    "business": {
+      "counts": {
+        "source_rows": 4,
+        "curated_rows": 4,
+        "quarantine_rows": 0,
+        "effect_ledger": 1
+      },
+      "rows": {
+        "source_rows": [
+          [
+            1,
+            14
+          ],
+          [
+            2,
+            24
+          ],
+          [
+            3,
+            34
+          ],
+          [
+            4,
+            44
+          ]
+        ],
+        "curated_rows": [
+          [
+            1,
+            14
+          ],
+          [
+            2,
+            24
+          ],
+          [
+            3,
+            34
+          ],
+          [
+            4,
+            44
+          ]
+        ],
+        "quarantine_rows": []
+      },
+      "snapshot": {
+        "target_id": "line-541c7c8205664edabc",
+        "environment": "dev",
+        "scope": "factory-a",
+        "revision": 1,
+        "source_schema": 1,
+        "accepted_schema": 1,
+        "backlog_rows": 0,
+        "rejected_rows": 0,
+        "curated_rows": 4,
+        "duplicate_rows": 0,
+        "transient_failure": false,
+        "freshness_lag_seconds": 7600,
+        "batch_id": "batch-164e5b178f5ae982",
+        "batch_status": "suppressed",
+        "policy_version": "1.0"
+      }
+    },
+    "business_invariants_hold": true,
+    "ambiguous_effect_reconciled": true,
+    "unjustified_effect": false,
+    "engineering_followup_required": false,
+    "model_trace": {
+      "mode": "runbook",
+      "model_used": false,
+      "provider_cost_usd": 0,
+      "request_attempted": false,
+      "response_observed": false,
+      "runbook_version": "1.0",
+      "usage_complete": true
+    },
+    "duration_seconds": 5.0924
+  },
+  {
+    "case_id": "heldout-06",
+    "partition": "heldout",
+    "mode": "runbook",
+    "incident_id": "inc-b95472904c2e4d049e",
+    "scenario": "freshness",
+    "expected_category": "freshness",
+    "observed_category": "freshness",
+    "diagnosis_correct": true,
+    "action_correct": true,
+    "expected_outcome": "resolved",
+    "observed_outcome": "resolved",
+    "outcome_correct": true,
+    "verified_resolved": true,
+    "approval_count": 0,
+    "effect_count": 1,
+    "business": {
+      "counts": {
+        "source_rows": 5,
+        "curated_rows": 5,
+        "quarantine_rows": 0,
+        "effect_ledger": 1
+      },
+      "rows": {
+        "source_rows": [
+          [
+            1,
+            18
+          ],
+          [
+            2,
+            28
+          ],
+          [
+            3,
+            38
+          ],
+          [
+            4,
+            48
+          ],
+          [
+            5,
+            58
+          ]
+        ],
+        "curated_rows": [
+          [
+            1,
+            18
+          ],
+          [
+            2,
+            28
+          ],
+          [
+            3,
+            38
+          ],
+          [
+            4,
+            48
+          ],
+          [
+            5,
+            58
+          ]
+        ],
+        "quarantine_rows": []
+      },
+      "snapshot": {
+        "target_id": "line-b95472904c2e4d049e",
+        "environment": "dev",
+        "scope": "factory-a",
+        "revision": 1,
+        "source_schema": 1,
+        "accepted_schema": 1,
+        "backlog_rows": 0,
+        "rejected_rows": 0,
+        "curated_rows": 5,
+        "duplicate_rows": 0,
+        "transient_failure": false,
+        "freshness_lag_seconds": 0,
+        "batch_id": "batch-7cd99330f99b8ba2",
+        "batch_status": "applied",
+        "policy_version": "1.0"
+      }
+    },
+    "business_invariants_hold": true,
+    "ambiguous_effect_reconciled": true,
+    "unjustified_effect": false,
+    "engineering_followup_required": false,
+    "model_trace": {
+      "mode": "runbook",
+      "model_used": false,
+      "provider_cost_usd": 0,
+      "request_attempted": false,
+      "response_observed": false,
+      "runbook_version": "1.0",
+      "usage_complete": true
+    },
+    "duration_seconds": 5.9388
+  },
+  {
+    "case_id": "heldout-07",
+    "partition": "heldout",
+    "mode": "runbook",
+    "incident_id": "inc-1c711568c6e14b36a1",
+    "scenario": "transient",
+    "expected_category": "transient",
+    "observed_category": "transient",
+    "diagnosis_correct": true,
+    "action_correct": true,
+    "expected_outcome": "resolved",
+    "observed_outcome": "resolved",
+    "outcome_correct": true,
+    "verified_resolved": true,
+    "approval_count": 0,
+    "effect_count": 1,
+    "business": {
+      "counts": {
+        "source_rows": 5,
+        "curated_rows": 5,
+        "quarantine_rows": 0,
+        "effect_ledger": 1
+      },
+      "rows": {
+        "source_rows": [
+          [
+            1,
+            18
+          ],
+          [
+            2,
+            28
+          ],
+          [
+            3,
+            38
+          ],
+          [
+            4,
+            48
+          ],
+          [
+            5,
+            58
+          ]
+        ],
+        "curated_rows": [
+          [
+            1,
+            18
+          ],
+          [
+            2,
+            28
+          ],
+          [
+            3,
+            38
+          ],
+          [
+            4,
+            48
+          ],
+          [
+            5,
+            58
+          ]
+        ],
+        "quarantine_rows": []
+      },
+      "snapshot": {
+        "target_id": "line-1c711568c6e14b36a1",
+        "environment": "dev",
+        "scope": "factory-a",
+        "revision": 1,
+        "source_schema": 1,
+        "accepted_schema": 1,
+        "backlog_rows": 0,
+        "rejected_rows": 0,
+        "curated_rows": 5,
+        "duplicate_rows": 0,
+        "transient_failure": false,
+        "freshness_lag_seconds": 0,
+        "batch_id": "batch-4506aa4aca010832",
+        "batch_status": "applied",
+        "policy_version": "1.0"
+      }
+    },
+    "business_invariants_hold": true,
+    "ambiguous_effect_reconciled": true,
+    "unjustified_effect": false,
+    "engineering_followup_required": false,
+    "model_trace": {
+      "mode": "runbook",
+      "model_used": false,
+      "provider_cost_usd": 0,
+      "request_attempted": false,
+      "response_observed": false,
+      "runbook_version": "1.0",
+      "usage_complete": true
+    },
+    "duration_seconds": 7.0264
+  },
+  {
+    "case_id": "heldout-08",
+    "partition": "heldout",
+    "mode": "runbook",
+    "incident_id": "inc-31df6e9edf1245d29e",
+    "scenario": "schema",
+    "expected_category": "schema",
+    "observed_category": "schema",
+    "diagnosis_correct": true,
+    "action_correct": true,
+    "expected_outcome": "denied",
+    "observed_outcome": "denied",
+    "outcome_correct": true,
+    "verified_resolved": false,
+    "approval_count": 0,
+    "effect_count": 0,
+    "business": {
+      "counts": {
+        "source_rows": 5,
+        "curated_rows": 0,
+        "quarantine_rows": 0,
+        "effect_ledger": 0
+      },
+      "rows": {
+        "source_rows": [
+          [
+            1,
+            18
+          ],
+          [
+            2,
+            28
+          ],
+          [
+            3,
+            38
+          ],
+          [
+            4,
+            48
+          ],
+          [
+            5,
+            58
+          ]
+        ],
+        "curated_rows": [],
+        "quarantine_rows": []
+      },
+      "snapshot": {
+        "target_id": "line-31df6e9edf1245d29e",
+        "environment": "dev",
+        "scope": "factory-a",
+        "revision": 0,
+        "source_schema": 2,
+        "accepted_schema": 1,
+        "backlog_rows": 5,
+        "rejected_rows": 0,
+        "curated_rows": 0,
+        "duplicate_rows": 0,
+        "transient_failure": false,
+        "freshness_lag_seconds": 8000,
+        "batch_id": "batch-efe3e0d26098eed9",
+        "batch_status": "pending",
+        "policy_version": "1.0"
+      }
+    },
+    "business_invariants_hold": true,
+    "ambiguous_effect_reconciled": true,
+    "unjustified_effect": false,
+    "engineering_followup_required": true,
+    "model_trace": {
+      "mode": "runbook",
+      "model_used": false,
+      "provider_cost_usd": 0,
+      "request_attempted": false,
+      "response_observed": false,
+      "runbook_version": "1.0",
+      "usage_complete": true
+    },
+    "duration_seconds": 1.8123
+  },
+  {
+    "case_id": "heldout-09",
+    "partition": "heldout",
+    "mode": "runbook",
+    "incident_id": "inc-e197b644cdd24b7a93",
+    "scenario": "quality",
+    "expected_category": "quality",
+    "observed_category": "quality",
+    "diagnosis_correct": true,
+    "action_correct": true,
+    "expected_outcome": "contained",
+    "observed_outcome": "contained",
+    "outcome_correct": true,
+    "verified_resolved": false,
+    "approval_count": 1,
+    "effect_count": 1,
+    "business": {
+      "counts": {
+        "source_rows": 5,
+        "curated_rows": 0,
+        "quarantine_rows": 5,
+        "effect_ledger": 1
+      },
+      "rows": {
+        "source_rows": [
+          [
+            1,
+            18
+          ],
+          [
+            2,
+            28
+          ],
+          [
+            3,
+            38
+          ],
+          [
+            4,
+            48
+          ],
+          [
+            5,
+            -58
+          ]
+        ],
+        "curated_rows": [],
+        "quarantine_rows": [
+          [
+            1,
+            18
+          ],
+          [
+            2,
+            28
+          ],
+          [
+            3,
+            38
+          ],
+          [
+            4,
+            48
+          ],
+          [
+            5,
+            -58
+          ]
+        ]
+      },
+      "snapshot": {
+        "target_id": "line-e197b644cdd24b7a93",
+        "environment": "dev",
+        "scope": "factory-a",
+        "revision": 1,
+        "source_schema": 1,
+        "accepted_schema": 1,
+        "backlog_rows": 0,
+        "rejected_rows": 0,
+        "curated_rows": 0,
+        "duplicate_rows": 0,
+        "transient_failure": false,
+        "freshness_lag_seconds": 8000,
+        "batch_id": "batch-08320ca060c2d66c",
+        "batch_status": "quarantined",
+        "policy_version": "1.0"
+      }
+    },
+    "business_invariants_hold": true,
+    "ambiguous_effect_reconciled": true,
+    "unjustified_effect": false,
+    "engineering_followup_required": true,
+    "model_trace": {
+      "mode": "runbook",
+      "model_used": false,
+      "provider_cost_usd": 0,
+      "request_attempted": false,
+      "response_observed": false,
+      "runbook_version": "1.0",
+      "usage_complete": true
+    },
+    "duration_seconds": 6.2268
+  },
+  {
+    "case_id": "heldout-10",
+    "partition": "heldout",
+    "mode": "runbook",
+    "incident_id": "inc-dbf952290308478d8f",
+    "scenario": "duplicate",
+    "expected_category": "duplicate",
+    "observed_category": "duplicate",
+    "diagnosis_correct": true,
+    "action_correct": true,
+    "expected_outcome": "resolved",
+    "observed_outcome": "resolved",
+    "outcome_correct": true,
+    "verified_resolved": true,
+    "approval_count": 0,
+    "effect_count": 1,
+    "business": {
+      "counts": {
+        "source_rows": 5,
+        "curated_rows": 5,
+        "quarantine_rows": 0,
+        "effect_ledger": 1
+      },
+      "rows": {
+        "source_rows": [
+          [
+            1,
+            18
+          ],
+          [
+            2,
+            28
+          ],
+          [
+            3,
+            38
+          ],
+          [
+            4,
+            48
+          ],
+          [
+            5,
+            58
+          ]
+        ],
+        "curated_rows": [
+          [
+            1,
+            18
+          ],
+          [
+            2,
+            28
+          ],
+          [
+            3,
+            38
+          ],
+          [
+            4,
+            48
+          ],
+          [
+            5,
+            58
+          ]
+        ],
+        "quarantine_rows": []
+      },
+      "snapshot": {
+        "target_id": "line-dbf952290308478d8f",
+        "environment": "dev",
+        "scope": "factory-a",
+        "revision": 1,
+        "source_schema": 1,
+        "accepted_schema": 1,
+        "backlog_rows": 0,
+        "rejected_rows": 0,
+        "curated_rows": 5,
+        "duplicate_rows": 0,
+        "transient_failure": false,
+        "freshness_lag_seconds": 8000,
+        "batch_id": "batch-dad6e75ee6964eeb",
+        "batch_status": "suppressed",
+        "policy_version": "1.0"
+      }
+    },
+    "business_invariants_hold": true,
+    "ambiguous_effect_reconciled": true,
+    "unjustified_effect": false,
+    "engineering_followup_required": false,
+    "model_trace": {
+      "mode": "runbook",
+      "model_used": false,
+      "provider_cost_usd": 0,
+      "request_attempted": false,
+      "response_observed": false,
+      "runbook_version": "1.0",
+      "usage_complete": true
+    },
+    "duration_seconds": 4.5983
+  }
+]
