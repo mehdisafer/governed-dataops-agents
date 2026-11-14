@@ -1,0 +1,117 @@
+{
+  "prepared_at": "2026-11-14T14:14:34.196187+00:00",
+  "repository": "mehdisafer/governed-dataops-agents",
+  "source_main_commit": "cdded1e3f54fd816ec1d4b323b93143417e722df",
+  "source_tree": "582cfd0f391c20c662408e0ca13d9f2080d8fc71",
+  "identical_tree_commit": "7656622c68e1e74812f1c2cf02e512aad3795ce3",
+  "tree_equality_verified_from_local_git_objects": true,
+  "pull_request_url": "https://github.com/mehdisafer/governed-dataops-agents/pull/2",
+  "scope": "Post-merge receipt only; no application changes, new tests, service execution, browser work or Git ref mutation in this preparation",
+  "capture_semantics": "The four GitHub files preserve the exact locally captured connector JSON strings. They are not original raw HTTP response bodies or headers. Scanner reports are copied unchanged with their native redacted findings and content-bound proofs.",
+  "date_semantics": "Original report and GitHub object dates retain their meanings. Source filesystem mtime is not asserted to be the HTTP retrieval time.",
+  "files": [
+    {
+      "file": "secret-main-history.json",
+      "original_path": "evidence/runs/publication-final/secret-main-history.json",
+      "bytes": 134819,
+      "sha256": "d17b7fd634b62d99d672af683c79ea49377c8e2f956a3d79d33b737d7952f93c",
+      "copy_equals_original_capture": true,
+      "capture_kind": "original redacted scanner report",
+      "source_dates": {
+        "source_file_mtime_utc": "2026-11-14T14:11:01.922954+00:00",
+        "created_at": "2026-11-14T14:11:00.044741+00:00"
+      }
+    },
+    {
+      "file": "secret-main-worktree.json",
+      "original_path": "evidence/runs/publication-final/secret-main-worktree.json",
+      "bytes": 90739,
+      "sha256": "3bbb899aa3e4a9104b6fcad3613ec6682d97edcc5d584b0f9518d1e98dc0dc77",
+      "copy_equals_original_capture": true,
+      "capture_kind": "original redacted scanner report",
+      "source_dates": {
+        "source_file_mtime_utc": "2026-11-14T14:11:03.383514+00:00",
+        "created_at": "2026-11-14T14:11:01.989585+00:00"
+      }
+    },
+    {
+      "file": "main-workflow-jobs.json",
+      "original_path": "evidence/runs/publication-final/main-workflow-jobs.json",
+      "bytes": 4680,
+      "sha256": "d6f69550dab364586bc509b7a5b94ef15b4414cd31f86838a7aa78194d412dc0",
+      "copy_equals_original_capture": true,
+      "capture_kind": "captured connector JSON string, not raw HTTP response bytes",
+      "source_dates": {
+        "source_file_mtime_utc": "2026-11-14T14:12:15.992182+00:00"
+      }
+    },
+    {
+      "file": "main-workflow-run.json",
+      "original_path": "evidence/runs/publication-final/main-workflow-run.json",
+      "bytes": 14061,
+      "sha256": "1c77f45b28f53b5bdd2d6bd4342ccb28f5ecef3199e5ec4110a8323ca68a815f",
+      "copy_equals_original_capture": true,
+      "capture_kind": "captured connector JSON string, not raw HTTP response bytes",
+      "source_dates": {
+        "source_file_mtime_utc": "2026-11-14T14:12:15.992259+00:00",
+        "created_at": "2026-11-14T14:09:33Z",
+        "updated_at": "2026-11-14T14:09:37Z",
+        "run_started_at": "2026-11-14T14:09:33Z"
+      }
+    },
+    {
+      "file": "main-workflow-artifacts.json",
+      "original_path": "evidence/runs/publication-final/main-workflow-artifacts.json",
+      "bytes": 32,
+      "sha256": "244563f989470892c537c9a4622920af0d228ee4528f7d00c64a06d6cd95856c",
+      "copy_equals_original_capture": true,
+      "capture_kind": "captured connector JSON string, not raw HTTP response bytes",
+      "source_dates": {
+        "source_file_mtime_utc": "2026-11-14T14:12:15.992600+00:00"
+      }
+    },
+    {
+      "file": "main-ref.json",
+      "original_path": "evidence/runs/publication-final/main-ref.json",
+      "bytes": 366,
+      "sha256": "159f32eab3fbb2e2e0ea0d1e8ff7412b0f97788df19db2571968b48cdf908d62",
+      "copy_equals_original_capture": true,
+      "capture_kind": "captured connector JSON string, not raw HTTP response bytes",
+      "source_dates": {
+        "source_file_mtime_utc": "2026-11-14T14:12:15.992656+00:00"
+      }
+    }
+  ],
+  "history_scan": {
+    "reachable_commits": 6,
+    "raw_occurrences": 62,
+    "proved_occurrences": 62,
+    "unresolved_occurrences": 0,
+    "occurrence_counts_by_commit": {
+      "cdded1e3f54fd816ec1d4b323b93143417e722df": 31,
+      "7656622c68e1e74812f1c2cf02e512aad3795ce3": 24,
+      "f1e6e2f3800242ec210145680261da8ab60f38b4": 7
+    },
+    "interpretation": "The --all --full-history -m traversal includes the same content candidates again in a merge-parent diff. 62 is a count of historical raw occurrences, not 62 unique secrets."
+  },
+  "worktree_scan": {
+    "files": 193,
+    "raw_occurrences": 31,
+    "proved_occurrences": 31,
+    "unresolved_occurrences": 0,
+    "snapshot_manifest_sha256": "0b3b5c210eb83ac99b0ba4b7ac725ceac94d89646c739f140ad11f54467a1604"
+  },
+  "github_actions": {
+    "run_id": 43603386961,
+    "run_attempt": 1,
+    "core_job_id": 132472738198,
+    "core_conclusion": "failure",
+    "core_runner_id": 0,
+    "core_runner_name": "",
+    "core_step_count": 0,
+    "remaining_jobs": "containers, model-evaluation, governance and infrastructure skipped",
+    "artifact_count": 0,
+    "underlying_cause": "unknown",
+    "interpretation": "The captured metadata provides no executed workflow-step or project-test evidence. No cause is inferred from the missing runner, skipped jobs or empty artifact collection."
+  }
+}
