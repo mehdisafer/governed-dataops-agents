@@ -17,7 +17,7 @@ These results describe the clean, unchanged application source at [`f1e6e2f`](ht
 | Persistence | Paired application/Temporal restore executed; 56 closed current histories and 26 earlier development histories replayed | Earlier development source was dirty; replay covered a query-only workflow change |
 | Frozen comparison | Runbook 10/10; agent 2/10; all twenty final business states observed | Two accepted model proposals were correct; eight absent responses failed the operational criterion |
 | Bounded load | Twelve runbook incidents, concurrency four, p95 6.150 s, zero errors | This does not measure model throughput or multi-host scalability |
-| Deployment and console | Native services ran; Docker, Terraform validation, browser interaction and CI remain unqualified | Docker unavailable; provider/browser runtime failures; CI failed before running any step |
+| Deployment and console | Native services ran. CircleCI unit tests passed on an earlier setup-branch commit; GitHub Actions, browser, container and infrastructure qualification remain open | Do not extrapolate a setup-branch unit result to container qualification or the current main commit |
 
 The [qualification ledger](docs/QUALIFICATION.md) explains each result, the [evaluation report](docs/EVALUATION.md) preserves denominators and usage uncertainty, and the [evidence index](evidence/README.md) links the original artifacts. The [prioritized backlog](docs/BACKLOG.md) records the remaining work without changing the acceptance criteria.
 
@@ -126,6 +126,7 @@ Profiles are `smoke`, `integration`, `governance`, `evaluation` and `load`. `gov
 
 ## Operations and limitations
 
+- [CI provenance](docs/CI.md): CircleCI unit execution, separate manual container qualification and GitHub Actions limitations.
 - [Operations](docs/OPERATIONS.md): readiness, metrics, actionable alerts, bounded queues, recovery, paired backup/restore, migration and rollback.
 - [Security](docs/SECURITY.md): role boundaries, signed approvals, injection assumptions, scan coverage and disclosure.
 - [Third-party components](docs/THIRD_PARTY.md): pinned provenance, inventories and unresolved licence decisions.
