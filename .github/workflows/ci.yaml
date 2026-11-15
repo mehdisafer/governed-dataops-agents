@@ -25,29 +25,38 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 0
-      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+      - uses: astral-sh/setup-uv@d0cc045d04ccac9d8b7881df0226f9e82c39688e # v6.8.0
         with:
+          version: '0.13.6'
           python-version: '3.12.14'
       - name: Determine whether runtime qualification is required
         id: scope
         run: |
-          python - <<'PY'
+          python3 - <<'PY'
           import json, os, subprocess
-          event = json.load(open(os.environ['GITHUB_EVENT_PATH']))
+          event_path = os.environ.get('GITHUB_EVENT_PATH')
+          # A manually triggered CircleCI Actions run has no GitHub event file.
+          # Unknown scope requests full qualification; it never skips runtime.
+          event = json.load(open(event_path)) if event_path else {}
           base = event.get('before') or event.get('pull_request', {}).get('base', {}).get('sha')
-          if not base or set(base) == {'0'}:
+          manual = os.environ.get('GITHUB_EVENT_NAME') == 'workflow_dispatch'
+          if manual or not base or set(base) == {'0'}:
+              required = True
+          elif subprocess.run(['git', 'cat-file', '-e', base + '^{commit}'], capture_output=True).returncode:
               required = True
           else:
               paths = subprocess.check_output(['git', 'diff', '--name-only', base, 'HEAD'], text=True).splitlines()
-              prefixes = ('src/', 'scripts/', 'tests/', 'contracts/', 'data/', 'infra/', '.github/', '.dockerignore', 'Dockerfile', 'compose', 'pyproject.toml', 'uv.lock')
+              prefixes = ('src/', 'scripts/', 'tests/', 'contracts/', 'data/', 'infra/', '.github/', '.circleci/', '.dockerignore', 'Dockerfile', 'compose', 'pyproject.toml', 'uv.lock')
               required = any(path.startswith(prefixes) for path in paths)
+          print(json.dumps({'runtime_required': required, 'event_metadata_available': bool(event_path)}))
           with open(os.environ['GITHUB_OUTPUT'], 'a') as output:
               output.write(f'runtime={str(required).lower()}\n')
           PY
       - name: Install locked project and review tools
         run: |
-          python -m pip install uv==0.13.6
-          uv sync --frozen
+          uv sync --frozen --python 3.12.14
+          uv --version
+          uv run --frozen python --version
           mkdir -p evidence/runs/ci
       - name: Static and unit checks
         run: |
@@ -80,15 +89,15 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 0
-      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+      - uses: astral-sh/setup-uv@d0cc045d04ccac9d8b7881df0226f9e82c39688e # v6.8.0
         with:
+          version: '0.13.6'
           python-version: '3.12.14'
       - name: Install project, real Temporal and browser
         run: |
-          python -m pip install uv==0.13.6
-          uv sync --frozen
+          uv sync --frozen --python 3.12.14
           uv run playwright install --with-deps chromium
-          python scripts/bootstrap_runtime.py --component temporal --destination var/runtime
+          uv run python scripts/bootstrap_runtime.py --component temporal --destination var/runtime
       - name: Qualify policy, recovery, business effects, restore and console
         run: uv run python scripts/qualify.py --manifest var/runtime/provisioning.json --output evidence/runs/governance --profile governance --count 12 --concurrency 4 --source-commit "$GITHUB_SHA"
       - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
@@ -107,14 +116,14 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 0
-      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+      - uses: astral-sh/setup-uv@d0cc045d04ccac9d8b7881df0226f9e82c39688e # v6.8.0
         with:
+          version: '0.13.6'
           python-version: '3.12.14'
       - name: Install real local inference and workflow runtimes
         run: |
-          python -m pip install uv==0.13.6
-          uv sync --frozen
-          python scripts/bootstrap_runtime.py --destination var/runtime
+          uv sync --frozen --python 3.12.14
+          uv run python scripts/bootstrap_runtime.py --destination var/runtime
       - name: Compare both engines on the frozen corpus
         run: uv run python scripts/qualify.py --manifest var/runtime/provisioning.json --output evidence/runs/evaluation --profile evaluation --source-commit "$GITHUB_SHA"
       - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
@@ -133,13 +142,12 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 0
-      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+      - uses: astral-sh/setup-uv@d0cc045d04ccac9d8b7881df0226f9e82c39688e # v6.8.0
         with:
+          version: '0.13.6'
           python-version: '3.12.14'
       - name: Install locked project
-        run: |
-          python -m pip install uv==0.13.6
-          uv sync --frozen
+        run: uv sync --frozen --python 3.12.14
       - name: Build and qualify the actual reference containers
         run: uv run python scripts/qualify_container.py --source-commit "$GITHUB_SHA" --output evidence/runs/container --model-cpus 2
       - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
@@ -158,13 +166,12 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 0
-      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+      - uses: astral-sh/setup-uv@d0cc045d04ccac9d8b7881df0226f9e82c39688e # v6.8.0
         with:
+          version: '0.13.6'
           python-version: '3.12.14'
       - name: Install locked project
-        run: |
-          python -m pip install uv==0.13.6
-          uv sync --frozen
+        run: uv sync --frozen --python 3.12.14
       - name: Verify Terraform and plan isolated local Docker resources
         run: uv run python scripts/validate_infra.py --source-commit "$GITHUB_SHA" --output evidence/runs/infrastructure
       - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
