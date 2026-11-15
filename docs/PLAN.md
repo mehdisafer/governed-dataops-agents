@@ -6,7 +6,7 @@ The intended product is an operator console and API that explains a synthetic in
 
 ## Scope and boundaries
 
-- Only this repository and isolated demonstration infrastructure are in scope. No personal computer, client environment or other portfolio repository is used.
+- The reproducible repository and isolated synthetic demonstration environment define the project scope. Access to any personal workstation, client system or unrelated portfolio project is not required or authorized by this task.
 - All business data are synthetic. The model has no general shell, direct database connection or write capability.
 - The repository remains private at the inspected date. Original project source is licensed under [Apache-2.0](../LICENSE); dependency/model licences remain independent.
 - Public release, billing changes and externally hosted resources require separate explicit authorization.
