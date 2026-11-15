@@ -23,12 +23,14 @@ The description and all eight proposed topics were confirmed applied in the repo
 | Agent utility | Reserved strict success: agent 2/10, competent runbook 10/10 | Experimental model; no superiority claim |
 | Container / infrastructure | Docker unavailable before build; Terraform schema loading failed after successful version/fmt/init | Successful execution still required |
 | Operator console | Chromium failed before rendered interaction | No visual demonstration or browser acceptance claimed |
-| Hosted CI | Run 43597256488 (two attempts), PR run 43603161619 and main run 43603386961 failed before runner assignment; zero executed steps in the core jobs | No CI success; cause remains unknown |
+| Hosted CI | GitHub Actions core jobs failed before runner assignment, including run 43754179426; CircleCI unit pipeline #9 passed on setup-branch commit 25913b0, while container pipeline #10 failed on that same commit | Unit result is scoped to its source SHA; native container and GitHub Actions qualification remain open |
 | Publication scanning | Original expanded artifacts reviewed before compression; exact findings and proofs retained | Verify the delivered source/history and exposed metadata as well |
 | Review | Automated review is labelled and anchored to the delivered PR revision | Does not substitute for an independent human approval |
 | Project licence / repository settings | Apache License 2.0 explicitly selected and committed; description and topics applied; visibility remains private | Owner still controls visibility and supported protection settings |
 
 The exact source reference in the [qualification ledger](QUALIFICATION.md) and the [evidence index](../evidence/README.md) establish the observed scope. Post-run corrections to evidence verification or evaluation logic have their own regression checks; they do not rewrite the original native result. A green subset, a fixed harness, or a correct checksum cannot establish agent value.
+
+For separated CI provider status and run links, see [CI provenance](CI.md).
 
 ## Precise CI prerequisite
 
