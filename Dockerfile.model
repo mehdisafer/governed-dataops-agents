@@ -13,6 +13,9 @@ COPY --from=download --chown=1000:1000 --chmod=0444 /runtime/Qwen3-4B-Instruct-2
 COPY --from=download --chown=1000:1000 --chmod=0444 /runtime/QWEN-LICENSE /models/LICENSE
 COPY --from=download --chown=1000:1000 --chmod=0444 /runtime/qwen3-4b-base-README.md /runtime/qwen3-4b-quantizer-README.md /models/
 COPY --from=download --chown=1000:1000 --chmod=0444 /runtime/provisioning.json /models/provenance.json
+# COPY --chmod also affects a newly created destination directory. A directory
+# needs traversal bits even when its contents are immutable read-only files.
+RUN chmod 0555 /models
 USER 1000:1000
 RUN python -c "from pathlib import Path; p=Path('/models/model.gguf'); assert p.open('rb').read(4) == b'GGUF'; assert Path('/models/LICENSE').read_text(); assert Path('/models/provenance.json').read_text()"
 ENTRYPOINT ["/opt/llama/llama-server"]
