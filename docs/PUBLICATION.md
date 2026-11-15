@@ -20,19 +20,21 @@ The description and all eight proposed topics were confirmed applied in the repo
 | --- | --- | --- |
 | Exact native source | Clean, unchanged `f1e6e2f3800242ec210145680261da8ab60f38b4`; 192 original run files | Reproducible identity, with the run's failures preserved |
 | Native integration | 14/18 requested checks passed; overall run failed | No full acceptance |
-| Agent utility | Reserved strict success: agent 2/10, competent runbook 10/10 | Experimental model; no superiority claim |
-| Container / infrastructure | Docker unavailable before build; Terraform schema loading failed after successful version/fmt/init | Successful execution still required |
-| Operator console | Chromium failed before rendered interaction | No visual demonstration or browser acceptance claimed |
-| Hosted CI | Run 43597256488 (two attempts), PR run 43603161619 and main run 43603386961 failed before runner assignment; zero executed steps in the core jobs | No CI success; cause remains unknown |
+| Agent utility | Original 14 Nov agent 2/10 vs runbook 10/10; later hosted frozen agent 1/10 vs runbook 10/10 | Experimental model; no superiority claim |
+| Container / infrastructure | Original native attempt was blocked; later CircleCI `reference-containers` passed ten platform checks at `cad9cc6`; infrastructure job passed on `924dd24` | Single-host synthetic platform qualification, not agent quality or production Terraform apply |
+| Operator console | Original native Chromium launch failed; later hosted CircleCI governance profile at `924dd24` passed its declared browser gate | Only that tested browser/environment is qualified; no general acceptance implied |
+| Hosted CI | CircleCI unit passed on `main` at `2460012`, platform containers passed at `cad9cc6`, and hosted frozen model evaluation failed at `924dd24`. GitHub Actions run 43769325453 still failed before runner assignment | Distinct CI providers, source identities and scopes; full agent-value acceptance withheld |
 | Publication scanning | Original expanded artifacts reviewed before compression; exact findings and proofs retained | Verify the delivered source/history and exposed metadata as well |
 | Review | Automated review is labelled and anchored to the delivered PR revision | Does not substitute for an independent human approval |
 | Project licence / repository settings | Apache License 2.0 explicitly selected and committed; description and topics applied; visibility remains private | Owner still controls visibility and supported protection settings |
 
 The exact source reference in the [qualification ledger](QUALIFICATION.md) and the [evidence index](../evidence/README.md) establish the observed scope. Post-run corrections to evidence verification or evaluation logic have their own regression checks; they do not rewrite the original native result. A green subset, a fixed harness, or a correct checksum cannot establish agent value.
 
+For separated CI provider status and run links, see [CI provenance](CI.md).
+
 ## Precise CI prerequisite
 
-Inspect the annotation on [the latest failed main core job](https://github.com/mehdisafer/governed-dataops-agents/actions/runs/43603386961/job/132472738198) in the owner's authenticated GitHub session. The original two attempts and subsequent PR and main runs report runner ID zero, no runner name and no executed steps in core. Log retrieval returned 404, and the connected API did not expose the annotation endpoint. The isolated cloud-browser session was logged out. The [original API observations](../evidence/github-actions-43597256488/) preserve these limitations.
+Inspect the annotation on [the latest failed main core job](https://github.com/mehdisafer/governed-dataops-agents/actions/runs/43769325453/job/132981467752) in the owner's authenticated GitHub session. The original two attempts and subsequent PR and main runs report runner ID zero, no runner name and no executed steps in core. Log retrieval returned 404, and the connected API did not expose the annotation endpoint. The isolated cloud-browser session was logged out. The [original API observations](../evidence/github-actions-43597256488/) preserve these limitations.
 
 The cause must be established before changing account settings or selecting another runner. No billing diagnosis, purchase, visibility workaround or third blind retry is justified by these records. Once an authorized runner is available, execute the existing `core`, `governance`, `model-evaluation`, `containers` and `infrastructure` jobs and retain the resulting source identity and artifacts. A newly triggered run requires its own inspection; its existence is not successful qualification.
 
