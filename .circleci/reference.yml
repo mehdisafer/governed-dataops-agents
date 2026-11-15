@@ -27,7 +27,9 @@ jobs:
       - run:
           name: Qualify model, Temporal, business effects, recovery and cleanup
           no_output_timeout: 30m
-          command: timeout --signal=TERM --kill-after=60s 2400s uv run --frozen python scripts/qualify_container.py --source-commit "$CIRCLE_SHA1" --output evidence/runs/container --model-cpus 2
+          # Match compose.yaml's documented four-CPU model quota. The failed
+          # two-CPU run is retained; the 90-second model deadline is unchanged.
+          command: timeout --signal=TERM --kill-after=60s 2400s uv run --frozen python scripts/qualify_container.py --source-commit "$CIRCLE_SHA1" --output evidence/runs/container --model-cpus 4
       - store_artifacts:
           path: evidence/runs/ci-host
           destination: ci-host
