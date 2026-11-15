@@ -6,7 +6,7 @@ The reference configuration targets a private Linux amd64 host running Docker En
 
 Use a non-root deployment account. Allow 8 CPU threads, 12 GiB RAM and at least 15 GiB free disk for images, downloads, state and evidence. These are provisioning allowances, not measured throughput guarantees. Record the actual execution environment with every qualification run.
 
-**Validation boundary:** download verification, native execution, container build, container execution and Terraform validation are separate gates. `docker compose config` checks structure; it does not build or start an image. The reference container deployment remains unverified. This is a single-host demonstration with no HA or production acceptance. The [Temporal CLI development server](https://docs.temporal.io/cli/server#start-dev) is intended for development.
+**Validation boundary:** download verification, native execution, container execution, model diagnosis and Terraform deployment are separate gates. The corrected reference containers passed ten hosted execution checks at `cad9cc6eb28a70f24e9bf02774a7614cc4cb9631`; a real model response was incorrect and policy denied it. This is a private single-host demonstration, not HA or production acceptance. The [Temporal CLI development server](https://docs.temporal.io/cli/server#start-dev) is intended for development.
 
 ## Observed qualification status
 
@@ -24,6 +24,12 @@ The retained qualification on **2026-11-14** used clean, unchanged source commit
 | GitHub Actions | [Run 43597256488](../evidence/github-actions-43597256488/) failed on both attempts before runner assignment, with zero executed steps | The available evidence does not establish the cause; neither attempt supplies CI qualification results |
 
 End-to-end heldout agent latency was median **91.425 seconds** and p95 **210.917 seconds**. The run also recorded delayed workflow completion, worker heartbeat timeouts and RPC errors. Their cause remains unestablished. The configured 90-second model-call deadline is not an end-to-end incident deadline. Diagnose those timing layers before changing budgets or attributing the delay to a particular component. Detailed model results and scope are in [evaluation](EVALUATION.md) and the [retained comparison and logs](../evidence/qualification-f1e6e2f/).
+
+## Hosted reference platform qualification — 15 November 2026
+
+[CircleCI `reference-containers` success at source `cad9cc6`](https://app.circleci.com/workflow/15f6d873-dc0d-4e83-8d20-d3abf1ec20c9) covers the corrected actual Docker/Temporal/local-model reference. The [current ledger](QUALIFICATION.md) records ten passed platform checks: scoped service identities and secret mounts; a realized loopback API and internal-only backend network; installed runtime identity; the five synthetic business scenarios; worker recovery; stopped paired application/Temporal restoration; and an observed real model response. The model proposed schema migration for a freshness incident, which the independent policy rejected: `diagnostic_quality_passed=false`. The separate [hosted governance/browser/infrastructure success at `924dd24`](https://github.com/mehdisafer/governed-dataops-agents/commit/924dd24780b332b13f24a5394a725ad2c55888ba) and failed frozen comparative evaluation (agent 1/10 versus runbook 10/10) must remain separately identified.
+
+The 14 November native limitations in the historical table above are not rewritten. The observed reference still uses local single-host SQLite and a Temporal development server. Neither successful container startup nor refusal of a wrong model action demonstrates production readiness, model advantage, multi-host partitioning or general exactly-once effects.
 
 ## Versions and provenance
 
@@ -96,7 +102,7 @@ API, worker and target share one writable application database. They are trusted
 
 ## Container qualification gate
 
-The [attempt against `f1e6e2f`](../evidence/containers-f1e6e2f/) returned exit code 1 before any Docker command ran. Its cleanup list is empty because no stack was created. The procedures below remain to be executed on a host with Docker; the successful native recovery exercise does not verify their container equivalents.
+The [14 November native attempt at `f1e6e2f`](../evidence/containers-f1e6e2f/) stopped before Docker was available; that original failure remains retained. A later corrected [real-container workflow at `cad9cc6`](https://app.circleci.com/workflow/15f6d873-dc0d-4e83-8d20-d3abf1ec20c9) passed ten platform execution checks on 15 November, including restoration and a real model response, while the model diagnosis remained incorrect. Requalify each new runtime source, not simply the older recorded image.
 
 Run the gate on a normal Linux Docker host or a CI runner with sufficient measured resources. Retain the source commit, resolved Compose configuration, image IDs, versions, health output, business API results, raw service logs and cleanup status. Do not upload tokens, private keys or live databases.
 
@@ -108,7 +114,7 @@ uv run python scripts/qualify_container.py \
   --output evidence/runs/container-01
 ```
 
-It checks container isolation, installed asset identity, all five runbook cases, response-loss reconciliation, worker restart, a stopped paired backup and restore, retained Temporal history, and an actual local-agent request. It removes only its uniquely named stacks and image tags; it never prunes shared Docker resources. On a smaller CI runner, an explicit `--model-cpus 2` override records the different CPU budget. It is not the reference host's throughput measurement.
+It checks container isolation, installed asset identity, five real runbook business cases, ambiguous-effect reconciliation, worker restart, a stopped paired restore, retained Temporal history and an actual local-agent request. The harness removes only its uniquely named synthetic resources, never globally prunes Docker. The qualified hosted reference used `--model-cpus 4`, preserving the original 90-second model budget; a separate two-CPU trial timed out and remains a failed experiment, not a model-throughput result.
 
 The local-agent request always runs. The harness requires an observed model response and independently enforces safe effects; its semantic diagnosis result is recorded in `model-quality.json`. Add `--require-model-quality` to make correctness on that case an exit-status gate. Without that flag, a passed container-execution gate can coexist with a failed diagnostic-quality result. Neither outcome establishes the separate full-corpus acceptance gate.
 
@@ -182,7 +188,7 @@ uv run python scripts/qualify.py \
 
 Bootstrap verifies size and SHA-256, rejects modified cache/extracted files and records provenance. Cache and installation paths on the same filesystem share verified assets through hard links; treat both paths as immutable. Bootstrap starts no service. The qualifier must supervise all real services and clean up its children. On hosts where each command has a separate network namespace, run services and clients inside one supervisor invocation.
 
-The smoke profile covers a subset of the checks. The retained [full native integration run](../evidence/qualification-f1e6e2f/) contains its original commands, source hashes, runtime identities, business observations, histories, failures and cleanup result. A future run must retain its own evidence and source identity; the current native results do not close the container, infrastructure, browser or model-quality gates.
+The smoke profile covers only a subset. The retained [14 November full native integration](../evidence/qualification-f1e6e2f/) preserves its original commands, files, failures and cleanup. Later hosted CircleCI browser/governance/infrastructure and container results are separately dated in [QUALIFICATION.md](QUALIFICATION.md). They close only their tested environment gaps, not model quality, multi-host routing or production operation. Every new qualification must retain its own source identity and original results.
 
 ## Sources
 

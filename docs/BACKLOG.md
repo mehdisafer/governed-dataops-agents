@@ -43,6 +43,8 @@ unchanged. The current corpus still has a 10/10 baseline ceiling, so this logic
 correction alone cannot demonstrate agent value. The open items below therefore
 remain necessary.
 
+The separate hosted frozen evaluation at `924dd24` scored agent 1/10 versus runbook 10/10; the original 2/10 result remains an independent historical failure, not a score to average or replace.
+
 ## Prioritized open work
 
 | Order | Priority | Item | Current missing claim |
@@ -52,7 +54,7 @@ remain necessary.
 | 3 | P0 | Diagnose Temporal reporting and workflow-task delays | Predictable bounded end-to-end failure propagation |
 | 4 | P0 | Localize inference slowdown, then improve completion | Reliable diagnostic availability within the declared budget |
 | 5 | P0 | Qualify target partitioning and worker additions | Business invariants under partition routing, ownership changes and saturation |
-| 6 | P0 | Run browser/deployment gates on a compatible runner | Real console and reference-environment evidence |
+| 6 | P1 | Retain hosted browser/container qualification and assess remaining production boundaries | The tested single-host reference passes its declared gates; production topology, multi-host guarantees and model quality remain unproven |
 | 7 | P0 for an LLM-value claim | Measure useful advantage over a competent baseline | Additional operational benefit from inference |
 | 8 | P2 | Replay between clean identified revisions | A clean-version upgrade claim beyond the current retained histories |
 
@@ -205,26 +207,15 @@ Saturate one partition while continuing work in the other, with a separately
 declared admission/latency bound and recovery check for each. A second worker on
 the existing shared queue alone does not close this item.
 
-## 6. Complete environment-dependent browser and deployment evidence
+## 6. Retain hosted browser and container qualification without overstating it
 
-**Observed gap.** The native browser gate failed during Chromium launch with
-`socket() failed: Operation not permitted`. It never executed the console's
-browser assertions. Passing HTTP/API tests does not establish responsive layout,
-credential handling in the DOM, screenshots or usable interactions. Source:
-[results.json](../evidence/qualification-f1e6e2f/results.json).
+**Original limitation (14 November).** The native Chromium launch failed with `socket() failed: Operation not permitted`; Docker was unavailable and Terraform provider-schema validation did not complete. These failures remain in the [original run](../evidence/qualification-f1e6e2f/results.json) and must not be rewritten as a pass on the old source.
 
-**Next work.** Run the existing real browser check on a supported Linux runner
-with the necessary browser facilities, retaining the source SHA, browser version,
-launch log, screenshots and assertion results. Track container and infrastructure
-qualification separately using their actual evidence in
-[QUALIFICATION.md](QUALIFICATION.md) and [DEPLOYMENT.md](DEPLOYMENT.md); native
-service success does not substitute for those gates. Do not bypass the current
-environment's restrictions or silently convert a failed gate into a skipped pass.
+**New scoped evidence (15 November).** CircleCI [hosted governance/browser/infrastructure checks on `924dd24`](https://github.com/mehdisafer/governed-dataops-agents/commit/924dd24780b332b13f24a5394a725ad2c55888ba) reported success for their declared single-host scope. The [corrected real-container reference at `cad9cc6`](https://app.circleci.com/workflow/15f6d873-dc0d-4e83-8d20-d3abf1ec20c9) passed ten platform execution gates, including business effects, paired restoration, secret/network isolation and a real model response. Its separate semantic model result was **incorrect and safely denied** (`diagnostic_quality_passed=false`).
 
-**Acceptance evidence.** Actual desktop/mobile console checks pass with no
-JavaScript errors or exposed role token, plus independently recorded results for
-the claimed reference deployment. An environment-blocked result remains blocked
-until a permitted runner supplies the missing evidence.
+**Remaining evidence.** Retain the original artifacts and screenshots with source/runtime versions and resource limits. Confirm other host or production targets only when explicitly authorized; there has been no production Terraform apply. Multi-host partitioning, untrusted-tenant isolation and an accepted model-value benefit are still unproven. Diagnose the unrelated GitHub Actions runner-allocation error from its actual annotation rather than guessing.
+
+**Acceptance boundary.** The named CircleCI single-host platform and browser execution checks can be reported as passed. That does not qualify a general deployment, high availability, external-system exactly-once effects, or the model's diagnostic accuracy.
 
 ## 7. Establish useful LLM value, or retain the experimental label
 
