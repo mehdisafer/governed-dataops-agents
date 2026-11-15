@@ -18,7 +18,13 @@ x-app: &app
   <<: *common
   image: governed-dataops-app:0.1.0a1
   build: {context: ., dockerfile: Dockerfile}
-  volumes: [app-data:/data]
+  # init-state owns volume initialization. Image copy-up must not replace the
+  # selected deployment UID on a fresh, still-empty restoration volume.
+  volumes:
+    - type: volume
+      source: app-data
+      target: /data
+      volume: {nocopy: true}
   mem_limit: 768m
   cpus: 1.0
   pids_limit: 128
@@ -45,7 +51,15 @@ services:
     environment:
       DATAOPS_UID: "${DATAOPS_UID:-1000}"
       DATAOPS_GID: "${DATAOPS_GID:-1000}"
-    volumes: [app-data:/data, temporal-data:/temporal]
+    volumes:
+      - type: volume
+        source: app-data
+        target: /data
+        volume: {nocopy: true}
+      - type: volume
+        source: temporal-data
+        target: /temporal
+        volume: {nocopy: true}
     cap_add: [CHOWN]
     restart: "no"
     mem_limit: 128m
@@ -55,7 +69,11 @@ services:
     <<: *common
     image: governed-dataops-temporal:1.10.1
     build: {context: ., dockerfile: Dockerfile.temporal}
-    volumes: [temporal-data:/data]
+    volumes:
+      - type: volume
+        source: temporal-data
+        target: /data
+        volume: {nocopy: true}
     depends_on:
       init-state: {condition: service_completed_successfully}
     healthcheck:
