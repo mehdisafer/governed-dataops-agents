@@ -2,13 +2,13 @@
 
 The intended product is an operator console and API that explains a synthetic industrial data incident, collects evidence through MCP, uses PydanticAI for a bounded model diagnosis, asks deterministic policy for authority, executes through Temporal, and verifies the resulting business state. Acceptance also requires measured agent value over a competent deterministic runbook.
 
-**The implementation and its first complete native qualification are retained; full project acceptance remains open.** The frozen source at `f1e6e2f3800242ec210145680261da8ab60f38b4` passed 14/18 requested native checks. The reserved comparison was 10/10 for the runbook and 2/10 for the agent. Deployment, browser and CI gates also require successful execution evidence. [Issue #1](https://github.com/mehdisafer/governed-dataops-agents/issues/1) remains open. [PR #2](https://github.com/mehdisafer/governed-dataops-agents/pull/2) records delivery and automated review of the experimental implementation.
+**The implemented reference and its dated qualification evidence are retained; full agent-value acceptance remains open.** The clean 14 November native source `f1e6e2f` passed 14/18 checks (agent 2/10 versus runbook 10/10). CircleCI subsequently passed unit checks on `main` at `2460012`, hosted governance/browser checks at `924dd24`, and ten actual container-platform checks at `cad9cc6`. The separate 15 November frozen model evaluation still failed (agent **1/10**, runbook **10/10**). GitHub Actions runner allocation and target-partitioning evidence remain open. [Issue #1](https://github.com/mehdisafer/governed-dataops-agents/issues/1) remains open.
 
 ## Scope and boundaries
 
-- Only this repository and isolated demonstration infrastructure are in scope. No personal computer, client environment or other portfolio repository is used.
+- The reproducible repository and isolated synthetic demonstration environment define the project scope. Access to any personal workstation, client system or unrelated portfolio project is not required or authorized by this task.
 - All business data are synthetic. The model has no general shell, direct database connection or write capability.
-- The repository remains private. Its own licence is undecided; third-party licences continue to apply.
+- The repository remains private at the inspected date. Original project source is licensed under [Apache-2.0](../LICENSE); dependency/model licences remain independent.
 - Public release, billing changes and externally hosted resources require separate explicit authorization.
 
 ## Recovery and retained implementation
@@ -30,20 +30,20 @@ The final review also corrected an impossible combination of evaluation gates: a
 | Negative behavior | Stale/tampered/expired approvals, changed policy, incomplete evidence, injection and model outage | Named refusals/outage exercised; known injection template only, no general attack-resistance claim |
 | Recovery | Worker outage, buffered approval, duplicate ingress, old-history replay and backup/restore | Executed; 56 current and 26 earlier histories replayed with the documented source/change limits |
 | Capacity | Target contention, bounded admission, saturation recovery, partitioning invariants, load threshold and resource observations | Contention/admission/load exercised on one host; required target-partitioning qualification remains open |
-| Model evaluation | Frozen reserved corpus, competent baseline, all failures and denominators, measured value | Comparison completed; agent 2/10 versus runbook 10/10; value criterion failed |
-| Operator console | Real correlated trace display and approval/cancellation interaction | Implemented; real Chromium launch blocked before rendered interaction |
-| Deployment | Actual container build/run and supported Terraform resource validation/plan | Reference implemented; Docker unavailable, Terraform provider-schema load failed, no plan/apply |
-| Operations and CI | Locked dependencies, security/component inventory, CI execution, restore and operating procedures | Local checks and native restore retained; hosted CI failed before runner assignment on both attempts |
-| Publication | Coherent commits, reviewed PR, identified release, licence decision and authorized public review | Reviewed implementation and unreleased candidate prepared for the default branch; review labelled as automation; licence/administration/publication pending |
+| Model evaluation | Frozen reserved corpus, competent baseline, complete failures/denominators and measured value | Native: agent 2/10 vs runbook 10/10; later hosted: agent 1/10 vs runbook 10/10. Both fail the value criterion |
+| Operator console | Correlated trace display, approval/cancellation and real-browser interactions | Original native Chromium launch blocked; later hosted governance profile at `924dd24` passed its declared browser gate |
+| Deployment | Actual container build/run and supported Terraform validation/plan | Real corrected reference containers passed ten execution checks at `cad9cc6`; hosted infrastructure job passed at `924dd24`. Neither is a production apply or LLM-value PASS |
+| Operations and CI | Locked dependencies, security inventory, CI, restores and runbooks | CircleCI unit passed on `main` at `2460012`, governance at `924dd24` and container at `cad9cc6`; GitHub Actions still fails before runner assignment |
+| Publication | Coherent commits, reviewed PRs, identified candidate release, licence and public review | PR #2 and unit CI PR #5 merged; corrected runtime in PR #4; Apache-2.0 selected; visibility private and stable acceptance withheld |
 
 Implemented, executed, tested and accepted remain distinct states. [QUALIFICATION.md](QUALIFICATION.md) gives the exact evidence and limits. A checked subset does not close the original scope issue.
 
 ## Next work in dependency order
 
-1. Resolve the hosted runner prerequisite from the actual GitHub check annotation. Reproduce the Docker, Terraform and rendered-console checks in an authorized environment that provides their required facilities.
+1. Diagnose GitHub Actions' independent pre-run failure using its actual annotation; keep already passing CircleCI results bound to their source SHAs, and do not speculate about billing.
 2. Investigate the retained local-model slowdown, missing responses and Temporal/transport delays using development inputs and isolated measurements. Keep failed attempts and usage uncertainty visible.
 3. Select any revised model, prompt, runtime or diagnostic contract using development data only. Freeze a new evaluation prospectively; the now-exposed reserved set remains a regression set.
 4. Evaluate concrete agent utility while preserving the competent baseline, safety invariants and complete outcome/cost denominators. Matching the existing baseline does not demonstrate added value.
-5. Qualify the required target-partitioning invariants and additional-worker behavior, complete the outstanding release gates, then obtain the explicit repository licence and publication decisions. The current two-worker contention result does not establish partitioned routing.
+5. Qualify target-partitioning invariants and additional worker behavior, then close agent-value/release gates with new evidence. Apache-2.0 is already selected; owner-managed visibility and branch protections remain separate. Two-worker contention on one queue is not partitioning.
 
 The [detailed backlog](BACKLOG.md) defines evidence needed to close these items. No deadline increase, implicit runbook fallback, excluded failure or reduced baseline is used to turn the current result into acceptance.

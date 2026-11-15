@@ -4,7 +4,12 @@ RUN python /bootstrap_runtime.py --component temporal --destination /runtime
 
 FROM python:3.12.14-slim-trixie@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f
 COPY --from=download /runtime/temporal /opt/temporal
-RUN mkdir /data && chown 1000:1000 /data
+RUN groupadd --gid 1000 temporal \
+    && useradd --uid 1000 --gid 1000 --home-dir /data --no-create-home --shell /usr/sbin/nologin temporal \
+    && mkdir /data && chown 1000:1000 /data
+# Go's pure-Go resource detector requires USER when no cgo lookup is available.
+ENV USER=temporal HOME=/data
 USER 1000:1000
+RUN python -c "import os,pwd; assert os.getuid()==1000; assert pwd.getpwuid(os.getuid()).pw_name==os.environ['USER']; assert os.access('/data', os.W_OK)"
 ENTRYPOINT ["/opt/temporal/temporal"]
 CMD ["server", "start-dev", "--ip", "0.0.0.0", "--port", "7233", "--ui-ip", "0.0.0.0", "--ui-port", "8233", "--ui-disable-news-fetch", "--metrics-port", "8234", "--db-filename", "/data/temporal.db"]

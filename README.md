@@ -4,9 +4,23 @@ An incident-response console for a synthetic industrial data platform. It collec
 
 I built this project to make agent decisions inspectable. The console shows the incident, observations, diagnosis, proposed action, permission decision, approval and correlated execution trace. The target holds actual source, curated and quarantine rows. A successful tool response alone cannot close an incident as resolved.
 
-**Current status: acceptance remains open.** The complete native run passed **14 of 18 checks** and returned a nonzero exit. On the ten frozen reserved cases, the deterministic runbook achieved **10/10** strict successes and the local agent **2/10**; eight model attempts escalated without an accepted diagnosis. The model remains experimental, and no advantage over the runbook is established. Original failures, logs and workflow histories are retained. [PR #2](https://github.com/mehdisafer/governed-dataops-agents/pull/2) records the implementation and automated review. [Issue #1](https://github.com/mehdisafer/governed-dataops-agents/issues/1) remains open; publishing the experimental implementation does not close its acceptance criteria.
+**Current status (15 November 2026): CircleCI unit checks on `main`, real hosted governance/browser and a corrected Docker-container execution profile have successful reported checks on their named commits; full agent-quality and value acceptance remains open.** The historical 14 November native run passed 14/18 checks (agent 2/10 versus runbook 10/10). The separate 15 November hosted frozen evaluation yielded agent **1/10** versus runbook **10/10**. At `cad9cc6`, real container execution passed ten declared platform gates, but the local model's one-case diagnosis was incorrect and safely refused by policy. No model advantage, production-readiness or multi-host partitioning is claimed. [Issue #1](https://github.com/mehdisafer/governed-dataops-agents/issues/1) remains open.
 
-## Observed results
+## Latest hosted execution — 15 November 2026
+
+These are separate executions, linked to their actual source commits. They do not rewrite the earlier native qualification or establish an accepted stable release.
+
+| Gate | Evidence | Limit |
+|---|---|---|
+| CircleCI unit and lint on `main` | [`2460012` `build-and-test` success](https://app.circleci.com/workflow/9f31433c-2712-467c-89be-34ad2c3285c8/job/9d5fd2e8-3c67-4a35-861c-6feb9a735ea7) | Unit workflow, not container or model evaluation |
+| Hosted governance and browser | [`924dd24` source/governance checks succeeded](https://github.com/mehdisafer/governed-dataops-agents/commit/924dd24780b332b13f24a5394a725ad2c55888ba) | Runbook-governed single-host reference, not agent advantage |
+| Actual model, Temporal and Docker reference | [`cad9cc6` container workflow succeeded](https://app.circleci.com/workflow/15f6d873-dc0d-4e83-8d20-d3abf1ec20c9) | Ten platform gates; model diagnosis incorrect |
+| Frozen hosted model comparison | [`924dd24` model-evaluation failed](https://github.com/mehdisafer/governed-dataops-agents/commit/924dd24780b332b13f24a5394a725ad2c55888ba) | Agent 1/10 versus runbook 10/10 |
+| GitHub Actions | [Main run 43769325453 failed before runner allocation](https://github.com/mehdisafer/governed-dataops-agents/actions/runs/43769325453) | No steps executed, underlying cause unknown |
+
+A wrong model proposal rejected by independent policy is a governance success, not a correct diagnosis. See the [complete qualification ledger](docs/QUALIFICATION.md) and [CI provenance](docs/CI.md) for source-specific evidence and limitations.
+
+## Historical native results — 14 November 2026
 
 These results describe the clean, unchanged application source at [`f1e6e2f`](https://github.com/mehdisafer/governed-dataops-agents/commit/f1e6e2f3800242ec210145680261da8ab60f38b4), executed on 2026-11-14. Later qualification-harness and evidence-verifier corrections have separate regression checks; they do not rewrite this native result.
 
@@ -17,7 +31,7 @@ These results describe the clean, unchanged application source at [`f1e6e2f`](ht
 | Persistence | Paired application/Temporal restore executed; 56 closed current histories and 26 earlier development histories replayed | Earlier development source was dirty; replay covered a query-only workflow change |
 | Frozen comparison | Runbook 10/10; agent 2/10; all twenty final business states observed | Two accepted model proposals were correct; eight absent responses failed the operational criterion |
 | Bounded load | Twelve runbook incidents, concurrency four, p95 6.150 s, zero errors | This does not measure model throughput or multi-host scalability |
-| Deployment and console | Native services ran. CircleCI unit tests passed on an earlier setup-branch commit; GitHub Actions, browser, container and infrastructure qualification remain open | Do not extrapolate a setup-branch unit result to container qualification or the current main commit |
+| Deployment and console on that original native host | Container, Terraform and rendered browser execution could not complete in the original environment | Later hosted results above supersede those environmental gaps only for their separate tested scopes |
 
 The [qualification ledger](docs/QUALIFICATION.md) explains each result, the [evaluation report](docs/EVALUATION.md) preserves denominators and usage uncertainty, and the [evidence index](evidence/README.md) links the original artifacts. The [prioritized backlog](docs/BACKLOG.md) records the remaining work without changing the acceptance criteria.
 
@@ -58,7 +72,7 @@ See [architecture and decisions](docs/ARCHITECTURE.md), [SDK compatibility](docs
 
 The reference profile is Linux amd64, Python 3.12, uv 0.13.6, Docker Engine and Docker Compose. Allow 12 GiB RAM, eight CPU threads and 15 GiB disk for the full demonstration. These are deployment allowances, not measured throughput claims.
 
-The commands below describe the container reference. Its build and execution could not be exercised in the supplied environment because Docker was unavailable. Browser interaction also lacks a successful rendered run. Use the [deployment guide](docs/DEPLOYMENT.md) and the retained failure evidence when reproducing those outstanding gates on an authorized host.
+The reference container was subsequently exercised in an isolated hosted Linux VM at `cad9cc6`; its ten platform checks passed while the diagnostic quality check failed. The commands below are reproducible starting steps for an authorized host, not a production deployment certificate. Follow the [deployment guide](docs/DEPLOYMENT.md) for evidence and resource limits.
 
 ```bash
 uv sync --frozen
@@ -66,7 +80,7 @@ uv run dataops init
 export DATAOPS_UID="$(id -u)"
 export DATAOPS_GID="$(id -g)"
 docker compose build
-docker compose up -d --wait --wait-timeout 180
+docker compose up -d --wait --wait-timeout 240
 ```
 
 Open [http://127.0.0.1:8080](http://127.0.0.1:8080). Enter the value from your local `.secrets/operator-token` file. Select an incident class and a diagnostic engine. The deterministic runbook is the explicit baseline; the local model remains experimental. A quality incident requires the separate `.secrets/approver-token` credential before quarantine. The console clears credential inputs and keeps credentials only in the current tab's memory.
@@ -124,6 +138,16 @@ The supervisor runs communicating services and clients in one network namespace.
 
 Profiles are `smoke`, `integration`, `governance`, `evaluation` and `load`. `governance` exercises the platform with the explicitly selected runbook and does not start a model. `evaluation` runs the frozen held-out corpus in both modes. `load --count 12 --concurrency 4` measures bounded runbook throughput, not model scalability. Exact thresholds, denominators and limitations are described in [EVALUATION.md](docs/EVALUATION.md).
 
+For isolated real-container qualification against a clean source commit:
+
+```bash
+uv run python scripts/qualify_container.py \
+  --source-commit "$(git rev-parse HEAD)" \
+  --output evidence/runs/container-current --model-cpus 4
+```
+
+The container platform gate separately records `diagnostic_quality_passed`. A real model response can be incorrect even when the container execution succeeds. Always use a fresh output directory and preserve unsuccessful original records.
+
 ## Operations and limitations
 
 - [CI provenance](docs/CI.md): CircleCI unit execution, separate manual container qualification and GitHub Actions limitations.
@@ -136,4 +160,4 @@ Profiles are `smoke`, `integration`, `governance`, `evaluation` and `load`. `gov
 
 This is a private single-host demonstration over synthetic data. The Temporal development server, shared SQLite volume and trusted application processes do not provide hostile-tenant isolation or an HA production deployment. The local model can be wrong even when its JSON and citations are valid. Atomic effect/receipt behavior is specific to the provided target; it is not a generic exactly-once guarantee for external APIs. A paired backup is only considered exercised when a restore is executed and its business state checked.
 
-The maintainer has explicitly selected the [Apache License, Version 2.0](LICENSE) for this repository's original source. The repository remains private until the owner completes the separate visibility and publication review steps. Third-party software and weights retain their own licences. No client data, personal computer access or external paid provider is used.
+The maintainer has explicitly selected the [Apache License, Version 2.0](LICENSE) for this repository's original source. The repository remains private until the owner completes the separate visibility and publication review steps. Third-party software and weights retain their own licences. The reproducible incident fixtures use synthetic data; the reference does not require access to a personal workstation, a client environment or an external paid inference provider.

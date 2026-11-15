@@ -1,0 +1,42 @@
+# Manual container qualification. Frozen model evaluation remains a separate
+# mandatory gate; a successful container job does not establish model advantage.
+version: 2.1
+jobs:
+  reference-containers:
+    machine:
+      image: ubuntu-2404:2026.10.1
+    resource_class: large
+    steps:
+      - checkout
+      - run:
+          name: Record source and install isolated pinned tooling
+          command: |
+            mkdir -p evidence/runs/ci-host
+            git rev-parse HEAD > evidence/runs/ci-host/commit.txt
+            docker version > evidence/runs/ci-host/docker-version.txt
+            docker compose version > evidence/runs/ci-host/compose-version.txt
+            python3 -m venv /tmp/governed-ci-tools
+            /tmp/governed-ci-tools/bin/python -m pip install --disable-pip-version-check uv==0.13.6
+            printf 'export PATH=/tmp/governed-ci-tools/bin:$PATH\n' >> "$BASH_ENV"
+      - run:
+          name: Install the exact reviewed dependency lock
+          command: |
+            uv sync --frozen --python 3.12.14
+            uv --version
+            uv run --frozen python --version
+      - run:
+          name: Qualify model, Temporal, business effects, recovery and cleanup
+          no_output_timeout: 30m
+          # Match compose.yaml's documented four-CPU model quota. The failed
+          # two-CPU run is retained; the 90-second model deadline is unchanged.
+          command: timeout --signal=TERM --kill-after=60s 2400s uv run --frozen python scripts/qualify_container.py --source-commit "$CIRCLE_SHA1" --output evidence/runs/container --model-cpus 4
+      - store_artifacts:
+          path: evidence/runs/ci-host
+          destination: ci-host
+      - store_artifacts:
+          path: evidence/runs/container
+          destination: container
+workflows:
+  reference-qualification:
+    jobs:
+      - reference-containers

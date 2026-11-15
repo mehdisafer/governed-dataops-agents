@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Build and exercise the real private Compose stack on the local Docker daemon.
 
-Every invocation creates its own named synthetic volumes, network and credentials.
+Every invocation creates its own named synthetic volumes, networks and credentials.
 Cleanup removes only those resources. No mock service or external inference is used.
 The platform gate and the one-case diagnostic result are reported separately.
 """
@@ -358,6 +358,7 @@ class ContainerQualification:
             "temporal": set(),
             "model": set(),
         }
+        api_id = None
         for item in details:
             service = item["Config"]["Labels"]["com.docker.compose.service"]
             if service not in expected:
@@ -382,11 +383,20 @@ class ContainerQualification:
             if service != "api":
                 assert "DATAOPS_APPROVAL_SIGNING_KEY_FILE" not in environment_keys
             bindings = host["PortBindings"] or {}
+            actual_ports = item["NetworkSettings"]["Ports"] or {}
+            networks = set(item["NetworkSettings"]["Networks"])
             if service == "api":
-                assert bindings == {"8080/tcp": [{"HostIp": "127.0.0.1", "HostPort": "8080"}]}
+                expected_bindings = {"8080/tcp": [{"HostIp": "127.0.0.1", "HostPort": "8080"}]}
+                assert bindings == expected_bindings
+                # Configured bindings alone did not establish an actual listener
+                # on an internal-only Docker network. Check realized mappings too.
+                assert {key: value for key, value in actual_ports.items() if value} == expected_bindings
+                assert networks == {self.stack + "-private", self.stack + "-ingress"}
+                api_id = item["Id"]
             else:
                 assert not bindings
-            assert set(item["NetworkSettings"]["Networks"]) == {self.stack + "-private"}
+                assert not any(actual_ports.values())
+                assert networks == {self.stack + "-private"}
             inventory.append(
                 {
                     "service": service,
@@ -395,6 +405,8 @@ class ContainerQualification:
                     "read_only_root": True,
                     "secret_mounts": sorted(secrets_mounted),
                     "port_bindings": bindings,
+                    "actual_published_ports": actual_ports,
+                    "networks": sorted(networks),
                     "memory_limit_bytes": host["Memory"],
                     "cpu_limit": host["NanoCpus"] / 1e9,
                 }
@@ -406,6 +418,16 @@ class ContainerQualification:
             ).stdout
         )[0]
         assert network["Internal"] is True
+        ingress = json.loads(
+            self.execute(
+                ["docker", "network", "inspect", self.stack + "-ingress"], "inspect-ingress-network"
+            ).stdout
+        )[0]
+        assert ingress["Internal"] is False
+        assert ingress["Options"]["com.docker.network.bridge.host_binding_ipv4"] == "127.0.0.1"
+        assert set(ingress["Containers"]) == {api_id}
+        health = self.client.get("/health")
+        health.raise_for_status()
         probe = self.compose(
             [
                 "exec",
@@ -421,6 +443,9 @@ class ContainerQualification:
         return {
             "containers": inventory,
             "internal_network": True,
+            "ingress_attached_only_to_api": True,
+            "host_loopback_health_status": health.status_code,
+            "api_egress_blocked": False,
             "worker_key_probe": probe.stdout.strip(),
         }
 
@@ -740,7 +765,7 @@ class ContainerQualification:
                 removed = (
                     stopped.returncode == 0
                     and not containers.stdout.strip()
-                    and stack + "-private" not in networks.stdout.splitlines()
+                    and not networks.stdout.strip()
                     and not {stack + "-app-data", stack + "-temporal-data"}
                     & set(volumes.stdout.splitlines())
                 )

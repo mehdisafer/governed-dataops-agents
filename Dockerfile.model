@@ -7,10 +7,16 @@ RUN python -c "from pathlib import Path; Path('/etc/apt/sources.list.d/debian.so
     && apt-get update && apt-get install -y --no-install-recommends libgomp1 libstdc++6 libzstd1 \
     && rm -rf /var/lib/apt/lists/*
 COPY --from=download /runtime/llama/llama-b12368 /opt/llama
-COPY --from=download /runtime/Qwen3-4B-Instruct-2507-Q2_K.gguf /models/model.gguf
-COPY --from=download /runtime/QWEN-LICENSE /models/LICENSE
-COPY --from=download /runtime/qwen3-4b-base-README.md /runtime/qwen3-4b-quantizer-README.md /models/
-COPY --from=download /runtime/provisioning.json /models/provenance.json
+# The downloader creates private temporary files. Publish only these reviewed,
+# immutable model assets with explicit ownership and read permissions.
+COPY --from=download --chown=1000:1000 --chmod=0444 /runtime/Qwen3-4B-Instruct-2507-Q2_K.gguf /models/model.gguf
+COPY --from=download --chown=1000:1000 --chmod=0444 /runtime/QWEN-LICENSE /models/LICENSE
+COPY --from=download --chown=1000:1000 --chmod=0444 /runtime/qwen3-4b-base-README.md /runtime/qwen3-4b-quantizer-README.md /models/
+COPY --from=download --chown=1000:1000 --chmod=0444 /runtime/provisioning.json /models/provenance.json
+# COPY --chmod also affects a newly created destination directory. A directory
+# needs traversal bits even when its contents are immutable read-only files.
+RUN chmod 0555 /models
 USER 1000:1000
+RUN python -c "from pathlib import Path; p=Path('/models/model.gguf'); assert p.open('rb').read(4) == b'GGUF'; assert Path('/models/LICENSE').read_text(); assert Path('/models/provenance.json').read_text()"
 ENTRYPOINT ["/opt/llama/llama-server"]
 CMD ["--model", "/models/model.gguf", "--host", "0.0.0.0", "--port", "8090", "--alias", "governed-qwen", "--threads", "4", "--threads-batch", "4", "--threads-http", "4", "--ctx-size", "2048", "--parallel", "1", "--gpu-layers", "0", "--metrics", "--no-webui", "--no-agent", "--jinja", "--n-predict", "768", "--batch-size", "128", "--ubatch-size", "64", "--cache-type-k", "q8_0", "--cache-type-v", "q8_0", "--flash-attn", "on", "--no-repack", "--cache-ram", "0", "--ctx-checkpoints", "0"]
