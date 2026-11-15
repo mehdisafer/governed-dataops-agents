@@ -1,138 +1,100 @@
 # Governed DataOps Agents
 
-An incident-response console for a synthetic industrial data platform. It collects evidence, proposes a typed action, checks deterministic policy, obtains a bound approval when needed, executes through a durable workflow, and rereads the business state before reporting an outcome.
+**Collect evidence, authorize a bounded action, and verify the business state.**
 
-I built this project to make agent decisions inspectable. The console shows the incident, observations, diagnosis, proposed action, permission decision, approval and correlated execution trace. The target holds actual source, curated and quarantine rows. A successful tool response alone cannot close an incident as resolved.
+This synthetic industrial incident-response platform uses MCP for narrow capabilities, PydanticAI for structured diagnosis, Temporal for durable orchestration, and actual transactional source/curated/quarantine rows. The operator console exposes observations, diagnosis, policy, signed approval, effects and fresh verification. A successful tool call alone cannot mark an incident resolved.
 
-**Current status: acceptance remains open.** The complete native run passed **14 of 18 checks** and returned a nonzero exit. On the ten frozen reserved cases, the deterministic runbook achieved **10/10** strict successes and the local agent **2/10**; eight model attempts escalated without an accepted diagnosis. The model remains experimental, and no advantage over the runbook is established. Original failures, logs and workflow histories are retained. [PR #2](https://github.com/mehdisafer/governed-dataops-agents/pull/2) records the implementation and automated review. [Issue #1](https://github.com/mehdisafer/governed-dataops-agents/issues/1) remains open; publishing the experimental implementation does not close its acceptance criteria.
+## Current delivery status — 15 November 2026
 
-## Observed results
+**The reference platform is qualified; full agent-value acceptance remains open.** Real hosted container, governance, restore and browser execution are now evidenced. The local model still fails the frozen quality/value gate. Publishing or merging the experimental implementation must not imply that it improves on the runbook.
 
-These results describe the clean, unchanged application source at [`f1e6e2f`](https://github.com/mehdisafer/governed-dataops-agents/commit/f1e6e2f3800242ec210145680261da8ab60f38b4), executed on 2026-11-14. Later qualification-harness and evidence-verifier corrections have separate regression checks; they do not rewrite this native result.
+| Gate | Current observation |
+|---|---|
+| Core unit/boundary suite | 232 tests passed in the hosted source profile |
+| Real native governance profile | Eight requested checks passed, including MCP/Temporal business effects, recovery, paired restore and real browser console |
+| Actual container platform | Ten checks passed at `cad9cc6eb28a70f24e9bf02774a7614cc4cb9631`, including five business scenarios, worker restart, paired restoration and real local-model response |
+| Frozen ten-case comparison | Deterministic runbook 10/10; local agent 1/10 strict successes in the latest hosted evaluation |
+| One-case container model quality | Failed: actual response observed, but wrong diagnosis was safely denied by policy |
+| Added agent value | Not demonstrated; the original acceptance issue remains open |
 
-| Area | Observed result | Limit |
-| --- | --- | --- |
-| Business paths | All five runbook cases matched the expected row-based outcome | A containment or refusal is not a resolution |
-| Governance and recovery | Tampered/stale/expired approval refusal, worker restart, model outage, contention and admission recovery exercised | Trusted single-host application processes and synthetic targets |
-| Persistence | Paired application/Temporal restore executed; 56 closed current histories and 26 earlier development histories replayed | Earlier development source was dirty; replay covered a query-only workflow change |
-| Frozen comparison | Runbook 10/10; agent 2/10; all twenty final business states observed | Two accepted model proposals were correct; eight absent responses failed the operational criterion |
-| Bounded load | Twelve runbook incidents, concurrency four, p95 6.150 s, zero errors | This does not measure model throughput or multi-host scalability |
-| Deployment and console | Native services ran; Docker, Terraform validation, browser interaction and CI remain unqualified | Docker unavailable; provider/browser runtime failures; CI failed before running any step |
+[Qualification ledger and evidence](docs/QUALIFICATION.md) · [Successful container platform run](https://app.circleci.com/workflow/15f6d873-dc0d-4e83-8d20-d3abf1ec20c9) · [Open acceptance issue](https://github.com/mehdisafer/governed-dataops-agents/issues/1)
 
-The [qualification ledger](docs/QUALIFICATION.md) explains each result, the [evaluation report](docs/EVALUATION.md) preserves denominators and usage uncertainty, and the [evidence index](evidence/README.md) links the original artifacts. The [prioritized backlog](docs/BACKLOG.md) records the remaining work without changing the acceptance criteria.
+The earlier 14/18 native integration result, including 2/10 on its reserved evaluation, remains an immutable historical result in [evidence](evidence/qualification-f1e6e2f/). The later 1/10 evaluation is a separate execution, not a rewrite of that history. Neither demonstrates an advantage over the competent runbook.
 
-## What the system does
+## Business response and authority
 
-| Incident | Observed business state | Governed response | Expected outcome |
-|---|---|---|---|
-| Freshness objective exceeded | Pending valid rows and an overdue freshness watermark | Load the reviewed partition once | Resolved after fresh row and watermark checks |
-| Transient ingestion failure | Failed batch with a recorded transient interruption | Retry the fixed batch handler once | Resolved; lost responses reconcile against the receipt |
-| Incompatible schema | Source schema differs from the accepted version | Refuse automated schema migration | Denied and referred to engineering |
-| Rejected quality batch | Invalid source row in a rejected batch | Require separate approval, then quarantine the batch | Contained; source quality still requires repair |
-| Duplicate delivery risk | The batch is already present in curated data but delivery remains pending | Prove row equivalence, then suppress redelivery | Resolved without inserting duplicate rows |
+| Incident | Governed action | Verified outcome |
+|---|---|---|
+| Freshness exceeded | Load the reviewed partition once | Resolved after row/watermark checks |
+| Transient ingestion failure | Retry the bounded handler and reconcile uncertain writes | Resolved with one receipt/effect |
+| Incompatible schema | Refuse automatic migration | Denied and escalated to engineering |
+| Invalid quality batch | Separate signed approval, then quarantine | Contained, not falsely resolved |
+| Duplicate delivery | Prove equivalence and suppress redelivery | Resolved without duplicate rows |
 
-The model has no shell, SQL connection or write tool. Its category and action are proposals. The policy and target independently verify scope, environment, catalogue version, revision, preconditions and budgets. A changed plan or changed state invalidates an approval.
+The model has no shell, SQL connection or write capability. Its diagnosis is a proposal. Deterministic policy and the target verify scope, environment, catalogue revision, state, approval and budgets. Changed plans or target revisions invalidate approval. SQLite WAL is a trusted single-host reference, not a general exactly-once guarantee for external systems or hostile-tenant isolation.
 
-## Architecture
+## Run the private reference
 
-```mermaid
-flowchart TD
-    O["Operator console / API"] --> T["Temporal workflow"]
-    T --> C["MCP evidence collection"]
-    C --> D["PydanticAI diagnosis"]
-    D --> P["Typed plan and deterministic policy"]
-    P -->|Approval required| A["Signed approver decision"]
-    A --> P
-    P -->|Authorized| E["MCP effect gateway"]
-    P -->|Denied| X["Escalation and trace"]
-    E --> S["Transactional target and receipt"]
-    S --> V["Fresh business verification"]
-    V --> O
-```
-
-Temporal owns durable ordering, signals, timeouts and retries. MCP is the narrow capability transport. PydanticAI calls the configured model and validates its structured response. SQLite WAL stores the single-host synthetic business state, approvals, observations and effect receipts. The model is local llama.cpp serving a pinned community Qwen quantization through an OpenAI-compatible protocol; it is not an OpenAI-hosted deployment.
-
-See [architecture and decisions](docs/ARCHITECTURE.md), [SDK compatibility](docs/COMPATIBILITY.md), the [versioned catalogue](src/governed_dataops/catalogue-v1.json) and [JSON contracts](contracts/v1).
-
-## Start the private console
-
-The reference profile is Linux amd64, Python 3.12, uv 0.13.6, Docker Engine and Docker Compose. Allow 12 GiB RAM, eight CPU threads and 15 GiB disk for the full demonstration. These are deployment allowances, not measured throughput claims.
-
-The commands below describe the container reference. Its build and execution could not be exercised in the supplied environment because Docker was unavailable. Browser interaction also lacks a successful rendered run. Use the [deployment guide](docs/DEPLOYMENT.md) and the retained failure evidence when reproducing those outstanding gates on an authorized host.
+Requirements: Linux amd64, Python 3.12, uv 0.13.6, Docker Engine and Compose. The documented allowance is 12 GiB RAM, eight CPU threads and 15 GiB disk; this is not a throughput claim. The model uses a four-CPU limit in the qualified container profile.
 
 ```bash
-uv sync --frozen
+uv sync --frozen --python 3.12.14
 uv run dataops init
 export DATAOPS_UID="$(id -u)"
 export DATAOPS_GID="$(id -g)"
 docker compose build
-docker compose up -d --wait --wait-timeout 180
+docker compose up -d --wait --wait-timeout 240
 ```
 
-Open [http://127.0.0.1:8080](http://127.0.0.1:8080). Enter the value from your local `.secrets/operator-token` file. Select an incident class and a diagnostic engine. The deterministic runbook is the explicit baseline; the local model remains experimental. A quality incident requires the separate `.secrets/approver-token` credential before quarantine. The console clears credential inputs and keeps credentials only in the current tab's memory.
+Open `http://127.0.0.1:8080` and use the local `.secrets/operator-token`. The runbook is the explicit baseline. A quality incident requires the distinct approver credential. Initialization refuses to overwrite credentials. Keep `.secrets/` private; never publish its tokens or private signing key.
 
-Initialization refuses to overwrite existing credentials. Only the API port is published, on loopback. Worker, target, model and Temporal use an internal network. The signing private key is mounted only into the API; the worker receives public verification material and reader/executor credentials. Follow the full [deployment instructions](docs/DEPLOYMENT.md) for permissions, secrets, resource limits, optional Terraform ownership and cleanup.
+Only the API publishes a host port, bound to loopback, and joins a separate ingress bridge. Model, Temporal, worker and target remain on the internal network without published ports. **The API can initiate egress; the entire stack is not air-gapped.** The API alone receives the private approval-signing key. Worker mounts are limited to public verification and reader/executor credentials.
 
-### API example
+Volume initialization assigns the selected non-root deployment UID. Explicit `nocopy` volume mounts prevent image copy-up from changing ownership during restoration. Model assets are immutable/readable by the non-root process, and the Temporal image defines its execution identity. These are tested deployment corrections, not a relaxation to world-writable files or root application execution.
 
-This creates an isolated synthetic target and submits a runbook incident. The response contains the stable incident and workflow identifiers.
-
-```bash
-uv run python - <<'PY'
-from pathlib import Path
-import httpx
-
-token = Path('.secrets/operator-token').read_text().strip()
-response = httpx.post(
-    'http://127.0.0.1:8080/api/demo/incidents',
-    headers={'Authorization': f'Bearer {token}'},
-    json={'scenario': 'transient', 'mode': 'runbook', 'simulate_lost_response': True},
-    timeout=30,
-)
-response.raise_for_status()
-print(response.json())
-PY
-```
-
-`POST /api/incidents` accepts an explicit versioned incident and an execution mode. Incident content and execution intent are admitted in one transaction. Duplicate event submissions reuse the durable workflow ID; rebinding an event to different content or mode is rejected. `GET /api/incidents/{id}` exposes the scoped trace. `POST /api/incidents/{id}/approval` requires the reviewed plan fingerprint and an approver credential. `POST /api/incidents/{id}/cancel` requests cancellation without promising rollback of an already dispatched effect. The runtime exposes its OpenAPI contract at `/openapi.json`.
-
-## Reproduce the evidence
-
-Fast checks use real SQLite and cryptography. Tests that use fake Temporal/provider boundaries label that scope; they do not establish service integration.
+## Reproduce checks and full integration
 
 ```bash
-uv sync --frozen
+uv sync --frozen --python 3.12.14
 uv run ruff check .
 uv run pytest -q
 uv run python scripts/export_contracts.py
 git diff --exit-code -- contracts
 ```
 
-For native real-service qualification, download the pinned runtime assets and run the supervisor from a clean source commit:
+For real native services, use a clean source and a new output directory:
 
 ```bash
-python scripts/bootstrap_runtime.py --destination var/runtime
-uv run playwright install chromium
-uv run python scripts/qualify.py \
-  --manifest var/runtime/provisioning.json \
-  --output evidence/runs/local-integration \
-  --profile integration \
+uv run python scripts/bootstrap_runtime.py --destination var/runtime
+uv run playwright install --with-deps chromium
+uv run python scripts/qualify.py --manifest var/runtime/provisioning.json \
+  --output evidence/runs/new-governance --profile governance \
+  --source-commit "$(git rev-parse HEAD)"
+uv run python scripts/qualify.py --manifest var/runtime/provisioning.json \
+  --output evidence/runs/new-evaluation --profile evaluation \
   --source-commit "$(git rev-parse HEAD)"
 ```
 
-The supervisor runs communicating services and clients in one network namespace. It generates temporary role credentials outside the evidence directory, records the source/input/runtime identities, executes the scenarios, retains original histories and traces, and shuts down its processes. It refuses to overwrite an existing result directory. Any failed requested gate results in a nonzero exit; independent checks continue so a model failure does not hide a recovery failure.
+The governance profile deliberately uses the runbook and does not claim inference quality. Evaluation compares both engines on the frozen corpus and fails when its criteria are unmet. A new output directory is required; failed results are not overwritten.
 
-Profiles are `smoke`, `integration`, `governance`, `evaluation` and `load`. `governance` exercises the platform with the explicitly selected runbook and does not start a model. `evaluation` runs the frozen held-out corpus in both modes. `load --count 12 --concurrency 4` measures bounded runbook throughput, not model scalability. Exact thresholds, denominators and limitations are described in [EVALUATION.md](docs/EVALUATION.md).
+For the complete actual container reference:
 
-## Operations and limitations
+```bash
+uv run python scripts/qualify_container.py \
+  --source-commit "$(git rev-parse HEAD)" \
+  --output evidence/runs/new-container --model-cpus 4
+```
 
-- [Operations](docs/OPERATIONS.md): readiness, metrics, actionable alerts, bounded queues, recovery, paired backup/restore, migration and rollback.
-- [Security](docs/SECURITY.md): role boundaries, signed approvals, injection assumptions, scan coverage and disclosure.
-- [Third-party components](docs/THIRD_PARTY.md): pinned provenance, inventories and unresolved licence decisions.
-- [Evidence](evidence/README.md): retained original results and their scope.
-- [Delivery plan](docs/PLAN.md): implementation milestones, acceptance status and reconstruction history.
-- [Backlog](docs/BACKLOG.md): model/runtime investigation, evaluation design and remaining deployment gates.
+The container gate measures infrastructure, effects, restoration and receipt of a real model response. Its report separately records `diagnostic_quality_passed`; platform success does not imply that field is true. Use `--require-model-quality` to require the one-case quality check as well, but even that single case does not replace frozen comparative evaluation.
 
-This is a private single-host demonstration over synthetic data. The Temporal development server, shared SQLite volume and trusted application processes do not provide hostile-tenant isolation or an HA production deployment. The local model can be wrong even when its JSON and citations are valid. Atomic effect/receipt behavior is specific to the provided target; it is not a generic exactly-once guarantee for external APIs. A paired backup is only considered exercised when a restore is executed and its business state checked.
+`.circleci/config.yml` remains the fast Smarter Testing suite. `.circleci/reference.yml` is a manually triggered native Linux VM container qualification. `.github/workflows/ci.yaml` retains the full source, governance, frozen model evaluation, container and infrastructure profiles. No hidden provider fallback or automatically weakened baseline is used.
 
-The maintainer has explicitly selected the [Apache License, Version 2.0](LICENSE) for this repository's original source. The repository remains private until the owner completes the separate visibility and publication review steps. Third-party software and weights retain their own licences. No client data, personal computer access or external paid provider is used.
+## Model result, limitations and publication
+
+The latest frozen ten-case run obtained one strict agent success versus ten for the runbook. Eight real responses were observed; absent/incorrect outcomes remain in the denominator. Policy prevented unsafe effects in the observed cases, but safe refusal is not correct diagnosis. The four-CPU container trial returned a response within the unchanged ninety-second budget and still diagnosed its freshness case incorrectly. The failed two-CPU timeout run is retained.
+
+The pinned Qwen quantization is served locally by llama.cpp through an OpenAI-compatible protocol, not an external hosted model. Compute, energy and human effort are not measured as zero merely because provider charges are zero. General attack resistance, multi-host scale and production availability are not established by these small synthetic runs.
+
+[Architecture](docs/ARCHITECTURE.md), [deployment](docs/DEPLOYMENT.md), [operations](docs/OPERATIONS.md), [evaluation](docs/EVALUATION.md), [security](docs/SECURITY.md), [third-party components](docs/THIRD_PARTY.md) and the [backlog](docs/BACKLOG.md) describe the system boundaries. The current [qualification ledger](docs/QUALIFICATION.md) supersedes old statements that container/browser execution was unavailable, without altering their dated evidence.
+
+Original project source uses the maintainer-selected [Apache-2.0 licence](LICENSE); dependencies and weights retain their own terms. Public visibility and protections remain separate maintainer settings. PC-Mehdi was used with task-specific permission for CI control and artifact retention; application qualification ran on isolated CI workers with synthetic data. No client environment or paid external provider was used. Full V1 agent acceptance and a stable production release remain withheld while the quality/value criterion fails.
