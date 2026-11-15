@@ -19,4 +19,4 @@ Retain real histories before changing workflow code. Run the relevant qualificat
 
 Do not tune prompts on the held-out corpus. A new development iteration after looking at held-out results needs a new separately frozen evaluation partition; retain the previous comparison. Keep the runbook competent and give it the same observations and downstream execution path as the model.
 
-All GitHub text is written in English. Reviews should identify concrete risks and evidence, not claim independent human approval when the same automation authored and reviewed a change. The maintainer's repository licence decision is still pending; do not add or change a licence or public visibility implicitly.
+All GitHub text is written in English. Reviews should identify concrete risks and evidence, not claim independent human approval when the same automation authored and reviewed a change. The maintainer explicitly selected Apache License 2.0 for this repository. Do not change the project licence or public visibility without explicit authorization.

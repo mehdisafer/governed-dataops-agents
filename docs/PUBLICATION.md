@@ -1,6 +1,6 @@
 # Publication preparation
 
-**The candidate is private, unreleased and not accepted.** [PR #2](https://github.com/mehdisafer/governed-dataops-agents/pull/2) records the implementation review and integration. [Issue #1](https://github.com/mehdisafer/governed-dataops-agents/issues/1) remains open. The repository's own licence has not been selected. No visibility, billing, paid resource or licence change is implicit in this implementation.
+**The candidate is private, unreleased and not accepted.** [PR #2](https://github.com/mehdisafer/governed-dataops-agents/pull/2) records the implementation review and integration. [Issue #1](https://github.com/mehdisafer/governed-dataops-agents/issues/1) remains open. The maintainer explicitly selected Apache License 2.0 for this repository's original source; the decision is recorded in [LICENSE](../LICENSE). No visibility, billing or paid resource change is implicit in this implementation.
 
 The maintainer's intended next destination is a **public repository** and the maintainer will handle the required GitHub interface operations. The source, evidence, metadata proposal and review are prepared through the connected repository tools and isolated environment; access to the maintainer's account through a browser is unnecessary. Public visibility and full technical acceptance remain separate: the experimental model label, failed measurements and open requirements must stay visible after publication.
 
@@ -12,7 +12,7 @@ The maintainer's intended next destination is a **public repository** and the ma
 
 **Candidate release identifier:** `v0.1.0a1`, currently unreleased. See [release notes](RELEASE_NOTES.md).
 
-The description and topics are prepared proposals. The connected integration does not expose their administration, and they are not represented as applied repository settings.
+The description and all eight proposed topics were confirmed applied in the repository's GitHub metadata on 2026-11-15. The connected integration cannot change repository administration or visibility settings.
 
 ## Evidence and release decision
 
@@ -23,22 +23,22 @@ The description and topics are prepared proposals. The connected integration doe
 | Agent utility | Reserved strict success: agent 2/10, competent runbook 10/10 | Experimental model; no superiority claim |
 | Container / infrastructure | Docker unavailable before build; Terraform schema loading failed after successful version/fmt/init | Successful execution still required |
 | Operator console | Chromium failed before rendered interaction | No visual demonstration or browser acceptance claimed |
-| Hosted CI | Run 43597256488 failed twice before runner assignment; zero steps | No CI success; cause remains unknown |
+| Hosted CI | Run 43597256488 (two attempts), PR run 43603161619 and main run 43603386961 failed before runner assignment; zero executed steps in the core jobs | No CI success; cause remains unknown |
 | Publication scanning | Original expanded artifacts reviewed before compression; exact findings and proofs retained | Verify the delivered source/history and exposed metadata as well |
 | Review | Automated review is labelled and anchored to the delivered PR revision | Does not substitute for an independent human approval |
-| Project licence / repository settings | Undecided licence; private visibility; settings proposal only | Explicit owner decision and supported administrative access required |
+| Project licence / repository settings | Apache License 2.0 explicitly selected and committed; description and topics applied; visibility remains private | Owner still controls visibility and supported protection settings |
 
 The exact source reference in the [qualification ledger](QUALIFICATION.md) and the [evidence index](../evidence/README.md) establish the observed scope. Post-run corrections to evidence verification or evaluation logic have their own regression checks; they do not rewrite the original native result. A green subset, a fixed harness, or a correct checksum cannot establish agent value.
 
 ## Precise CI prerequisite
 
-Inspect the annotation on [the second failed core job](https://github.com/mehdisafer/governed-dataops-agents/actions/runs/43597256488/job/132455148696) in the owner's authenticated GitHub session. Both available attempts report runner ID zero, no runner name and no executed steps. Log retrieval returned 404, and the connected API did not expose the annotation endpoint. The isolated cloud-browser session was logged out. The [original API observations](../evidence/github-actions-43597256488/) preserve these limitations.
+Inspect the annotation on [the latest failed main core job](https://github.com/mehdisafer/governed-dataops-agents/actions/runs/43603386961/job/132472738198) in the owner's authenticated GitHub session. The original two attempts and subsequent PR and main runs report runner ID zero, no runner name and no executed steps in core. Log retrieval returned 404, and the connected API did not expose the annotation endpoint. The isolated cloud-browser session was logged out. The [original API observations](../evidence/github-actions-43597256488/) preserve these limitations.
 
 The cause must be established before changing account settings or selecting another runner. No billing diagnosis, purchase, visibility workaround or third blind retry is justified by these records. Once an authorized runner is available, execute the existing `core`, `governance`, `model-evaluation`, `containers` and `infrastructure` jobs and retain the resulting source identity and artifacts. A newly triggered run requires its own inspection; its existence is not successful qualification.
 
 ## Owner decisions and access limits
 
-The owner must explicitly select a licence for **this repository** before public publication. A licence used by another portfolio project or a dependency is not authorization for this source. The decision does not replace the licences or notices of Python dependencies, Temporal, llama.cpp, Qwen, Terraform, the Docker provider or OCI base images. Component provenance is recorded in [THIRD_PARTY.md](THIRD_PARTY.md).
+The owner explicitly selected **Apache License 2.0** for this repository, committed as [LICENSE](../LICENSE), before public publication. A licence used by another portfolio project or a dependency would not independently authorize this source. The decision does not replace the licences or notices of Python dependencies, Temporal, llama.cpp, Qwen, Terraform, the Docker provider or OCI base images. Component provenance is recorded in [THIRD_PARTY.md](THIRD_PARTY.md).
 
 The connected repository integration can read/write source, issues and pull requests but does not expose repository metadata/visibility administration. Initial inspection of branch protections returned an integration-permission error; ruleset inspection additionally reported the private-plan availability restriction. Do not purchase an upgrade or make the repository public as a workaround. Record the protections actually available when the owner performs the administration step.
 
@@ -48,6 +48,6 @@ For an accepted release, protect `main` using the available review and required-
 
 Before an explicitly authorized public switch, review the delivered commit, reachable Git history, issues, PR comments, original logs, traces, snapshots and artifact retention. Secret-scan findings must be explained or resolved against their actual source, not hidden by compression or broad exclusions. Keep private keys, role tokens, client data and live database files out of distributable evidence.
 
-Verify the reviewed archive against its expanded artifact manifest. Preserve all original failure records and the source hashes used by each run. Apply the explicit project licence decision, approved description/topics and supported protection settings. Reassess unresolved acceptance gates before creating an accepted release. Integrating the reviewed experimental implementation into the default branch prepares the public repository; it must keep the failed results and open acceptance issue visible.
+Verify the reviewed archive against its expanded artifact manifest. Preserve all original failure records and the source hashes used by each run. Verify the committed Apache-2.0 licence and already-applied description/topics, and apply supported protection settings. Reassess unresolved acceptance gates before creating an accepted release. Integrating the reviewed experimental implementation into the default branch prepares the public repository; it must keep the failed results and open acceptance issue visible.
 
 After an authorized visibility change, verify anonymous access to the intended repository and evidence links. This does not publish the console or any business service; their loopback/private-network exposure remains separate. No anonymous-access verification or accepted release/tag is claimed while the current candidate remains private and unaccepted. Default-branch integration does not by itself satisfy those gates.

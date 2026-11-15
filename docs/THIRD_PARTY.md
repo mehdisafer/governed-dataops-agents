@@ -6,9 +6,10 @@ The exact Python dependency graph and distribution hashes are in `uv.lock`.
 package licence metadata and licence-file checksums. These are provenance records,
 not a legal compatibility opinion or a security certification.
 
-The repository owner's licence choice remains pending. No licence has been
-selected for this project's original source. Do not infer a licence for the
-project from the licences of its dependencies or from public repository access.
+The maintainer explicitly selected [Apache License 2.0](../LICENSE) for this
+repository's original source. Third-party components, dependencies and model
+weights remain governed by their own licences and notices; do not infer those
+rights from the project's licence or its eventual public visibility.
 
 ## Application dependencies
 

@@ -2,7 +2,7 @@
 
 **Acceptance remains open.** The complete native integration run returned a nonzero exit with **14 of 18 requested checks passed**. The frozen agent completed the expected diagnostic and business outcome in **2 of 10 reserved cases**, compared with **10 of 10** for the unchanged deterministic runbook. No measured agent advantage is established. Browser and deployment verification also remain incomplete.
 
-[PR #2](https://github.com/mehdisafer/governed-dataops-agents/pull/2) records the reviewed implementation, and [issue #1](https://github.com/mehdisafer/governed-dataops-agents/issues/1) remains open. Integration into the default branch and public visibility are delivery steps; they do not close the original technical acceptance criteria.
+[PR #2](https://github.com/mehdisafer/governed-dataops-agents/pull/2) records the reviewed implementation, and [issue #1](https://github.com/mehdisafer/governed-dataops-agents/issues/1) remains open. The reviewed PR was merged into the default branch as [`cdded1e3`](https://github.com/mehdisafer/governed-dataops-agents/commit/cdded1e3f54fd816ec1d4b323b93143417e722df); public visibility is a separate delivery step and does not close the original technical acceptance criteria.
 
 ## Source, environment and retained originals
 
@@ -116,7 +116,7 @@ The strict pip-audit report covers fifty frozen runtime dependencies, with zero 
 | Terraform validation / local Docker plan | Not qualified | Provider schema/handshake failure during validation; no plan or apply executed |
 | Browser rendering and interaction | Not qualified | Original Chromium socket-permission failure in the native results; no successful screenshot |
 | GitHub Actions run 43597256488 | Failed before runner assignment | Both attempts of `core` have runner ID 0 and zero steps; the four dependent jobs were skipped |
-| Public publication, project licence and protections | Pending | Repository remains private; no licence, billing, visibility or administration change was made |
+| Public publication and protections | Pending | Apache-2.0 was selected and committed after this native run; repository remains private, with no billing, visibility or administration change |
 
 The original [GitHub API observations](../evidence/github-actions-43597256488/) include one bounded retry. Log retrieval returned 404; the connector did not support reading the check annotation. A logged-out isolated cloud-browser view yielded no further diagnostic. The cause of the pre-run CI failure is therefore **unknown**. It is not reported as a failing project test, a confirmed billing issue, or a successful CI validation. The owner can inspect the annotation on the [failed core job](https://github.com/mehdisafer/governed-dataops-agents/actions/runs/43597256488/job/132455148696).
 
@@ -124,4 +124,4 @@ The original [GitHub API observations](../evidence/github-actions-43597256488/) 
 
 The backend's tested governance and recovery paths are implemented and evidenced. Full acceptance is withheld because the agent's reliability/value criterion failed and the operator-console/container/infrastructure gates lack successful execution evidence. Multi-host operation and partitioned queues also remain outside the measured reference profile.
 
-The [prioritized backlog](BACKLOG.md) preserves those gaps without weakening the baseline, increasing deadlines to hide a failure, or relabelling a blocked check as passed. The [publication preparation](PUBLICATION.md) contains the concrete metadata and owner decisions required before public release. The reviewed implementation can be integrated for the maintainer's intended public portfolio while its experimental status stays explicit. No accepted-release tag or production-readiness claim follows from the successful subset; the maintainer handles visibility and licence decisions.
+The [prioritized backlog](BACKLOG.md) preserves those gaps without weakening the baseline, increasing deadlines to hide a failure, or relabelling a blocked check as passed. The [publication preparation](PUBLICATION.md) contains the concrete metadata and owner decisions required before public release. The reviewed implementation can be integrated for the maintainer's intended public portfolio while its experimental status stays explicit. No accepted-release tag or production-readiness claim follows from the successful subset; the maintainer has selected Apache-2.0 and handles the remaining visibility and protection decisions.
