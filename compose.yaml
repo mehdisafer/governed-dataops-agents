@@ -123,6 +123,10 @@ services:
 
   api:
     <<: *app
+    # Only the operator-facing API has a non-internal ingress bridge.
+    # Model, Temporal, worker and business target retain internal-only networking.
+    # API egress is consequently possible; this is not a whole-stack air gap.
+    networks: [private, ingress]
     command: [serve, api, --host, "0.0.0.0", --port, "8080"]
     ports: ["127.0.0.1:8080:8080"]
     environment:
@@ -147,6 +151,11 @@ networks:
   private:
     name: "${DATAOPS_STACK:-governed-dataops}-private"
     internal: true
+  ingress:
+    name: "${DATAOPS_STACK:-governed-dataops}-ingress"
+    driver: bridge
+    driver_opts:
+      com.docker.network.bridge.host_binding_ipv4: "127.0.0.1"
 
 volumes:
   app-data:
