@@ -74,7 +74,9 @@ Verification rereads target state through MCP. It checks the expected revision t
 
 ## Capacity and failure handling
 
-Admission capacity, Temporal queueing, worker activity slots, per-process model semaphores, model-server decoding slots and target write serialization are separate controls. API saturation returns HTTP 429 with retry guidance before accepting a new incident. Duplicate retries remain idempotent. Model queue acquisition is bounded, activity retry/time budgets are finite and the model has no delegation loop.
+Admission capacity, Temporal queueing, worker activity slots, per-process model semaphores, model-server decoding slots and target write serialization are separate controls. The admission maximum is now counted transactionally for each authenticated **(environment, scope)** rather than across every scope stored in SQLite: saturating one scope returns HTTP 429 there, while another scope can still enter its own bounded queue. Concurrent admissions to one scope cannot overbook the last slot. Global event/incident identities and their intent binding remain unchanged. Duplicate retries remain idempotent. Model queue acquisition is bounded, activity retry/time budgets are finite and the model has no delegation loop.
+
+**Partition routing is not thereby qualified:** all accepted incidents still use the configured Temporal task queue and worker/model capacity. A busy scope can continue to delay other scopes at those shared execution layers. No partition ownership handoff, per-partition worker queue or latency isolation is claimed by the new admission-only tests.
 
 The target is intentionally a single local SQLite authority. Adding a second worker is tested for contention and duplicate suppression; it does not establish horizontal database scalability. Partitioned production targets would need an explicit ownership and idempotency contract per partition before these guarantees could be generalized.
 

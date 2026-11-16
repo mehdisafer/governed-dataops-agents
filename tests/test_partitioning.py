@@ -118,6 +118,34 @@ def test_worker_rejects_cross_partition_and_unregistered_target(tmp_path):
         Activities(correct)._assert_owned("unregistered-target")
 
 
+def test_partition_quota_respects_independent_environment_and_scope(tmp_path):
+    store = Store(tmp_path / "scoped-queue.db")
+    queue = "governed-dataops-v1.p00"
+    first = incident("scope-a", target_on(0, "scope-a"))
+    foreign = incident("scope-b", target_on(0, "scope-b")).model_copy(
+        update={"scope": "factory-b"}
+    )
+    assert store.record_incident(first, 1, intent=intent(queue), partition_capacity=1)
+    assert store.record_incident(foreign, 1, intent=intent(queue), partition_capacity=1)
+    assert len(store.list_incidents()) == 2
+    with pytest.raises(CapacityExceeded):
+        store.record_incident(
+            incident("scope-a-overflow", target_on(0, "scope-a-overflow")),
+            1, intent=intent(queue), partition_capacity=1
+        )
+    # A pending legacy event in a third scope cannot block partition activation
+    # for either independently authenticated scope.
+    old = incident("scope-c-legacy", "legacy-target").model_copy(
+        update={"scope": "factory-c"}
+    )
+    store.record_incident(old, 1, intent={"mode": "runbook", "simulate_lost_response": False})
+    store.event(first.incident_id, "resolved", {"reason": "quota released"})
+    assert store.record_incident(
+        incident("scope-a-next", target_on(0, "scope-a-next")),
+        1, intent=intent(queue), partition_capacity=1
+    )
+
+
 class FakeTemporal:
     def __init__(self):
         self.service_client = self

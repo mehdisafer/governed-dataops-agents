@@ -4,21 +4,22 @@ An incident-response console for a synthetic industrial data platform. It collec
 
 I built this project to make agent decisions inspectable. The console shows the incident, observations, diagnosis, proposed action, permission decision, approval and correlated execution trace. The target holds actual source, curated and quarantine rows. A successful tool response alone cannot close an incident as resolved.
 
-**Current status (16 November 2026): this source repository is public, but the application remains an experimental, single-host reference.** [GitHub Actions full run 43919667084](https://github.com/mehdisafer/governed-dataops-agents/actions/runs/43919667084) executed at `7b709ff`: `core`, `governance`, `containers` and `infrastructure` succeeded; **`model-evaluation` failed**. A later [docs-only run 43924763001](https://github.com/mehdisafer/governed-dataops-agents/actions/runs/43924763001) at `351817e` passed `core` and skipped four runtime jobs, so it is not full requalification. Earlier frozen comparisons are separate: 14 November agent 2/10 vs runbook 10/10, and 15 November hosted agent 1/10 vs runbook 10/10. Full model advantage, multi-host partitioning and stable V1 acceptance remain unproven. [Issue #1](https://github.com/mehdisafer/governed-dataops-agents/issues/1) stays open.
+**Current status (17 November 2026): this repository is public and the single-host synthetic governance reference has a passing platform qualification, but full agent-value V1 acceptance remains withheld.** [PR #10](https://github.com/mehdisafer/governed-dataops-agents/pull/10) merged scope-isolated admission into `main` at `33a8eba54600`. On the exact PR source `8ab185f`, [GitHub Actions run 43976640653](https://github.com/mehdisafer/governed-dataops-agents/actions/runs/43976640653) reported **247 passing core tests, 12 successful governance checks, ten successful container checks and successful infrastructure checks**, but **the frozen model-evaluation still FAILED** on ten attempted agent cases, with no demonstrated advantage over the deterministic runbook. The container report itself has `diagnostic_quality_passed=false`. Older independent results remain 14 November 2/10 and 15 November 1/10 agent versus 10/10 runbook. Only admission budgets are separated by `(environment, scope)`; worker queue/LLM capacity and full target-partition routing remain shared/unqualified. The original [V1 issue #1](https://github.com/mehdisafer/governed-dataops-agents/issues/1) remains open; no stable release or production acceptance is claimed.
 
-## Hosted execution — 15–16 November 2026
+## Hosted execution — 15–17 November 2026
 
 These are separate executions, linked to their actual source commits. They do not rewrite the earlier native qualification or establish an accepted stable release.
 
 | Gate | Evidence | Limit |
 |---|---|---|
+| Scoped admission and latest hosted qualification | [PR #10](https://github.com/mehdisafer/governed-dataops-agents/pull/10), exact [GitHub Actions run 43976640653](https://github.com/mehdisafer/governed-dataops-agents/actions/runs/43976640653): Core 247 tests, governance 12 checks, containers 10 checks and infrastructure **PASS**; model-evaluation **FAIL** | Source-level per-(environment, scope) atomic admission; shared Temporal queue/model capacity, no partition reassignment, and no LLM advantage acceptance |
 | CircleCI unit and lint on `main` | [`2460012` `build-and-test` success](https://app.circleci.com/workflow/9f31433c-2712-467c-89be-34ad2c3285c8/job/9d5fd2e8-3c67-4a35-861c-6feb9a735ea7) | Unit workflow, not container or model evaluation |
 | Hosted governance and browser | [`924dd24` source/governance checks succeeded](https://github.com/mehdisafer/governed-dataops-agents/commit/924dd24780b332b13f24a5394a725ad2c55888ba) | Runbook-governed single-host reference, not agent advantage |
 | Actual model, Temporal and Docker reference | [`cad9cc6` container workflow succeeded](https://app.circleci.com/workflow/15f6d873-dc0d-4e83-8d20-d3abf1ec20c9) | Ten platform gates; model diagnosis incorrect |
 | Frozen hosted model comparison | [`924dd24` model-evaluation failed](https://github.com/mehdisafer/governed-dataops-agents/commit/924dd24780b332b13f24a5394a725ad2c55888ba) | Agent 1/10 versus runbook 10/10 |
 | GitHub Actions full runtime on `7b709ff` | [Run #43919667084](https://github.com/mehdisafer/governed-dataops-agents/actions/runs/43919667084): `core`, `governance`, `containers`, `infrastructure` succeeded; **`model-evaluation` failed** | Real platform checks passed; frozen agent value remains failed and no production apply occurred |
 
-A wrong model proposal rejected by independent policy is a governance success, not a correct diagnosis. On `351817e`, the docs-only core ran **245 passing tests**, Ruff, a reviewed Gitleaks scan with 31 raw worktree and 62 raw historical candidates, and a dependency audit reporting no known vulnerabilities at query time. Python licence metadata was fully declared. Skipped jobs are not passes. See the [complete qualification ledger](docs/QUALIFICATION.md) and [CI provenance](docs/CI.md) for source-specific evidence and limitations.
+A wrong model proposal rejected by independent policy is a governance success, not a correct diagnosis. The latest full test did not reinterpret an incorrect/unavailable model answer as an accepted remediation. On `351817e`, the docs-only core ran **245 passing tests**, Ruff, a reviewed Gitleaks scan with 31 raw worktree and 62 raw historical candidates, and a dependency audit reporting no known vulnerabilities at query time. Python licence metadata was fully declared. Skipped jobs are not passes. See the [complete qualification ledger](docs/QUALIFICATION.md) and [CI provenance](docs/CI.md) for source-specific evidence and limitations.
 
 ## Historical native results — 14 November 2026
 
@@ -152,7 +153,7 @@ The container platform gate separately records `diagnostic_quality_passed`. A re
 
 - [CI provenance](docs/CI.md): CircleCI unit execution, separate manual container qualification and GitHub Actions limitations.
 - [Operations](docs/OPERATIONS.md): readiness, metrics, actionable alerts, bounded queues, recovery, paired backup/restore, migration and rollback.
-- [Fixed target partitions](docs/PARTITIONING.md): opt-in queue ownership, reserved admission and remaining live recovery checks.
+- [Fixed target partitions](docs/PARTITIONING.md): opt-in queue ownership, scoped admission reservations and real-worker qualification.
 - [Security](docs/SECURITY.md): role boundaries, signed approvals, injection assumptions, scan coverage and disclosure.
 - [Third-party components](docs/THIRD_PARTY.md): pinned provenance, inventories and unresolved licence decisions.
 - [Evidence](evidence/README.md): retained original results and their scope.

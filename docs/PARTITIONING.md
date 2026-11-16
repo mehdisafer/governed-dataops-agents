@@ -43,8 +43,10 @@ DATAOPS_WORKER_PARTITION=1
 A multi-partition worker without an explicit slot **refuses startup**.
 The same queue can have additional worker replicas for extra capacity.
 The required global admission limit is at least the partition count multiplied
-by the per-partition budget, ensuring one partition cannot consume another's
-reserved *admission* allocation.
+by the per-partition budget. Both global admission and each queue reservation
+are enforced within the authenticated **(environment, scope)**, preserving
+PR #10's scoped capacity. One partition cannot consume another partition's
+reserved *admission* allocation inside that scope.
 
 The data store still uses one SQLite WAL and model service. **Per-partition
 model latency, persistent admission during an old unpartitioned backlog, and

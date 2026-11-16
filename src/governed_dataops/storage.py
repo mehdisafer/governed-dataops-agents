@@ -554,9 +554,13 @@ class Store:
                 if max_pending < 1:
                     raise ValueError("max_pending must be positive")
                 placeholders = ",".join("?" for _ in TERMINAL_STATUSES)
+                # Preserve the separately qualified per-(environment, scope)
+                # transactional admission fence from main/PR #10.
                 pending = connection.execute(
-                    f"SELECT COUNT(*) FROM incidents WHERE status NOT IN ({placeholders})",
-                    TERMINAL_STATUSES,
+                    f"SELECT COUNT(*) FROM incidents WHERE status NOT IN ({placeholders}) "
+                    "AND json_extract(body_json,'$.environment')=? "
+                    "AND json_extract(body_json,'$.scope')=?",
+                    (*TERMINAL_STATUSES, incident.environment, incident.scope),
                 ).fetchone()[0]
                 if pending >= max_pending:
                     raise CapacityExceeded("incident admission capacity reached")
@@ -568,9 +572,11 @@ class Store:
                         f"SELECT COUNT(*) FROM incidents i "
                         f"LEFT JOIN incident_events e ON e.incident_id=i.incident_id "
                         f"AND e.phase='received' WHERE i.status NOT IN ({placeholders}) "
+                        "AND json_extract(i.body_json,'$.environment')=? "
+                        "AND json_extract(i.body_json,'$.scope')=? "
                         "AND (e.incident_id IS NULL OR "
                         "json_extract(e.payload_json,'$.task_queue') IS NULL)",
-                        TERMINAL_STATUSES,
+                        (*TERMINAL_STATUSES, incident.environment, incident.scope),
                     ).fetchone()[0]
                     if legacy:
                         raise ValueError(
@@ -580,8 +586,10 @@ class Store:
                         f"SELECT COUNT(*) FROM incidents i "
                         f"JOIN incident_events e ON e.incident_id=i.incident_id "
                         f"AND e.phase='received' WHERE i.status NOT IN ({placeholders}) "
+                        "AND json_extract(i.body_json,'$.environment')=? "
+                        "AND json_extract(i.body_json,'$.scope')=? "
                         "AND json_extract(e.payload_json,'$.task_queue')=?",
-                        (*TERMINAL_STATUSES, assigned_queue),
+                        (*TERMINAL_STATUSES, incident.environment, incident.scope, assigned_queue),
                     ).fetchone()[0]
                     if used >= partition_capacity:
                         raise CapacityExceeded(

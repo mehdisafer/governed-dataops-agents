@@ -177,11 +177,29 @@ or a faster synthetic schema benchmark cannot close this item.
 
 ## 5. Qualify target partitioning and worker additions
 
-**Implementation progress (branch candidate, not yet accepted).** Explicit fixed-width queue routing now binds the first target queue to the durable admission record. Separate admission quotas reserve capacity across partitions and activity handlers refuse wrong ownership. SQLite/ASGI tests exist, but real Temporal worker reassignment, pending approval, ambiguous effect and end-to-end shared-model saturation have not yet been qualified. See [partitioning design and gaps](PARTITIONING.md).
+**Implementation progress — candidate branch, not full acceptance.** The
+opt-in fixed-width router records a target's initial Temporal queue in its
+durable admission transaction and refuses silent route drift. Per-queue quotas
+are enforced inside the independently scoped `(environment, scope)`
+admission fence already merged in PR #10. Tests cover legacy drain refusal,
+stable event identity and worker ownership. A real two-queue Temporal profile
+is wired into governance CI but must actually execute and preserve business
+effects and histories before this criterion is closed. See
+[partitioning design](PARTITIONING.md).
+
 
 
 **Mandatory acceptance gap.** The original scope requires preserving business
-invariants when targets are partitioned and workers are added. The native test
+invariants when targets are partitioned and workers are added. The
+source-level admission fix from [PR #10](https://github.com/mehdisafer/governed-dataops-agents/pull/10), now merged at `33a8eba`,
+implements independent `(environment, scope)` admission budgets in one durable
+SQLite transaction. The exact source `8ab185f` passed 247 core tests,
+twelve real governance checks, ten container checks and infrastructure checks,
+but its frozen model evaluation still **failed**. Concurrent tests cover two
+scopes, globally immutable event identity and independent capacity recovery.
+This is **not** a dedicated Temporal routing or worker-saturation qualification;
+do not close
+this P0 criterion until the actual workflow/worker/target evidence below exists. The native test
 `two_workers_one_target` proves its specific contention and duplicate-event
 invariants with two workers on one task queue and one target. It does not test
 partitioning or saturation isolation. This requirement remains open; it is not

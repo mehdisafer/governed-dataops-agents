@@ -18,7 +18,7 @@ The full native integration run on **2026-11-14**, at clean and unchanged source
 
 The measurements, restore assertions and replay source hashes are in the [original run results, comparison and load records](../evidence/qualification-f1e6e2f/). No unjustified or unknown effects were observed in the heldout benchmark; that metric is a benchmark proxy and does not establish a complete authorization audit.
 
-The 14 November native host could not build Docker images or launch Chromium, and Terraform provider-schema loading failed. Later [CircleCI container execution at `cad9cc6`](https://app.circleci.com/workflow/15f6d873-dc0d-4e83-8d20-d3abf1ec20c9) and hosted governance/browser/infrastructure profiles at `924dd24` passed their declared scopes. The frozen model quality/value criterion still failed (hosted agent 1/10 versus runbook 10/10); GitHub Actions still fails before runner assignment. A scoped synthetic platform result is not production or multi-host acceptance. See [qualification](QUALIFICATION.md) and [CI provenance](CI.md).
+The 14 November native host could not build Docker images or launch Chromium, and Terraform provider-schema loading failed. Later [CircleCI container execution at `cad9cc6`](https://app.circleci.com/workflow/15f6d873-dc0d-4e83-8d20-d3abf1ec20c9) and hosted governance/browser/infrastructure profiles at `924dd24` passed their declared scopes. The frozen model quality/value criterion still failed (historical agent 1/10 versus runbook 10/10). The earlier GitHub Actions runner-admission failure is **historical**, not a current limitation: [full run #43976640653](https://github.com/mehdisafer/governed-dataops-agents/actions/runs/43976640653) actually executed Core (247 tests), Governance (twelve checks), Containers (ten checks) and Infrastructure successfully on source `8ab185f`; model-evaluation still **failed**. A scoped synthetic platform result is not production or multi-host acceptance. See [qualification](QUALIFICATION.md) and [CI provenance](CI.md).
 
 ### Operating thresholds
 
@@ -28,7 +28,7 @@ The following thresholds are operating choices, not measured availability guaran
 | --- | --- | --- |
 | Unjustified committed effect | Any occurrence | Stop admission and workers, preserve state and investigate |
 | Unknown effect outcome | Any unreconciled occurrence | Inspect the exact idempotency key in the target ledger; do not force a repeat with another key |
-| Admission queue | 32 pending incidents | Honour HTTP 429 and Retry-After; inspect worker/model capacity, retry the same event identity |
+| Admission queue | 32 pending incidents per configured (environment, scope), checked transactionally | Honour HTTP 429 and Retry-After in the saturated scope; another scope's admission budget is independent. The Temporal task queue/model slots are still shared and can cause downstream contention; retry the same event identity |
 | Local model diagnosis | 90-second overall diagnostic deadline; at most two requests, each capped at 300 output tokens | Inspect model health, prompt revision, usage and context size; track total incident latency separately and retain failures in the evaluation denominator |
 | Application/Temporal disk | 80% host volume usage | Plan retention or storage expansion before writes fail; preserve live histories and effect receipts |
 | Service health | Three consecutive failed checks | Inspect service dependencies; a restart alone is not verified recovery |
@@ -37,23 +37,22 @@ The queue limit, worker activities, target transactions and model slots are diff
 
 Model resource settings and failure history are documented in [deployment](DEPLOYMENT.md). Native service evidence, container execution evidence and historical observations that no longer have retained raw files must remain clearly distinguished. Use the current run artifacts, not an old completion claim, to judge the state of the system.
 
-## Partitioned admission — optional and not yet integrated-accepted
+## Optional fixed target partitioning
 
-The routing mode is enabled only when \`DATAOPS_PARTITION_COUNT\` exceeds one.
-Each worker must identify its slot via \`DATAOPS_WORKER_PARTITION\`. Admission
-reserves \`DATAOPS_PARTITION_ADMISSION_LIMIT\` for each queue and refuses
-configuration whose total reservations exceed global capacity.
+The API binds each target to one deterministic Temporal task queue when
+`DATAOPS_PARTITION_COUNT` exceeds one. Set an explicit
+`DATAOPS_PARTITION_ADMISSION_LIMIT` whose reservations fit the configured
+per-scope global limit. The budget is counted **per environment, scope and
+queue**, retaining PR #10's independent scope capacity. Workers declare
+`DATAOPS_WORKER_PARTITION`; a missing or wrong owner is refused before
+activity execution.
 
-Do not change topology while workflows, approvals or uncertain effects are
-pending. Existing target routes remain immutable and the original effect
-receipt must be reconciled under the same identity. If enabling partitioning
-on an older installation, drain unpartitioned work first. Rollback or
-rebalancing requires an explicitly reviewed migration; this demonstration
-does not automate it.
-
-These guards establish per-queue **admission** rules, not multi-host throughput,
-shared-model response guarantees or full partition fault isolation. See the
-[dedicated qualification requirements](PARTITIONING.md).
+Do not change queue topology while approvals or uncertain effects are in
+flight. First drain old unpartitioned incidents, and do not requeue a target
+to sidestep an approval or idempotency key. Additional replicas of the same
+partition use the same task queue; a different partition is not a fallback.
+See [partitioning design and recovery limits](PARTITIONING.md). These controls
+do not independently qualify multi-host operation or shared-model throughput.
 
 ## Routine inspection
 
