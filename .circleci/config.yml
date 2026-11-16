@@ -29,7 +29,72 @@ jobs:
           command: circleci testsuite run "python-unit"
       - store_test_results:
           path: test-results
+  publication-security:
+    # Small, isolated scanner job. No model, Docker daemon, paid service or external inference.
+    docker:
+      - image: cimg/python:3.12
+    resource_class: small
+    steps:
+      - checkout
+      - run:
+          name: Install the frozen project and pinned security tooling
+          command: |
+            python -m pip install --disable-pip-version-check uv==0.13.6
+            uv sync --frozen
+      - run:
+          name: Verify complete reachable Git history
+          command: |
+            mkdir -p evidence/runs/ci-security
+            printf '%s\n' "$CIRCLE_SHA1" > evidence/runs/ci-security/checkout-sha.txt
+            if [ "$(git rev-parse --is-shallow-repository)" = "true" ]; then
+              if ! git fetch --no-tags --prune --unshallow origin '+refs/heads/*:refs/remotes/origin/*' >/dev/null 2>&1; then
+                echo "SECURITY BLOCKED: full-history fetch failed; no scan success is claimed"
+                exit 2
+              fi
+            else
+              if ! git fetch --no-tags --prune origin '+refs/heads/*:refs/remotes/origin/*' >/dev/null 2>&1; then
+                echo "SECURITY BLOCKED: branch-history fetch failed; no scan success is claimed"
+                exit 2
+              fi
+            fi
+            if ! git fetch --tags origin >/dev/null 2>&1; then
+              echo "SECURITY BLOCKED: tag-history fetch failed; no scan success is claimed"
+              exit 2
+            fi
+            if [ "$(git rev-parse --is-shallow-repository)" != "false" ]; then
+              echo "SECURITY BLOCKED: a shallow repository is not a complete history"
+              exit 2
+            fi
+            git rev-list --all --count > evidence/runs/ci-security/reachable-commits.txt
+            git for-each-ref --format='%(refname)' refs/remotes/origin refs/tags > evidence/runs/ci-security/visible-refs.txt
+      - run:
+          name: Scan working tree and all reachable refs with pinned Gitleaks
+          command: |
+            set +e
+            uv run --frozen python scripts/secret_scan.py --working-tree --output evidence/runs/ci-security/worktree.json
+            worktree_status=$?
+            uv run --frozen python scripts/secret_scan.py --output evidence/runs/ci-security/history.json
+            history_status=$?
+            set -e
+            printf 'worktree_exit=%s\nhistory_exit=%s\n' "$worktree_status" "$history_status" > evidence/runs/ci-security/scan-exits.txt
+            if [ "$worktree_status" -ne 0 ] || [ "$history_status" -ne 0 ]; then
+              echo "SECURITY FAILED: scanner error or unresolved candidate; review preserved JSON artifacts"
+              exit 1
+            fi
+      - run:
+          name: Inventory package licences and audit frozen runtime requirements
+          when: always
+          command: |
+            mkdir -p evidence/runs/ci-security
+            uv run --frozen python scripts/component_inventory.py --output evidence/runs/ci-security/component-inventory.json
+            uv export --frozen --no-dev --no-emit-project --format requirements-txt --output-file evidence/runs/ci-security/requirements.txt
+            uvx --from pip-audit==2.10.1 pip-audit --disable-pip --strict --format json --output evidence/runs/ci-security/pip-audit.json -r evidence/runs/ci-security/requirements.txt
+      - store_artifacts:
+          path: evidence/runs/ci-security
+          destination: publication-security
+
 workflows:
   build-and-test:
     jobs:
       - build-and-test
+      - publication-security

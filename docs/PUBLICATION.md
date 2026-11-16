@@ -24,13 +24,13 @@ The description and all eight proposed topics were confirmed applied in the repo
 | Container / infrastructure | Original native attempt was blocked; later CircleCI `reference-containers` passed ten platform checks at `cad9cc6`; infrastructure job passed on `924dd24` | Single-host synthetic platform qualification, not agent quality or production Terraform apply |
 | Operator console | Original native Chromium launch failed; later hosted CircleCI governance profile at `924dd24` passed its declared browser gate | Only that tested browser/environment is qualified; no general acceptance implied |
 | Hosted CI | CircleCI unit passed on `main` at `2460012`, platform containers passed at `cad9cc6`, and hosted frozen model evaluation failed at `924dd24`. GitHub Actions run 43769325453 still failed before runner assignment | Distinct CI providers, source identities and scopes; full agent-value acceptance withheld |
-| Publication scanning | Original expanded artifacts reviewed before compression; exact findings and proofs retained | Verify the delivered source/history and exposed metadata as well |
+| Publication scanning | Original expanded archives have content-bound reviews; a new dedicated CircleCI publication-security job is proposed to rescan the latest source and reachable Git refs | Do not authorize public visibility until the new run succeeds, its redacted candidates are adjudicated, and artifact limitations are reviewed |
 | Review | Automated review is labelled and anchored to the delivered PR revision | Does not substitute for an independent human approval |
 | Project licence / repository settings | Apache License 2.0 explicitly selected and committed; description and topics applied; visibility remains private | Owner still controls visibility and supported protection settings |
 
 The exact source reference in the [qualification ledger](QUALIFICATION.md) and the [evidence index](../evidence/README.md) establish the observed scope. Post-run corrections to evidence verification or evaluation logic have their own regression checks; they do not rewrite the original native result. A green subset, a fixed harness, or a correct checksum cannot establish agent value.
 
-For separated CI provider status and run links, see [CI provenance](CI.md).
+For separated CI provider status, new full-history security gate, and run links, see [CI provenance](CI.md).
 
 ## Precise CI prerequisite
 
