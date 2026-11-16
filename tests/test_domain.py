@@ -263,6 +263,76 @@ def test_ingress_deduplication_and_conflict_detection(store):
     assert store.get_incident_by_event(incident.event_id)["incident_id"] == incident.incident_id
 
 
+
+def test_scope_admission_capacity_isolated_across_environment_and_scope(store):
+    """A saturated configured scope cannot consume another scope's admission slots."""
+
+    def item(name, scope="factory-a", environment="dev"):
+        return Incident(
+            incident_id=f"partition-{name}",
+            event_id=f"partition-event-{name}",
+            target_id=f"line-{name}",
+            symptom="Synthetic backlog alert",
+            environment=environment,
+            scope=scope,
+        )
+
+    a1, a2 = item("a1"), item("a2")
+    b1 = item("b1", scope="factory-b")
+    prod1 = item("prod1", environment="prod")
+    assert store.record_incident(a1, max_pending=1)
+    assert not store.record_incident(a1, max_pending=1)
+    with pytest.raises(CapacityExceeded):
+        store.record_incident(a2, max_pending=1)
+
+    # Neither a different scope nor a different environment is starved by A.
+    assert store.record_incident(b1, max_pending=1)
+    assert store.record_incident(prod1, max_pending=1)
+    assert store.incident_counts("dev", "factory-a") == {"received": 1}
+    assert store.incident_counts("dev", "factory-b") == {"received": 1}
+    assert store.incident_counts("prod", "factory-a") == {"received": 1}
+
+    # Global event identity remains authoritative; another scope cannot reuse it.
+    with pytest.raises(ValueError, match="different content"):
+        store.record_incident(a1.model_copy(update={"scope": "factory-b"}), max_pending=1)
+
+    store.event(a1.incident_id, "escalated", {"reason": "synthetic operator escalation"})
+    assert store.record_incident(a2, max_pending=1)
+    assert store.incident_counts("dev", "factory-a") == {"escalated": 1, "received": 1}
+
+
+def test_concurrent_scope_admission_preserves_atomic_per_scope_limits(store):
+    """Concurrent scope traffic cannot overbook an individual admission partition."""
+    barrier = Barrier(4)
+    cases = [
+        Incident(
+            incident_id=f"concurrent-scope-{scope}-{i}",
+            event_id=f"event-concurrent-{scope}-{i}",
+            target_id=f"line-concurrent-{scope}-{i}",
+            symptom="Synthetic concurrent admission",
+            scope=scope,
+        )
+        for scope in ("factory-a", "factory-b")
+        for i in range(2)
+    ]
+
+    def admit(incident):
+        barrier.wait(timeout=10)
+        try:
+            created = store.record_incident(incident, max_pending=1)
+            return incident.scope, "accepted" if created else "duplicate"
+        except CapacityExceeded:
+            return incident.scope, "full"
+
+    with ThreadPoolExecutor(max_workers=4) as pool:
+        results = list(pool.map(admit, cases))
+    for scope in ("factory-a", "factory-b"):
+        statuses = [outcome for actual, outcome in results if actual == scope]
+        assert sorted(statuses) == ["accepted", "full"]
+        assert store.incident_counts("dev", scope) == {"received": 1}
+    assert sum(len(store.list_incidents(20, scope=scope)) for scope in ("factory-a", "factory-b")) == 2
+
+
 def test_atomic_admission_backpressure_and_recovery(store):
     first = Incident(incident_id="one", event_id="one", target_id="a", symptom="alert")
     second = Incident(incident_id="two", event_id="two", target_id="b", symptom="alert")

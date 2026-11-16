@@ -28,7 +28,7 @@ The following thresholds are operating choices, not measured availability guaran
 | --- | --- | --- |
 | Unjustified committed effect | Any occurrence | Stop admission and workers, preserve state and investigate |
 | Unknown effect outcome | Any unreconciled occurrence | Inspect the exact idempotency key in the target ledger; do not force a repeat with another key |
-| Admission queue | 32 pending incidents | Honour HTTP 429 and Retry-After; inspect worker/model capacity, retry the same event identity |
+| Admission queue | 32 pending incidents per configured (environment, scope), checked transactionally | Honour HTTP 429 and Retry-After in the saturated scope; another scope's admission budget is independent. The Temporal task queue/model slots are still shared and can cause downstream contention; retry the same event identity |
 | Local model diagnosis | 90-second overall diagnostic deadline; at most two requests, each capped at 300 output tokens | Inspect model health, prompt revision, usage and context size; track total incident latency separately and retain failures in the evaluation denominator |
 | Application/Temporal disk | 80% host volume usage | Plan retention or storage expansion before writes fail; preserve live histories and effect receipts |
 | Service health | Three consecutive failed checks | Inspect service dependencies; a restart alone is not verified recovery |

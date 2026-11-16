@@ -517,9 +517,16 @@ class Store:
                 if max_pending < 1:
                     raise ValueError("max_pending must be positive")
                 placeholders = ",".join("?" for _ in TERMINAL_STATUSES)
+                # Capacity is an admission budget per authenticated
+                # (environment, scope), not a global budget across unrelated
+                # synthetic targets. Keep the count and INSERT under the same
+                # BEGIN IMMEDIATE transaction: two concurrent operators in the
+                # same scope cannot both claim the final available slot.
                 pending = connection.execute(
-                    f"SELECT COUNT(*) FROM incidents WHERE status NOT IN ({placeholders})",
-                    TERMINAL_STATUSES,
+                    f"SELECT COUNT(*) FROM incidents WHERE status NOT IN ({placeholders}) "
+                    "AND json_extract(body_json,'$.environment')=? "
+                    "AND json_extract(body_json,'$.scope')=?",
+                    (*TERMINAL_STATUSES, incident.environment, incident.scope),
                 ).fetchone()[0]
                 if pending >= max_pending:
                     raise CapacityExceeded("incident admission capacity reached")
