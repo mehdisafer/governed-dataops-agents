@@ -467,7 +467,9 @@ class Runtime:
         self.spawn("model", self.manifest["services"]["model"]["command"])
         await self.readiness("model", "http://127.0.0.1:8090/health", 120)
 
-    async def start_app(self, service: str, name: str | None = None) -> None:
+    async def start_app(
+        self, service: str, name: str | None = None, *, extra_env: dict | None = None
+    ) -> None:
         command = [
             sys.executable,
             "-m",
@@ -477,7 +479,16 @@ class Runtime:
             "serve",
             service,
         ]
-        self.spawn(name or service, command, self.environment(service))
+        environment = self.environment(service)
+        if extra_env:
+            if (
+                service != "worker"
+                or set(extra_env) != {"DATAOPS_WORKER_PARTITION"}
+                or not str(extra_env["DATAOPS_WORKER_PARTITION"]).isdigit()
+            ):
+                raise ValueError("qualification may override only the worker partition slot")
+            environment.update(extra_env)
+        self.spawn(name or service, command, environment)
         if service != "worker":
             await self.readiness(
                 name or service, f"http://127.0.0.1:{8080 if service == 'api' else 8081}/health"
@@ -687,7 +698,7 @@ class Runtime:
 
     async def close(self) -> dict:
         failures = []
-        for name in ("api", "worker2", "worker", "target", "model", "temporal"):
+        for name in reversed(self.processes):
             try:
                 await self.stop(name)
             except Exception as exc:
@@ -1043,6 +1054,124 @@ class Qualification:
         finally:
             await run.stop("worker2")
 
+    async def partition_recovery(self) -> dict:
+        """Real two-queue Temporal exercise with independent admission reservations."""
+        run = self.runtime
+        from governed_dataops.routing import queue_for_target
+
+        if run.base.get("DATAOPS_PARTITION_COUNT") != "2":
+            raise AssertionError("partition qualification requires two configured queues")
+
+        def target_for(slot: int, ordinal: int) -> str:
+            candidates = (
+                f"part-{slot}-{i}"
+                for i in range(100)
+                if queue_for_target("governed-dataops-v1", 2, f"part-{slot}-{i}")
+                == f"governed-dataops-v1.p{slot:02d}"
+            )
+            return list(candidates)[ordinal]
+
+        await run.start_app("worker", "worker2", extra_env={"DATAOPS_WORKER_PARTITION": "1"})
+        q0a, q0b, q0c = (target_for(0, i) for i in range(3))
+        q1a, q1b = (target_for(1, i) for i in range(2))
+        first = await run.create("quality", target_id=q0a)
+        waiting = await run.wait_phase(first, {"awaiting_approval"})
+        assert run.store.bound_target_queue(q0a) == "governed-dataops-v1.p00"
+        await run.stop("worker", abrupt=True)
+        queued = await run.create("freshness", target_id=q0b)
+        assert run.store.get_incident(queued.incident_id)["status"] in {
+            "received", "dispatch_pending"
+        }
+
+        # Partition 0 already owns two pending slots and must reject a third.
+        run.store.seed_target(q0c, Scenario.FRESHNESS)
+        overflow = Incident(
+            incident_id=f"inc-{uuid4().hex[:18]}",
+            event_id=f"evt-{uuid4().hex[:18]}",
+            target_id=q0c,
+            symptom="Partition capacity while the owner is stopped",
+        )
+        run.initial_business[overflow.incident_id] = run.business(q0c)
+        write_json(
+            run.output / f"business-before-{overflow.incident_id}.json",
+            run.initial_business[overflow.incident_id],
+        )
+        rejected = await run.submit(overflow)
+        assert rejected.status_code == 429
+        assert run.business(q0c)["counts"]["effect_ledger"] == 0
+
+        # A worker on partition 1 must make progress while partition 0 is
+        # stopped and full. The transient effect loses its response, forcing
+        # reconciliation against the original target ledger.
+        started = time.monotonic()
+        independent = await run.create("transient", target_id=q1a, lost=True)
+        result_b = await run.complete(independent)
+        elapsed_b = time.monotonic() - started
+        assert elapsed_b <= 45, "partition 1 did not progress within the declared bound"
+        assert result_b["status"] == "resolved"
+        assert run.business(q1a)["counts"]["effect_ledger"] == 1
+        assert any(event["phase"] == "effect_reconciled" for event in result_b["events"])
+        assert run.store.get_incident(queued.incident_id)["status"] in {
+            "received", "dispatch_pending"
+        }
+        assert run.store.bound_target_queue(q1a) == "governed-dataops-v1.p01"
+
+        # Add a replica to the existing partition instead of rebinding the
+        # target or creating a new authority.
+        await run.start_app("worker", "worker3", extra_env={"DATAOPS_WORKER_PARTITION": "1"})
+        replica_case = await run.create("freshness", target_id=q1b)
+        result_replica = await run.complete(replica_case)
+        assert result_replica["status"] == "resolved"
+        assert run.business(q1b)["counts"]["effect_ledger"] == 1
+
+        # Approval is validly signed while the queue owner is absent. Restore
+        # the same partition worker and prove both pending workflows close.
+        approval = await run.request(
+            "POST",
+            f"/api/incidents/{first.incident_id}/approval",
+            role="approver",
+            body={"plan_hash": waiting["plan_hash"], "ttl_seconds": 120},
+        )
+        approval.raise_for_status()
+        await run.start_app("worker")
+        resumed_quality, resumed_freshness = await asyncio.gather(
+            run.complete(first, approve=False),
+            run.complete(queued, approve=False),
+        )
+        assert resumed_quality["status"] == "contained"
+        assert resumed_freshness["status"] == "resolved"
+        assert run.business(q0a)["counts"]["effect_ledger"] == 1
+        assert run.business(q0b)["counts"]["effect_ledger"] == 1
+
+        accepted = await run.submit(overflow)
+        assert accepted.status_code == 202
+        recovered = await run.complete(overflow, approve=False)
+        assert recovered["status"] == "resolved"
+        assert run.business(q0c)["counts"]["effect_ledger"] == 1
+
+        return {
+            "source": "actual Temporal workers and synthetic transactional target",
+            "partitions": 2,
+            "worker_replica_added": True,
+            "worker_restart_after_approval": True,
+            "partition_zero_overflow_http": rejected.status_code,
+            "partition_zero_retry_http": accepted.status_code,
+            "partition_one_progress_seconds": round(elapsed_b, 3),
+            "partition_one_progress_bound_seconds": 45,
+            "lost_response_reconciled": True,
+            "cases": {
+                "partition_zero_quality": resumed_quality["status"],
+                "partition_zero_pending": resumed_freshness["status"],
+                "partition_zero_capacity_retry": recovered["status"],
+                "partition_one_uncertain_effect": result_b["status"],
+                "partition_one_replica": result_replica["status"],
+            },
+            "effect_counts": {
+                target: run.business(target)["counts"]["effect_ledger"]
+                for target in (q0a, q0b, q0c, q1a, q1b)
+            },
+        }
+
     async def backpressure(self) -> dict:
         run = self.runtime
         await run.stop("worker")
@@ -1348,7 +1477,16 @@ async def main_async(args) -> int:
         or initial["untracked_source_files"]
     ):
         raise SystemExit("Qualification must run from the requested clean tracked commit")
-    runtime = Runtime(args.manifest, output, model=args.profile not in {"governance", "load"})
+    runtime = Runtime(
+        args.manifest, output, model=args.profile not in {"governance", "load", "partitioning"}
+    )
+    if args.profile == "partitioning":
+        runtime.base.update(
+            DATAOPS_PARTITION_COUNT="2",
+            DATAOPS_PARTITION_ADMISSION_LIMIT="2",
+            DATAOPS_MAX_PENDING_INCIDENTS="4",
+            DATAOPS_WORKER_PARTITION="0",
+        )
     suite = Qualification(runtime)
     metadata = {
         "started_at": datetime.now(UTC).isoformat(),
@@ -1369,6 +1507,7 @@ async def main_async(args) -> int:
         "thresholds": {
             "load_p95_seconds_max": 45,
             "load_error_count_max": 0,
+            "partition_other_queue_progress_seconds_max": 45,
             "reference_runbook_strict_agreement_required": 1.0,
             "agent_strict_agreement_required": 1.0,
             "heldout_baseline_score_requirement": "complete safe measurement; no perfect-score requirement",
@@ -1380,6 +1519,8 @@ async def main_async(args) -> int:
         await runtime.start()
         write_json(output / "run.json", metadata)
         write_json(output / "source-manifest.json", initial)
+        if args.profile == "partitioning":
+            await suite.check("two_partition_recovery_and_isolation", suite.partition_recovery)
         if args.profile in {"smoke", "integration", "governance", "evaluation"}:
             await suite.check("five_runbook_business_cases", suite.cases)
         if args.profile in {"smoke", "integration", "governance"}:
@@ -1468,7 +1609,7 @@ def main():
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument(
         "--profile",
-        choices=["smoke", "integration", "load", "evaluation", "governance"],
+        choices=["smoke", "integration", "load", "evaluation", "governance", "partitioning"],
         default="smoke",
     )
     parser.add_argument("--source-commit")
