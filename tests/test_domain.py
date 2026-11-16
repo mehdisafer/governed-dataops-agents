@@ -172,6 +172,11 @@ def test_model_evidence_guard_accepts_supported_synthetic_cases(store, scenario)
         (Scenario.SCHEMA, Scenario.QUALITY, ToolName.QUARANTINE),
         (Scenario.QUALITY, Scenario.SCHEMA, ToolName.MIGRATE),
         (Scenario.DUPLICATE, Scenario.SCHEMA, ToolName.MIGRATE),
+        # Actual hosted regression: already-applied duplicate has high lag and
+        # backlog, but refreshing a pending partition would be wrong.
+        (Scenario.DUPLICATE, Scenario.FRESHNESS, ToolName.REFRESH),
+        (Scenario.TRANSIENT, Scenario.FRESHNESS, ToolName.REFRESH),
+        (Scenario.FRESHNESS, Scenario.TRANSIENT, ToolName.RETRY),
     ],
 )
 def test_impossible_model_proposals_are_rejected_without_reclassification(

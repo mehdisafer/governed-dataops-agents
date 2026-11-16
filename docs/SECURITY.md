@@ -10,7 +10,7 @@ production cluster.
 
 | Boundary | Implemented control | Remaining assumption |
 | --- | --- | --- |
-| Incident/log text → diagnosis | Typed output, bounded context, verified evidence references, **necessary typed-snapshot precondition and category/action checks** (P0 fix candidate), enumerated actions | The model can still make an incorrect or incomplete diagnosis. These guards reject unsupported proposals but never replace them with a runbook result; target policy rechecks facts independently |
+| Incident/log text → diagnosis | Typed output, bounded context, verified evidence references, **complete typed-snapshot business preconditions and category/action checks** (P0 fix candidate), enumerated actions | The model can still make an incorrect or incomplete diagnosis. These guards reject unsupported proposals but never replace them with a runbook result; target policy rechecks facts independently |
 | Diagnosis → execution | Canonical plan hash, fixed catalogue, live target preconditions, one action, delegation depth at most one | Application, policy and catalogue source are trusted and reviewed |
 | Executor → approved action | Approver role distinct from executor; exact plan, target, environment, scope, revision and policy binding; bounded expiry; Ed25519 signature and persisted approval envelope | The API's configured approver credential identifies a trusted human operator; there is no external identity provider |
 | HTTP caller → target | Distinct configured bearer credentials; identity derived from target configuration; scope checks on reads, effects and reconciliation | Credential secrecy and the surrounding host/network remain trusted |
