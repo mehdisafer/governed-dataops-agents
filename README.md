@@ -4,9 +4,9 @@ An incident-response console for a synthetic industrial data platform. It collec
 
 I built this project to make agent decisions inspectable. The console shows the incident, observations, diagnosis, proposed action, permission decision, approval and correlated execution trace. The target holds actual source, curated and quarantine rows. A successful tool response alone cannot close an incident as resolved.
 
-**Current status (15 November 2026): CircleCI unit checks on `main`, real hosted governance/browser and a corrected Docker-container execution profile have successful reported checks on their named commits; full agent-quality and value acceptance remains open.** The historical 14 November native run passed 14/18 checks (agent 2/10 versus runbook 10/10). The separate 15 November hosted frozen evaluation yielded agent **1/10** versus runbook **10/10**. At `cad9cc6`, real container execution passed ten declared platform gates, but the local model's one-case diagnosis was incorrect and safely refused by policy. No model advantage, production-readiness or multi-host partitioning is claimed. [Issue #1](https://github.com/mehdisafer/governed-dataops-agents/issues/1) remains open.
+**Current status (16 November 2026): this source repository is public, but the application remains an experimental, single-host reference.** [GitHub Actions full run 43919667084](https://github.com/mehdisafer/governed-dataops-agents/actions/runs/43919667084) executed at `7b709ff`: `core`, `governance`, `containers` and `infrastructure` succeeded; **`model-evaluation` failed**. A later [docs-only run 43924763001](https://github.com/mehdisafer/governed-dataops-agents/actions/runs/43924763001) at `351817e` passed `core` and skipped four runtime jobs, so it is not full requalification. Earlier frozen comparisons are separate: 14 November agent 2/10 vs runbook 10/10, and 15 November hosted agent 1/10 vs runbook 10/10. Full model advantage, multi-host partitioning and stable V1 acceptance remain unproven. [Issue #1](https://github.com/mehdisafer/governed-dataops-agents/issues/1) stays open.
 
-## Latest hosted execution — 15 November 2026
+## Hosted execution — 15–16 November 2026
 
 These are separate executions, linked to their actual source commits. They do not rewrite the earlier native qualification or establish an accepted stable release.
 
@@ -16,9 +16,9 @@ These are separate executions, linked to their actual source commits. They do no
 | Hosted governance and browser | [`924dd24` source/governance checks succeeded](https://github.com/mehdisafer/governed-dataops-agents/commit/924dd24780b332b13f24a5394a725ad2c55888ba) | Runbook-governed single-host reference, not agent advantage |
 | Actual model, Temporal and Docker reference | [`cad9cc6` container workflow succeeded](https://app.circleci.com/workflow/15f6d873-dc0d-4e83-8d20-d3abf1ec20c9) | Ten platform gates; model diagnosis incorrect |
 | Frozen hosted model comparison | [`924dd24` model-evaluation failed](https://github.com/mehdisafer/governed-dataops-agents/commit/924dd24780b332b13f24a5394a725ad2c55888ba) | Agent 1/10 versus runbook 10/10 |
-| GitHub Actions | [Main run 43769325453 failed before runner allocation](https://github.com/mehdisafer/governed-dataops-agents/actions/runs/43769325453) | No steps executed, underlying cause unknown |
+| GitHub Actions full runtime on `7b709ff` | [Run #43919667084](https://github.com/mehdisafer/governed-dataops-agents/actions/runs/43919667084): `core`, `governance`, `containers`, `infrastructure` succeeded; **`model-evaluation` failed** | Real platform checks passed; frozen agent value remains failed and no production apply occurred |
 
-A wrong model proposal rejected by independent policy is a governance success, not a correct diagnosis. See the [complete qualification ledger](docs/QUALIFICATION.md) and [CI provenance](docs/CI.md) for source-specific evidence and limitations.
+A wrong model proposal rejected by independent policy is a governance success, not a correct diagnosis. On `351817e`, the docs-only core ran **245 passing tests**, Ruff, a reviewed Gitleaks scan with 31 raw worktree and 62 raw historical candidates, and a dependency audit reporting no known vulnerabilities at query time. Python licence metadata was fully declared. Skipped jobs are not passes. See the [complete qualification ledger](docs/QUALIFICATION.md) and [CI provenance](docs/CI.md) for source-specific evidence and limitations.
 
 ## Historical native results — 14 November 2026
 

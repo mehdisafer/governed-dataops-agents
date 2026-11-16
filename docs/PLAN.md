@@ -2,13 +2,13 @@
 
 The intended product is an operator console and API that explains a synthetic industrial data incident, collects evidence through MCP, uses PydanticAI for a bounded model diagnosis, asks deterministic policy for authority, executes through Temporal, and verifies the resulting business state. Acceptance also requires measured agent value over a competent deterministic runbook.
 
-**The implemented reference and its dated qualification evidence are retained; full agent-value acceptance remains open.** The clean 14 November native source `f1e6e2f` passed 14/18 checks (agent 2/10 versus runbook 10/10). CircleCI subsequently passed unit checks on `main` at `2460012`, hosted governance/browser checks at `924dd24`, and ten actual container-platform checks at `cad9cc6`. The separate 15 November frozen model evaluation still failed (agent **1/10**, runbook **10/10**). GitHub Actions runner allocation and target-partitioning evidence remain open. [Issue #1](https://github.com/mehdisafer/governed-dataops-agents/issues/1) remains open.
+**The experimental reference and its dated qualification evidence are retained; full agent-value acceptance remains open.** The 14 November native run passed 14/18 selected checks (agent 2/10, runbook 10/10). The distinct 15 November hosted evaluation failed (agent 1/10, runbook 10/10). On 16 November GitHub Actions at `7b709ff` passed core, governance, containers and infrastructure, but failed model-evaluation; a docs-only `351817e` run passed core with 245 tests and skipped four runtime profiles. Multi-host partitioning and model-value proof remain open. [Issue #1](https://github.com/mehdisafer/governed-dataops-agents/issues/1) remains open.
 
 ## Scope and boundaries
 
 - The reproducible repository and isolated synthetic demonstration environment define the project scope. Access to any personal workstation, client system or unrelated portfolio project is not required or authorized by this task.
 - All business data are synthetic. The model has no general shell, direct database connection or write capability.
-- The repository remains private at the inspected date. Original project source is licensed under [Apache-2.0](../LICENSE); dependency/model licences remain independent.
+- GitHub reports the source repository Public (16 November 2026); original source and wheel are declared Apache-2.0, while dependencies/weights retain their own terms. Local runtime endpoints remain private and are not hosted publicly.
 - Public release, billing changes and externally hosted resources require separate explicit authorization.
 
 ## Recovery and retained implementation
@@ -33,14 +33,14 @@ The final review also corrected an impossible combination of evaluation gates: a
 | Model evaluation | Frozen reserved corpus, competent baseline, complete failures/denominators and measured value | Native: agent 2/10 vs runbook 10/10; later hosted: agent 1/10 vs runbook 10/10. Both fail the value criterion |
 | Operator console | Correlated trace display, approval/cancellation and real-browser interactions | Original native Chromium launch blocked; later hosted governance profile at `924dd24` passed its declared browser gate |
 | Deployment | Actual container build/run and supported Terraform validation/plan | Real corrected reference containers passed ten execution checks at `cad9cc6`; hosted infrastructure job passed at `924dd24`. Neither is a production apply or LLM-value PASS |
-| Operations and CI | Locked dependencies, security inventory, CI, restores and runbooks | CircleCI unit passed on `main` at `2460012`, governance at `924dd24` and container at `cad9cc6`; GitHub Actions still fails before runner assignment |
-| Publication | Coherent commits, reviewed PRs, identified candidate release, licence and public review | PR #2 and unit CI PR #5 merged; corrected runtime in PR #4; Apache-2.0 selected; visibility private and stable acceptance withheld |
+| Operations and CI | Locked dependencies, security inventory, CI, restore and runbooks | Full GitHub Actions `7b709ff` ran four platform jobs successfully but failed model-evaluation; docs-only `351817e` passed core and skipped runtime profiles; CircleCI unit/security succeeded |
+| Publication | Reviewed PRs, release candidate, licence, public source and protections | PRs #2/#4/#5/#6/#7/#8 merged; public source and Apache-2.0 packaging verified; `main` unprotected and full agent acceptance withheld |
 
 Implemented, executed, tested and accepted remain distinct states. [QUALIFICATION.md](QUALIFICATION.md) gives the exact evidence and limits. A checked subset does not close the original scope issue.
 
 ## Next work in dependency order
 
-1. Diagnose GitHub Actions' independent pre-run failure using its actual annotation; keep already passing CircleCI results bound to their source SHAs, and do not speculate about billing.
+1. Preserve the historical GitHub Actions pre-run failures without speculative causal claims. New runners execute full jobs; prioritize the failed frozen model-value gate and source-specific evidence.
 2. Investigate the retained local-model slowdown, missing responses and Temporal/transport delays using development inputs and isolated measurements. Keep failed attempts and usage uncertainty visible.
 3. Select any revised model, prompt, runtime or diagnostic contract using development data only. Freeze a new evaluation prospectively; the now-exposed reserved set remains a regression set.
 4. Evaluate concrete agent utility while preserving the competent baseline, safety invariants and complete outcome/cost denominators. Matching the existing baseline does not demonstrate added value.
