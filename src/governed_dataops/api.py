@@ -30,6 +30,7 @@ from governed_dataops.contracts import (
     Scenario,
 )
 from governed_dataops.policy import evaluate_plan
+from governed_dataops.routing import queue_for_target
 from governed_dataops.settings import Settings, get_settings
 from governed_dataops.signing import sign_approval
 from governed_dataops.storage import TERMINAL_STATUSES, CapacityExceeded, Store
@@ -150,9 +151,18 @@ def create_app(
         if body.simulate_lost_response and not config.demo_mode:
             raise HTTPException(403, "Response-loss injection requires demo mode")
         intent = {"mode": body.mode, "simulate_lost_response": body.simulate_lost_response}
+        assigned_queue = queue_for_target(
+            config.task_queue, config.partition_count, incident.target_id
+        )
+        if config.partition_count > 1:
+            # Durable immutable route is claimed in the same admission transaction.
+            intent["task_queue"] = assigned_queue
         try:
             created = database.record_incident(
-                incident, config.max_pending_incidents, intent=intent
+                incident,
+                config.max_pending_incidents,
+                intent=intent,
+                partition_capacity=config.partition_admission_limit,
             )
         except CapacityExceeded:
             raise HTTPException(
@@ -172,7 +182,7 @@ def create_app(
                         "approval_timeout_seconds": config.approval_timeout_seconds,
                     },
                     id=identifier,
-                    task_queue=config.task_queue,
+                    task_queue=assigned_queue,
                     id_reuse_policy=WorkflowIDReusePolicy.REJECT_DUPLICATE,
                     execution_timeout=timedelta(seconds=config.approval_timeout_seconds + 900),
                     rpc_timeout=timedelta(seconds=10),
@@ -194,6 +204,7 @@ def create_app(
             "incident_id": incident.incident_id,
             "workflow_id": identifier,
             "deduplicated": not created,
+            "task_queue": assigned_queue,
         }
 
     @app.post("/api/incidents", status_code=202)

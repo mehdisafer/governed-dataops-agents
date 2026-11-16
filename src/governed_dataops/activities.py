@@ -26,6 +26,7 @@ from governed_dataops.diagnostic import (
 )
 from governed_dataops.mcp_client import MCPGateway
 from governed_dataops.policy import evaluate_plan, verify_effect
+from governed_dataops.routing import queue_for_target, queue_for_worker
 from governed_dataops.settings import Settings, get_settings
 from governed_dataops.signing import verify_approval_signature
 from governed_dataops.storage import Store
@@ -40,9 +41,28 @@ class Activities:
         self.executor = self.settings.principal("executor")
         self.model_slots = asyncio.Semaphore(self.settings.model_concurrency)
 
+    def _assert_owned(self, target_id: str) -> None:
+        if self.settings.partition_count == 1:
+            return
+        expected = queue_for_target(
+            self.settings.task_queue, self.settings.partition_count, target_id
+        )
+        owner = queue_for_worker(
+            self.settings.task_queue,
+            self.settings.partition_count,
+            self.settings.worker_partition,
+        )
+        if expected != owner or self.store.bound_target_queue(target_id) != owner:
+            raise ApplicationError(
+                "target partition is not owned by this worker or route was changed",
+                type="PartitionOwnershipViolation",
+                non_retryable=True,
+            )
+
     @activity.defn(name="dataops.collect")
     async def collect(self, request: dict) -> dict:
         incident = Incident.model_validate(request["incident"])
+        self._assert_owned(incident.target_id)
         self.store.record_incident(incident)
         evidence = await self.gateway.collect(incident.target_id)
         self.store.event(
@@ -61,6 +81,7 @@ class Activities:
     @activity.defn(name="dataops.diagnose")
     async def diagnose(self, request: dict) -> dict:
         incident = Incident.model_validate(request["incident"])
+        self._assert_owned(incident.target_id)
         evidence = Evidence.model_validate(request["evidence"])
         mode = request.get("mode", "agent")
         try:
@@ -102,6 +123,7 @@ class Activities:
     @activity.defn(name="dataops.authorize")
     async def authorize(self, request: dict) -> dict:
         plan = Plan.model_validate(request["plan"])
+        self._assert_owned(plan.target_id)
         approval = Approval.model_validate(request["approval"]) if request.get("approval") else None
         current = await self.gateway.collect(plan.target_id)
         if not current.complete:
@@ -134,6 +156,7 @@ class Activities:
     @activity.defn(name="dataops.execute")
     async def execute(self, request: dict) -> dict:
         plan = Plan.model_validate(request["plan"])
+        self._assert_owned(plan.target_id)
         index = int(request.get("action_index", 0))
         approval = Approval.model_validate(request["approval"]) if request.get("approval") else None
         key = effect_key(plan, index)
@@ -205,6 +228,7 @@ class Activities:
     @activity.defn(name="dataops.verify")
     async def verify(self, request: dict) -> dict:
         plan = Plan.model_validate(request["plan"])
+        self._assert_owned(plan.target_id)
         effect = EffectResult.model_validate(request["effect"])
         if effect.status != "applied":
             verification = Verification(
@@ -235,6 +259,7 @@ class Activities:
 
     @activity.defn(name="dataops.record")
     async def record(self, request: dict) -> dict:
+        self._assert_owned(self.store.get_incident(request["incident_id"])["target_id"])
         self.store.event(request["incident_id"], request["phase"], request.get("payload", {}))
         return {"recorded": True}
 

@@ -9,6 +9,7 @@ import hashlib
 import json
 import logging
 import os
+import re
 import sqlite3
 from contextlib import closing, contextmanager
 from importlib.resources import files
@@ -486,17 +487,38 @@ class Store:
             return result
 
     def record_incident(
-        self, incident: Incident, max_pending: int | None = None, *, intent: dict | None = None
+        self,
+        incident: Incident,
+        max_pending: int | None = None,
+        *,
+        intent: dict | None = None,
+        partition_capacity: int | None = None,
     ) -> bool:
         encoded_intent = None
+        assigned_queue: str | None = None
         if intent is not None:
+            allowed_keys = {"mode", "simulate_lost_response"}
+            if set(intent) not in (allowed_keys, allowed_keys | {"task_queue"}):
+                raise ValueError("invalid incident execution intent")
             if (
-                set(intent) != {"mode", "simulate_lost_response"}
-                or intent["mode"] not in {"agent", "runbook"}
+                intent["mode"] not in {"agent", "runbook"}
                 or not isinstance(intent["simulate_lost_response"], bool)
             ):
                 raise ValueError("invalid incident execution intent")
+            assigned_queue = intent.get("task_queue")
+            if assigned_queue is not None and (
+                not isinstance(assigned_queue, str)
+                or not re.fullmatch(r"[a-zA-Z0-9][a-zA-Z0-9_.-]{0,95}", assigned_queue)
+            ):
+                raise ValueError("invalid partition task queue")
             encoded_intent = _json(intent)
+        if partition_capacity is not None and (
+            not isinstance(partition_capacity, int)
+            or partition_capacity < 1
+            or max_pending is None
+            or assigned_queue is None
+        ):
+            raise ValueError("partition admission requires a bound queue and global capacity")
         with self._connection(write=True) as connection:
             existing = connection.execute(
                 "SELECT body_json FROM incidents WHERE event_id=? OR incident_id=?",
@@ -513,6 +535,21 @@ class Store:
                 if encoded_intent is not None:
                     self._claim_incident_intent(connection, incident.incident_id, encoded_intent)
                 return False
+            if assigned_queue is not None:
+                # Historical admission is the durable route authority for this
+                # target. A topology edit cannot silently move pending work or
+                # change its queue after the first incident was admitted.
+                prior = connection.execute(
+                    "SELECT json_extract(e.payload_json,'$.task_queue') AS queue "
+                    "FROM incidents i JOIN incident_events e ON e.incident_id=i.incident_id "
+                    "WHERE i.target_id=? AND e.phase='received' "
+                    "ORDER BY e.sequence LIMIT 1",
+                    (incident.target_id,),
+                ).fetchone()
+                if prior is not None and prior["queue"] != assigned_queue:
+                    raise ValueError(
+                        "target queue binding changed; drain and explicitly migrate the target"
+                    )
             if max_pending is not None:
                 if max_pending < 1:
                     raise ValueError("max_pending must be positive")
@@ -523,6 +560,33 @@ class Store:
                 ).fetchone()[0]
                 if pending >= max_pending:
                     raise CapacityExceeded("incident admission capacity reached")
+                if partition_capacity is not None:
+                    # Enabling partitioning across active legacy/unrouted work
+                    # would break reserved admission capacity. Refuse rather
+                    # than silently route an existing workflow to a new queue.
+                    legacy = connection.execute(
+                        f"SELECT COUNT(*) FROM incidents i "
+                        f"LEFT JOIN incident_events e ON e.incident_id=i.incident_id "
+                        f"AND e.phase='received' WHERE i.status NOT IN ({placeholders}) "
+                        "AND (e.incident_id IS NULL OR "
+                        "json_extract(e.payload_json,'$.task_queue') IS NULL)",
+                        TERMINAL_STATUSES,
+                    ).fetchone()[0]
+                    if legacy:
+                        raise ValueError(
+                            "drain active unpartitioned incidents before enabling partitioning"
+                        )
+                    used = connection.execute(
+                        f"SELECT COUNT(*) FROM incidents i "
+                        f"JOIN incident_events e ON e.incident_id=i.incident_id "
+                        f"AND e.phase='received' WHERE i.status NOT IN ({placeholders}) "
+                        "AND json_extract(e.payload_json,'$.task_queue')=?",
+                        (*TERMINAL_STATUSES, assigned_queue),
+                    ).fetchone()[0]
+                    if used >= partition_capacity:
+                        raise CapacityExceeded(
+                            "target partition admission capacity reached"
+                        )
             connection.execute(
                 "INSERT INTO incidents(incident_id,event_id,target_id,body_json,created_at) "
                 "VALUES(?,?,?,?,?)",
@@ -555,6 +619,18 @@ class Store:
             "VALUES(?,'received',?,?)",
             (incident_id, encoded_intent, utc_now()),
         )
+
+    def bound_target_queue(self, target_id: str) -> str | None:
+        """Return the immutable first-admission queue for a target, if present."""
+        with self._connection() as connection:
+            row = connection.execute(
+                "SELECT json_extract(e.payload_json,'$.task_queue') AS queue "
+                "FROM incidents i JOIN incident_events e ON e.incident_id=i.incident_id "
+                "WHERE i.target_id=? AND e.phase='received' "
+                "ORDER BY e.sequence LIMIT 1",
+                (target_id,),
+            ).fetchone()
+            return row["queue"] if row is not None else None
 
     def get_incident_by_event(self, event_id: str) -> dict | None:
         with self._connection() as connection:
