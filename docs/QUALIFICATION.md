@@ -2,6 +2,16 @@
 
 Updated 15 November 2026. **Platform execution is qualified; full agent-value acceptance is withheld.** A green container workflow verifies its declared infrastructure/effect gates, not comparative diagnosis quality. The original [acceptance issue #1](https://github.com/mehdisafer/governed-dataops-agents/issues/1) remains open. No accepted stable V1 or production-readiness claim follows from the passing subset.
 
+## GitHub Actions and publication qualification — 16 November 2026
+
+| Source | Observed jobs | Limit |
+| --- | --- | --- |
+| [`7b709ff`](https://github.com/mehdisafer/governed-dataops-agents/commit/7b709ffdb8440a0b41c3d28e7ee7ec028cac1a8d) | [GitHub Actions full run #43919667084](https://github.com/mehdisafer/governed-dataops-agents/actions/runs/43919667084): `core`, `governance`, `containers`, `infrastructure` **SUCCESS**, `model-evaluation` **FAILED** | Ten reserved agent cases attempted but strict diagnosis/action/outcome agreement incomplete; advantage absent; exact count not asserted without artifact-level review |
+| [`351817e`](https://github.com/mehdisafer/governed-dataops-agents/commit/351817eeecc969dd13491e592b3510f8ae38ea7d) | [GitHub Actions docs-only run #43924763001](https://github.com/mehdisafer/governed-dataops-agents/actions/runs/43924763001): `core` **SUCCESS**, other four runtime jobs **SKIPPED** | 245 passing tests, Ruff, 31/62 raw reviewed Gitleaks findings, no unresolved installed Python licence metadata, dependency audit no known vulnerabilities at scan time |
+| `351817e` | CircleCI `build-and-test`, `publication-security` **SUCCESS** | Scanner and wheel results have declared scope and limits; no blanket claim about encrypted/opaque archives or unreachable Git objects |
+
+These results are separate from the 14 November native run and 15 November CircleCI qualification below. The four successful GitHub Actions platform jobs show that runners can now execute; the prior zero-runner cause remains unknown. The 16 November container reported `diagnostic_quality_passed=false` despite a passing execution gate; the frozen model evaluation is **FAILED**. Terraform produced a local plan without `apply`. Public repository visibility is confirmed in GitHub metadata, but `main` has no branch protection and full agent-value V1 acceptance remains open.
+
 ## Latest actual container qualification
 
 Source: `cad9cc6eb28a70f24e9bf02774a7614cc4cb9631`.
