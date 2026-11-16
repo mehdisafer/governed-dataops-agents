@@ -1,6 +1,6 @@
 # Release candidate: v0.1.0a1
 
-**State: unreleased private candidate; acceptance withheld.** No release tag or GitHub release exists for this candidate. The clean native application source is `f1e6e2f3800242ec210145680261da8ab60f38b4`; the reviewed [implementation PR](https://github.com/mehdisafer/governed-dataops-agents/pull/2) also retains the subsequent evidence and documentation. Read the [qualification ledger](QUALIFICATION.md) before interpreting an implemented capability as an accepted release.
+**State: public source repository, unreleased candidate; acceptance withheld.** No release tag or GitHub release exists for this candidate. The clean native application source is `f1e6e2f3800242ec210145680261da8ab60f38b4`; the reviewed [implementation PR](https://github.com/mehdisafer/governed-dataops-agents/pull/2) also retains the subsequent evidence and documentation. Read the [qualification ledger](QUALIFICATION.md) before interpreting an implemented capability as an accepted release.
 
 ## Included
 
@@ -27,7 +27,7 @@ The agent reliability/value gate failed in the original native comparison (agent
 
 The original 14 November Docker, Terraform and Chromium attempts were blocked and remain documented as historical failures. Later hosted checks passed: governance/browser and infrastructure profiles at `924dd24` and ten real Docker/Temporal/local-model platform gates at `cad9cc6`. The container case still recorded `diagnostic_quality_passed=false` for an incorrect model action safely denied by policy. GitHub Actions continues failing before runner assignment; CircleCI success cannot diagnose that separate issue. No production Terraform apply was claimed.
 
-The repository's original source has the explicitly selected [Apache License 2.0](../LICENSE), and its description/topics are configured. Public visibility, supported protections and anonymous access verification remain owner-controlled. No billing or visibility change follows from this candidate.
+The repository's original source has the explicitly selected [Apache License 2.0](../LICENSE), and its description/topics are configured. Public visibility is **confirmed by GitHub repository metadata (16 November 2026)**. Supported branch protections and anonymous-access readback remain separate; no billing, deployment or accepted release is implied.
 
 ## Installation and compatibility
 
@@ -35,4 +35,4 @@ Python 3.12 and the committed `uv.lock` define the Python environment. The refer
 
 ## Review status
 
-The reference implementation was merged in [PR #2](https://github.com/mehdisafer/governed-dataops-agents/pull/2), the passing CircleCI unit integration in [PR #5](https://github.com/mehdisafer/governed-dataops-agents/pull/5), and corrected container integration is tracked by [PR #4](https://github.com/mehdisafer/governed-dataops-agents/pull/4). Reviews by the authoring automation do not constitute independent approval. Full model-value acceptance, public settings and a stable production release remain withheld.
+The reference implementation was merged in [PR #2](https://github.com/mehdisafer/governed-dataops-agents/pull/2), the passing CircleCI unit integration in [PR #5](https://github.com/mehdisafer/governed-dataops-agents/pull/5), and corrected container integration is tracked by [PR #4](https://github.com/mehdisafer/governed-dataops-agents/pull/4). Reviews by the authoring automation do not constitute independent approval. Full model-value acceptance, complete protection-settings verification and a stable production release remain withheld. Source visibility alone does not close those gates.
