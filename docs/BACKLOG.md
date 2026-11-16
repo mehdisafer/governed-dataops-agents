@@ -177,6 +177,18 @@ or a faster synthetic schema benchmark cannot close this item.
 
 ## 5. Qualify target partitioning and worker additions
 
+**Implementation progress — candidate branch, not full acceptance.** The
+opt-in fixed-width router records a target's initial Temporal queue in its
+durable admission transaction and refuses silent route drift. Per-queue quotas
+are enforced inside the independently scoped `(environment, scope)`
+admission fence already merged in PR #10. Tests cover legacy drain refusal,
+stable event identity and worker ownership. A real two-queue Temporal profile
+is wired into governance CI but must actually execute and preserve business
+effects and histories before this criterion is closed. See
+[partitioning design](PARTITIONING.md).
+
+
+
 **Mandatory acceptance gap.** The original scope requires preserving business
 invariants when targets are partitioned and workers are added. The
 source-level admission fix from [PR #10](https://github.com/mehdisafer/governed-dataops-agents/pull/10), now merged at `33a8eba`,

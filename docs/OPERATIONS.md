@@ -37,6 +37,23 @@ The queue limit, worker activities, target transactions and model slots are diff
 
 Model resource settings and failure history are documented in [deployment](DEPLOYMENT.md). Native service evidence, container execution evidence and historical observations that no longer have retained raw files must remain clearly distinguished. Use the current run artifacts, not an old completion claim, to judge the state of the system.
 
+## Optional fixed target partitioning
+
+The API binds each target to one deterministic Temporal task queue when
+`DATAOPS_PARTITION_COUNT` exceeds one. Set an explicit
+`DATAOPS_PARTITION_ADMISSION_LIMIT` whose reservations fit the configured
+per-scope global limit. The budget is counted **per environment, scope and
+queue**, retaining PR #10's independent scope capacity. Workers declare
+`DATAOPS_WORKER_PARTITION`; a missing or wrong owner is refused before
+activity execution.
+
+Do not change queue topology while approvals or uncertain effects are in
+flight. First drain old unpartitioned incidents, and do not requeue a target
+to sidestep an approval or idempotency key. Additional replicas of the same
+partition use the same task queue; a different partition is not a fallback.
+See [partitioning design and recovery limits](PARTITIONING.md). These controls
+do not independently qualify multi-host operation or shared-model throughput.
+
 ## Routine inspection
 
 Run `docker compose ps` and `docker compose logs --since=10m api worker target temporal model`. Process logs are rotated to three 10 MiB files per service. Decision events in the transactional store identify incidents, plans and effects. Raw service stdout is not uniformly structured telemetry.
