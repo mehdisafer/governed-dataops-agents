@@ -37,7 +37,7 @@ For the GitHub App integration, each pipeline has its own **configuration source
 
 Do not change account billing, increase usage limits, or silently select another execution provider to hide a failing acceptance criterion.
 
-## Automated publication security gate (pending its first executed result)
+## Automated publication security gate — PR execution observed
 
 The ordinary CircleCI workflow now proposes a separate `publication-security` job running on the lightweight `cimg/python:3.12` Docker image with `resource_class: small`. It **does not** launch the large machine/model reference, buy credits, modify settings or use any external inference provider.
 
@@ -45,4 +45,4 @@ The job explicitly fetches all visible branches and tags and rejects a shallow o
 
 A separate component inventory and strict pip-audit of frozen runtime requirements run even if the scanner step fails, and retain their original reports as job artifacts. Installed licence metadata is a provenance observation rather than a legal compatibility verdict. Scanner limitations include unreachable dangling objects, opaque compressed archive interiors, false negatives and credentials outside the Git repository. Existing separately reviewed expanded archives retain their own content manifests and provenance.
 
-**Status:** configuration proposed, not yet executed at the final default-branch SHA. Do not treat this addition alone as a successful public-release security gate. Verify exact CircleCI job results and inspect every unresolved finding before switching visibility; no broad ignore or generic hex waiver is authorized.
+**Observed on 16 November 2026:** GitHub's commit-status API reports both `ci/circleci: publication-security` ([successful hosted job](https://app.circleci.com/workflow/592660d1-ce36-46b0-b3c0-373cdd13d005/job/b3f0e796-3e8f-4f0f-be65-1eb4b8f3df74)) and `ci/circleci: build-and-test` ([successful hosted job](https://app.circleci.com/workflow/592660d1-ce36-46b0-b3c0-373cdd13d005/job/44a8eef9-50da-4b35-aa47-8058d29bbaee)) as **success** at PR head `10f1510f4eab314c0679c384ad1ef4341cac8254`. This establishes hosted job conclusions on that exact source, **not independent reinspection of artifact JSON, full-history coverage, component inventory or vulnerability detail**. A subsequent documentation edit must obtain its own CI; the exact merged `main` SHA must also be checked before any public-visibility decision. Scan findings, scanned refs and retained artifacts must be reviewed, not inferred solely from a green job badge. No broad ignore or generic hexadecimal waiver is authorized.
