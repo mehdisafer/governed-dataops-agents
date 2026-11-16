@@ -7,7 +7,10 @@ package licence metadata and licence-file checksums. These are provenance record
 not a legal compatibility opinion or a security certification.
 
 The maintainer explicitly selected [Apache License 2.0](../LICENSE) for this
-repository's original source. Third-party components, dependencies and model
+repository's original source.
+The distributable Python project also declares the SPDX expression and the
+exact `LICENSE` file under PEP 639. A separate CI wheel check inspects the
+built package metadata and embedded licence bytes before distribution. Third-party components, dependencies and model
 weights remain governed by their own licences and notices; do not infer those
 rights from the project's licence or its eventual public visibility.
 

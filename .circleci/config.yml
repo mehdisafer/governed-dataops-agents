@@ -89,6 +89,12 @@ jobs:
             uv run --frozen python scripts/component_inventory.py --output evidence/runs/ci-security/component-inventory.json
             uv export --frozen --no-dev --no-emit-project --format requirements-txt --output-file evidence/runs/ci-security/requirements.txt
             uvx --from pip-audit==2.10.1 pip-audit --disable-pip --strict --format json --output evidence/runs/ci-security/pip-audit.json -r evidence/runs/ci-security/requirements.txt
+      - run:
+          name: Build and validate the Apache-2.0 wheel
+          when: always
+          command: |
+            uv build --wheel --out-dir evidence/runs/ci-security/dist
+            uv run --frozen python scripts/verify_wheel_license.py --wheel-dir evidence/runs/ci-security/dist --output evidence/runs/ci-security/wheel-license.json
       - store_artifacts:
           path: evidence/runs/ci-security
           destination: publication-security
