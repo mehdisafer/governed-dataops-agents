@@ -152,6 +152,7 @@ The container platform gate separately records `diagnostic_quality_passed`. A re
 
 - [CI provenance](docs/CI.md): CircleCI unit execution, separate manual container qualification and GitHub Actions limitations.
 - [Operations](docs/OPERATIONS.md): readiness, metrics, actionable alerts, bounded queues, recovery, paired backup/restore, migration and rollback.
+- [Fixed target partitions](docs/PARTITIONING.md): opt-in queue ownership, reserved admission and remaining live recovery checks.
 - [Security](docs/SECURITY.md): role boundaries, signed approvals, injection assumptions, scan coverage and disclosure.
 - [Third-party components](docs/THIRD_PARTY.md): pinned provenance, inventories and unresolved licence decisions.
 - [Evidence](evidence/README.md): retained original results and their scope.

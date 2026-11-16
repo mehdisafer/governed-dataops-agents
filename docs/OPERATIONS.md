@@ -37,6 +37,24 @@ The queue limit, worker activities, target transactions and model slots are diff
 
 Model resource settings and failure history are documented in [deployment](DEPLOYMENT.md). Native service evidence, container execution evidence and historical observations that no longer have retained raw files must remain clearly distinguished. Use the current run artifacts, not an old completion claim, to judge the state of the system.
 
+## Partitioned admission — optional and not yet integrated-accepted
+
+The routing mode is enabled only when \`DATAOPS_PARTITION_COUNT\` exceeds one.
+Each worker must identify its slot via \`DATAOPS_WORKER_PARTITION\`. Admission
+reserves \`DATAOPS_PARTITION_ADMISSION_LIMIT\` for each queue and refuses
+configuration whose total reservations exceed global capacity.
+
+Do not change topology while workflows, approvals or uncertain effects are
+pending. Existing target routes remain immutable and the original effect
+receipt must be reconciled under the same identity. If enabling partitioning
+on an older installation, drain unpartitioned work first. Rollback or
+rebalancing requires an explicitly reviewed migration; this demonstration
+does not automate it.
+
+These guards establish per-queue **admission** rules, not multi-host throughput,
+shared-model response guarantees or full partition fault isolation. See the
+[dedicated qualification requirements](PARTITIONING.md).
+
 ## Routine inspection
 
 Run `docker compose ps` and `docker compose logs --since=10m api worker target temporal model`. Process logs are rotated to three 10 MiB files per service. Decision events in the transactional store identify incidents, plans and effects. Raw service stdout is not uniformly structured telemetry.

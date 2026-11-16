@@ -177,6 +177,9 @@ or a faster synthetic schema benchmark cannot close this item.
 
 ## 5. Qualify target partitioning and worker additions
 
+**Implementation progress (branch candidate, not yet accepted).** Explicit fixed-width queue routing now binds the first target queue to the durable admission record. Separate admission quotas reserve capacity across partitions and activity handlers refuse wrong ownership. SQLite/ASGI tests exist, but real Temporal worker reassignment, pending approval, ambiguous effect and end-to-end shared-model saturation have not yet been qualified. See [partitioning design and gaps](PARTITIONING.md).
+
+
 **Mandatory acceptance gap.** The original scope requires preserving business
 invariants when targets are partitioned and workers are added. The native test
 `two_workers_one_target` proves its specific contention and duplicate-event
