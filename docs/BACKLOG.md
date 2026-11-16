@@ -43,7 +43,7 @@ unchanged. The current corpus still has a 10/10 baseline ceiling, so this logic
 correction alone cannot demonstrate agent value. The open items below therefore
 remain necessary.
 
-The separate hosted frozen evaluation at `924dd24` scored agent 1/10 versus runbook 10/10; the original 2/10 result remains an independent historical failure, not a score to average or replace.
+The separate hosted frozen evaluation at `924dd24` scored agent 1/10 versus runbook 10/10; the original 2/10 result remains an independent historical failure, not a score to average or replace. **A third source-bound hosted evaluation on `8ab185f` returned 10/10 observed responses but only 7/10 strict correct cases versus runbook 10/10**; all three incorrect proposals falsely requested schema migration even though the typed source and accepted schema were equal. See [forensic readback](EVALUATION.md#17-november-2026--original-hosted-model-artifact-forensic-readback) and [issue #12](https://github.com/mehdisafer/governed-dataops-agents/issues/12). This is still failed comparative acceptance, not a reason to average results or tune on formerly reserved labels.
 
 ## Prioritized open work
 

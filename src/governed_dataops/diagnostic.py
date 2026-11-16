@@ -96,8 +96,40 @@ def validate_evidence(incident: Incident, evidence: Evidence) -> None:
 
 
 def validate_diagnosis(diagnosis: Diagnosis, evidence: Evidence) -> None:
+    """Reject unsupported model proposals without substituting runbook results.
+
+    Log text and model rationale are never authorization evidence. This check
+    verifies only a proposal's minimum *necessary* typed preconditions. It
+    does not infer the correct category, relax policy or award agent success.
+    The target/policy independently recheck live state before any effect.
+    """
     if set(diagnosis.evidence_refs) != {evidence.evidence_id}:
         raise DiagnosticError("diagnosis cites evidence that was not collected")
+    expected_actions = {
+        Scenario.FRESHNESS: ToolName.REFRESH,
+        Scenario.TRANSIENT: ToolName.RETRY,
+        Scenario.SCHEMA: ToolName.MIGRATE,
+        Scenario.QUALITY: ToolName.QUARANTINE,
+        Scenario.DUPLICATE: ToolName.SUPPRESS,
+        Scenario.UNKNOWN: ToolName.ESCALATE,
+    }
+    if diagnosis.proposed_action != expected_actions[diagnosis.category]:
+        raise DiagnosticError("model category/action pair contradicts the fixed catalogue")
+    s = evidence.snapshot
+    minimum_support = {
+        Scenario.FRESHNESS: s.freshness_lag_seconds > 300 and s.backlog_rows > 0,
+        Scenario.TRANSIENT: s.transient_failure,
+        Scenario.SCHEMA: s.source_schema != s.accepted_schema,
+        Scenario.QUALITY: s.rejected_rows > 0,
+        Scenario.DUPLICATE: (
+            s.batch_status == "applied" and s.curated_rows > 0 and s.backlog_rows > 0
+        ),
+        Scenario.UNKNOWN: True,  # Explicit abstention always remains available.
+    }
+    if not minimum_support[diagnosis.category]:
+        raise DiagnosticError(
+            "model diagnosis contradicts necessary typed snapshot preconditions"
+        )
 
 
 def runbook_diagnose(incident: Incident, evidence: Evidence) -> tuple[Diagnosis, dict]:
