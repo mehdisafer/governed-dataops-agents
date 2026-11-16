@@ -179,11 +179,14 @@ or a faster synthetic schema benchmark cannot close this item.
 
 **Mandatory acceptance gap.** The original scope requires preserving business
 invariants when targets are partitioned and workers are added. The
-source-level admission fix proposed in PR `fix/p05-isolated-scope-admission`
-implements independent `(environment, scope)` queue budgets in one durable
-SQLite transaction, with concurrent tests for two scopes, authorization-safe
-event identity reuse and independent recovery of capacity. This is **not**
-a new native Temporal routing or worker-saturation qualification; do not close
+source-level admission fix from [PR #10](https://github.com/mehdisafer/governed-dataops-agents/pull/10), now merged at `33a8eba`,
+implements independent `(environment, scope)` admission budgets in one durable
+SQLite transaction. The exact source `8ab185f` passed 247 core tests,
+twelve real governance checks, ten container checks and infrastructure checks,
+but its frozen model evaluation still **failed**. Concurrent tests cover two
+scopes, globally immutable event identity and independent capacity recovery.
+This is **not** a dedicated Temporal routing or worker-saturation qualification;
+do not close
 this P0 criterion until the actual workflow/worker/target evidence below exists. The native test
 `two_workers_one_target` proves its specific contention and duplicate-event
 invariants with two workers on one task queue and one target. It does not test

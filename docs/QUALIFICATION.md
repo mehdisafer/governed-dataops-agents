@@ -1,6 +1,27 @@
 # Qualification ledger
 
-Updated 16 November 2026. **Platform execution is qualified for the declared synthetic reference checks; full agent-value acceptance is withheld.** A green container workflow verifies its declared infrastructure/effect gates, not comparative diagnosis quality. The original [acceptance issue #1](https://github.com/mehdisafer/governed-dataops-agents/issues/1) remains open. No accepted stable V1 or production-readiness claim follows from the passing subset.
+Updated 17 November 2026. **Platform execution is qualified for the declared synthetic reference checks; full agent-value acceptance is withheld.** A green container workflow verifies its declared infrastructure/effect gates, not comparative diagnosis quality. The original [acceptance issue #1](https://github.com/mehdisafer/governed-dataops-agents/issues/1) remains open. No accepted stable V1 or production-readiness claim follows from the passing subset.
+
+## Scoped admission and frozen evaluation — 17 November 2026
+
+Source change [PR #10](https://github.com/mehdisafer/governed-dataops-agents/pull/10) merged into `main` as [`33a8eba54600`](https://github.com/mehdisafer/governed-dataops-agents/commit/33a8eba54600a2c77f80e6cf119eeab85a9c111b). **Exact qualified PR source**: `8ab185fe2daf28624bba9bee47eca03920b154de`. This is an additional source qualification, not a rewrite of earlier runs and not a proof that a later `main` workflow has executed.
+
+The SQLite `Store.record_incident` unfinished-admission count is now filtered by the incident's authenticated `(environment, scope)` under the **same `BEGIN IMMEDIATE` transaction** as insertion. Tests exercise independent admission capacity in two scopes and an independent environment; concurrent arrivals cannot oversubscribe a scope, previously used event identities remain globally immutable, and capacity returns after a terminal incident.
+
+[GitHub Actions run #43976640653](https://github.com/mehdisafer/governed-dataops-agents/actions/runs/43976640653) inspected on this exact PR source:
+
+| Executed gate | Observed result | Evidence boundary |
+|---|---|---|
+| Core | **SUCCESS** — 247 Python tests in 8.10s, Ruff and source checks | Includes the new scoped-admission unit/concurrency tests |
+| Governance | **SUCCESS** — twelve named real-service checks | Includes five runbook business cases, stale approvals, restart, same-target worker contention, admission/recovery, paired restore, bounded load, retained replay and browser |
+| Containers | **SUCCESS** — ten named platform checks | Real local-model response observed, but `diagnostic_quality_passed=false` |
+| Infrastructure | **SUCCESS** | Synthetic local configuration/schema scope, no production `apply` |
+| CircleCI build/test and publication security | Both **SUCCESS** on exact PR head | Does not substitute for real model comparison |
+| Model evaluation | **FAILED** — heldout agent strict result and advantage gates | All ten agent cases attempted. The frozen runbook measurement passed; exact new agent correct-case count **not inferred from a status alone** |
+
+The model-evaluation job retained original outputs under [GitHub artifact `14281900580`](https://github.com/mehdisafer/governed-dataops-agents/actions/runs/43976640653). Its logs explicitly identify `heldout_agent` strict diagnosis/action/outcome mismatch and `measured_agent_advantage` failure. Do not use the passing container model-response gate as semantic success. Prior 2/10 and 1/10 failures retain their own sources and denominators.
+
+**Remaining P0:** separate Temporal queue/worker ownership per target partition, preserve pending approval and effect identities during reassignment, and demonstrate bounded progress in a second partition while one is saturated. The current change improves only **admission** isolation; all scopes still share the configured Temporal task queue and worker/model slots. The frozen model-value criterion, target-specific production acceptance and effective branch protections also remain open. No stable accepted V1 is claimed.
 
 ## GitHub Actions and publication qualification — 16 November 2026
 
