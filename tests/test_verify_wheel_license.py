@@ -1,11 +1,16 @@
 """Tests for the packaging licence gate, including negative cases."""
 
+import runpy
 from pathlib import Path
 from zipfile import ZipFile
 
 import pytest
 
-from scripts.verify_wheel_license import inspect_wheel
+# CircleCI invokes the pytest entry point, which does not add the repository root
+# to sys.path. Load this standalone review script by its exact path instead.
+inspect_wheel = runpy.run_path(
+    str(Path(__file__).resolve().parents[1] / "scripts" / "verify_wheel_license.py")
+)["inspect_wheel"]
 
 INFO = "governed_dataops_agents-0.1.0a1.dist-info/"
 
