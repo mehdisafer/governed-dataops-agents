@@ -1,6 +1,7 @@
 """Temporal activities own model calls, authorization reads and external effects."""
 
 import asyncio
+import time
 
 from temporalio import activity
 from temporalio.exceptions import ApplicationError
@@ -88,14 +89,28 @@ class Activities:
             if mode == "runbook":
                 diagnosis, trace = runbook_diagnose(incident, evidence)
             elif mode == "agent":
+                slot_wait_started = time.monotonic()
                 try:
                     await asyncio.wait_for(self.model_slots.acquire(), timeout=10)
                 except TimeoutError:
                     raise DiagnosticError(
-                        "model capacity exhausted; no unbounded queue or provider fallback"
+                        "model capacity exhausted; no unbounded queue or provider fallback",
+                        trace={
+                            "client_model_slot_wait_seconds": round(
+                                time.monotonic() - slot_wait_started, 6
+                            ),
+                            "client_model_slot_acquired": False,
+                        },
                     ) from None
+                slot_wait_seconds = round(time.monotonic() - slot_wait_started, 6)
                 try:
                     diagnosis, trace = await diagnose(incident, evidence, self.settings)
+                    trace["client_model_slot_wait_seconds"] = slot_wait_seconds
+                    trace["client_model_slot_acquired"] = True
+                except DiagnosticError as exc:
+                    exc.trace["client_model_slot_wait_seconds"] = slot_wait_seconds
+                    exc.trace["client_model_slot_acquired"] = True
+                    raise
                 finally:
                     self.model_slots.release()
             else:

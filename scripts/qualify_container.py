@@ -9,6 +9,7 @@ The platform gate and the one-case diagnostic result are reported separately.
 import argparse
 import hashlib
 import json
+import math
 import os
 import platform
 import shutil
@@ -109,6 +110,63 @@ def write_json(path: Path, value) -> None:
     path.write_text(json.dumps(value, indent=2, default=str) + "\n")
 
 
+def model_latency_report(
+    trace: dict | None,
+    *,
+    gate_wall_seconds: float,
+    admission_http_seconds: float | None,
+    workflow_poll_seconds: float | None,
+    stack_startup_seconds: float | None,
+    model_cpu_quota: float | None,
+    failure_type: str | None,
+) -> dict:
+    """Bounded observability: missing segments remain null, never inferred.
+
+    The diagnostic trace covers the entire PydanticAI call including response
+    validation; the Docker stack startup covers *all* services, not the model
+    alone. Neither can be silently re-labelled as isolated inference latency.
+    """
+    def duration(value):
+        if (
+            isinstance(value, bool)
+            or not isinstance(value, (int, float))
+            or not math.isfinite(value)
+            or value < 0
+        ):
+            return None
+        return round(float(value), 6)
+
+    data = trace if isinstance(trace, dict) else {}
+    observed = data.get("response_observed")
+    valid = data.get("diagnosis_valid")
+    return {
+        "status": "incomplete" if failure_type else "observed",
+        "failure_type": failure_type,
+        "response_observed": observed if isinstance(observed, bool) else None,
+        "diagnosis_valid": valid if isinstance(valid, bool) else None,
+        "model_cpu_quota": model_cpu_quota,
+        "segments_seconds": {
+            "stack_startup_all_services": duration(stack_startup_seconds),
+            "model_only_startup_readiness": None,
+            "client_model_slot_wait": duration(data.get("client_model_slot_wait_seconds")),
+            "server_internal_queue_wait": None,
+            "api_admission_http": duration(admission_http_seconds),
+            "workflow_poll_until_terminal_or_failure": duration(workflow_poll_seconds),
+            "diagnostic_call_including_validation": duration(data.get("duration_seconds")),
+            "inference_only": None,
+            "semantic_validation_only": None,
+            "full_agent_gate": duration(gate_wall_seconds),
+        },
+        "limits": [
+            "Null stages were not observed and must not be treated as zero latency.",
+            "Stack startup includes Temporal, target, API, workers and model.",
+            "Client slot wait excludes model-server internal queuing.",
+            "Diagnostic call duration includes transport, generation and validation.",
+            "No deadline, retry, model, prompt or outcome policy is altered.",
+        ],
+    }
+
+
 def source_manifest() -> dict:
     paths = [
         ROOT / name
@@ -168,6 +226,7 @@ class ContainerQualification:
     def execute(
         self, argv: list[str], label: str, *, timeout=120, check=True
     ) -> subprocess.CompletedProcess:
+        command_started = time.monotonic()
         if argv[0] == "docker":
             argv = ["docker", "--host", LOCAL_DOCKER, *argv[1:]]
         self.command_index += 1
@@ -213,6 +272,7 @@ class ContainerQualification:
                 "stderr_log": error_log.name,
                 "stack": self.stack,
                 "timed_out": timed_out,
+                "seconds": round(time.monotonic() - command_started, 6),
             }
         )
         write_json(self.output / "commands.json", self.records)
@@ -668,45 +728,110 @@ class ContainerQualification:
         }
 
     def agent_case(self) -> dict:
-        incident = self.submit("freshness", mode="agent")
-        record = self.complete(incident)
-        traces = [
-            event["payload"]["model_trace"]
-            for event in record["events"]
-            if "model_trace" in event["payload"]
-        ]
-        if not traces:
-            raise AssertionError("No model trace was recorded for the container agent call")
-        trace = traces[-1]
-        observed = trace.get("response_observed", False)
-        result = {
-            "incident_id": incident,
-            "mode": "agent",
-            "outcome": record["status"],
-            "response_observed": observed,
-            "quality_passed": False,
-            "trace": trace,
-        }
-        business = self.audit(record["target_id"])
-        write_json(self.output / f"business-{incident}.json", business)
+        # Record partial stages on both success and failure. The real diagnostic
+        # timeout and all business-effect assertions remain unchanged.
+        started = time.monotonic()
+        incident = None
+        record = None
+        trace = None
+        admission_seconds = None
+        poll_started = None
+        poll_seconds = None
+        failure_type = None
         try:
-            self.assert_business("freshness", record, business)
-            result["quality_passed"] = True
-        except (AssertionError, KeyError) as exc:
-            result["quality_failure"] = type(exc).__name__
-        write_json(self.output / "model-quality.json", result)
-        # Semantic model disagreement never relaxes target-effect correctness.
-        assert len(business["receipts"]) <= 1
-        if business["receipts"]:
-            assert record["plan"]["actions"][0]["tool"] == "refresh_partition"
-            assert business["target"]["revision"] == 1
-            assert business["rows"]["source_rows"] == business["rows"]["curated_rows"]
-            assert not business["rows"]["quarantine_rows"]
-        else:
-            assert business["target"]["revision"] == 0
-            assert not business["rows"]["curated_rows"] and not business["rows"]["quarantine_rows"]
-        assert trace.get("provider") == "local" and trace.get("request_attempted") and observed
-        return result
+            sent_at = time.monotonic()
+            incident = self.submit("freshness", mode="agent")
+            admission_seconds = time.monotonic() - sent_at
+            poll_started = time.monotonic()
+            record = self.complete(incident)
+            poll_seconds = time.monotonic() - poll_started
+            traces = [
+                event["payload"]["model_trace"]
+                for event in record["events"]
+                if "model_trace" in event["payload"]
+            ]
+            if not traces:
+                raise AssertionError("No model trace was recorded for the container agent call")
+            trace = traces[-1]
+            observed = trace.get("response_observed", False)
+            result = {
+                "incident_id": incident,
+                "mode": "agent",
+                "outcome": record["status"],
+                "response_observed": observed,
+                "quality_passed": False,
+                "trace": trace,
+            }
+            business = self.audit(record["target_id"])
+            write_json(self.output / f"business-{incident}.json", business)
+            try:
+                self.assert_business("freshness", record, business)
+                result["quality_passed"] = True
+            except (AssertionError, KeyError) as exc:
+                result["quality_failure"] = type(exc).__name__
+            write_json(self.output / "model-quality.json", result)
+            # Semantic model disagreement never relaxes target-effect correctness.
+            assert len(business["receipts"]) <= 1
+            if business["receipts"]:
+                assert record["plan"]["actions"][0]["tool"] == "refresh_partition"
+                assert business["target"]["revision"] == 1
+                assert business["rows"]["source_rows"] == business["rows"]["curated_rows"]
+                assert not business["rows"]["quarantine_rows"]
+            else:
+                assert business["target"]["revision"] == 0
+                assert not business["rows"]["curated_rows"] and not business["rows"]["quarantine_rows"]
+            assert trace.get("provider") == "local" and trace.get("request_attempted") and observed
+            return result
+        except Exception as exc:
+            failure_type = type(exc).__name__
+            if poll_started is not None and poll_seconds is None:
+                poll_seconds = time.monotonic() - poll_started
+            if incident is not None and record is None:
+                # Best-effort durable projection; the original exception still
+                # propagates and the gate cannot be marked as passed.
+                try:
+                    record = self.request("GET", "/api/incidents/" + incident, role="reader")
+                except Exception:
+                    pass
+            if isinstance(record, dict) and trace is None:
+                traces = [
+                    event.get("payload", {}).get("model_trace")
+                    for event in record.get("events", [])
+                    if isinstance(event.get("payload", {}).get("model_trace"), dict)
+                ]
+                trace = traces[-1] if traces else None
+            if not (self.output / "model-quality.json").exists():
+                write_json(
+                    self.output / "model-quality.json",
+                    {
+                        "incident_id": incident,
+                        "mode": "agent",
+                        "status": "incomplete",
+                        "quality_assessed": False,
+                        "quality_passed": False,
+                        "failure_type": failure_type,
+                        "trace": trace,
+                    },
+                )
+            raise
+        finally:
+            startup = next(
+                (item.get("seconds") for item in reversed(self.records)
+                 if item["label"] == "start-stack"),
+                None,
+            )
+            write_json(
+                self.output / "model-latency.json",
+                model_latency_report(
+                    trace,
+                    gate_wall_seconds=time.monotonic() - started,
+                    admission_http_seconds=admission_seconds,
+                    workflow_poll_seconds=poll_seconds,
+                    stack_startup_seconds=startup,
+                    model_cpu_quota=self.args.model_cpus,
+                    failure_type=failure_type,
+                ),
+            )
 
     def cleanup(self) -> list[dict]:
         results = []
