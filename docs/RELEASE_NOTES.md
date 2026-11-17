@@ -21,6 +21,30 @@ The separate bounded runbook load used twelve incidents at concurrency four, wit
 
 All 192 original files from the native run are retained, including failed cases, logs and resource samples. Post-run review corrected a contradictory evaluation gate, separating baseline competence from comparative score measurement while keeping agent quality and strict superiority requirements. It also hardened exact paired-case accounting and extended semantic secret-review support for the container source manifest. These corrections have separate regression tests; the original 14/18 native result is unchanged. See the [evidence index](../evidence/README.md), [evaluation report](EVALUATION.md) and [prioritized backlog](BACKLOG.md).
 
+## Current source-qualified security and model-value limits — 17 November 2026
+
+Current public source `main` at
+[`9635dbcc`](https://github.com/mehdisafer/governed-dataops-agents/commit/9635dbccfe8cfd168f14ee9380eeb1f03e105a0c)
+contains opt-in fixed target partition routing and explicit wrong-worker /
+cross-partition signed-approval refusal tests (PRs #14–#15), and [PR #13](https://github.com/mehdisafer/governed-dataops-agents/pull/13)'s
+typed-snapshot model proposal guard. Wrong model category/action pairs are
+rejected, never rewritten as successful runbook responses.
+
+[GitHub Actions full main run 43988865699](https://github.com/mehdisafer/governed-dataops-agents/actions/runs/43988865699)
+executed **272 passing core tests**, successful governance (including real
+two-queue Temporal), successful containers/paired restore, and successful
+infrastructure. **Frozen model-evaluation remained FAILED**: 10/10 model
+responses, **7/10 strict model success vs 10/10 runbook**, three wrong
+diagnoses escalated without unauthorized effects, no measured advantage.
+Both current CircleCI unit/publication-security checks succeeded.
+The independent source-specific original model artifacts preserve
+all negative results, including the earlier 2/10 and 1/10 attempts and
+`diagnostic_quality_passed=false` in the real container case.
+
+This is a security and bounded single-host platform improvement, **not a
+production-ready or accepted agent-value V1**. Shared-model saturation,
+prospective unseen v2 evaluation and independent-host operations remain open.
+
 ## Later hosted platform checks and remaining release gates
 
 The agent reliability/value gate failed in the original native comparison (agent 2/10 vs runbook 10/10) and the separate hosted frozen evaluation (agent 1/10 vs runbook 10/10). Development failures include output truncation, absent answers and transport delays. The causes are not fully established; increasing timeouts or tuning against the exposed reserved set is not acceptance evidence.

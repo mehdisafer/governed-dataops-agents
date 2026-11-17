@@ -175,58 +175,13 @@ latency distributions. Then the frozen candidate faces evaluation v2 with all
 attempts retained. Conditional correctness alone, an isolated successful request,
 or a faster synthetic schema benchmark cannot close this item.
 
-## 5. Qualify target partitioning and worker additions
+## 5. Partition routing — delivered single-host evidence and open limits
 
-**Implementation progress — candidate branch, not full acceptance.** The
-opt-in fixed-width router records a target's initial Temporal queue in its
-durable admission transaction and refuses silent route drift. Per-queue quotas
-are enforced inside the independently scoped `(environment, scope)`
-admission fence already merged in PR #10. Tests cover legacy drain refusal,
-stable event identity and worker ownership. A real two-queue Temporal profile
-is wired into governance CI but must actually execute and preserve business
-effects and histories before this criterion is closed. See
-[partitioning design](PARTITIONING.md).
+**Implemented and source-tested, not production/general-topology accepted.** [PR #14](https://github.com/mehdisafer/governed-dataops-agents/pull/14) integrated opt-in deterministic SHA-256 target-to-queue routing, durable first-admission owner identity, per-`(environment,scope,partition)` admission reservations and fail-closed worker ownership. [PR #15](https://github.com/mehdisafer/governed-dataops-agents/pull/15) subsequently added actual SQLite/Ed25519 cross-partition signed approval and forged-route negative tests on `main` `32ec8a7`. Source and permission checks retain stable incident/event/effect identities, revision and plan bindings, no unauthorized target mutation and refusal to silently re-shard old target work.
 
+**Executed real Temporal proof:** [PR #14 run #43980366884](https://github.com/mehdisafer/governed-dataops-agents/actions/runs/43980366884) passed `two_partition_recovery_and_isolation` on two actual Temporal queues (29.409 seconds), including a stopped owner, buffered approved work, other partition progress during saturated admission, lost-response effect reconciliation, worker replica and resumed work. The [post-merge PR #13 source run #43988865699](https://github.com/mehdisafer/governed-dataops-agents/actions/runs/43988865699) again passed governance and the partitioning gate on `9635dbcc`. This is a **bounded, single-host, fixed-partition acceptance**, not broad worker migration or multi-host guarantees.
 
-
-**Mandatory acceptance gap.** The original scope requires preserving business
-invariants when targets are partitioned and workers are added. The
-source-level admission fix from [PR #10](https://github.com/mehdisafer/governed-dataops-agents/pull/10), now merged at `33a8eba`,
-implements independent `(environment, scope)` admission budgets in one durable
-SQLite transaction. The exact source `8ab185f` passed 247 core tests,
-twelve real governance checks, ten container checks and infrastructure checks,
-but its frozen model evaluation still **failed**. Concurrent tests cover two
-scopes, globally immutable event identity and independent capacity recovery.
-This is **not** a dedicated Temporal routing or worker-saturation qualification;
-do not close
-this P0 criterion until the actual workflow/worker/target evidence below exists. The native test
-`two_workers_one_target` proves its specific contention and duplicate-event
-invariants with two workers on one task queue and one target. It does not test
-partitioning or saturation isolation. This requirement remains open; it is not
-conditional on a future deployment choice. Source:
-[results.json](../evidence/qualification-f1e6e2f/results.json).
-
-**Next work.** Define explicit routing and ownership for each target's environment,
-scope and partition, including what happens to in-flight workflows when workers
-are added, restarted or reassigned. Keep incident/event identity and canonical
-effect keys stable across routing changes. Preserve the single durable workflow
-authority, exact signed approval binding to target, scope, plan and revision,
-and reconciliation against the correct target's durable effect journal. A stale
-route, duplicate delivery or ownership overlap must not create another authority
-or authorize an effect on a different partition. Declare how admission and worker
-capacity are allocated so saturation in one partition cannot silently consume
-another partition's entire service capacity.
-
-**Acceptance evidence.** An initial single-host setup with at least two explicit
-target partitions is sufficient to test the requirement; multiple hosts are not
-mandatory. Retain routing/ownership metadata and original histories for concurrent
-partition traffic, worker additions, a restart or reassignment with an approval
-pending, and an ambiguous effect that requires reconciliation. Prove no lost or
-duplicate business effect, no cross-partition mutation or approval reuse, and
-the same row/revision/duplicate invariants before and after the ownership change.
-Saturate one partition while continuing work in the other, with a separately
-declared admission/latency bound and recovery check for each. A second worker on
-the existing shared queue alone does not close this item.
+**Still missing:** shared Qwen/model inference scheduling and latency under one partition's saturation; dynamic repartitioning; cross-build Temporal workflow migration; independent tenant isolation and multi-host availability. Record predeclared per-queue admission/latency/resource bounds and real execution before claiming these behaviors. The selected earlier [single-queue source's two-worker test](../evidence/qualification-f1e6e2f/results.json) remains historical and must not be substituted for the separate executed two-queue trial. See the [current partitioning design](PARTITIONING.md).
 
 ## 6. Retain hosted browser and container qualification without overstating it
 
