@@ -24,6 +24,8 @@ from uuid import uuid4
 
 import httpx
 
+from governed_dataops.model_server_metrics import model_metric_delta, parse_metric_snapshot
+
 ROOT = Path(__file__).resolve().parents[1]
 LOCAL_DOCKER = "unix:///var/run/docker.sock"
 TERMINAL = {"resolved", "contained", "denied", "escalated", "cancelled"}
@@ -750,10 +752,63 @@ class ContainerQualification:
             "secrets_restored_from_database": False,
         }
 
+    def server_metric_snapshot(self, phase: str) -> dict[str, float] | None:
+        """Read allowlisted private llama.cpp counters without exposing its port.
+
+        The model container already enables --metrics. This is a bounded,
+        best-effort diagnostic read, never a prerequisite for safe business
+        effects or a replacement for the original model-quality outcome.
+        """
+        # Unit-boundary tests deliberately construct an isolated qualifier
+        # without a Docker Compose project. Do not invoke the host Docker CLI
+        # when the source-bound reference stack was never configured.
+        if not hasattr(self, "override"):
+            return None
+        script = (
+            "import math, urllib.request\n"
+            "names={'llamacpp:prompt_tokens_total','llamacpp:tokens_predicted_total',"
+            "'llamacpp:prompt_seconds_total','llamacpp:tokens_predicted_seconds_total',"
+            "'llamacpp:requests_processing','llamacpp:requests_deferred'}\n"
+            "body=urllib.request.urlopen('http://127.0.0.1:8090/metrics',timeout=2).read(262145)\n"
+            "if len(body)>262144: raise ValueError('metrics response exceeds bounded size')\n"
+            "for line in body.decode('utf-8').splitlines():\n"
+            " fields=line.strip().split()\n"
+            " if len(fields)!=2 or fields[0] not in names: continue\n"
+            " try: value=float(fields[1])\n"
+            " except ValueError: continue\n"
+            " if math.isfinite(value) and value>=0: print(fields[0],value)\n"
+        )
+        try:
+            result = self.compose(
+                ["exec", "-T", "model", "python", "-c", script],
+                f"model-metrics-{phase}",
+                timeout=10,
+            )
+            samples = parse_metric_snapshot(result.stdout)
+            if not samples:
+                print(
+                    json.dumps({"stage": "model-metrics", "phase": phase, "status": "unavailable"}),
+                    flush=True,
+                )
+                return None
+            return samples
+        except (TimeoutError, OSError, RuntimeError, ValueError) as exc:
+            print(
+                json.dumps({
+                    "stage": "model-metrics",
+                    "phase": phase,
+                    "status": "unavailable",
+                    "error_type": type(exc).__name__,
+                }),
+                flush=True,
+            )
+            return None
+
     def agent_case(self) -> dict:
         # Record partial stages on both success and failure. The real diagnostic
         # timeout and all business-effect assertions remain unchanged.
         started = time.monotonic()
+        server_before = self.server_metric_snapshot("before")
         incident = None
         record = None
         trace = None
@@ -839,18 +894,29 @@ class ContainerQualification:
                 )
             raise
         finally:
+            server_after = self.server_metric_snapshot("after")
             startup = active_stack_startup_seconds(self.records, self.stack)
-            write_json(
-                self.output / "model-latency.json",
-                model_latency_report(
-                    trace,
-                    gate_wall_seconds=time.monotonic() - started,
-                    admission_http_seconds=admission_seconds,
-                    workflow_poll_seconds=poll_seconds,
-                    stack_startup_seconds=startup,
-                    model_cpu_quota=self.args.model_cpus,
-                    failure_type=failure_type,
-                ),
+            report = model_latency_report(
+                trace,
+                gate_wall_seconds=time.monotonic() - started,
+                admission_http_seconds=admission_seconds,
+                workflow_poll_seconds=poll_seconds,
+                stack_startup_seconds=startup,
+                model_cpu_quota=self.args.model_cpus,
+                failure_type=failure_type,
+            )
+            report["model_server_metrics"] = model_metric_delta(server_before, server_after)
+            report["metric_probe_scope"] = "same active restored Docker model stack; bounded internal endpoint"
+            write_json(self.output / "model-latency.json", report)
+            print(
+                json.dumps({
+                    "stage": "model-server-counters",
+                    "status": report["model_server_metrics"]["status"],
+                    "available_counter_count":
+                        report["model_server_metrics"]["available_counter_count"],
+                    "model_cpu_quota": self.args.model_cpus,
+                }),
+                flush=True,
             )
 
     def cleanup(self) -> list[dict]:

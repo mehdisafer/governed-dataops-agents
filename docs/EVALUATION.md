@@ -1,5 +1,32 @@
 # Evaluation and final native evidence
 
+## Experimental llama.cpp server-counter probes — pending runtime evidence
+
+The pinned **llama.cpp b12368** model container already enables `--metrics`.
+A new bounded qualifier now reads six allowlisted numeric Prometheus samples
+**from inside that private container** before and after its real one-case
+model request. It records prompt tokens, generated tokens, prompt-processing
+seconds and prediction seconds as process-wide counter **deltas** when both
+scrapes are available and monotonic, plus before/after request-processing and
+deferred-request gauges. The original client request timing, 90-second model
+deadline, typed evidence checks, business postconditions and failed frozen
+agent-vs-runbook result remain unchanged.
+
+A missing, duplicated, nonfinite, labelled or reset metric is **unknown**,
+not zero; the raw command evidence and failure classifications remain retained.
+Two gauge readings cannot detect a transient queue peak, and aggregate server
+counters cannot establish per-request inference-only latency when other work
+may overlap. No new causal conclusion or model performance benefit is
+claimed until the exact-source hosted container run produces its original
+`model-latency.json` and scanner-safe command logs.
+
+The added metrics do not modify the inference provider, CPU quota,
+generation configuration, retry budget or validation contract. This is
+source-level instrumentation, **not** a completed repeated 2-CPU/4-CPU
+performance experiment or full quality acceptance. The prior raw timed
+results and [issue #16](https://github.com/mehdisafer/governed-dataops-agents/issues/16)
+remain the basis for a prospectively declared reproduction matrix.
+
 ## Acceptance decision
 
 **The frozen native integration run failed full acceptance.** On 14 November
