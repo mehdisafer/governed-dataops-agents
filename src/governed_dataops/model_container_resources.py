@@ -23,6 +23,7 @@ GAUGES = (
 )
 COUNTERS = (*CPU_COUNTERS, *MEMORY_COUNTERS)
 ALLOWED = frozenset((*COUNTERS, *GAUGES))
+MAX_CGROUP_COUNTER = (1 << 64) - 1
 
 # This literal is executed ONLY inside the already-running private model
 # container, after the existing bounded private /metrics scrape. It reads only
@@ -97,6 +98,8 @@ def parse_container_resource_snapshot(text: str) -> dict[str, int]:
         if not (raw.isascii() and raw.isdecimal() and len(raw) <= 20):
             continue
         value = int(raw)
+        if value > MAX_CGROUP_COUNTER:
+            continue
         if name in values:
             duplicates.add(name)
         else:
@@ -158,7 +161,10 @@ def model_container_resource_delta(
             "partial" if measured or any(x["after"] is not None for x in gauges.values())
             else "unavailable"
         ),
-        "resource_scope": "Linux cgroup v2 of the active restored model container",
+        "resource_scope": (
+            "cgroup v2 mount read inside the restored model container; "
+            "mount/namespace attribution not independently verified"
+        ),
         "counter_deltas": deltas,
         "boundary_gauges": gauges,
         "available_counter_count": measured,
@@ -172,6 +178,7 @@ def model_container_resource_delta(
             "Memory current and peak snapshots do not prove the time of peak pressure.",
             "Missing cgroup-v2 fields, reset counters and unavailable quota remain unknown.",
             "Two snapshots cannot establish transient CPU or memory pressure causality.",
+            "The cgroup mount/namespace identity must be independently verified before attributing these counters exclusively to the model container.",
             "No model, timeout, CPU allocation, prompt, retry or policy is modified.",
         ],
     }
