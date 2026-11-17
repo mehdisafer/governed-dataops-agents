@@ -1,6 +1,6 @@
 # Evaluation and final native evidence
 
-## Experimental llama.cpp server-counter probes — pending runtime evidence
+## Experimental llama.cpp server-counter probes — first source-bound runtime observation
 
 The pinned **llama.cpp b12368** model container already enables `--metrics`.
 A new bounded qualifier now reads six allowlisted numeric Prometheus samples
@@ -17,12 +17,21 @@ not zero; the raw command evidence and failure classifications remain retained.
 Two gauge readings cannot detect a transient queue peak, and aggregate server
 counters cannot establish per-request inference-only latency when other work
 may overlap. No new causal conclusion or model performance benefit is
-claimed until the exact-source hosted container run produces its original
-`model-latency.json` and scanner-safe command logs.
+claimed from the first real trial alone. The reviewed [PR #21](https://github.com/mehdisafer/governed-dataops-agents/pull/21) source head `44dabbf`, and its GitHub Actions PR preview `a636933`, have the **identical Git tree** `ce5653bec043df28c90babe30aacfc9c291c3670`, also committed as [`4ec7adb`](https://github.com/mehdisafer/governed-dataops-agents/commit/4ec7adbf204955081a4984afc29166d9c8a8e6f2). The [original full PR run #44161986053](https://github.com/mehdisafer/governed-dataops-agents/actions/runs/44161986053) finished with **core 292 tests, governance, infrastructure and containers SUCCESS, but mandatory model-evaluation FAILED**. The retained [container artifact #14363268796](https://github.com/mehdisafer/governed-dataops-agents/actions/runs/44161986053/artifacts/14363268796) and original job logs report:
+
+- The metrics probe read the restored stack's private model service before and after its real inference, at **2 CPU**.
+- **4/4 counters observed**; `real_local_model_response` **PASS in 69.247s**, while the independent model quality flag remained `diagnostic_quality_passed=false`.
+- The four server counter values are **not quoted** because the connector exposed their availability and artifact metadata, not an independently re-read ZIP payload.
+- The frozen evaluation attempted 10/10 cases, did not satisfy strict action/outcome agreement and demonstrated **no model advantage**. Its exact numerator is not inferred from the job conclusion.
+- The source-corrected PR originally had two fake-qualifier unit failures; it was repaired and all **292 tests** then passed. The old failure reports are retained.
+
+These observations establish a usable measurement pathway, **not** a latency root cause. Neither server queue peaks, request-exclusive inference time, the effect of CPU throttling, nor repeated success rates have been established.
+
+**Independent post-merge result on the same executable Git tree:** [full `main` GitHub Actions #44163668519](https://github.com/mehdisafer/governed-dataops-agents/actions/runs/44163668519) completed with overall **FAILURE**. On exact source [`4ec7adbf`](https://github.com/mehdisafer/governed-dataops-agents/commit/4ec7adbf204955081a4984afc29166d9c8a8e6f2), **core 292 tests/Ruff, governance and infrastructure SUCCESS**, but **containers and frozen model-evaluation FAILED**. The [original container artifact #14363928475](https://github.com/mehdisafer/governed-dataops-agents/actions/runs/44163668519/artifacts/14363928475) and original logs report the same private restored model stack, **2 CPUs, 4/4 counters observed**, and a **failed 94.880s real-model-response gate** (`AssertionError`, empty console reason). It recorded `container_execution=failed`, `diagnostic_quality_passed=false`. By contrast the source-equivalent PR gate had succeeded in **69.247s**. The [original model-evaluation artifact #14364697423](https://github.com/mehdisafer/governed-dataops-agents/actions/runs/44163668519/artifacts/14364697423) retained all ten attempted cases, with strict outcome agreement incomplete and no measured advantage. Exact model numerator and numeric server deltas are not asserted without direct binary artifact inspection. This is **a real same-source reproducibility failure**, not a proven cause or mitigation; no manual paid retry is authorized by these records.
 
 The added metrics do not modify the inference provider, CPU quota,
 generation configuration, retry budget or validation contract. This is
-source-level instrumentation, **not** a completed repeated 2-CPU/4-CPU
+source-level instrumentation and one source-qualified runtime observation, **not** a completed repeated 2-CPU/4-CPU
 performance experiment or full quality acceptance. The prior raw timed
 results and [issue #16](https://github.com/mehdisafer/governed-dataops-agents/issues/16)
 remain the basis for a prospectively declared reproduction matrix.
