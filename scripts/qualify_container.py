@@ -772,17 +772,18 @@ class ContainerQualification:
             return None
         script = (
             "import math, urllib.request\n"
-            "names={'llamacpp:prompt_tokens_total','llamacpp:tokens_predicted_total',"
-            "'llamacpp:prompt_seconds_total','llamacpp:tokens_predicted_seconds_total',"
-            "'llamacpp:requests_processing','llamacpp:requests_deferred'}\n"
-            "body=urllib.request.urlopen('http://127.0.0.1:8090/metrics',timeout=2).read(262145)\n"
-            "if len(body)>262144: raise ValueError('metrics response exceeds bounded size')\n"
-            "for line in body.decode('utf-8').splitlines():\n"
-            " fields=line.strip().split()\n"
-            " if len(fields)!=2 or fields[0] not in names: continue\n"
-            " try: value=float(fields[1])\n"
-            " except ValueError: continue\n"
-            " if math.isfinite(value) and value>=0: print(fields[0],value)\n"
+            "names={'llamacpp:prompt_tokens_total','llamacpp:tokens_predicted_total','llamacpp:prompt_seconds_total','llamacpp:tokens_predicted_seconds_total','llamacpp:requests_processing','llamacpp:requests_deferred'}\n"
+            "try:\n"
+            " body=urllib.request.urlopen('http://127.0.0.1:8090/metrics',timeout=2).read(262145)\n"
+            " if len(body)>262144: raise ValueError('metrics response exceeds bounded size')\n"
+            " for line in body.decode('utf-8').splitlines():\n"
+            "  fields=line.strip().split()\n"
+            "  if len(fields)!=2 or fields[0] not in names: continue\n"
+            "  try: value=float(fields[1])\n"
+            "  except ValueError: continue\n"
+            "  if math.isfinite(value) and value>=0: print(fields[0],value)\n"
+            "except (OSError, ValueError, UnicodeError):\n"
+            " pass\n"
         ) + MODEL_CGROUP_PROBE_SCRIPT
         try:
             result = self.compose(
