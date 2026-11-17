@@ -20,11 +20,11 @@ import tempfile
 import time
 from datetime import UTC, datetime
 from pathlib import Path
-
-from governed_dataops.model_server_metrics import model_metric_delta, parse_metric_snapshot
 from uuid import uuid4
 
 import httpx
+
+from governed_dataops.model_server_metrics import model_metric_delta, parse_metric_snapshot
 
 ROOT = Path(__file__).resolve().parents[1]
 LOCAL_DOCKER = "unix:///var/run/docker.sock"
