@@ -153,6 +153,12 @@ def model_latency_report(
             "api_admission_http": duration(admission_http_seconds),
             "workflow_poll_until_terminal_or_failure": duration(workflow_poll_seconds),
             "diagnostic_call_including_validation": duration(data.get("duration_seconds")),
+            "agent_run_including_native_output_validation": duration(
+                data.get("agent_run_seconds")
+            ),
+            "typed_business_validation": duration(
+                data.get("typed_business_validation_seconds")
+            ),
             "inference_only": None,
             "semantic_validation_only": None,
             "full_agent_gate": duration(gate_wall_seconds),

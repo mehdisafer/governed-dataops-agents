@@ -317,21 +317,33 @@ async def diagnose(
                     model_settings=parameters,
                 )
                 trace["request_attempted"] = True
-                result = await agent.run(
-                    context,
-                    usage=usage,
-                    usage_limits=UsageLimits(
-                        request_limit=2,
-                        tool_calls_limit=0,
-                        output_tokens_limit=settings.model_max_tokens * 2,
-                        input_tokens_limit=20_000,
-                    ),
-                    timeout=settings.model_timeout_seconds,
-                )
+                agent_run_started = time.monotonic()
+                try:
+                    result = await agent.run(
+                        context,
+                        usage=usage,
+                        usage_limits=UsageLimits(
+                            request_limit=2,
+                            tool_calls_limit=0,
+                            output_tokens_limit=settings.model_max_tokens * 2,
+                            input_tokens_limit=20_000,
+                        ),
+                        timeout=settings.model_timeout_seconds,
+                    )
+                finally:
+                    trace["agent_run_seconds"] = round(
+                        time.monotonic() - agent_run_started, 6
+                    )
                 run_completed = True
                 diagnosis = result.output
                 trace["model_proposal"] = diagnosis.model_dump(mode="json")
-                validate_diagnosis(diagnosis, evidence)
+                validation_started = time.monotonic()
+                try:
+                    validate_diagnosis(diagnosis, evidence)
+                finally:
+                    trace["typed_business_validation_seconds"] = round(
+                        time.monotonic() - validation_started, 6
+                    )
                 trace["diagnosis_valid"] = True
                 trace["response_sha256"] = _hash(diagnosis.model_dump_json())
                 return diagnosis, trace

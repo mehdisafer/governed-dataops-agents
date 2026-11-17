@@ -27,6 +27,8 @@ def test_stage_report_records_only_measured_numbers_and_not_raw_model_text():
         "response_observed": True,
         "diagnosis_valid": False,
         "duration_seconds": 86.75,
+        "agent_run_seconds": 86.5,
+        "typed_business_validation_seconds": 0.0012,
         "client_model_slot_wait_seconds": 0.035,
         "untrusted_text": "THIS_STRING_MUST_NOT_LEAK_IN_THE_REPORT",
     }
@@ -45,6 +47,8 @@ def test_stage_report_records_only_measured_numbers_and_not_raw_model_text():
     stages = report["segments_seconds"]
     assert stages["client_model_slot_wait"] == 0.035
     assert stages["diagnostic_call_including_validation"] == 86.75
+    assert stages["agent_run_including_native_output_validation"] == 86.5
+    assert stages["typed_business_validation"] == 0.0012
     assert stages["full_agent_gate"] == 92.125
     assert stages["model_only_startup_readiness"] is None
     assert stages["server_internal_queue_wait"] is None
