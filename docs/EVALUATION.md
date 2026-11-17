@@ -39,7 +39,31 @@ recovery, diagnostic availability, diagnostic quality, operator experience and
 comparative benefit therefore remain separate acceptance questions. The next
 work is recorded in [BACKLOG.md](BACKLOG.md).
 
-## 17 November 2026 — original hosted model artifact forensic readback
+## Latest source-bound frozen result and instrumentation — 17 November 2026
+
+The most recent qualified application source on [PR #17](https://github.com/mehdisafer/governed-dataops-agents/pull/17) is `e81309b300b579f60298b77d6202ac67ea843ae4`, merged into public `main` as [`263a6c1c7226`](https://github.com/mehdisafer/governed-dataops-agents/commit/263a6c1c72260c7be6ba7ba7aeb1a4a891b7f41f). Its actual [GitHub Actions run #43990582623](https://github.com/mehdisafer/governed-dataops-agents/actions/runs/43990582623) ran a temporary merge-preview with **the identical Git tree** and completed all four platform jobs successfully, but the mandatory `model-evaluation` **failed**. Original model/case artifacts were downloaded; every attempted case remains in the denominator.
+
+| Frozen measure (this source only) | Runbook | Local model |
+|---|---:|---:|
+| Cases attempted / final observations | 10/10 | 10/10 |
+| Completed model responses observed | N/A | 10/10 |
+| Strict correct category/action/outcome | **10/10** | **6/10** |
+| Verified resolved business cases | 6 | 3 |
+| Case wall median | 4.5788 s | 25.63055 s |
+| Nearest-rank p95 case wall | 9.059 s | 43.323 s |
+| Observed unjustified/unknown effects | 0 | 0 |
+
+Original [frozen evaluation artifact #14288370568](https://github.com/mehdisafer/governed-dataops-agents/actions/runs/43990582623/artifacts/14288370568) retains the individual outcomes and nine usage-complete agent cases. There was **no demonstrated agent advantage** over the already competent runbook. The earlier guarded 7/10, unguarded 7/10, native 2/10 and hosted 1/10 are separate, independently dated/source-identified runs; do **not** compare them as controlled model improvements or average them.
+
+[Original real-container artifact #14288017124](https://github.com/mehdisafer/governed-dataops-agents/actions/runs/43990582623/artifacts/14288017124) shows a response observed but semantic quality failure, a full agent gate of **69.936369s**, `Agent.run` inclusive of transport/native-output validation **67.004099s**, and correct restored-stack startup **17.568490s**. The original startup attribution bug incorrectly used the first stack; PR #17 corrected and requalified it on an actual restored stack. Queue wait in llama.cpp, first-token and inference-only timing have not been observed and are **not inferred** by subtraction. The measurement changes did not alter the model, prompt, timeout, provider or deterministic policy.
+
+**Independent post-merge `main` proof:** [GitHub Actions run #43992090061](https://github.com/mehdisafer/governed-dataops-agents/actions/runs/43992090061) completed on exact merged source `263a6c1c72260c7be6ba7ba7aeb1a4a891b7f41f`. **Core 284 tests/Ruff, Governance, Containers (ten platform checks) and Infrastructure all SUCCESS; model-evaluation FAILED**, so overall workflow conclusion was **failure**. The [original mainline model artifact #14288013914](https://github.com/mehdisafer/governed-dataops-agents/actions/runs/43992090061/artifacts/14288013914) was downloaded and its original `comparison.json` verified (ZIP integrity PASS, 120 entries, SHA-256 `dd572cb2572d0b5ecc9e55c127522655a47104a24881db7adf691098934744e8`): runbook **10/10**, model **6/10** strict, all ten responses observed, **model resolved 2**, runbook resolved **6**; model case median/p95 **24.6661/28.0617s**, runbook **3.93485/6.2401s**, and zero observed unjustified/unknown effects. These are distinct measurements from the PR-head 6/10 run, which resolved three rather than two cases. Both remain failures of the unwaived value criterion.
+
+[Original mainline container #14287384372](https://github.com/mehdisafer/governed-dataops-agents/actions/runs/43992090061/artifacts/14287384372) was also downloaded and integrity-checked (146 entries, SHA-256 `38ea1171dbfb9ed3feeeff89b88149d83a9934b017f3d322976220c82632333a`). Its source remained unchanged, credential scan passed, ten platform checks passed and semantic `diagnostic_quality_passed=false`. `commands.json` confirms initial stack **17.926662s**, restored stack **18.077121s**; `model-latency.json` correctly selects the **18.077121s restored stack**, with full agent gate **66.719662s**, inclusive `Agent.run` **63.465644s**, client slot wait **0.000016s** and independent typed business validation **0.000022s**. Inference-only and llama.cpp server queue time remain null/unobserved.
+
+[Issue #16](https://github.com/mehdisafer/governed-dataops-agents/issues/16) remains open for root-cause/repetition matrix; [issue #1](https://github.com/mehdisafer/governed-dataops-agents/issues/1) remains open for full value acceptance.
+
+## Earlier original hosted model artifact forensic readback — 17 November 2026
 
 A later, separately executed GitHub Actions [run #43976640653](https://github.com/mehdisafer/governed-dataops-agents/actions/runs/43976640653), source `8ab185fe2daf28624bba9bee47eca03920b154de`, retained original model-evaluation artifact **14281900580**. The raw ZIP was downloaded and `comparison.json`, ten `cases-heldout-agent.json` entries and `failed-cases-heldout-agent.json` were inspected. Its source and environment are distinct from the dated original native run described below.
 
@@ -59,7 +83,7 @@ The model's three strict failures are **heldout-06 freshness, heldout-07 transie
 
 The new **necessary-precondition guard** prepared under [issue #12](https://github.com/mehdisafer/governed-dataops-agents/issues/12) is a *safety* correction: it rejects an impossible model category/action and allows explicit `unknown/escalate`. It never supplies the runbook's answer as a model fallback or changes historical scores. The old frozen corpus is **now inspected** and cannot become a new unseen acceptance set after tuning. Before model/prompt/runtime optimization, reserve a prospective evaluation v2 and keep both historical failures, new 7/10 result and all attempted cases. The strict advantage criterion remains unmet: the runbook was 10/10.
 
-## Current guarded-source forensic comparison — 17 November 2026
+## Earlier guarded-source forensic comparison — 17 November 2026
 
 The trusted typed-snapshot/category-action guard was merged via
 [security PR #13](https://github.com/mehdisafer/governed-dataops-agents/pull/13)

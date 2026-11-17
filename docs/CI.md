@@ -2,7 +2,19 @@
 
 This repository has two independent CI providers. The results below are deliberately scoped to the **observed run's source SHA**. The unit check is now successful on an observed `main` SHA, and the separate container platform profile has passed on its recorded branch SHA. These scoped results do **not** establish model diagnostic value or production readiness.
 
-## Latest post-merge source-bound CI — 17 November 2026
+## Latest PR #17 instrumentation: exact-tree CI and non-acceptance — 17 November 2026
+
+The last runtime-qualified `main` revision is [`263a6c1c7226`](https://github.com/mehdisafer/governed-dataops-agents/commit/263a6c1c72260c7be6ba7ba7aeb1a4a891b7f41f), integrating [PR #17](https://github.com/mehdisafer/governed-dataops-agents/pull/17) after concurrent docs-only changes. [GitHub Actions #43990582623](https://github.com/mehdisafer/governed-dataops-agents/actions/runs/43990582623) ran the preview commit `158e52c5`, **identical Git tree** `77c18f708010dc51687d5e6022000eb6a05f4d18` to PR source `e81309b`: Core **284 tests/Ruff PASS**, Governance **PASS**, Containers **10/10 platform PASS**, Infrastructure **PASS**, and **model-evaluation FAILED** (runbook 10/10, local agent 6/10 with ten actual responses). CircleCI build/test and publication-security both passed on `e81309b`. This is a **failed overall agent-value acceptance**, not an infrastructure test error.
+
+The original [container artifact #14288017124](https://github.com/mehdisafer/governed-dataops-agents/actions/runs/43990582623/artifacts/14288017124) independently confirms `model-latency.json` now attributes **17.568490s** startup to the *restored stack used by inference*, not the initial stack's **18.442006s**. The prior misattribution was fixed and real-run verified without increasing model timeout or changing model outputs. The original frozen [evaluation artifact #14288370568](https://github.com/mehdisafer/governed-dataops-agents/actions/runs/43990582623/artifacts/14288370568) retains failures and all ten cases.
+
+**Independent post-merge `main` proof:** [GitHub Actions run #43992090061](https://github.com/mehdisafer/governed-dataops-agents/actions/runs/43992090061) completed on exact merged source `263a6c1c72260c7be6ba7ba7aeb1a4a891b7f41f`. **Core 284 tests/Ruff, Governance, Containers (ten platform checks) and Infrastructure all SUCCESS; model-evaluation FAILED**, so overall workflow conclusion was **failure**. The [original mainline model artifact #14288013914](https://github.com/mehdisafer/governed-dataops-agents/actions/runs/43992090061/artifacts/14288013914) was downloaded and its original `comparison.json` verified (ZIP integrity PASS, 120 entries, SHA-256 `dd572cb2572d0b5ecc9e55c127522655a47104a24881db7adf691098934744e8`): runbook **10/10**, model **6/10** strict, all ten responses observed, **model resolved 2**, runbook resolved **6**; model case median/p95 **24.6661/28.0617s**, runbook **3.93485/6.2401s**, and zero observed unjustified/unknown effects. These are distinct measurements from the PR-head 6/10 run, which resolved three rather than two cases. Both remain failures of the unwaived value criterion.
+
+[Original mainline container #14287384372](https://github.com/mehdisafer/governed-dataops-agents/actions/runs/43992090061/artifacts/14287384372) was also downloaded and integrity-checked (146 entries, SHA-256 `38ea1171dbfb9ed3feeeff89b88149d83a9934b017f3d322976220c82632333a`). Its source remained unchanged, credential scan passed, ten platform checks passed and semantic `diagnostic_quality_passed=false`. `commands.json` confirms initial stack **17.926662s**, restored stack **18.077121s**; `model-latency.json` correctly selects the **18.077121s restored stack**, with full agent gate **66.719662s**, inclusive `Agent.run` **63.465644s**, client slot wait **0.000016s** and independent typed business validation **0.000022s**. Inference-only and llama.cpp server queue time remain null/unobserved.
+
+
+
+## Previous guarded-source post-merge CI — 17 November 2026
 
 After [security PR #13](https://github.com/mehdisafer/governed-dataops-agents/pull/13),
 the exact `main` SHA `9635dbccfe8cfd168f14ee9380eeb1f03e105a0c`

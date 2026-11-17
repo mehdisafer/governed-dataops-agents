@@ -1,6 +1,18 @@
 # Remaining acceptance work
 
-## Starting point and rules
+## Current post-instrumentation P0 status — 17 November 2026
+
+[PR #17](https://github.com/mehdisafer/governed-dataops-agents/pull/17) merged as [`263a6c1c7226`](https://github.com/mehdisafer/governed-dataops-agents/commit/263a6c1c72260c7be6ba7ba7aeb1a4a891b7f41f). The original [GitHub Actions #43990582623](https://github.com/mehdisafer/governed-dataops-agents/actions/runs/43990582623) qualified the exact PR source tree: **Core 284 tests/Ruff, native governance (including fixed two-queue Temporal), ten container checks, Infrastructure, and both CircleCI source/security jobs PASS**. The mandatory **model evaluation FAILED: agent 6/10 versus runbook 10/10**, ten responses observed, no measured advantage. This is an instrumentation improvement, not a candidate that meets agent quality. Historical independent model scores 7/10 (twice on different sources), 2/10 and 1/10 remain original failed/limited records, not a pooled trend.
+
+The corrected `model-latency.json` now attributes **17.568490s** to the active *restored* Compose stack rather than the first project's startup, while documenting total agent gate **69.936369s**, inclusive `Agent.run` **67.004099s**, and explicitly unknown inference-only/server-queue timings. Provenance and partial-failure reporting have improved; **no model server root cause, p95 reliability distribution, prospective unseen evaluation v2 or model-value benefit has been demonstrated**.
+
+**Independent post-merge `main` proof:** [GitHub Actions run #43992090061](https://github.com/mehdisafer/governed-dataops-agents/actions/runs/43992090061) completed on exact merged source `263a6c1c72260c7be6ba7ba7aeb1a4a891b7f41f`. **Core 284 tests/Ruff, Governance, Containers (ten platform checks) and Infrastructure all SUCCESS; model-evaluation FAILED**, so overall workflow conclusion was **failure**. The [original mainline model artifact #14288013914](https://github.com/mehdisafer/governed-dataops-agents/actions/runs/43992090061/artifacts/14288013914) was downloaded and its original `comparison.json` verified (ZIP integrity PASS, 120 entries, SHA-256 `dd572cb2572d0b5ecc9e55c127522655a47104a24881db7adf691098934744e8`): runbook **10/10**, model **6/10** strict, all ten responses observed, **model resolved 2**, runbook resolved **6**; model case median/p95 **24.6661/28.0617s**, runbook **3.93485/6.2401s**, and zero observed unjustified/unknown effects. These are distinct measurements from the PR-head 6/10 run, which resolved three rather than two cases. Both remain failures of the unwaived value criterion.
+
+[Original mainline container #14287384372](https://github.com/mehdisafer/governed-dataops-agents/actions/runs/43992090061/artifacts/14287384372) was also downloaded and integrity-checked (146 entries, SHA-256 `38ea1171dbfb9ed3feeeff89b88149d83a9934b017f3d322976220c82632333a`). Its source remained unchanged, credential scan passed, ten platform checks passed and semantic `diagnostic_quality_passed=false`. `commands.json` confirms initial stack **17.926662s**, restored stack **18.077121s**; `model-latency.json` correctly selects the **18.077121s restored stack**, with full agent gate **66.719662s**, inclusive `Agent.run` **63.465644s**, client slot wait **0.000016s** and independent typed business validation **0.000022s**. Inference-only and llama.cpp server queue time remain null/unobserved.
+
+Continue [latency investigation #16](https://github.com/mehdisafer/governed-dataops-agents/issues/16), strict [V1 #1](https://github.com/mehdisafer/governed-dataops-agents/issues/1), and the separate fixed-partition versus shared-model saturation limits. No budget change, provider fallback or unapproved production deployment was made.
+
+## Historical starting point and rules
 
 The clean native integration run on
 `f1e6e2f3800242ec210145680261da8ab60f38b4` finished with **14/18 selected gates passing**
