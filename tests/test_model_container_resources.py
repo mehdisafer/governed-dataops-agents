@@ -37,8 +37,8 @@ def test_model_cgroup_parser_is_allowlisted_and_does_not_echo_untrusted_data():
 
 def test_oversized_unsigned_cgroup_counter_is_not_accepted():
     source = (
-        f"gda:cgroup_cpu_usage_usec {MAX_CGROUP_COUNTER + 1}\\n"
-        "gda:cgroup_cpu_nr_periods 7\\n"
+        f"gda:cgroup_cpu_usage_usec {MAX_CGROUP_COUNTER + 1}\n"
+        "gda:cgroup_cpu_nr_periods 7\n"
     )
     # The kernel's unsigned 64-bit counter range is the upper boundary.
     # A parsable 20-digit value beyond that range is corrupt/unsupported.
