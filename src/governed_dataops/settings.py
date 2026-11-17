@@ -20,7 +20,10 @@ class Settings(BaseModel):
     target_timeout_seconds: float = Field(default=10, gt=0, le=120)
     temporal_address: str = "127.0.0.1:7233"
     temporal_namespace: str = "default"
-    task_queue: str = "governed-dataops-v1"
+    task_queue: Identifier = "governed-dataops-v1"
+    partition_count: int = Field(default=1, ge=1, le=8)
+    partition_admission_limit: int | None = Field(default=None, ge=1, le=256)
+    worker_partition: int | None = Field(default=None, ge=0, le=7)
     reader_token: str = Field(default="", repr=False)
     executor_token: str = Field(default="", repr=False)
     operator_token: str = Field(default="", repr=False)
@@ -79,6 +82,17 @@ class Settings(BaseModel):
             raise ValueError("role identities must be distinct")
         if not self.environment.strip() or not self.scope.strip():
             raise ValueError("environment and scope are required")
+        if self.partition_count > 1:
+            if self.partition_admission_limit is None:
+                raise ValueError("partition_admission_limit is required for multiple partitions")
+            if self.partition_count * self.partition_admission_limit > self.max_pending_incidents:
+                raise ValueError("global admission must reserve a full quota for each partition")
+            if len(self.task_queue) > 90:
+                raise ValueError("task_queue is too long for a partition suffix")
+        elif self.partition_admission_limit is not None:
+            raise ValueError("partition_admission_limit requires multiple partitions")
+        if self.worker_partition is not None and self.worker_partition >= self.partition_count:
+            raise ValueError("worker_partition must refer to a configured partition")
         return self
 
     def principal(self, role: str):

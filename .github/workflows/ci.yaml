@@ -100,11 +100,15 @@ jobs:
           uv run python scripts/bootstrap_runtime.py --component temporal --destination var/runtime
       - name: Qualify policy, recovery, business effects, restore and console
         run: uv run python scripts/qualify.py --manifest var/runtime/provisioning.json --output evidence/runs/governance --profile governance --count 12 --concurrency 4 --source-commit "$GITHUB_SHA"
+      - name: Qualify two real Temporal partitions, worker recovery and admission isolation
+        run: uv run python scripts/qualify.py --manifest var/runtime/provisioning.json --output evidence/runs/partitioning --profile partitioning --source-commit "$GITHUB_SHA"
       - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         if: always()
         with:
           name: governance-evidence-${{ github.sha }}
-          path: evidence/runs/governance/
+          path: |
+            evidence/runs/governance/
+            evidence/runs/partitioning/
           retention-days: 14
 
   model-evaluation:

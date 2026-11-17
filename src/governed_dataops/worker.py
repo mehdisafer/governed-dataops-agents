@@ -9,12 +9,16 @@ from temporalio.contrib.pydantic import pydantic_data_converter
 from temporalio.worker import Worker
 
 from governed_dataops.activities import Activities
+from governed_dataops.routing import queue_for_worker
 from governed_dataops.settings import Settings, get_settings
 from governed_dataops.workflow import IncidentWorkflow
 
 
 async def create_worker(settings: Settings | None = None) -> Worker:
     settings = settings or get_settings()
+    assigned_queue = queue_for_worker(
+        settings.task_queue, settings.partition_count, settings.worker_partition
+    )
     client = await Client.connect(
         settings.temporal_address,
         namespace=settings.temporal_namespace,
@@ -23,7 +27,7 @@ async def create_worker(settings: Settings | None = None) -> Worker:
     activities = Activities(settings)
     return Worker(
         client,
-        task_queue=settings.task_queue,
+        task_queue=assigned_queue,
         workflows=[IncidentWorkflow],
         activities=activities.registered(),
         max_concurrent_activities=settings.worker_concurrency,
