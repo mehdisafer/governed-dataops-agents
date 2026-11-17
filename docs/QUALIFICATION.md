@@ -2,6 +2,17 @@
 
 Updated 17 November 2026. **Platform execution is qualified for the declared synthetic reference checks; full agent-value acceptance is withheld.** A green container workflow verifies its declared infrastructure/effect gates, not comparative diagnosis quality. The original [acceptance issue #1](https://github.com/mehdisafer/governed-dataops-agents/issues/1) remains open. No accepted stable V1 or production-readiness claim follows from the passing subset.
 
+## New server-metric evidence — PR #21, 17 November 2026
+
+| Source and exact execution | Reported result | Limit |
+| --- | --- | --- |
+| [PR head `44dabbf`](https://github.com/mehdisafer/governed-dataops-agents/commit/44dabbf19de9c223027627a8e493a6ca63490c4a), preview `a636933` (same tree `ce5653be`) | [GitHub Actions #44161986053](https://github.com/mehdisafer/governed-dataops-agents/actions/runs/44161986053): **core 292 tests, governance, infrastructure, containers SUCCESS; model-evaluation FAILED** | Process execution and independent agent-quality criterion must remain separate |
+| Original real [container artifact #14363268796](https://github.com/mehdisafer/governed-dataops-agents/actions/runs/44161986053/artifacts/14363268796) | Private restored-stack llama.cpp metrics **4/4 cumulative counters observed** at **2 CPU**; model-response gate **69.247s**; `container_execution=passed`, `diagnostic_quality_passed=false` | Individual numeric deltas in binary artifact not independently inspected through this connector; no inference-only or server queue peak claim |
+| Original [model-evaluation artifact #14363284141](https://github.com/mehdisafer/governed-dataops-agents/actions/runs/44161986053/artifacts/14363284141) | **FAILED**: all 10 agent cases attempted, strict agreement and measured advantage absent | Do not infer an exact 0–10 numerator without independently reading its original comparison data |
+| [Merged `main` `4ec7adbf`](https://github.com/mehdisafer/governed-dataops-agents/commit/4ec7adbf204955081a4984afc29166d9c8a8e6f2) | [Full GitHub Actions #44163668519](https://github.com/mehdisafer/governed-dataops-agents/actions/runs/44163668519) initiated; source tree identical to PR head | At last observation core and infrastructure passed; final independent run status not yet established |
+
+The observed server counters improve visibility into prompt/generation workload but are process-wide and only two snapshots. They do not identify the cause of intermittent 2-CPU response delays. The 90-second model deadline, constrained actions, original business checks and existing evaluation failures remain unchanged. [Issues #16](https://github.com/mehdisafer/governed-dataops-agents/issues/16) and [#1](https://github.com/mehdisafer/governed-dataops-agents/issues/1) stay OPEN.
+
 ## Most recent source-integrated qualification — 17 November 2026
 
 Merged [PR #17](https://github.com/mehdisafer/governed-dataops-agents/pull/17) established qualified runtime `main` revision [`263a6c1c7226`](https://github.com/mehdisafer/governed-dataops-agents/commit/263a6c1c72260c7be6ba7ba7aeb1a4a891b7f41f). Its testable instrumentation head [`e81309b`](https://github.com/mehdisafer/governed-dataops-agents/commit/e81309b300b579f60298b77d6202ac67ea843ae4) and the reviewed GitHub Actions merge-preview `158e52c5` share identical Git tree `77c18f708010dc51687d5e6022000eb6a05f4d18`. [Original GitHub Actions #43990582623](https://github.com/mehdisafer/governed-dataops-agents/actions/runs/43990582623) and the two CircleCI checks were inspected.
