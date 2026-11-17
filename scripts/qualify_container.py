@@ -24,6 +24,11 @@ from uuid import uuid4
 
 import httpx
 
+from governed_dataops.model_container_resources import (
+    MODEL_CGROUP_PROBE_SCRIPT,
+    model_container_resource_delta,
+    parse_container_resource_snapshot,
+)
 from governed_dataops.model_server_metrics import model_metric_delta, parse_metric_snapshot
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -235,6 +240,7 @@ class ContainerQualification:
         self.images = []
         self.tokens = {}
         self.records = []
+        self._resource_snapshots = {}
         self.checks = []
         self.command_index = 0
         self.client = httpx.Client(
@@ -777,7 +783,7 @@ class ContainerQualification:
             " try: value=float(fields[1])\n"
             " except ValueError: continue\n"
             " if math.isfinite(value) and value>=0: print(fields[0],value)\n"
-        )
+        ) + MODEL_CGROUP_PROBE_SCRIPT
         try:
             result = self.compose(
                 ["exec", "-T", "model", "python", "-c", script],
@@ -785,6 +791,13 @@ class ContainerQualification:
                 timeout=10,
             )
             samples = parse_metric_snapshot(result.stdout)
+            # One private exec samples both optional metric and cgroup sources.
+            # No missing cgroup observation is converted into zero usage.
+            resources = parse_container_resource_snapshot(result.stdout)
+            if resources:
+                if not hasattr(self, "_resource_snapshots"):
+                    self._resource_snapshots = {}
+                self._resource_snapshots[phase] = resources
             if not samples:
                 print(
                     json.dumps({"stage": "model-metrics", "phase": phase, "status": "unavailable"}),
@@ -906,7 +919,12 @@ class ContainerQualification:
                 failure_type=failure_type,
             )
             report["model_server_metrics"] = model_metric_delta(server_before, server_after)
+            resources = getattr(self, "_resource_snapshots", {})
+            report["model_container_resources"] = model_container_resource_delta(
+                resources.get("before"), resources.get("after")
+            )
             report["metric_probe_scope"] = "same active restored Docker model stack; bounded internal endpoint"
+            report["resource_probe_scope"] = "same private model-container exec; cgroup v2 if available"
             write_json(self.output / "model-latency.json", report)
             print(
                 json.dumps({
@@ -915,6 +933,15 @@ class ContainerQualification:
                     "available_counter_count":
                         report["model_server_metrics"]["available_counter_count"],
                     "model_cpu_quota": self.args.model_cpus,
+                }),
+                flush=True,
+            )
+            print(
+                json.dumps({
+                    "stage": "model-container-cgroup",
+                    "status": report["model_container_resources"]["status"],
+                    "available_counter_count":
+                        report["model_container_resources"]["available_counter_count"],
                 }),
                 flush=True,
             )
