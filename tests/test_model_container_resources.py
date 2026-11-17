@@ -173,7 +173,7 @@ def test_server_metric_unavailable_can_still_retain_cgroup_observation():
     )
     qualifier.override = Path("/tmp/isolated-fake-compose-override.json")
     qualifier.compose = lambda args, label, **kwargs: subprocess.CompletedProcess(
-        args, 0, "gda:cgroup_cpu_usage_usec 123456\\n", ""
+        args, 0, "gda:cgroup_cpu_usage_usec 123456\n", ""
     )
     # Server-only evidence is missing but independent cgroup evidence is real
     # data from this bounded synthetic output, not fabricated zero usage.
