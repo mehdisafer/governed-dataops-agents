@@ -80,6 +80,28 @@ probes, denominators, stop conditions and explicit authorization veto.
 It has **not been executed**. No sample-level reliability distribution,
 mitigation or completed V1 acceptance is claimed.
 
+## Candidate cgroup-v2 resource probe — source only, not runtime-qualified
+
+The staged Python helper `model_container_resources.py` is designed to read
+read-only, allowlisted Linux cgroup-v2 `cpu.stat`, `cpu.max`,
+`memory.current`, `memory.peak` and `memory.events` **inside the private
+model container**. It appends the observation to the **existing** internal
+llama.cpp metric probe, so it does not add a second Docker exec at either
+boundary. Its proposed `model-latency.json` field is
+`model_container_resources`, containing raw before/after numeric gauges,
+counter deltas, reset indicators and a conditional observed CPU quota /
+throttled-period fraction.
+
+**Code and isolated unit tests are proposed; real container support and
+values are NOT yet observed or validated.** Files absent under a different
+cgroup layout remain unknown. The cgroup probes measure the whole model
+container, including any probe overhead; they do not establish
+request-exclusive inference, causal CPU throttling, peak memory pressure
+or server queue delay. The 2-CPU quota and 90-second diagnostic deadline
+are unchanged. Review the [preregistered trial
+protocol](MODEL_LATENCY_TRIAL_PROTOCOL.md) before any deliberate repeated
+CI/model execution.
+
 ## Qualification protocol
 
 - Build from a clean recorded commit, run the existing bounded container
