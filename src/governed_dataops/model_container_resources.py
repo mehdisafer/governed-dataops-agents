@@ -92,7 +92,9 @@ def parse_container_resource_snapshot(text: str) -> dict[str, int]:
         if len(fields) != 2 or fields[0] not in ALLOWED:
             continue
         name, raw = fields
-        if not raw.isdecimal():
+        # Cgroup counters fit unsigned machine integers. Arbitrarily long or
+        # non-ASCII output must not trigger a parser exception in the qualifier.
+        if not (raw.isascii() and raw.isdecimal() and len(raw) <= 20):
             continue
         value = int(raw)
         if name in values:
