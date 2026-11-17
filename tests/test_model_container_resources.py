@@ -161,6 +161,29 @@ def test_existing_private_model_scrape_reuses_one_exec_for_both_sources():
     assert "/metrics" in args[-1] and "/sys/fs/cgroup/cpu.stat" in args[-1]
     assert label == "model-metrics-before"
     assert kwargs == {"timeout": 10}
+    # Verify the exact concatenated Python probe can compile without Docker.
+    compile(args[-1], "<private-model-and-cgroup-probe>", "exec")
+
+
+def test_server_metric_unavailable_can_still_retain_cgroup_observation():
+    qualifier = object.__new__(
+        runpy.run_path(str(ROOT / "scripts" / "qualify_container.py"))[
+            "ContainerQualification"
+        ]
+    )
+    qualifier.override = Path("/tmp/isolated-fake-compose-override.json")
+    qualifier.compose = lambda args, label, **kwargs: subprocess.CompletedProcess(
+        args, 0, "gda:cgroup_cpu_usage_usec 123456\\n", ""
+    )
+    # Server-only evidence is missing but independent cgroup evidence is real
+    # data from this bounded synthetic output, not fabricated zero usage.
+    assert qualifier.server_metric_snapshot("after") is None
+    assert qualifier._resource_snapshots["after"] == {
+        "gda:cgroup_cpu_usage_usec": 123456
+    }
+    assert model_container_resource_delta(
+        None, qualifier._resource_snapshots["after"]
+    )["status"] == "unavailable"
 
 
 def test_without_docker_override_model_and_cgroup_remain_unavailable():
