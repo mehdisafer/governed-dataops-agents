@@ -759,6 +759,11 @@ class ContainerQualification:
         best-effort diagnostic read, never a prerequisite for safe business
         effects or a replacement for the original model-quality outcome.
         """
+        # Unit-boundary tests deliberately construct an isolated qualifier
+        # without a Docker Compose project. Do not invoke the host Docker CLI
+        # when the source-bound reference stack was never configured.
+        if not hasattr(self, "override"):
+            return None
         script = (
             "import math, urllib.request\n"
             "names={'llamacpp:prompt_tokens_total','llamacpp:tokens_predicted_total',"

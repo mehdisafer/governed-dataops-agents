@@ -105,6 +105,7 @@ def _container_qualifier_without_docker():
 
 def test_private_container_probe_emits_only_allowlisted_counter_values():
     qualifier = _container_qualifier_without_docker()
+    qualifier.override = Path("/tmp/synthetic-compose-override.json")
     calls = []
 
     def fake_compose(args, label, **kwargs):
@@ -135,6 +136,7 @@ def test_private_container_probe_emits_only_allowlisted_counter_values():
 
 def test_unavailable_private_metric_scrape_does_not_disrupt_evaluation():
     qualifier = _container_qualifier_without_docker()
+    qualifier.override = Path("/tmp/synthetic-compose-override.json")
 
     def offline(*_args, **_kwargs):
         raise TimeoutError("synthetic, bounded probe failure")
@@ -142,3 +144,10 @@ def test_unavailable_private_metric_scrape_does_not_disrupt_evaluation():
     qualifier.compose = offline
     assert qualifier.server_metric_snapshot("after") is None
     assert model_metric_delta(None, None)["status"] == "unavailable"
+
+
+def test_isolated_existing_unit_qualifier_without_docker_never_calls_compose():
+    qualifier = _container_qualifier_without_docker()
+    # Existing model-quality unit tests provide no Docker project/override.
+    # This optional metrics probe must not mask their original failures.
+    assert qualifier.server_metric_snapshot("before") is None
