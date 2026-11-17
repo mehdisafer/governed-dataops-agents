@@ -47,6 +47,39 @@ not duplicate raw prompt, untrusted logs, credentials, model proposals or
 tokens. The separate original trace remains available in the scoped
 `model-quality.json` and incident records where collected.
 
+## Post-merge source-matched evidence — 17 November 2026
+
+[PR #21's original hosted run #44161986053](https://github.com/mehdisafer/governed-dataops-agents/actions/runs/44161986053)
+and the [merged-main run #44163668519](https://github.com/mehdisafer/governed-dataops-agents/actions/runs/44163668519)
+used the **same executable Git tree** at an explicit **2-CPU** model quota.
+The former returned within the **69.247-second gate**; the latter
+**failed the 94.880-second gate** with client `Agent.run` timed out
+at **90.003133 s**. This is observed variability, not a proven cause.
+
+The original mainline ZIP was independently checked and its readback
+recorded in [issue #16](https://github.com/mehdisafer/governed-dataops-agents/issues/16).
+Its **process-wide** llama.cpp counters changed by **721 prompt tokens /
+72.4677 cumulative seconds** and **65 predicted tokens /
+17.8181 cumulative seconds**, with all four cumulative counters
+available. The two boundary queue gauges were zero. These counters
+do not prove that every recorded server microsecond belonged to this
+client request, and two zero endpoint gauges do not exclude an
+intervening queue. The measured client model-slot wait was
+**0.000023 s**; typed-business validation was not reached on the
+timeout and must remain null.
+
+The independent full model-evaluation job on the merged main source
+also failed strict **model quality/value**, despite ten completed
+responses in that separate run (**8/10** strict agent cases versus
+**10/10** for the runbook). Container model availability and frozen
+business-value acceptance must not be conflated.
+
+The [prospective 2-CPU trial protocol](MODEL_LATENCY_TRIAL_PROTOCOL.md)
+preregisters four new source-frozen runs, the needed resource/CPU
+probes, denominators, stop conditions and explicit authorization veto.
+It has **not been executed**. No sample-level reliability distribution,
+mitigation or completed V1 acceptance is claimed.
+
 ## Qualification protocol
 
 - Build from a clean recorded commit, run the existing bounded container
@@ -64,9 +97,13 @@ tokens. The separate original trace remains available in the scoped
 - Do not compute p95 from a few anecdotes or claim an inferred model-server
   queue time from the total elapsed and client-side wait.
 
-**Still unverified:** internal server queue time, startup time specific to the
-model service, separate model prefill/token generation and native structured-
-output validation, and whether variation comes from runner contention, model
-service execution or other stages. The typed business-precondition validator
-now has its own duration but does not cover the entire validation pipeline. A controlled repeated source-correlated investigation is required
+**Still unverified:** internal server queue time or transient queue peaks,
+startup time specific to the model service, request-exclusive prefill and
+token-generation durations, CPU throttling and memory pressure in the
+model container, native structured-output validation alone, and whether
+runner contention changes these stages. Process-wide server prompt/predict
+counters are observed but are **not request-exclusive timing**.
+The typed business-precondition validator has its own duration when reached
+but does not cover the entire validation pipeline. A controlled,
+prospectively specified and separately authorized investigation is required
 before closing issue #16.
