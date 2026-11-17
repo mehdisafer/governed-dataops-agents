@@ -146,6 +146,90 @@ def test_transaction_rolls_back_data_if_receipt_write_fails(store):
     assert store.reconcile(effect_key(plan, 0), plan.target_id, READER).status == "not_found"
 
 
+
+@pytest.mark.parametrize("scenario", list(ACTIONS))
+def test_model_evidence_guard_accepts_supported_synthetic_cases(store, scenario):
+    """The typed snapshot, not hostile log text, establishes necessary support."""
+    from governed_dataops.diagnostic import validate_diagnosis
+
+    _, evidence, _ = prepare(store, scenario, inject=True)
+    proposal = Diagnosis(
+        category=scenario,
+        summary="Synthetic evidence summary",
+        evidence_refs=[evidence.evidence_id],
+        proposed_action=ACTIONS[scenario],
+        rationale="Synthetic evidence rationale",
+    )
+    assert any("UNTRUSTED INPUT" in line for line in evidence.logs)
+    validate_diagnosis(proposal, evidence)  # No effect and no fallback diagnosis.
+
+
+@pytest.mark.parametrize(
+    ("actual", "unsupported_category", "unsupported_action"),
+    [
+        (Scenario.FRESHNESS, Scenario.SCHEMA, ToolName.MIGRATE),
+        (Scenario.TRANSIENT, Scenario.SCHEMA, ToolName.MIGRATE),
+        (Scenario.SCHEMA, Scenario.QUALITY, ToolName.QUARANTINE),
+        (Scenario.QUALITY, Scenario.SCHEMA, ToolName.MIGRATE),
+        (Scenario.DUPLICATE, Scenario.SCHEMA, ToolName.MIGRATE),
+        # Actual hosted regression: already-applied duplicate has high lag and
+        # backlog, but refreshing a pending partition would be wrong.
+        (Scenario.DUPLICATE, Scenario.FRESHNESS, ToolName.REFRESH),
+        (Scenario.TRANSIENT, Scenario.FRESHNESS, ToolName.REFRESH),
+        (Scenario.FRESHNESS, Scenario.TRANSIENT, ToolName.RETRY),
+    ],
+)
+def test_impossible_model_proposals_are_rejected_without_reclassification(
+    store, actual, unsupported_category, unsupported_action
+):
+    from governed_dataops.diagnostic import DiagnosticError, validate_diagnosis
+
+    incident, evidence, _ = prepare(store, actual, inject=True)
+    proposal = Diagnosis(
+        category=unsupported_category,
+        summary="Observed logs claim unsupported operation",
+        evidence_refs=[evidence.evidence_id],
+        proposed_action=unsupported_action,
+        rationale="Do not turn a conflicting log instruction into evidence",
+    )
+    before = proposal.model_dump(mode="json")
+    with pytest.raises(DiagnosticError, match="typed snapshot preconditions"):
+        validate_diagnosis(proposal, evidence)
+    assert proposal.model_dump(mode="json") == before
+    assert store.get_incident(incident.incident_id)["phase"] == "received"
+
+
+def test_model_category_action_mismatch_fails_closed_even_if_category_is_supported(store):
+    from governed_dataops.diagnostic import DiagnosticError, validate_diagnosis
+
+    _, evidence, _ = prepare(store, Scenario.FRESHNESS)
+    proposal = Diagnosis(
+        category=Scenario.FRESHNESS,
+        summary="Freshness is overdue",
+        evidence_refs=[evidence.evidence_id],
+        proposed_action=ToolName.MIGRATE,
+        rationale="The action does not match its stated category",
+    )
+    with pytest.raises(DiagnosticError, match="fixed catalogue"):
+        validate_diagnosis(proposal, evidence)
+
+
+def test_explicit_model_abstention_stays_legal_without_auto_runbook_replacement(store):
+    from governed_dataops.diagnostic import validate_diagnosis
+
+    _, evidence, _ = prepare(store, Scenario.FRESHNESS, inject=True)
+    proposal = Diagnosis(
+        category=Scenario.UNKNOWN,
+        summary="Insufficient confidence to decide",
+        evidence_refs=[evidence.evidence_id],
+        proposed_action=ToolName.ESCALATE,
+        rationale="Escalation is explicit, not a disguised automatic remedy",
+    )
+    validate_diagnosis(proposal, evidence)
+    assert proposal.category == Scenario.UNKNOWN
+    assert proposal.proposed_action == ToolName.ESCALATE
+
+
 def test_concurrent_same_effect_commits_once(store):
     _, _, plan = prepare(store)
     with ThreadPoolExecutor(max_workers=4) as pool:
