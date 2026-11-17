@@ -1,5 +1,9 @@
 """Failure-aware metrics tests; no live model, network or Docker required."""
 
+import runpy
+import subprocess
+from pathlib import Path
+
 from governed_dataops.model_server_metrics import (
     COUNTERS,
     model_metric_delta,
@@ -88,3 +92,53 @@ def test_no_server_samples_never_claim_inference_only_timing():
     assert report["boundary_gauges"]["llamacpp:requests_deferred"] == {
         "before": 0, "after": 0
     }
+
+
+def _container_qualifier_without_docker():
+    # The script is invoked as a file in CI, not imported as a top-level package.
+    # Loading its definitions must not execute main() or start Docker.
+    definitions = runpy.run_path(
+        str(Path(__file__).resolve().parents[1] / "scripts" / "qualify_container.py")
+    )
+    return object.__new__(definitions["ContainerQualification"])
+
+
+def test_private_container_probe_emits_only_allowlisted_counter_values():
+    qualifier = _container_qualifier_without_docker()
+    calls = []
+
+    def fake_compose(args, label, **kwargs):
+        calls.append((args, label, kwargs))
+        return subprocess.CompletedProcess(
+            args, 0,
+            "llamacpp:prompt_tokens_total 42\n"
+            "llamacpp:tokens_predicted_seconds_total 3.5\n"
+            "llamacpp:requests_deferred 0\n"
+            "untrusted_metric 999\n",
+            "",
+        )
+
+    qualifier.compose = fake_compose
+    observed = qualifier.server_metric_snapshot("before")
+    assert observed == {
+        "llamacpp:prompt_tokens_total": 42,
+        "llamacpp:tokens_predicted_seconds_total": 3.5,
+        "llamacpp:requests_deferred": 0,
+    }
+    args, label, kwargs = calls[0]
+    assert args[:4] == ["exec", "-T", "model", "python"]
+    assert "/metrics" in args[-1]
+    assert "127.0.0.1:8090" in args[-1]
+    assert label == "model-metrics-before"
+    assert kwargs == {"timeout": 10}
+
+
+def test_unavailable_private_metric_scrape_does_not_disrupt_evaluation():
+    qualifier = _container_qualifier_without_docker()
+
+    def offline(*_args, **_kwargs):
+        raise TimeoutError("synthetic, bounded probe failure")
+
+    qualifier.compose = offline
+    assert qualifier.server_metric_snapshot("after") is None
+    assert model_metric_delta(None, None)["status"] == "unavailable"
