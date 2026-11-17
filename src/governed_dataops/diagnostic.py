@@ -17,6 +17,7 @@ from pydantic_ai.providers.openai import OpenAIProvider
 from pydantic_ai.usage import RunUsage, UsageLimits
 
 from governed_dataops.contracts import Diagnosis, Evidence, Incident, Scenario, ToolName
+from governed_dataops.policy import FRESHNESS_OBJECTIVE_SECONDS
 from governed_dataops.settings import Settings, get_settings
 
 PROMPT_VERSION = "diagnosis-v3"
@@ -96,8 +97,72 @@ def validate_evidence(incident: Incident, evidence: Evidence) -> None:
 
 
 def validate_diagnosis(diagnosis: Diagnosis, evidence: Evidence) -> None:
+    """Reject unsupported model proposals without substituting runbook results.
+
+    Log text and model rationale are never authorization evidence. All
+    deterministic business preconditions are checked on the typed snapshot
+    *before* accepting a model proposal. This is not a model classifier or a
+    runbook fallback; an unsupported proposal is rejected, never rewritten.
+    The target/policy independently recheck live state before any effect.
+    """
     if set(diagnosis.evidence_refs) != {evidence.evidence_id}:
         raise DiagnosticError("diagnosis cites evidence that was not collected")
+    expected_actions = {
+        Scenario.FRESHNESS: ToolName.REFRESH,
+        Scenario.TRANSIENT: ToolName.RETRY,
+        Scenario.SCHEMA: ToolName.MIGRATE,
+        Scenario.QUALITY: ToolName.QUARANTINE,
+        Scenario.DUPLICATE: ToolName.SUPPRESS,
+        Scenario.UNKNOWN: ToolName.ESCALATE,
+    }
+    if diagnosis.proposed_action != expected_actions[diagnosis.category]:
+        raise DiagnosticError("model category/action pair contradicts the fixed catalogue")
+    s = evidence.snapshot
+    schema_compatible = s.source_schema == s.accepted_schema
+    # Mirror the policy's business preconditions, not its authorization roles.
+    # In particular, a late *applied* batch may have high lag and backlog yet
+    # cannot be a pending freshness refresh: reject it before plan creation.
+    necessary_support = {
+        Scenario.FRESHNESS: (
+            schema_compatible
+            and s.freshness_lag_seconds > FRESHNESS_OBJECTIVE_SECONDS
+            and s.backlog_rows > 0
+            and s.batch_status == "pending"
+            and s.rejected_rows == 0
+            and s.curated_rows == 0
+            and s.duplicate_rows == 0
+            and not s.transient_failure
+        ),
+        Scenario.TRANSIENT: (
+            schema_compatible
+            and s.transient_failure
+            and s.batch_status == "failed"
+            and s.backlog_rows > 0
+            and s.rejected_rows == 0
+            and s.curated_rows == 0
+            and s.duplicate_rows == 0
+        ),
+        Scenario.SCHEMA: not schema_compatible,
+        Scenario.QUALITY: (
+            schema_compatible
+            and s.rejected_rows > 0
+            and s.batch_status == "rejected"
+            and s.curated_rows == 0
+            and s.duplicate_rows == 0
+        ),
+        Scenario.DUPLICATE: (
+            schema_compatible
+            and s.batch_status == "applied"
+            and s.curated_rows > 0
+            and s.backlog_rows > 0
+            and s.duplicate_rows == 0
+        ),
+        Scenario.UNKNOWN: True,  # Explicit abstention always remains available.
+    }
+    if not necessary_support[diagnosis.category]:
+        raise DiagnosticError(
+            "model diagnosis contradicts necessary typed snapshot preconditions"
+        )
 
 
 def runbook_diagnose(incident: Incident, evidence: Evidence) -> tuple[Diagnosis, dict]:
