@@ -160,3 +160,41 @@ async def test_activity_preserves_slot_measurement_when_model_proposal_fails(tmp
     assert trace["client_model_slot_acquired"] is True
     assert trace["client_model_slot_wait_seconds"] >= 0.0
     assert trace["response_observed"] is True
+
+
+def test_quality_cannot_pass_when_final_effect_invariant_fails(tmp_path):
+    probe = object.__new__(ContainerQualification)
+    probe.output = tmp_path
+    probe.records = [{"label": "start-stack", "seconds": 5.0}]
+    probe.args = SimpleNamespace(model_cpus=2.0)
+    probe.submit = lambda *_args, **_kwargs: "inc-failure"
+    probe.complete = lambda _incident: {
+        "events": [{"payload": {"model_trace": {
+            "provider": "local", "request_attempted": True, "response_observed": True,
+            "duration_seconds": 1.0,
+        }}}],
+        "status": "resolved",
+        "target_id": "target",
+        "plan": {"actions": [{"tool": "refresh_partition"}]},
+    }
+    probe.audit = lambda _target: {
+        "receipts": [{"idempotency_key": "synthetic"}],
+        "target": {"revision": 1},
+        "rows": {
+            "source_rows": [{"row_id": 1, "amount": 10}],
+            "curated_rows": [],
+            "quarantine_rows": [],
+        },
+    }
+    # Even if a preliminary assertion implementation returned, the final
+    # source/curated row consistency check must still block a positive report.
+    probe.assert_business = lambda *_args: None
+    with pytest.raises(AssertionError):
+        probe.agent_case()
+    evidence = json.loads((tmp_path / "model-quality.json").read_text())
+    assert evidence["quality_passed"] is False
+    assert evidence["quality_assessed"] is False
+    assert evidence["failure_type"] == "AssertionError"
+    latency = json.loads((tmp_path / "model-latency.json").read_text())
+    assert latency["status"] == "incomplete"
+    assert latency["response_observed"] is True

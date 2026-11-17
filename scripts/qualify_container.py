@@ -769,7 +769,6 @@ class ContainerQualification:
                 result["quality_passed"] = True
             except (AssertionError, KeyError) as exc:
                 result["quality_failure"] = type(exc).__name__
-            write_json(self.output / "model-quality.json", result)
             # Semantic model disagreement never relaxes target-effect correctness.
             assert len(business["receipts"]) <= 1
             if business["receipts"]:
@@ -781,6 +780,8 @@ class ContainerQualification:
                 assert business["target"]["revision"] == 0
                 assert not business["rows"]["curated_rows"] and not business["rows"]["quarantine_rows"]
             assert trace.get("provider") == "local" and trace.get("request_attempted") and observed
+            # Only publish a positive semantic report after all effect assertions.
+            write_json(self.output / "model-quality.json", result)
             return result
         except Exception as exc:
             failure_type = type(exc).__name__
