@@ -1,4 +1,5 @@
-# Evaluation
+# Evaluation and final native evidence
+
 ## Experimental llama.cpp server-counter probes — pending runtime evidence
 
 The pinned **llama.cpp b12368** model container already enables `--metrics`.
@@ -25,8 +26,6 @@ source-level instrumentation, **not** a completed repeated 2-CPU/4-CPU
 performance experiment or full quality acceptance. The prior raw timed
 results and [issue #16](https://github.com/mehdisafer/governed-dataops-agents/issues/16)
 remain the basis for a prospectively declared reproduction matrix.
-
- and final native evidence
 
 ## Acceptance decision
 
