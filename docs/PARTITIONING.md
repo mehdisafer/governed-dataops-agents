@@ -89,13 +89,18 @@ was merged at `585de77`. CI logs and retained histories are source-bound to
 the executed PR merge preview; do not reinterpret them as arbitrary topology
 or multi-host evidence.
 
-**Additional negative regression checks (new PR; pending its own CI):**
-a legitimate Ed25519 approval and durable registry entry for target/partition
-A must not authorize a target/partition B effect, including when an attacker
-rewrites the envelope without re-signing. A worker for the wrong queue must
-refuse the effect before any target mutation, and an old completed target must
-not be silently re-sharded. These are real SQLite/cryptography unit checks,
-not another executed two-queue Temporal trial.
+**Additional negative regressions now integrated and tested (17 November):**
+[PR #15](https://github.com/mehdisafer/governed-dataops-agents/pull/15)
+merged at `32ec8a74853032c98e1d36f61a048fe41ce8581c`.
+Its actual SQLite/Ed25519 tests reject a legitimate approval for target/partition
+A when replayed on B, forged plan/route envelope bindings, a wrong worker's
+activity, and silent re-sharding after a completed incident. They assert
+**zero unauthorized target/effect mutations** and that correctly signed,
+correctly owned work still succeeds. They are **unit/cryptographic regression
+evidence**, not another separate full two-queue Temporal execution. That real
+integration was observed in the earlier PR #14 run and again on the
+[merged security-guard main run #43988865699](https://github.com/mehdisafer/governed-dataops-agents/actions/runs/43988865699)
+(`governance` job SUCCESS); its model-value gate still FAILED.
 
 **Still unverified:** isolation of the shared local model's latency/throughput
 under per-partition inference saturation; dynamic repartitioning or multi-host

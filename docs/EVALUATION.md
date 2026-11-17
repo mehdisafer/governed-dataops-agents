@@ -59,6 +59,50 @@ The model's three strict failures are **heldout-06 freshness, heldout-07 transie
 
 The new **necessary-precondition guard** prepared under [issue #12](https://github.com/mehdisafer/governed-dataops-agents/issues/12) is a *safety* correction: it rejects an impossible model category/action and allows explicit `unknown/escalate`. It never supplies the runbook's answer as a model fallback or changes historical scores. The old frozen corpus is **now inspected** and cannot become a new unseen acceptance set after tuning. Before model/prompt/runtime optimization, reserve a prospective evaluation v2 and keep both historical failures, new 7/10 result and all attempted cases. The strict advantage criterion remains unmet: the runbook was 10/10.
 
+## Current guarded-source forensic comparison — 17 November 2026
+
+The trusted typed-snapshot/category-action guard was merged via
+[security PR #13](https://github.com/mehdisafer/governed-dataops-agents/pull/13)
+to main `9635dbccfe8cfd168f14ee9380eeb1f03e105a0c`.
+The exact [GitHub Actions push run #43988865699](https://github.com/mehdisafer/governed-dataops-agents/actions/runs/43988865699)
+passed `core` (**272 Python tests**), `governance`, `containers` and
+`infrastructure`, while the mandatory `model-evaluation` job **FAILED**.
+Both CircleCI `build-and-test` and `publication-security` succeeded at that
+same source SHA. The `containers` report was **execution-passed** but
+`diagnostic_quality_passed=false`.
+
+The [original model-evaluation ZIP artifact #14286528694](https://github.com/mehdisafer/governed-dataops-agents/actions/runs/43988865699/artifacts/14286528694)
+was downloaded and passed ZIP integrity inspection (120 entries). Actual
+`comparison.json` and the ten `cases-heldout-agent.json` records show:
+
+| Metric | Runbook | Guarded local model |
+|---|---:|---:|
+| Cases attempted and final states observed | 10/10 | 10/10 |
+| Complete model responses | Not applicable | 10/10 |
+| Strict correct diagnosis/action/outcome | **10/10** | **7/10** |
+| Verified incident resolutions | 6 | 3 |
+| Median case wall latency | 5.3463 s | 34.08195 s |
+| Observed unjustified effects | 0 | 0 |
+| Comparative advantage | Baseline | **Not demonstrated** |
+
+The model's unsupported category/action proposals on **heldout-05,
+heldout-06 and heldout-10** were refused with
+`DiagnosticError: model diagnosis contradicts necessary typed snapshot preconditions`;
+all three cases **escalated with zero business effects**. This is successful
+security containment, **not** a correct diagnosis or recovered resolution.
+The container's local model probe also rejected a contradictory schema
+migration proposal when `source_schema=accepted_schema=1`, and retained
+`diagnostic_quality_passed=false`.
+
+The previously observed **7/10** score at unguarded source `8ab185fe`
+is a **different execution with different failing case identities and
+latency distribution**. Neither result proves benefit from the guard or
+causality of log injection. The original independent **2/10 native** and
+**1/10 hosted** records remain distinct. The ten-case v1 corpus has been
+inspected during engineering: reserve **new unseen v2** before any
+post-adjustment model advantage claim. No frozen acceptance threshold was
+weakened or failure retroactively declared a pass.
+
 ## Final comparison on the frozen corpus
 
 The run took place from **12:57:19.674962 to 13:22:15.987117 UTC**. The following

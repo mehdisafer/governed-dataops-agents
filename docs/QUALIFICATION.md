@@ -2,7 +2,24 @@
 
 Updated 17 November 2026. **Platform execution is qualified for the declared synthetic reference checks; full agent-value acceptance is withheld.** A green container workflow verifies its declared infrastructure/effect gates, not comparative diagnosis quality. The original [acceptance issue #1](https://github.com/mehdisafer/governed-dataops-agents/issues/1) remains open. No accepted stable V1 or production-readiness claim follows from the passing subset.
 
-## Scoped admission and frozen evaluation — 17 November 2026
+## Current tagged-source-independent main qualification — 17 November 2026
+
+The public `main` source after [security PR #13](https://github.com/mehdisafer/governed-dataops-agents/pull/13) is [`9635dbccfe8cfd168f14ee9380eeb1f03e105a0c`](https://github.com/mehdisafer/governed-dataops-agents/commit/9635dbccfe8cfd168f14ee9380eeb1f03e105a0c). Its Git tree `80331e7b1d1a64423182c33b4ad81737ed9b7a48` exactly matches the combined PR source tested by [GitHub Actions #43987760401](https://github.com/mehdisafer/governed-dataops-agents/actions/runs/43987760401). The [post-merge main run #43988865699](https://github.com/mehdisafer/governed-dataops-agents/actions/runs/43988865699) was separately **completed** and returned overall **failure solely because the mandatory `model-evaluation` job remained red**:
+
+| Exact main job | Observed result | Boundaries |
+|---|---|---|
+| `core` | **SUCCESS, 272 Python tests**, Ruff and bounded source/security checks | Execution regression, not model quality |
+| `governance` | **SUCCESS** — real Temporal workflows, signed-approval refusals, restart/restore, browser and `two_partition_recovery_and_isolation` | Single host, two fixed queues, one shared model service |
+| `containers` | **SUCCESS** — real private local model/Temporal/target, paired restore and cleanup | The original report explicitly records `diagnostic_quality_passed=false` |
+| `infrastructure` | **SUCCESS** — local Terraform/provider preparation | No production apply |
+| `model-evaluation` | **FAILED** — frozen agent strict 7/10 vs competent runbook 10/10; measured advantage absent | Do **not** waive or replace this gate |
+| CircleCI `build-and-test` / `publication-security` | **SUCCESS / SUCCESS** at exact `9635dbcc` | Source/unit/security scopes only |
+
+The original [model-evaluation artifact #14286528694](https://github.com/mehdisafer/governed-dataops-agents/actions/runs/43988865699/artifacts/14286528694) and [container artifact #14285959973](https://github.com/mehdisafer/governed-dataops-agents/actions/runs/43988865699/artifacts/14285959973) were downloaded and ZIP integrity checked. The original comparison observed all **10/10 model responses** and final business states. Agent strict correct actions and outcomes were **7/10**, **3 resolved**, runbook strict **10/10**, **6 resolved**. Agent median **34.08195 s** versus runbook **5.3463 s**; compute/energy/human cost unmeasured. In failed cases **heldout-05, -06 and -10**, the model's impossible typed-state proposals were rejected with `DiagnosticError`, resulting in explicit escalation with **zero business effects**, not successful resolution. The container's one-case model diagnosis was similarly rejected (`diagnostic_quality_passed=false`). The original heldout corpus has been inspected, so new improvement claims require a **prospectively reserved evaluation v2**.
+
+This latest source preserves [PR #14](https://github.com/mehdisafer/governed-dataops-agents/pull/14) opt-in target queue ownership and real two-queue Temporal qualification, plus [PR #15](https://github.com/mehdisafer/governed-dataops-agents/pull/15) real SQLite/Ed25519 cross-partition approval/route negative tests. Shared-model inference saturation, topology changes, hostile-tenant and multi-host behavior remain **unverified**. The historic native 14/18, agent 2/10, later hosted agent 1/10, and source-specific unguarded 7/10 results below retain their dates and exact sources; no result has been overwritten or averaged.
+
+## Historical scoped admission and frozen evaluation — source of PR #10
 
 Source change [PR #10](https://github.com/mehdisafer/governed-dataops-agents/pull/10) merged into `main` as [`33a8eba54600`](https://github.com/mehdisafer/governed-dataops-agents/commit/33a8eba54600a2c77f80e6cf119eeab85a9c111b). **Exact qualified PR source**: `8ab185fe2daf28624bba9bee47eca03920b154de`. This is an additional source qualification, not a rewrite of earlier runs and not a proof that a later `main` workflow has executed.
 
@@ -21,7 +38,7 @@ The SQLite `Store.record_incident` unfinished-admission count is now filtered by
 
 The model-evaluation job retained original outputs under [GitHub artifact `14281900580`](https://github.com/mehdisafer/governed-dataops-agents/actions/runs/43976640653). Its logs explicitly identify `heldout_agent` strict diagnosis/action/outcome mismatch and `measured_agent_advantage` failure. Do not use the passing container model-response gate as semantic success. Prior 2/10 and 1/10 failures retain their own sources and denominators.
 
-**Remaining P0:** separate Temporal queue/worker ownership per target partition, preserve pending approval and effect identities during reassignment, and demonstrate bounded progress in a second partition while one is saturated. The current change improves only **admission** isolation; all scopes still share the configured Temporal task queue and worker/model slots. The frozen model-value criterion, target-specific production acceptance and effective branch protections also remain open. No stable accepted V1 is claimed.
+**At that PR #10 source**, separate Temporal queue/worker ownership, buffered approvals under reassignment and a second partition under saturation remained unqualified. [Subsequent PR #14 and #15](PARTITIONING.md) implemented and tested a fixed two-queue reference. The current remaining P0 is **shared model inference contention, prospective model evaluation and explicit operational acceptance**, not absence of any two-queue Temporal execution. No stable accepted V1 is claimed.
 
 ## GitHub Actions and publication qualification — 16 November 2026
 

@@ -4,6 +4,30 @@
 
 GitHub now reports the intended **public repository state**. The owner retains control of the About, security and protection settings, but no further visibility switch is required. The source, evidence, metadata proposal and review are prepared through the connected repository tools and isolated environment; access to the maintainer's account through a browser is unnecessary. Public visibility and full technical acceptance remain separate: the experimental model label, failed measurements and open requirements must stay visible after publication.
 
+## Post-merge P0 security and partitioning readback — 17 November 2026
+
+GitHub source `main` at
+[`9635dbcc`](https://github.com/mehdisafer/governed-dataops-agents/commit/9635dbccfe8cfd168f14ee9380eeb1f03e105a0c)
+includes the opt-in target partition router, the cross-partition
+SQLite/Ed25519 refusal tests and an evidence-bound model diagnosis guard.
+[GitHub Actions run 43988865699](https://github.com/mehdisafer/governed-dataops-agents/actions/runs/43988865699)
+passed **core 272 tests**, actual governance/Temporal, isolated
+containers and infrastructure. The overall run **FAILED**
+`model-evaluation`: agent **7/10 strict** against runbook **10/10**,
+three wrong proposals were rejected without business effects. The earlier
+**2/10** native and **1/10** hosted results remain historical.
+CircleCI `build-and-test` and `publication-security` passed on this SHA;
+neither constitutes a green model-value gate.
+
+The fixed two-queue reference has actual bounded real Temporal execution
+([PR #14](https://github.com/mehdisafer/governed-dataops-agents/pull/14),
+[PR #15](https://github.com/mehdisafer/governed-dataops-agents/pull/15)).
+**Shared model latency/throughput under saturation**, changed topologies
+and multi-host/hostile-tenant behavior remain open. No stable release is
+accepted. GitHub still reports `main.protected=false` and zero rulesets;
+owner-side protection, independently verified public access and a possible
+future experimental tag remain separate.
+
 ## Concrete metadata proposal
 
 **Description:** Governed incident response for a synthetic data platform: MCP, PydanticAI and Temporal with signed approvals, idempotent effects and reproducible evidence.
@@ -20,7 +44,7 @@ The description and all eight proposed topics were confirmed applied in the repo
 | --- | --- | --- |
 | Exact native source | Clean, unchanged `f1e6e2f3800242ec210145680261da8ab60f38b4`; 192 original run files | Reproducible identity, with the run's failures preserved |
 | Native integration | 14/18 requested checks passed; overall run failed | No full acceptance |
-| Agent utility | Original 14 Nov agent 2/10 vs runbook 10/10; later hosted frozen agent 1/10 vs runbook 10/10 | Experimental model; no superiority claim |
+| Agent utility | Native 14 Nov agent 2/10, hosted 15 Nov 1/10, and guarded 17 Nov exact-main **7/10**, all versus competent runbook **10/10** | Different sources/host runs and denominators; no agent superiority or experimental label removal |
 | Container / infrastructure | Original native attempt was blocked; later CircleCI `reference-containers` passed ten platform checks at `cad9cc6`; infrastructure job passed on `924dd24` | Single-host synthetic platform qualification, not agent quality or production Terraform apply |
 | Operator console | Original native Chromium launch failed; later hosted CircleCI governance profile at `924dd24` passed its declared browser gate | Only that tested browser/environment is qualified; no general acceptance implied |
 | Hosted CI | [GitHub Actions full run 43919667084](https://github.com/mehdisafer/governed-dataops-agents/actions/runs/43919667084): four platform jobs SUCCESS, **model-evaluation FAILED**; [docs-only 43924763001](https://github.com/mehdisafer/governed-dataops-agents/actions/runs/43924763001): `core` SUCCESS, runtime jobs SKIPPED. CircleCI unit and publication-security SUCCESS on `351817e` | Platform execution is observed; model utility is a genuine failed acceptance gate, not a runner issue |

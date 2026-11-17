@@ -2,6 +2,32 @@
 
 This repository has two independent CI providers. The results below are deliberately scoped to the **observed run's source SHA**. The unit check is now successful on an observed `main` SHA, and the separate container platform profile has passed on its recorded branch SHA. These scoped results do **not** establish model diagnostic value or production readiness.
 
+## Latest post-merge source-bound CI — 17 November 2026
+
+After [security PR #13](https://github.com/mehdisafer/governed-dataops-agents/pull/13),
+the exact `main` SHA `9635dbccfe8cfd168f14ee9380eeb1f03e105a0c`
+completed [GitHub Actions run #43988865699](https://github.com/mehdisafer/governed-dataops-agents/actions/runs/43988865699).
+**The run conclusion is FAILURE**, because its frozen `model-evaluation`
+job is genuinely red (**agent 7/10**, competent runbook **10/10**). In the
+same run, **`core` (272 Python tests), `governance`, `containers`, and
+`infrastructure` all SUCCESS**. Both CircleCI
+`ci/circleci: build-and-test` and `ci/circleci: publication-security`
+were **SUCCESS** on that same SHA.
+
+The actual [model-evaluation artifact #14286528694](https://github.com/mehdisafer/governed-dataops-agents/actions/runs/43988865699/artifacts/14286528694)
+has been downloaded and independently inspected: all ten agent responses
+completed, three contradictory typed-snapshot proposals were refused with
+zero effects, no measured agent advantage. The original container
+[artifact #14285959973](https://github.com/mehdisafer/governed-dataops-agents/actions/runs/43988865699/artifacts/14285959973)
+retains `diagnostic_quality_passed=false`. **A safely refused model proposal
+is not a correct diagnosis**. This is a source-specific security/Temporal
+platform qualification, not a green overall V1.
+
+The actual opt-in two-queue Temporal profile and SQLite/Ed25519 partition
+authority regressions are included in this source. Remaining source CI
+does not validate LLM throughput isolation, dynamic partition migration,
+independent tenant security, multi-host or production operations.
+
 ## CircleCI unit checks
 
 - Pipeline configuration: [`.circleci/config.yml`](../.circleci/config.yml).
