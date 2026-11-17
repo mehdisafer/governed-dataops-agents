@@ -173,6 +173,23 @@ def model_latency_report(
     }
 
 
+def active_stack_startup_seconds(records: list[dict], stack: str) -> float | None:
+    """Record the successful start of the stack that served the probe.
+
+    After restoring a database pair, the live project uses the distinct
+    start-restored-stack command. The initial start-stack timing describes
+    another deployment and must not be attributed to restored inference.
+    """
+    for item in reversed(records):
+        if (
+            item.get("stack") == stack
+            and item.get("label") in {"start-stack", "start-restored-stack"}
+            and item.get("exit_code") == 0
+        ):
+            return item.get("seconds")
+    return None
+
+
 def source_manifest() -> dict:
     paths = [
         ROOT / name
@@ -822,11 +839,7 @@ class ContainerQualification:
                 )
             raise
         finally:
-            startup = next(
-                (item.get("seconds") for item in reversed(self.records)
-                 if item["label"] == "start-stack"),
-                None,
-            )
+            startup = active_stack_startup_seconds(self.records, self.stack)
             write_json(
                 self.output / "model-latency.json",
                 model_latency_report(

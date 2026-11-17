@@ -20,6 +20,24 @@ QUALIFIER = runpy.run_path(
 )
 model_latency_report = QUALIFIER["model_latency_report"]
 ContainerQualification = QUALIFIER["ContainerQualification"]
+active_stack_startup_seconds = QUALIFIER["active_stack_startup_seconds"]
+
+
+def test_active_stack_startup_uses_restored_deployment_not_original():
+    commands = [
+        {"label": "start-stack", "stack": "initial", "exit_code": 0, "seconds": 38.4},
+        {"label": "stop-original-stack", "stack": "initial", "exit_code": 0, "seconds": 1.5},
+        {"label": "start-restored-stack", "stack": "restored", "exit_code": 0, "seconds": 24.2},
+        {"label": "target-business-audit", "stack": "restored", "exit_code": 0, "seconds": 3.1},
+    ]
+    assert active_stack_startup_seconds(commands, "initial") == 38.4
+    assert active_stack_startup_seconds(commands, "restored") == 24.2
+    assert active_stack_startup_seconds(commands, "unknown") is None
+    commands.append(
+        {"label": "start-restored-stack", "stack": "restored", "exit_code": 1, "seconds": 99.0}
+    )
+    assert active_stack_startup_seconds(commands, "restored") == 24.2
+    assert active_stack_startup_seconds(commands[:2], "restored") is None
 
 
 def test_stage_report_records_only_measured_numbers_and_not_raw_model_text():
@@ -76,7 +94,10 @@ def test_unavailable_or_invalid_durations_are_not_fabricated_as_seconds(bad):
 def test_incomplete_real_container_probe_retains_original_failure_and_partial_report(tmp_path):
     probe = object.__new__(ContainerQualification)
     probe.output = tmp_path
-    probe.records = [{"label": "start-stack", "seconds": 11.3}]
+    probe.stack = "original"
+    probe.records = [
+        {"label": "start-stack", "stack": "original", "exit_code": 0, "seconds": 11.3}
+    ]
     probe.args = SimpleNamespace(model_cpus=2.0)
     probe.submit = lambda *_args, **_kwargs: "synthetic-incident"
 
@@ -169,7 +190,10 @@ async def test_activity_preserves_slot_measurement_when_model_proposal_fails(tmp
 def test_quality_cannot_pass_when_final_effect_invariant_fails(tmp_path):
     probe = object.__new__(ContainerQualification)
     probe.output = tmp_path
-    probe.records = [{"label": "start-stack", "seconds": 5.0}]
+    probe.stack = "restored"
+    probe.records = [
+        {"label": "start-restored-stack", "stack": "restored", "exit_code": 0, "seconds": 5.0}
+    ]
     probe.args = SimpleNamespace(model_cpus=2.0)
     probe.submit = lambda *_args, **_kwargs: "inc-failure"
     probe.complete = lambda _incident: {

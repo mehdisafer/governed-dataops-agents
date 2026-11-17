@@ -31,7 +31,7 @@ A timed-out/incomplete model probe also leaves a minimal
 
 | Field in `model-latency.json` | What is actually measured |
 | --- | --- |
-| `stack_startup_all_services` | Docker Compose start-and-health command, including all containers |
+| `stack_startup_all_services` | Successful start-and-health command of the **active stack** (initial `start-stack` or restored `start-restored-stack`); an initial project's startup timing must not be attributed to inference on a restored project. If no successful active-stack start was observed, the field is null |
 | `api_admission_http` | Demo incident admission HTTP request wall time |
 | `workflow_poll_until_terminal_or_failure` | Polling elapsed until durable closure or an exception |
 | `client_model_slot_wait` | Worker-side semaphore acquisition; null if unobserved |
