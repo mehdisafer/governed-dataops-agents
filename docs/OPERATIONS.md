@@ -196,6 +196,8 @@ Reverting an image is safe only when its database schema and retained Temporal h
 
 The retained execution establishes restoration of the current schema and replay of the specified histories. It does not establish a schema upgrade/downgrade or rollback between two released versions. Preserve that limitation when using the 26 earlier-development histories as compatibility evidence; their producing source was not clean. A future schema or workflow change needs its own migration, recovery and replay evidence.
 
+Model latency/timeout investigation is described in [MODEL_LATENCY.md](MODEL_LATENCY.md). Its per-stage report marks unavailable measurements unknown and preserves failure records without increasing the diagnostic deadline.
+
 ## Retention and release gates
 
 This release has no automatic database retention or archival service. Monitor disk use and preserve unresolved incidents, effect receipts and retained histories. Do not delete receipts merely to free disk while retries remain possible.
