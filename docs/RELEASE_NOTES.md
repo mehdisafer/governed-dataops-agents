@@ -21,7 +21,13 @@ The separate bounded runbook load used twelve incidents at concurrency four, wit
 
 All 192 original files from the native run are retained, including failed cases, logs and resource samples. Post-run review corrected a contradictory evaluation gate, separating baseline competence from comparative score measurement while keeping agent quality and strict superiority requirements. It also hardened exact paired-case accounting and extended semantic secret-review support for the container source manifest. These corrections have separate regression tests; the original 14/18 native result is unchanged. See the [evidence index](../evidence/README.md), [evaluation report](EVALUATION.md) and [prioritized backlog](BACKLOG.md).
 
-## Current source-qualified security and model-value limits — 17 November 2026
+## Most recent merged source instrumentation — 17 November 2026
+
+The current public source `main` [`263a6c1c7226`](https://github.com/mehdisafer/governed-dataops-agents/commit/263a6c1c72260c7be6ba7ba7aeb1a4a891b7f41f) integrates [PR #17](https://github.com/mehdisafer/governed-dataops-agents/pull/17): bounded model-latency/failure attribution, original failed-probe preservation and correct restored-stack startup selection. Its PR head `e81309b` and GitHub Actions merge-preview `158e52c5` have the same Git tree. [Run #43990582623](https://github.com/mehdisafer/governed-dataops-agents/actions/runs/43990582623) passed **284 Python core tests, real governance/two-queue Temporal, ten container checks, infrastructure**, and the two CircleCI source/security checks were green. **Mandatory model-evaluation FAILED** with **6/10 strict agent** versus **10/10 runbook** on ten observed model responses. Model quality in the real container remained false.
+
+The original [container timings](MODEL_LATENCY.md) measured **67.004099s `Agent.run`** inclusive of transport/inference/native output validation and a correct **17.568490s restored stack** startup; internal inference-only/queue-stage times remain unknown. No model weights, prompt, 90s budget, approvals, external provider or business effect contract were altered. This is *not* a new stable release, model-value acceptance or production-readiness claim. Earlier guarded and historical comparisons below remain separate, source-bound failures. The independent post-merge main CI must receive its own receipt.
+
+## Earlier guarded-source security and model-value limits — 17 November 2026
 
 Current public source `main` at
 [`9635dbcc`](https://github.com/mehdisafer/governed-dataops-agents/commit/9635dbccfe8cfd168f14ee9380eeb1f03e105a0c)

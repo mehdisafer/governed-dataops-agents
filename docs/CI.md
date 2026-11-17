@@ -2,7 +2,13 @@
 
 This repository has two independent CI providers. The results below are deliberately scoped to the **observed run's source SHA**. The unit check is now successful on an observed `main` SHA, and the separate container platform profile has passed on its recorded branch SHA. These scoped results do **not** establish model diagnostic value or production readiness.
 
-## Latest post-merge source-bound CI — 17 November 2026
+## Latest PR #17 instrumentation: exact-tree CI and non-acceptance — 17 November 2026
+
+Current source `main` is [`263a6c1c7226`](https://github.com/mehdisafer/governed-dataops-agents/commit/263a6c1c72260c7be6ba7ba7aeb1a4a891b7f41f), integrating [PR #17](https://github.com/mehdisafer/governed-dataops-agents/pull/17) after concurrent docs-only changes. [GitHub Actions #43990582623](https://github.com/mehdisafer/governed-dataops-agents/actions/runs/43990582623) ran the preview commit `158e52c5`, **identical Git tree** `77c18f708010dc51687d5e6022000eb6a05f4d18` to PR source `e81309b`: Core **284 tests/Ruff PASS**, Governance **PASS**, Containers **10/10 platform PASS**, Infrastructure **PASS**, and **model-evaluation FAILED** (runbook 10/10, local agent 6/10 with ten actual responses). CircleCI build/test and publication-security both passed on `e81309b`. This is a **failed overall agent-value acceptance**, not an infrastructure test error.
+
+The original [container artifact #14288017124](https://github.com/mehdisafer/governed-dataops-agents/actions/runs/43990582623/artifacts/14288017124) independently confirms `model-latency.json` now attributes **17.568490s** startup to the *restored stack used by inference*, not the initial stack's **18.442006s**. The prior misattribution was fixed and real-run verified without increasing model timeout or changing model outputs. The original frozen [evaluation artifact #14288370568](https://github.com/mehdisafer/governed-dataops-agents/actions/runs/43990582623/artifacts/14288370568) retains failures and all ten cases. The separate [post-merge main push #43992090061](https://github.com/mehdisafer/governed-dataops-agents/actions/runs/43992090061) must be judged from **its own** final job results, never inferred solely from this source-equivalent PR preview.
+
+## Previous guarded-source post-merge CI — 17 November 2026
 
 After [security PR #13](https://github.com/mehdisafer/governed-dataops-agents/pull/13),
 the exact `main` SHA `9635dbccfe8cfd168f14ee9380eeb1f03e105a0c`

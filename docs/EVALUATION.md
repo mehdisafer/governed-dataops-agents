@@ -39,7 +39,25 @@ recovery, diagnostic availability, diagnostic quality, operator experience and
 comparative benefit therefore remain separate acceptance questions. The next
 work is recorded in [BACKLOG.md](BACKLOG.md).
 
-## 17 November 2026 — original hosted model artifact forensic readback
+## Latest source-bound frozen result and instrumentation — 17 November 2026
+
+The most recent qualified application source on [PR #17](https://github.com/mehdisafer/governed-dataops-agents/pull/17) is `e81309b300b579f60298b77d6202ac67ea843ae4`, merged into public `main` as [`263a6c1c7226`](https://github.com/mehdisafer/governed-dataops-agents/commit/263a6c1c72260c7be6ba7ba7aeb1a4a891b7f41f). Its actual [GitHub Actions run #43990582623](https://github.com/mehdisafer/governed-dataops-agents/actions/runs/43990582623) ran a temporary merge-preview with **the identical Git tree** and completed all four platform jobs successfully, but the mandatory `model-evaluation` **failed**. Original model/case artifacts were downloaded; every attempted case remains in the denominator.
+
+| Frozen measure (this source only) | Runbook | Local model |
+|---|---:|---:|
+| Cases attempted / final observations | 10/10 | 10/10 |
+| Completed model responses observed | N/A | 10/10 |
+| Strict correct category/action/outcome | **10/10** | **6/10** |
+| Verified resolved business cases | 6 | 3 |
+| Case wall median | 4.5788 s | 25.63055 s |
+| Nearest-rank p95 case wall | 9.059 s | 43.323 s |
+| Observed unjustified/unknown effects | 0 | 0 |
+
+Original [frozen evaluation artifact #14288370568](https://github.com/mehdisafer/governed-dataops-agents/actions/runs/43990582623/artifacts/14288370568) retains the individual outcomes and nine usage-complete agent cases. There was **no demonstrated agent advantage** over the already competent runbook. The earlier guarded 7/10, unguarded 7/10, native 2/10 and hosted 1/10 are separate, independently dated/source-identified runs; do **not** compare them as controlled model improvements or average them.
+
+[Original real-container artifact #14288017124](https://github.com/mehdisafer/governed-dataops-agents/actions/runs/43990582623/artifacts/14288017124) shows a response observed but semantic quality failure, a full agent gate of **69.936369s**, `Agent.run` inclusive of transport/native-output validation **67.004099s**, and correct restored-stack startup **17.568490s**. The original startup attribution bug incorrectly used the first stack; PR #17 corrected and requalified it on an actual restored stack. Queue wait in llama.cpp, first-token and inference-only timing have not been observed and are **not inferred** by subtraction. The measurement changes did not alter the model, prompt, timeout, provider or deterministic policy. [Issue #16](https://github.com/mehdisafer/governed-dataops-agents/issues/16) remains open for root-cause/repetition matrix; [issue #1](https://github.com/mehdisafer/governed-dataops-agents/issues/1) remains open for full value acceptance.
+
+## Earlier original hosted model artifact forensic readback — 17 November 2026
 
 A later, separately executed GitHub Actions [run #43976640653](https://github.com/mehdisafer/governed-dataops-agents/actions/runs/43976640653), source `8ab185fe2daf28624bba9bee47eca03920b154de`, retained original model-evaluation artifact **14281900580**. The raw ZIP was downloaded and `comparison.json`, ten `cases-heldout-agent.json` entries and `failed-cases-heldout-agent.json` were inspected. Its source and environment are distinct from the dated original native run described below.
 
@@ -59,7 +77,7 @@ The model's three strict failures are **heldout-06 freshness, heldout-07 transie
 
 The new **necessary-precondition guard** prepared under [issue #12](https://github.com/mehdisafer/governed-dataops-agents/issues/12) is a *safety* correction: it rejects an impossible model category/action and allows explicit `unknown/escalate`. It never supplies the runbook's answer as a model fallback or changes historical scores. The old frozen corpus is **now inspected** and cannot become a new unseen acceptance set after tuning. Before model/prompt/runtime optimization, reserve a prospective evaluation v2 and keep both historical failures, new 7/10 result and all attempted cases. The strict advantage criterion remains unmet: the runbook was 10/10.
 
-## Current guarded-source forensic comparison — 17 November 2026
+## Earlier guarded-source forensic comparison — 17 November 2026
 
 The trusted typed-snapshot/category-action guard was merged via
 [security PR #13](https://github.com/mehdisafer/governed-dataops-agents/pull/13)
