@@ -26,7 +26,6 @@ from governed_dataops.settings import Settings
 from governed_dataops.signing import generate_approval_keys, sign_approval
 from governed_dataops.storage import Store
 
-
 BASE_QUEUE = "governed-dataops-v1"
 
 

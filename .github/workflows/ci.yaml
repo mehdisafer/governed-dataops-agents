@@ -60,7 +60,6 @@ jobs:
           mkdir -p evidence/runs/ci
       - name: Static and unit checks
         run: |
-          uv run ruff check --select I --diff tests/test_partition_authority.py || true
           uv run ruff check .
           uv run pytest -q --junitxml=evidence/runs/ci/pytest.xml
           uv run python scripts/export_contracts.py
