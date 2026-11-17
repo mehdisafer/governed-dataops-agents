@@ -6,6 +6,7 @@ from pathlib import Path
 
 from governed_dataops.model_container_resources import (
     ALLOWED,
+    MAX_CGROUP_COUNTER,
     MODEL_CGROUP_PROBE_SCRIPT,
     model_container_resource_delta,
     parse_container_resource_snapshot,
@@ -32,6 +33,18 @@ def test_model_cgroup_parser_is_allowlisted_and_does_not_echo_untrusted_data():
     }
     assert set(samples) <= ALLOWED
     assert "EXPOSED" not in repr(samples)
+
+
+def test_oversized_unsigned_cgroup_counter_is_not_accepted():
+    source = (
+        f"gda:cgroup_cpu_usage_usec {MAX_CGROUP_COUNTER + 1}\\n"
+        "gda:cgroup_cpu_nr_periods 7\\n"
+    )
+    # The kernel's unsigned 64-bit counter range is the upper boundary.
+    # A parsable 20-digit value beyond that range is corrupt/unsupported.
+    assert parse_container_resource_snapshot(source) == {
+        "gda:cgroup_cpu_nr_periods": 7
+    }
 
 
 def test_duplicate_metric_and_invalid_sample_remain_unknown():
@@ -78,6 +91,8 @@ def test_deltas_quota_and_cpu_throttling_are_observed_not_inferred():
         "before": 1200, "after": 1700
     }
     assert any("not request-exclusive" in x for x in report["limits"])
+    assert "attribution not independently verified" in report["resource_scope"]
+    assert any("mount/namespace identity" in x for x in report["limits"])
 
 
 def test_resource_counter_reset_and_quota_change_are_unknown():
