@@ -4,6 +4,26 @@ An incident-response console for a synthetic industrial data platform. It collec
 
 I built this project to make agent decisions inspectable. The console shows the incident, observations, diagnosis, proposed action, permission decision, approval and correlated execution trace. The target holds actual source, curated and quarantine rows. A successful tool response alone cannot close an incident as resolved.
 
+## Current runtime checkpoint — 23 November 2026
+
+The latest fully executed runtime source is [`ea80f252`](https://github.com/mehdisafer/governed-dataops-agents/commit/ea80f2524060fcba745c23e85b344a9ad010b782),
+which merges [PR #25](https://github.com/mehdisafer/governed-dataops-agents/pull/25)'s bounded container-resource observations.
+The [PR run 45082434901](https://github.com/mehdisafer/governed-dataops-agents/actions/runs/45082434901) and
+[independent main run 45083502058](https://github.com/mehdisafer/governed-dataops-agents/actions/runs/45083502058) both completed
+**core (314 tests), governance, containers and infrastructure successfully**,
+while **model-evaluation failed** in each. Both measured **agent 7/10 strict
+cases and 3 resolutions versus runbook 10/10 and 6**; their original timings,
+outputs and archives remain separate.
+
+The new private-container cgroup probe observed **12/12 counters** on the
+restored stack in both executions, at the unchanged 2-CPU quota. The
+[resource readback](docs/MODEL_LATENCY.md) records CPU throttling, memory,
+identity and collection overhead. This qualifies the observation mechanism;
+it does not establish a latency mitigation, reliable model quality or added
+value. B01–B04 remain unexecuted and [PR #23](https://github.com/mehdisafer/governed-dataops-agents/pull/23) remains a draft
+V2 feasibility protocol. Full V1 acceptance is still withheld. See the
+[qualification ledger](docs/QUALIFICATION.md) for exact source and archive proofs.
+
 **Earlier guarded-source checkpoint (17 November 2026): this repository is public, Apache-2.0, with an executed synthetic single-host governance/Temporal reference, including opt-in two-queue partition routing and trusted-snapshot diagnosis guards. The full agent-value V1 acceptance remains withheld.**
 
 [PR #14](https://github.com/mehdisafer/governed-dataops-agents/pull/14) integrated deterministic target-to-queue routing, transactional partition admission and wrong-worker refusal; actual two-queue Temporal qualification exercised a stopped owner, a buffered signed approval and independent progress under saturated admission. [PR #15](https://github.com/mehdisafer/governed-dataops-agents/pull/15) added real SQLite/Ed25519 cross-partition approval and ownership denial tests. These establish **bounded admission, history and target isolation on the single-host reference**, not independent model throughput, dynamic resharing, hostile-tenant or multi-host guarantees.
@@ -12,9 +32,9 @@ I built this project to make agent decisions inspectable. The console shows the 
 
 The earlier independent agent scores **2/10** (native) and **1/10** (hosted) remain historical evidence, not scores to average or retroactively relabel. Qwen remains experimental. The [V1 acceptance issue #1](https://github.com/mehdisafer/governed-dataops-agents/issues/1) stays open; no stable released/production claim is made.
 
-## Latest source integration and acceptance — 17 November 2026
+## Historical PR #17 source integration — 17 November 2026
 
-**Last runtime-qualified `main` revision (before this documentation update):** [`263a6c1c7226`](https://github.com/mehdisafer/governed-dataops-agents/commit/263a6c1c72260c7be6ba7ba7aeb1a4a891b7f41f), after merging [PR #17](https://github.com/mehdisafer/governed-dataops-agents/pull/17). The PR-head `e81309b300b579f60298b77d6202ac67ea843ae4` and its GitHub Actions merge preview `158e52c5d01515b77aec3f62d12b19e81c9db72e` share **identical Git tree `77c18f708010dc51687d5e6022000eb6a05f4d18`**. [Exact-tree PR workflow #43990582623](https://github.com/mehdisafer/governed-dataops-agents/actions/runs/43990582623) finished with **Core SUCCESS (284 Python tests and Ruff), Governance SUCCESS (including actual two-queue Temporal recovery), Containers SUCCESS (all 10 platform checks), Infrastructure SUCCESS; model-evaluation FAILED**. Both source-bound CircleCI `build-and-test` and `publication-security` were SUCCESS.
+**Runtime-qualified `main` revision at that checkpoint:** [`263a6c1c7226`](https://github.com/mehdisafer/governed-dataops-agents/commit/263a6c1c72260c7be6ba7ba7aeb1a4a891b7f41f), after merging [PR #17](https://github.com/mehdisafer/governed-dataops-agents/pull/17). The PR-head `e81309b300b579f60298b77d6202ac67ea843ae4` and its GitHub Actions merge preview `158e52c5d01515b77aec3f62d12b19e81c9db72e` share **identical Git tree `77c18f708010dc51687d5e6022000eb6a05f4d18`**. [Exact-tree PR workflow #43990582623](https://github.com/mehdisafer/governed-dataops-agents/actions/runs/43990582623) finished with **Core SUCCESS (284 Python tests and Ruff), Governance SUCCESS (including actual two-queue Temporal recovery), Containers SUCCESS (all 10 platform checks), Infrastructure SUCCESS; model-evaluation FAILED**. Both source-bound CircleCI `build-and-test` and `publication-security` were SUCCESS.
 
 The frozen evaluation returned **agent 6/10 strict cases** versus **runbook 10/10**, with ten model responses actually observed, three agent business resolutions versus six runbook resolutions, and **no measured advantage**. The original [model-evaluation artifact #14288370568](https://github.com/mehdisafer/governed-dataops-agents/actions/runs/43990582623/artifacts/14288370568) was downloaded and inspected. Its agent median/nearest-rank p95 case wall times were **25.63055s / 43.323s**, versus **4.5788s / 9.059s** for the runbook; interrupted/unreported usage and compute costs must not be replaced with zero. The previous **7/10** at guarded `9635dbcc`, unguarded **7/10** at `8ab185f`, and older **2/10** and **1/10** results are distinct original runs. Do not infer improvement or degradation from these unpaired differences.
 
@@ -41,7 +61,7 @@ These are separate executions, linked to their actual source commits. They do no
 | Frozen hosted model comparison | [`924dd24` model-evaluation failed](https://github.com/mehdisafer/governed-dataops-agents/commit/924dd24780b332b13f24a5394a725ad2c55888ba) | Agent 1/10 versus runbook 10/10 |
 | GitHub Actions full runtime on `7b709ff` | [Run #43919667084](https://github.com/mehdisafer/governed-dataops-agents/actions/runs/43919667084): `core`, `governance`, `containers`, `infrastructure` succeeded; **`model-evaluation` failed** | Real platform checks passed; frozen agent value remains failed and no production apply occurred |
 
-A wrong model proposal rejected by trusted typed evidence and independent policy is a governance success, not a correct diagnosis. The newer independent PR #17 comparison also fails the diagnostic/value criterion, as documented in the latest source integration above. On `351817e`, the docs-only core ran **245 passing tests**, Ruff, a reviewed Gitleaks scan with 31 raw worktree and 62 raw historical candidates, and a dependency audit reporting no known vulnerabilities at query time. Python licence metadata was fully declared. Skipped jobs are not passes. See the [complete qualification ledger](docs/QUALIFICATION.md) and [CI provenance](docs/CI.md) for source-specific evidence and limitations.
+A wrong model proposal rejected by trusted typed evidence and independent policy is a governance success, not a correct diagnosis. The separate PR #17 comparison also failed the diagnostic/value criterion, as documented in its historical source integration above. On `351817e`, the docs-only core ran **245 passing tests**, Ruff, a reviewed Gitleaks scan with 31 raw worktree and 62 raw historical candidates, and a dependency audit reporting no known vulnerabilities at query time. Python licence metadata was fully declared. Skipped jobs are not passes. See the [complete qualification ledger](docs/QUALIFICATION.md) and [CI provenance](docs/CI.md) for source-specific evidence and limitations.
 
 ## Historical native results — 14 November 2026
 

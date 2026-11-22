@@ -1,6 +1,37 @@
 # Remaining acceptance work
 
-## Current post-instrumentation P0 status — 17 November 2026
+## Current remaining gates — 23 November 2026
+
+[PR #25](https://github.com/mehdisafer/governed-dataops-agents/pull/25), merged into executable source
+`ea80f2524060fcba745c23e85b344a9ad010b782`, implements and source-qualifies bounded
+cgroup-v2 observations on the exact restored private model container.
+Both the [PR](https://github.com/mehdisafer/governed-dataops-agents/actions/runs/45082434901) and
+[independent main](https://github.com/mehdisafer/governed-dataops-agents/actions/runs/45083502058) executed four platform jobs successfully, including **314 core tests**;
+their model comparisons independently
+failed at **7/10 strict / 3 resolutions versus runbook 10/10 / 6**.
+The [qualification](QUALIFICATION.md), [resource](MODEL_LATENCY.md) and
+[evaluation](EVALUATION.md) ledgers preserve their exact original evidence.
+
+- **Implemented and observed:** 12 resource counters, private namespace and
+  lifetime/limit identity, bounded collection overhead, missing/reset handling
+  and original-error preservation. Source and reachable-history scans passed
+  their scoped reviewed-findings gates. These measurement prerequisites no
+  longer belong in the backlog as entirely unimplemented probes.
+- **Still open in #16:** causal localization of latency variability and an
+  effective mitigation with prospectively specified repeated evidence.
+  B01–B04 remain unexecuted; the two CI qualifications are not replacements.
+- **Still open in #20 / #1:** reliable diagnosis and operational model value.
+  Draft [PR #23](https://github.com/mehdisafer/governed-dataops-agents/pull/23) requires a legitimate additional authorized
+  task, a capable comparator and unseen data before tuning; it is unchanged.
+- **Still open operationally:** shared-model isolation, dynamic ownership
+  changes, target-specific/multi-host requirements and owner-side publication
+  controls. The bounded two-queue result and source-publication status do not
+  establish those guarantees.
+
+The earlier 8/10, 6/10 and timed-out executions remain failed historical
+observations, not erased by either new successful response gate.
+
+## Historical post-instrumentation P0 checkpoint — 17 November 2026
 
 [PR #17](https://github.com/mehdisafer/governed-dataops-agents/pull/17) merged as [`263a6c1c7226`](https://github.com/mehdisafer/governed-dataops-agents/commit/263a6c1c72260c7be6ba7ba7aeb1a4a891b7f41f). The original [GitHub Actions #43990582623](https://github.com/mehdisafer/governed-dataops-agents/actions/runs/43990582623) qualified the exact PR source tree: **Core 284 tests/Ruff, native governance (including fixed two-queue Temporal), ten container checks, Infrastructure, and both CircleCI source/security jobs PASS**. The mandatory **model evaluation FAILED: agent 6/10 versus runbook 10/10**, ten responses observed, no measured advantage. This is an instrumentation improvement, not a candidate that meets agent quality. Historical independent model scores 7/10 (twice on different sources), 2/10 and 1/10 remain original failed/limited records, not a pooled trend.
 
@@ -34,12 +65,12 @@ approval, live policy checks, fixed effect keys, reconciliation and absence of
 model tools/provider fallback. Future work must not obtain a green result by
 relaxing those controls or excluding failed attempts.
 
-## Post-run harness correction
+## Historical post-run harness correction
 
 Independent review found that the v1 conjunction was unsatisfiable: a perfect
 N/N heldout baseline was required at the same time as an agent score strictly
 greater than N on those N cases. **Semantics 1.1 is implemented and 61 focused
-synthetic harness tests passed; native requalification has not been performed.** It retains
+synthetic harness tests passed at that checkpoint; native requalification had not yet been performed.** It retains
 five-case strict reference competence, changes heldout baseline gating to complete safe paired
 measurement, preserves the agent's strict quality and strictly-greater value
 requirements, and checks exact case identities and denominators. Pre-admission
@@ -55,7 +86,7 @@ unchanged. The current corpus still has a 10/10 baseline ceiling, so this logic
 correction alone cannot demonstrate agent value. The open items below therefore
 remain necessary.
 
-The separate hosted frozen evaluation at `924dd24` scored agent 1/10 versus runbook 10/10; the original 2/10 result remains an independent historical failure, not a score to average or replace. **A third source-bound hosted evaluation on `8ab185f` returned 10/10 observed responses but only 7/10 strict correct cases versus runbook 10/10**; all three incorrect proposals falsely requested schema migration even though the typed source and accepted schema were equal. See [forensic readback](EVALUATION.md#17-november-2026--original-hosted-model-artifact-forensic-readback) and [issue #12](https://github.com/mehdisafer/governed-dataops-agents/issues/12). This is still failed comparative acceptance, not a reason to average results or tune on formerly reserved labels.
+The separate hosted frozen evaluation at `924dd24` scored agent 1/10 versus runbook 10/10; the original 2/10 result remains an independent historical failure, not a score to average or replace. **A third source-bound hosted evaluation on `8ab185f` returned 10/10 observed responses but only 7/10 strict correct cases versus runbook 10/10**; all three incorrect proposals falsely requested schema migration even though the typed source and accepted schema were equal. See [forensic readback](EVALUATION.md#earlier-original-hosted-model-artifact-forensic-readback--17-november-2026) and [issue #12](https://github.com/mehdisafer/governed-dataops-agents/issues/12). This is still failed comparative acceptance, not a reason to average results or tune on formerly reserved labels.
 
 ## Prioritized open work
 

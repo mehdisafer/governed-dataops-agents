@@ -8,6 +8,11 @@ authorize a CI rerun, a paid resource, a model/prompt change or a V1 PASS.
 See [issue #16](https://github.com/mehdisafer/governed-dataops-agents/issues/16)
 and the separate [model-value issue #20](https://github.com/mehdisafer/governed-dataops-agents/issues/20).
 
+The status above refers to the prospective **B01–B04** matrix. The later
+PR #25 and merged-source qualification records in [MODEL_LATENCY.md](MODEL_LATENCY.md)
+are independent source qualifications, not retrospective substitutions for
+any of those four predeclared trials.
+
 ## 1. Already-observed evidence is retrospective, not a trial in this design
 
 | Source-bound run | Real container response gate | Distinct outcome |
@@ -53,10 +58,10 @@ Record, with original redacted files, the following bounded stages:
 - Before/after model-container cgroup `cpu.stat` usage, periods,
   throttled periods, and throttled time; visible `cpu.max` quota and
   bounded memory/current/events when available. **The bounded cgroup-v2
-  probe is now implemented; source-qualified hosted observations remain
-  pending.** Its exact-container/lifetime checks, unsupported-v1 behavior,
-  quota visibility limits and local test boundary are documented in
-  [MODEL_LATENCY.md](MODEL_LATENCY.md#implemented-resource-probe-hosted-observations-still-pending).
+  probe is implemented and has produced source-bound hosted observations.**
+  Its exact-container/lifetime checks, unsupported-v1 behavior,
+  quota visibility limits and separate qualification records are documented in
+  [MODEL_LATENCY.md](MODEL_LATENCY.md#implemented-resource-probe-and-observed-hosted-qualification).
   Visible container limits are not proof of every ancestor's effective limit.
 - Each probe's overhead, collection error type, stage and availability;
   immutable failure artifacts, service logs, final target state, effect

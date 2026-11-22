@@ -1,8 +1,72 @@
 # Qualification ledger
 
-Updated 17 November 2026. **Platform execution is qualified for the declared synthetic reference checks; full agent-value acceptance is withheld.** A green container workflow verifies its declared infrastructure/effect gates, not comparative diagnosis quality. The original [acceptance issue #1](https://github.com/mehdisafer/governed-dataops-agents/issues/1) remains open. No accepted stable V1 or production-readiness claim follows from the passing subset.
+Updated 23 November 2026 (Europe/Paris). **Platform execution is qualified for the declared synthetic reference checks; full agent-value acceptance is withheld.** A green container workflow verifies its declared infrastructure/effect gates, not comparative diagnosis quality. The original [acceptance issue #1](https://github.com/mehdisafer/governed-dataops-agents/issues/1) remains open. No accepted stable V1 or production-readiness claim follows from the passing subset.
 
-## New server-metric evidence — PR #21, 17 November 2026
+## Current source-qualified checkpoint — 23 November 2026
+
+[PR #25](https://github.com/mehdisafer/governed-dataops-agents/pull/25) adds bounded cgroup-v2 resource observations and
+preserves original model failures when optional probes fail. Its head
+`29a377efc7cf7f85c6b4f48803d8f2634701172c`, actual tested preview
+`87da59dd4e7989bb7a830867557e165af608f3aa` and merged executable source
+`ea80f2524060fcba745c23e85b344a9ad010b782` share Git tree `60d4a8049a1cb02cc770ed4dc2c832c65c0e3ac4`.
+The following are **two independent original runs**, both attempt 1; no
+rerun, averaged result or retroactive B01–B04 trial is represented here.
+
+| Gate | [PR run 45082434901](https://github.com/mehdisafer/governed-dataops-agents/actions/runs/45082434901), preview `87da59dd` | [Main run 45083502058](https://github.com/mehdisafer/governed-dataops-agents/actions/runs/45083502058), exact `ea80f252` |
+| --- | --- | --- |
+| Core | SUCCESS; 314 tests, 0 failed/error/skipped; Ruff | SUCCESS; 314 tests, 0 failed/error/skipped; Ruff |
+| Source / reachable-history scans | 31 / 62 raw candidates, all reviewed with verified non-secret proofs | 31 / 62 raw candidates, all reviewed with verified non-secret proofs |
+| Governance | SUCCESS; 12 governance + 2 partitioning checks | SUCCESS; 12 governance + 2 partitioning checks |
+| Containers | SUCCESS; 10 platform checks; diagnostic quality false | SUCCESS; 10 platform checks; diagnostic quality false |
+| Infrastructure | SUCCESS; isolated local Docker Terraform plan, no apply | SUCCESS; isolated local Docker Terraform plan, no apply |
+| Model evaluation | **FAILED**; agent 7/10 strict, 3 resolutions; runbook 10/10, 6 | **FAILED**; agent 7/10 strict, 3 resolutions; runbook 10/10, 6 |
+| Overall workflow | **FAILURE** | **FAILURE** |
+
+The actual main checkout is confirmed in all five job logs and original
+source manifests. Governance and model profiles reported stopped tracked
+children with no cleanup failures. Both container stacks were removed with
+no inspection errors. The source-matched main CircleCI
+[build-and-test](https://app.circleci.com/workflow/c08ff0b2-35b2-4ea5-8390-4847893a216b/job/e44f9e33-8457-4316-9d1c-d49bd2fe27f0)
+and [publication-security](https://app.circleci.com/workflow/c08ff0b2-35b2-4ea5-8390-4847893a216b/job/a6ca37a2-3e75-4cfe-8731-a8beaa0dcd09)
+statuses were independently read as SUCCESS; that status read is not a
+separate inspection of CircleCI's archive payloads.
+
+The cgroup-v2 probe genuinely observed a private namespace, unchanged
+container/process/cgroup identity, unchanged visible 2-CPU/3-GiB limits and
+**12/12 counters** in both real restored stacks. The [resource ledger](MODEL_LATENCY.md)
+retains numeric deltas, overhead and the distinct 79.382866/54.662328-second
+gates; no causal or optimization claim follows. The [evaluation ledger](EVALUATION.md)
+retains both negative comparisons and their different timings. The prior
+8/10, 6/10, other 7/10, 2/10, 1/10 and original 90-second timeout results are
+not replaced. The inspected v1 corpus is regression evidence, not unseen V2.
+
+### Original archives independently checked
+
+Every archive below was downloaded in its original ZIP form, passed CRC
+inspection and matched the independently recalculated SHA-256 shown here.
+Artifact retention remains governed by GitHub Actions; these identities
+record precisely what was inspected, not a promise of permanent download availability.
+
+| Execution / artifact | ZIP members | SHA-256 |
+| --- | ---: | --- |
+| [PR core 14777761603](https://github.com/mehdisafer/governed-dataops-agents/actions/runs/45082434901/artifacts/14777761603) | 6 | `a584b58a01afe8be155705aec306a3e33526d85947dd2cdace2a56fc1bcf6ab2` |
+| [PR infrastructure 14777626746](https://github.com/mehdisafer/governed-dataops-agents/actions/runs/45082434901/artifacts/14777626746) | 33 | `2092d2c69c031c12307b1db0ebd665a42e29e4111aa8eccf79f9442a6dc8921c` |
+| [PR governance 14777367683](https://github.com/mehdisafer/governed-dataops-agents/actions/runs/45082434901/artifacts/14777367683) | 171 | `195bb836638058d90350e87f5d4c13996978a0074fea5ad21804e038b036d460` |
+| [PR container 14777472758](https://github.com/mehdisafer/governed-dataops-agents/actions/runs/45082434901/artifacts/14777472758) | 162 | `db1e050bb9aa96a889e93710aa58a78cb72b44be614418780dee99c89994807d` |
+| [PR model 14778380944](https://github.com/mehdisafer/governed-dataops-agents/actions/runs/45082434901/artifacts/14778380944) | 120 | `805441fe1e7f7d09173e5c8d24ae6cf066a4bebe16366327b53b39cc58e80844` |
+| [Main core 14777827870](https://github.com/mehdisafer/governed-dataops-agents/actions/runs/45083502058/artifacts/14777827870) | 6 | `0ca1bc664e1772f8eab18c59701096c7acce2b55f9cc2d59e83c1591c48baa70` |
+| [Main infrastructure 14778490612](https://github.com/mehdisafer/governed-dataops-agents/actions/runs/45083502058/artifacts/14778490612) | 33 | `97d5b218e787665315907e22051c898617fb7b9470afc0266f3ce3896906dbce` |
+| [Main governance 14777633532](https://github.com/mehdisafer/governed-dataops-agents/actions/runs/45083502058/artifacts/14777633532) | 171 | `a709b385a79bcf546939480fd1df482c6cab5861000ca3940ab9828dcdf1cdb1` |
+| [Main container 14778337823](https://github.com/mehdisafer/governed-dataops-agents/actions/runs/45083502058/artifacts/14778337823) | 162 | `03cbb6fe657c55aa97e2808f0a603da33ff87b35feffda26fd541fa7f185e9ae` |
+| [Main model 14778159430](https://github.com/mehdisafer/governed-dataops-agents/actions/runs/45083502058/artifacts/14778159430) | 120 | `4de55c1f2b3afaa59288b89d6db5dac8555905ce888f2ab07bdaba4f7a22e057` |
+
+**Remaining gates:** repeated reliability/causal investigation under the
+prospective [B01–B04 protocol](MODEL_LATENCY_TRIAL_PROTOCOL.md), an authorized
+additional V2 task and unseen evaluation, shared-model/multi-host operational
+boundaries, owner-side publication controls and full agent-value acceptance.
+The observation implementation closes none of those acceptance gates.
+
+## Historical server-metric qualification — PR #21, 17 November 2026
 
 | Source and exact execution | Reported result | Limit |
 | --- | --- | --- |
@@ -11,11 +75,11 @@ Updated 17 November 2026. **Platform execution is qualified for the declared syn
 | Original [model-evaluation artifact #14363284141](https://github.com/mehdisafer/governed-dataops-agents/actions/runs/44161986053/artifacts/14363284141) | **FAILED**: all 10 agent cases attempted, strict agreement and measured advantage absent | Do not infer an exact 0–10 numerator without independently reading its original comparison data |
 | [Merged `main` `4ec7adbf`](https://github.com/mehdisafer/governed-dataops-agents/commit/4ec7adbf204955081a4984afc29166d9c8a8e6f2) | [Full GitHub Actions #44163668519](https://github.com/mehdisafer/governed-dataops-agents/actions/runs/44163668519) **FAILED** on identical source tree: core **292 tests**, governance and infrastructure **SUCCESS**; containers and model-evaluation **FAILED** | [Container artifact #14363928475](https://github.com/mehdisafer/governed-dataops-agents/actions/runs/44163668519/artifacts/14363928475): **4/4** server counters observed but response gate **FAILED in 94.880s**, diagnostic quality false, versus **69.247s PASS** on the PR preview; root cause unknown |
 
-**The independent main execution must not be collapsed into the PR preview's success.** At the same 2-CPU quota and identical executable tree, the container's model-response gate failed after 94.880s with an empty-message `AssertionError`; its mainline metric sampling itself still reported four counters. The mainline model-evaluation separately failed the unwaived strict-quality/value gate. The [original model artifact #14364697423](https://github.com/mehdisafer/governed-dataops-agents/actions/runs/44163668519/artifacts/14364697423) remains accessible by GitHub Actions, but the connector did not independently read its binary ZIP to establish a precise case numerator.
+**The independent main execution must not be collapsed into the PR preview's success.** At the same 2-CPU quota and identical executable tree, the container's model-response gate failed after 94.880s with an empty-message `AssertionError`; its mainline metric sampling itself still reported four counters. The mainline model-evaluation separately failed the unwaived strict-quality/value gate. The [original model artifact #14364697423](https://github.com/mehdisafer/governed-dataops-agents/actions/runs/44163668519/artifacts/14364697423) was subsequently downloaded and checked: **8/10** strict agent cases and **4 resolutions** versus runbook **10/10 and 6 resolutions**, still no measured advantage. The original main-container readback also established the **90.003133-second** client timeout and its numeric server counters, retained in [MODEL_LATENCY.md](MODEL_LATENCY.md#post-merge-source-matched-evidence--17-november-2026). The earlier logs-only limitation is historical; these failed outcomes remain separate from later executions.
 
 The observed server counters improve visibility into prompt/generation workload but are process-wide and only two snapshots. They do not identify the cause of intermittent 2-CPU response delays. The 90-second model deadline, constrained actions, original business checks and existing evaluation failures remain unchanged. [Issues #16](https://github.com/mehdisafer/governed-dataops-agents/issues/16) and [#1](https://github.com/mehdisafer/governed-dataops-agents/issues/1) stay OPEN.
 
-## Most recent source-integrated qualification — 17 November 2026
+## Historical PR #17 source-integrated qualification — 17 November 2026
 
 Merged [PR #17](https://github.com/mehdisafer/governed-dataops-agents/pull/17) established qualified runtime `main` revision [`263a6c1c7226`](https://github.com/mehdisafer/governed-dataops-agents/commit/263a6c1c72260c7be6ba7ba7aeb1a4a891b7f41f). Its testable instrumentation head [`e81309b`](https://github.com/mehdisafer/governed-dataops-agents/commit/e81309b300b579f60298b77d6202ac67ea843ae4) and the reviewed GitHub Actions merge-preview `158e52c5` share identical Git tree `77c18f708010dc51687d5e6022000eb6a05f4d18`. [Original GitHub Actions #43990582623](https://github.com/mehdisafer/governed-dataops-agents/actions/runs/43990582623) and the two CircleCI checks were inspected.
 
@@ -40,7 +104,7 @@ Keep [#1](https://github.com/mehdisafer/governed-dataops-agents/issues/1) and [#
 
 ## Earlier guarded-source main qualification — 17 November 2026
 
-The public `main` source after [security PR #13](https://github.com/mehdisafer/governed-dataops-agents/pull/13) is [`9635dbccfe8cfd168f14ee9380eeb1f03e105a0c`](https://github.com/mehdisafer/governed-dataops-agents/commit/9635dbccfe8cfd168f14ee9380eeb1f03e105a0c). Its Git tree `80331e7b1d1a64423182c33b4ad81737ed9b7a48` exactly matches the combined PR source tested by [GitHub Actions #43987760401](https://github.com/mehdisafer/governed-dataops-agents/actions/runs/43987760401). The [post-merge main run #43988865699](https://github.com/mehdisafer/governed-dataops-agents/actions/runs/43988865699) was separately **completed** and returned overall **failure solely because the mandatory `model-evaluation` job remained red**:
+The public `main` source at that checkpoint after [security PR #13](https://github.com/mehdisafer/governed-dataops-agents/pull/13) is [`9635dbccfe8cfd168f14ee9380eeb1f03e105a0c`](https://github.com/mehdisafer/governed-dataops-agents/commit/9635dbccfe8cfd168f14ee9380eeb1f03e105a0c). Its Git tree `80331e7b1d1a64423182c33b4ad81737ed9b7a48` exactly matches the combined PR source tested by [GitHub Actions #43987760401](https://github.com/mehdisafer/governed-dataops-agents/actions/runs/43987760401). The [post-merge main run #43988865699](https://github.com/mehdisafer/governed-dataops-agents/actions/runs/43988865699) was separately **completed** and returned overall **failure solely because the mandatory `model-evaluation` job remained red**:
 
 | Exact main job | Observed result | Boundaries |
 |---|---|---|

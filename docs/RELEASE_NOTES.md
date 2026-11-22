@@ -1,6 +1,20 @@
 # Release candidate: v0.1.0a1
 
-**State: public source repository, unreleased candidate; acceptance withheld.** No release tag or GitHub release exists for this candidate. The clean native application source is `f1e6e2f3800242ec210145680261da8ab60f38b4`; the reviewed [implementation PR](https://github.com/mehdisafer/governed-dataops-agents/pull/2) also retains the subsequent evidence and documentation. Read the [qualification ledger](QUALIFICATION.md) before interpreting an implemented capability as an accepted release.
+**State: public source repository, unreleased candidate; acceptance withheld.** No release tag or GitHub release exists for this candidate. The historical clean native application source is `f1e6e2f3800242ec210145680261da8ab60f38b4`; the reviewed [implementation PR](https://github.com/mehdisafer/governed-dataops-agents/pull/2) also retains the subsequent evidence and documentation. Read the [qualification ledger](QUALIFICATION.md) before interpreting an implemented capability as an accepted release.
+
+## Current source checkpoint — 23 November 2026
+
+[PR #25](https://github.com/mehdisafer/governed-dataops-agents/pull/25) integrated bounded, container-identity-checked
+cgroup resource observations into executable `main` at `ea80f2524060fcba745c23e85b344a9ad010b782`.
+The [qualification ledger](QUALIFICATION.md) records the PR qualification
+and independent exact-main execution separately: both passed four platform jobs, including 314 core tests,
+while both model evaluations **FAILED** at
+7/10 strict / 3 resolutions versus runbook 10/10 / 6.
+
+This remains an unreleased experimental candidate. Resource observations
+do not establish a latency mitigation, reliable model diagnosis, added
+model value or production acceptance. B01–B04 remain unexecuted and the
+separate evaluation-v2 feasibility protocol remains a draft.
 
 ## Included
 
@@ -11,7 +25,7 @@
 - Atomic business effects and receipts, reconciliation after a deliberately lost HTTP response, idempotent event admission and bounded backpressure.
 - Frozen dependencies and schemas, native/container qualification harnesses, CI configuration, security/component inventories, and deployment/recovery procedures.
 
-## Observed qualification
+## Historical native qualification — 14 November 2026
 
 The complete native run passed **14/18 requested checks** and returned a nonzero exit. It exercised all five runbook outcomes, refusal of tampered/stale/expired approvals, worker restart with buffered approval, changed policy, incomplete MCP evidence, genuine model outage, target contention, admission recovery and an executed paired restore. All 56 current closed histories replayed; 26 earlier histories replayed across a query-only workflow change, with the earlier dirty-source limitation retained.
 
@@ -21,9 +35,9 @@ The separate bounded runbook load used twelve incidents at concurrency four, wit
 
 All 192 original files from the native run are retained, including failed cases, logs and resource samples. Post-run review corrected a contradictory evaluation gate, separating baseline competence from comparative score measurement while keeping agent quality and strict superiority requirements. It also hardened exact paired-case accounting and extended semantic secret-review support for the container source manifest. These corrections have separate regression tests; the original 14/18 native result is unchanged. See the [evidence index](../evidence/README.md), [evaluation report](EVALUATION.md) and [prioritized backlog](BACKLOG.md).
 
-## Most recent merged source instrumentation — 17 November 2026
+## Historical PR #17 merged source instrumentation — 17 November 2026
 
-The last runtime-qualified public `main` revision [`263a6c1c7226`](https://github.com/mehdisafer/governed-dataops-agents/commit/263a6c1c72260c7be6ba7ba7aeb1a4a891b7f41f) integrates [PR #17](https://github.com/mehdisafer/governed-dataops-agents/pull/17): bounded model-latency/failure attribution, original failed-probe preservation and correct restored-stack startup selection. Its PR head `e81309b` and GitHub Actions merge-preview `158e52c5` have the same Git tree. [Run #43990582623](https://github.com/mehdisafer/governed-dataops-agents/actions/runs/43990582623) passed **284 Python core tests, real governance/two-queue Temporal, ten container checks, infrastructure**, and the two CircleCI source/security checks were green. **Mandatory model-evaluation FAILED** with **6/10 strict agent** versus **10/10 runbook** on ten observed model responses. Model quality in the real container remained false.
+The runtime-qualified public `main` revision at that checkpoint [`263a6c1c7226`](https://github.com/mehdisafer/governed-dataops-agents/commit/263a6c1c72260c7be6ba7ba7aeb1a4a891b7f41f) integrates [PR #17](https://github.com/mehdisafer/governed-dataops-agents/pull/17): bounded model-latency/failure attribution, original failed-probe preservation and correct restored-stack startup selection. Its PR head `e81309b` and GitHub Actions merge-preview `158e52c5` have the same Git tree. [Run #43990582623](https://github.com/mehdisafer/governed-dataops-agents/actions/runs/43990582623) passed **284 Python core tests, real governance/two-queue Temporal, ten container checks, infrastructure**, and the two CircleCI source/security checks were green. **Mandatory model-evaluation FAILED** with **6/10 strict agent** versus **10/10 runbook** on ten observed model responses. Model quality in the real container remained false.
 
 The original [container timings](MODEL_LATENCY.md) measured **67.004099s `Agent.run`** inclusive of transport/inference/native output validation and a correct **17.568490s restored stack** startup; internal inference-only/queue-stage times remain unknown. No model weights, prompt, 90s budget, approvals, external provider or business effect contract were altered. This is *not* a new stable release, model-value acceptance or production-readiness claim. Earlier guarded and historical comparisons below remain separate, source-bound failures.
 
@@ -35,7 +49,7 @@ The original [container timings](MODEL_LATENCY.md) measured **67.004099s `Agent.
 
 ## Earlier guarded-source security and model-value limits — 17 November 2026
 
-Current public source `main` at
+The public source `main` at that checkpoint,
 [`9635dbcc`](https://github.com/mehdisafer/governed-dataops-agents/commit/9635dbccfe8cfd168f14ee9380eeb1f03e105a0c)
 contains opt-in fixed target partition routing and explicit wrong-worker /
 cross-partition signed-approval refusal tests (PRs #14–#15), and [PR #13](https://github.com/mehdisafer/governed-dataops-agents/pull/13)'s
@@ -48,7 +62,7 @@ two-queue Temporal), successful containers/paired restore, and successful
 infrastructure. **Frozen model-evaluation remained FAILED**: 10/10 model
 responses, **7/10 strict model success vs 10/10 runbook**, three wrong
 diagnoses escalated without unauthorized effects, no measured advantage.
-Both current CircleCI unit/publication-security checks succeeded.
+Both CircleCI unit/publication-security checks succeeded on that exact source.
 The independent source-specific original model artifacts preserve
 all negative results, including the earlier 2/10 and 1/10 attempts and
 `diagnostic_quality_passed=false` in the real container case.

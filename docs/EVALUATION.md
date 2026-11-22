@@ -1,6 +1,42 @@
 # Evaluation and final native evidence
 
-## Experimental llama.cpp server-counter probes — first source-bound runtime observation
+## Current separate frozen regressions — 23 November 2026
+
+The original [PR #25 evaluation](https://github.com/mehdisafer/governed-dataops-agents/actions/runs/45082434901/artifacts/14778380944)
+ran on preview `87da59dd4e7989bb7a830867557e165af608f3aa`.
+The independent [main evaluation](https://github.com/mehdisafer/governed-dataops-agents/actions/runs/45083502058/artifacts/14778159430)
+ran on exact `ea80f2524060fcba745c23e85b344a9ad010b782`. Their Git tree is identical;
+their requests, timings and output archives are distinct. Both original ZIPs
+were independently downloaded and verified; see [QUALIFICATION.md](QUALIFICATION.md).
+
+| Measured frozen-corpus outcome | PR agent | PR runbook | Main agent | Main runbook |
+| --- | ---: | ---: | ---: | ---: |
+| Attempted / final business observations | 10 / 10 | 10 / 10 | 10 / 10 | 10 / 10 |
+| Completed model responses | 10 | N/A | 10 | N/A |
+| Strict category/action/outcome successes | **7/10** | **10/10** | **7/10** | **10/10** |
+| Verified resolutions | 3 | 6 | 3 | 6 |
+| Case wall median | 24.26565 s | 3.5633 s | 24.5424 s | 3.8127 s |
+| Observed input / output tokens | 6992 / 971 | 0 / 0 | 6922 / 864 | 0 / 0 |
+| Observed unjustified / unknown effects | 0 / 0 | 0 / 0 | 0 / 0 | 0 / 0 |
+
+Both agent runs failed cases **heldout-05, -06 and -10** with
+`DiagnosticError`, escalation and zero effects. Safety containment does not
+make these diagnoses correct. Both original `comparison.json` files report
+`agent_advantage_established=false`; strict model quality and comparative
+value remain **FAILED**. Local provider charge is recorded as zero while
+compute, energy and human cost remain unmeasured. Per-case p95 values in the
+original small-sample artifacts are descriptive, not reliability/SLA estimates.
+
+These v1 examples and labels have already been inspected. They remain frozen
+regressions and cannot support a new unseen-validation claim after tuning.
+No change to the model, prompt, 90-second budget, deterministic baseline or
+approval/effect policy was made. The earlier 8/10, 6/10, independent 7/10,
+2/10 and 1/10 results below remain separate source-bound records.
+[PR #23](https://github.com/mehdisafer/governed-dataops-agents/pull/23) remains a draft feasibility protocol requiring an
+actual additional authorized task and prospectively reserved data; the
+[latency B01–B04 matrix](MODEL_LATENCY_TRIAL_PROTOCOL.md) is also unexecuted.
+
+## Historical llama.cpp server-counter qualification — PR #21, 17 November 2026
 
 The pinned **llama.cpp b12368** model container already enables `--metrics`.
 A new bounded qualifier now reads six allowlisted numeric Prometheus samples
@@ -27,7 +63,7 @@ claimed from the first real trial alone. The reviewed [PR #21](https://github.co
 
 These observations establish a usable measurement pathway, **not** a latency root cause. Neither server queue peaks, request-exclusive inference time, the effect of CPU throttling, nor repeated success rates have been established.
 
-**Independent post-merge result on the same executable Git tree:** [full `main` GitHub Actions #44163668519](https://github.com/mehdisafer/governed-dataops-agents/actions/runs/44163668519) completed with overall **FAILURE**. On exact source [`4ec7adbf`](https://github.com/mehdisafer/governed-dataops-agents/commit/4ec7adbf204955081a4984afc29166d9c8a8e6f2), **core 292 tests/Ruff, governance and infrastructure SUCCESS**, but **containers and frozen model-evaluation FAILED**. The [original container artifact #14363928475](https://github.com/mehdisafer/governed-dataops-agents/actions/runs/44163668519/artifacts/14363928475) and original logs report the same private restored model stack, **2 CPUs, 4/4 counters observed**, and a **failed 94.880s real-model-response gate** (`AssertionError`, empty console reason). It recorded `container_execution=failed`, `diagnostic_quality_passed=false`. By contrast the source-equivalent PR gate had succeeded in **69.247s**. The [original model-evaluation artifact #14364697423](https://github.com/mehdisafer/governed-dataops-agents/actions/runs/44163668519/artifacts/14364697423) retained all ten attempted cases, with strict outcome agreement incomplete and no measured advantage. Exact model numerator and numeric server deltas are not asserted without direct binary artifact inspection. This is **a real same-source reproducibility failure**, not a proven cause or mitigation; no manual paid retry is authorized by these records.
+**Independent post-merge result on the same executable Git tree:** [full `main` GitHub Actions #44163668519](https://github.com/mehdisafer/governed-dataops-agents/actions/runs/44163668519) completed with overall **FAILURE**. On exact source [`4ec7adbf`](https://github.com/mehdisafer/governed-dataops-agents/commit/4ec7adbf204955081a4984afc29166d9c8a8e6f2), **core 292 tests/Ruff, governance and infrastructure SUCCESS**, but **containers and frozen model-evaluation FAILED**. The [original container artifact #14363928475](https://github.com/mehdisafer/governed-dataops-agents/actions/runs/44163668519/artifacts/14363928475) and original logs report the same private restored model stack, **2 CPUs, 4/4 counters observed**, and a **failed 94.880s real-model-response gate** (`AssertionError`, empty console reason). It recorded `container_execution=failed`, `diagnostic_quality_passed=false`. By contrast the source-equivalent PR gate had succeeded in **69.247s**. The [original model-evaluation artifact #14364697423](https://github.com/mehdisafer/governed-dataops-agents/actions/runs/44163668519/artifacts/14364697423) retained all ten attempted cases, with strict outcome agreement incomplete and no measured advantage. The initial review was logs-only. The subsequent original-ZIP readback in [MODEL_LATENCY.md](MODEL_LATENCY.md) establishes **8/10** strict agent cases and **4 resolutions** versus runbook **10/10 and 6 resolutions**, plus the **90.003133-second** client timeout and numeric server deltas. Both historical gates remain failed. This is **a real same-source reproducibility failure**, not a proven cause or mitigation; no manual paid retry is authorized by these records.
 
 The added metrics do not modify the inference provider, CPU quota,
 generation configuration, retry budget or validation contract. This is
@@ -36,7 +72,7 @@ performance experiment or full quality acceptance. The prior raw timed
 results and [issue #16](https://github.com/mehdisafer/governed-dataops-agents/issues/16)
 remain the basis for a prospectively declared reproduction matrix.
 
-## Acceptance decision
+## Historical native acceptance decision — 14 November 2026
 
 **The frozen native integration run failed full acceptance.** On 14 November
 2026, source commit `f1e6e2f3800242ec210145680261da8ab60f38b4` completed the real
@@ -48,8 +84,10 @@ advantage, and the real browser console check. These results are retained in
 [run.json](../evidence/qualification-f1e6e2f/run.json) and
 [results.json](../evidence/qualification-f1e6e2f/results.json).
 
-Those 18 gates are not the complete original acceptance scope: the required
-target-partitioning invariants remain unqualified, as detailed below.
+Those 18 gates were not the complete original acceptance scope: at that
+14 November source, required target-partitioning invariants remained unqualified.
+Later bounded two-queue qualification is recorded separately in the
+[qualification ledger](QUALIFICATION.md); shared-model and multi-host guarantees remain open.
 
 The agent produced an accepted diagnostic on **2 of 10 heldout attempts**. Both
 accepted proposals had the correct category and action: **2/2 conditional
@@ -75,9 +113,9 @@ recovery, diagnostic availability, diagnostic quality, operator experience and
 comparative benefit therefore remain separate acceptance questions. The next
 work is recorded in [BACKLOG.md](BACKLOG.md).
 
-## Latest source-bound frozen result and instrumentation — 17 November 2026
+## Historical PR #17 frozen result and instrumentation — 17 November 2026
 
-The most recent qualified application source on [PR #17](https://github.com/mehdisafer/governed-dataops-agents/pull/17) is `e81309b300b579f60298b77d6202ac67ea843ae4`, merged into public `main` as [`263a6c1c7226`](https://github.com/mehdisafer/governed-dataops-agents/commit/263a6c1c72260c7be6ba7ba7aeb1a4a891b7f41f). Its actual [GitHub Actions run #43990582623](https://github.com/mehdisafer/governed-dataops-agents/actions/runs/43990582623) ran a temporary merge-preview with **the identical Git tree** and completed all four platform jobs successfully, but the mandatory `model-evaluation` **failed**. Original model/case artifacts were downloaded; every attempted case remains in the denominator.
+The qualified application source at that checkpoint on [PR #17](https://github.com/mehdisafer/governed-dataops-agents/pull/17) is `e81309b300b579f60298b77d6202ac67ea843ae4`, merged into public `main` as [`263a6c1c7226`](https://github.com/mehdisafer/governed-dataops-agents/commit/263a6c1c72260c7be6ba7ba7aeb1a4a891b7f41f). Its actual [GitHub Actions run #43990582623](https://github.com/mehdisafer/governed-dataops-agents/actions/runs/43990582623) ran a temporary merge-preview with **the identical Git tree** and completed all four platform jobs successfully, but the mandatory `model-evaluation` **failed**. Original model/case artifacts were downloaded; every attempted case remains in the denominator.
 
 | Frozen measure (this source only) | Runbook | Local model |
 |---|---:|---:|
@@ -536,7 +574,7 @@ model, corpus or historical labels. The focused **61 synthetic harness tests** i
 fixture boundaries, including the seven retained workflow-closure and cleanup
 guard cases and new score/safety counterexamples. This is unit verification of the
 correction, not a native service rerun. Its separate status is recorded in
-[BACKLOG.md](BACKLOG.md#post-run-harness-correction); the original native evidence
+[BACKLOG.md](BACKLOG.md#historical-post-run-harness-correction); the original native evidence
 applies only to the f1e6e2f source and semantics 1.0.
 
 Even after correcting the conjunction, the observed runbook score on v1 remains
