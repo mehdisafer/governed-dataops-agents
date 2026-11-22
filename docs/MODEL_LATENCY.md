@@ -82,6 +82,47 @@ mitigation or completed V1 acceptance is claimed.
 
 ## Qualification protocol
 
+### Implemented resource probe; hosted observations still pending
+
+`model-latency.json.model_container_resources` now retains two bounded
+observations of the **exact active model container**. The qualifier resolves
+one complete container ID from its own Compose project, verifies its
+Docker `HostConfig.CgroupnsMode` is `private`, and uses that ID for
+`docker exec`; it does not read the host's cgroup or mount its filesystem.
+An empty/default or host namespace mode is unavailable, never assumed private.
+The stdlib-only observation script reads cgroup **v2** `cpu.stat`, `cpu.max`,
+`memory.current`, `memory.max` and `memory.events`. Cgroup v1, a non-private
+namespace, inaccessible files and unsupported metrics remain explicitly
+unavailable. No compatibility path is guessed.
+
+CPU counters retain their original microsecond/count units. Quota and memory
+limits distinguish the kernel's `max` value from a missing measurement.
+Before/after deltas require the same container ID, kernel boot identity,
+PID-1 start ticks and cgroup device/inode; a restart/replacement, missing
+identity or decreased counter yields null deltas. `visible_limits_match`
+separately flags changed or unverified visible quotas. Probe wall duration
+and bounded error types are retained on either outcome; probe failures do
+not suppress the original model/effect failure.
+An incomplete counter, limit or lifetime observation marks the snapshot
+partial; delta completeness is reported separately from lifetime verification.
+
+These are container-wide observations, including collection overhead and
+other work. Boundary memory readings do not measure peaks. The visible
+CPU quota and bandwidth counters do not expose every ancestor's limits or
+exclude host contention; see the [Linux cgroup v2 CPU interface](https://www.kernel.org/doc/html/latest/admin-guide/cgroup-v2.html#cpu-interface-files).
+No causal attribution, request-exclusive CPU duration or performance gain
+follows from a nonzero throttling counter. The complete gate duration now
+includes these extra probes; its historical values are not directly
+comparable without that overhead.
+
+This implements one prerequisite of the prospective trial. Local synthetic
+boundary tests are separate from actual hosted cgroup observations; neither
+launches B01–B04 or accepts model reliability/value. The model, prompt,
+weights, 90-second budget, retries, CPU quota and authorization policy are
+unchanged. New hosted evidence must retain its exact new source identity.
+
+### Execution and reporting
+
 - Build from a clean recorded commit, run the existing bounded container
   qualification, retain `run.json`, `commands.json`, `checks.json`,
   `model-latency.json`, `model-quality.json`, original service logs and
@@ -97,10 +138,11 @@ mitigation or completed V1 acceptance is claimed.
 - Do not compute p95 from a few anecdotes or claim an inferred model-server
   queue time from the total elapsed and client-side wait.
 
-**Still unverified:** internal server queue time or transient queue peaks,
+**Still unverified in a source-qualified hosted run:** the new cgroup probe
+and its overhead, CPU throttling and memory observations. Also unverified:
+internal server queue time or transient queue peaks,
 startup time specific to the model service, request-exclusive prefill and
-token-generation durations, CPU throttling and memory pressure in the
-model container, native structured-output validation alone, and whether
+token-generation durations, native structured-output validation alone, and whether
 runner contention changes these stages. Process-wide server prompt/predict
 counters are observed but are **not request-exclusive timing**.
 The typed business-precondition validator has its own duration when reached
