@@ -12,6 +12,7 @@ import json
 import math
 import os
 import platform
+import re
 import shutil
 import signal
 import subprocess
@@ -24,6 +25,8 @@ from uuid import uuid4
 
 import httpx
 
+from governed_dataops import model_resource_metrics
+from governed_dataops.model_resource_metrics import resource_delta
 from governed_dataops.model_server_metrics import model_metric_delta, parse_metric_snapshot
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -792,7 +795,7 @@ class ContainerQualification:
                 )
                 return None
             return samples
-        except (TimeoutError, OSError, RuntimeError, ValueError) as exc:
+        except (TimeoutError, OSError, RuntimeError, ValueError, subprocess.SubprocessError) as exc:
             print(
                 json.dumps({
                     "stage": "model-metrics",
@@ -804,10 +807,53 @@ class ContainerQualification:
             )
             return None
 
+    def resource_snapshot(self, phase: str) -> dict:
+        """Observe only the exact active model container, never host cgroup totals."""
+        if not hasattr(self, "override"):
+            return {"status": "unavailable", "reason": "stack_unconfigured", "probe_wall_seconds": None}
+        started = time.monotonic()
+        observation = {"status": "unavailable"}
+        try:
+            container = self.compose(
+                ["ps", "-q", "model"], f"model-resource-identity-{phase}", timeout=5,
+            ).stdout.strip()
+            if not re.fullmatch(r"[0-9a-f]{64}", container):
+                raise ValueError("a single exact model container identity was not observed")
+            mode = json.loads(self.execute(
+                ["docker", "inspect", "--format", "{{json .HostConfig.CgroupnsMode}}", container],
+                f"model-resource-namespace-{phase}", timeout=5,
+            ).stdout)
+            if mode != "private":
+                observation = {
+                    "status": "unavailable", "reason": "private_cgroup_namespace_unverified",
+                    "cgroup_namespace_mode": "host" if mode == "host" else "unknown",
+                    "probe_wall_seconds": round(time.monotonic() - started, 6),
+                }
+                return observation
+            # The stdlib-only module is executed unchanged. No packages, mounts,
+            # privileges or persistent files are added to the model container.
+            script = Path(model_resource_metrics.__file__).read_text()
+            result = self.execute(
+                ["docker", "exec", container, "python", "-c", script],
+                f"model-resources-{phase}", timeout=5,
+            )
+            observation = json.loads(result.stdout)
+            if not isinstance(observation, dict) or observation.get("schema_version") != 1:
+                raise ValueError("invalid resource snapshot schema")
+            observation.setdefault("identity", {})["container_id"] = container
+            observation["cgroup_namespace_mode"] = "private"
+        except (
+            TimeoutError, OSError, RuntimeError, ValueError, TypeError, subprocess.SubprocessError,
+        ) as exc:
+            observation = {"status": "unavailable", "error_type": type(exc).__name__}
+        observation["probe_wall_seconds"] = round(time.monotonic() - started, 6)
+        return observation
+
     def agent_case(self) -> dict:
         # Record partial stages on both success and failure. The real diagnostic
         # timeout and all business-effect assertions remain unchanged.
         started = time.monotonic()
+        resources_before = self.resource_snapshot("before")
         server_before = self.server_metric_snapshot("before")
         incident = None
         record = None
@@ -895,6 +941,7 @@ class ContainerQualification:
             raise
         finally:
             server_after = self.server_metric_snapshot("after")
+            resources_after = self.resource_snapshot("after")
             startup = active_stack_startup_seconds(self.records, self.stack)
             report = model_latency_report(
                 trace,
@@ -906,6 +953,7 @@ class ContainerQualification:
                 failure_type=failure_type,
             )
             report["model_server_metrics"] = model_metric_delta(server_before, server_after)
+            report["model_container_resources"] = resource_delta(resources_before, resources_after)
             report["metric_probe_scope"] = "same active restored Docker model stack; bounded internal endpoint"
             write_json(self.output / "model-latency.json", report)
             print(

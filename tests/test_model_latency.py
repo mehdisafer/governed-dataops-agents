@@ -129,6 +129,10 @@ def test_incomplete_real_container_probe_retains_original_failure_and_partial_re
     assert latency["segments_seconds"]["stack_startup_all_services"] == 11.3
     assert latency["segments_seconds"]["client_model_slot_wait"] == 0.005
     assert latency["segments_seconds"]["full_agent_gate"] >= 0.0
+    resources = latency["model_container_resources"]
+    assert resources["status"] == "unavailable"
+    assert resources["identity_matches"] is False
+    assert resources["before"]["reason"] == "stack_unconfigured"
 
 
 def fixture_incident(tmp_path):

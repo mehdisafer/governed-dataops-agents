@@ -51,9 +51,13 @@ Record, with original redacted files, the following bounded stages:
 - Before/after `llama.cpp` process-wide prompt/prediction
   tokens/seconds and boundary processing/deferred gauges.
 - Before/after model-container cgroup `cpu.stat` usage, periods,
-  throttled periods, and throttled time; effective `cpu.max` quota and
-  bounded memory/current/events when available. **These probes are
-  requested future instrumentation, not present verified observations.**
+  throttled periods, and throttled time; visible `cpu.max` quota and
+  bounded memory/current/events when available. **The bounded cgroup-v2
+  probe is now implemented; source-qualified hosted observations remain
+  pending.** Its exact-container/lifetime checks, unsupported-v1 behavior,
+  quota visibility limits and local test boundary are documented in
+  [MODEL_LATENCY.md](MODEL_LATENCY.md#implemented-resource-probe-hosted-observations-still-pending).
+  Visible container limits are not proof of every ancestor's effective limit.
 - Each probe's overhead, collection error type, stage and availability;
   immutable failure artifacts, service logs, final target state, effect
   ledger, durable workflow history and cleanup receipts.
